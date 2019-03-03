@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import UserProfile from "../types/UserProfile";
-import { authorize } from "../helpers/authorization";
 
 interface Props {
   isAuthorized: boolean;
@@ -8,6 +9,43 @@ interface Props {
   getAuthorization: () => void;
   getUserProfile: () => void;
 }
+
+const Wrapper = styled.header`
+  align-items: center;
+  display: flex;
+  background: ${props => props.theme.backgroundDark};
+  height: 50px;
+  justify-content: space-between;
+  padding: 0 30px;
+`;
+
+const Title = styled(Link)`
+  color: ${props => props.theme.foreground};
+  font-size: 20px;
+  font-weight: 800;
+  text-decoration: none;
+`;
+
+const LoginButton = styled.button`
+  background: ${props => props.theme.primary};
+  border: none;
+  color: ${props => props.theme.foreground};
+  cursor: pointer;
+  font-size: 15px;
+  height: 50px;
+  padding: 0 20px;
+
+  &:hover {
+    background: ${props => props.theme.foreground};
+    color: ${props => props.theme.primary};
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const UserName = styled.span``;
 
 class Header extends Component<Props> {
   componentDidUpdate() {
@@ -25,14 +63,15 @@ class Header extends Component<Props> {
     const { userProfile } = this.props;
 
     return (
-      <div>
-        <h1>Spotify Client</h1>
+      <Wrapper>
+        <Title to="/">Spotify</Title>
+
         {userProfile ? (
-          <h2>{userProfile.display_name}</h2>
+          <span>{userProfile.display_name}</span>
         ) : (
-          <button onClick={this.handleClick}>Log In</button>
+          <LoginButton onClick={this.handleClick}>Log In</LoginButton>
         )}
-      </div>
+      </Wrapper>
     );
   }
 }
