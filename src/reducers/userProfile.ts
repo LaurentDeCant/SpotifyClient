@@ -1,5 +1,6 @@
+import createReducer from "../helpers/createReducer";
 import UserProfile from "../types/UserProfile";
-import { Action, ActionType } from "../actions/userProfile";
+import { ActionType, ReceiveUserProfileAction } from "../actions/userProfile";
 import { State as CombinedState } from "./index";
 
 export interface State {
@@ -10,18 +11,18 @@ const initialState: State = {
   userProfile: undefined
 };
 
-export default function(state: State = initialState, action: Action) {
-  switch (action.type) {
-    case ActionType.RECEIVE_USER_PROFILE:
-      return {
-        ...state,
-        userProfile: action.payload
-      };
-    default:
-      return state;
-  }
-}
+export default createReducer(initialState, {
+  [ActionType.RECEIVE_USER_PROFILE]: (
+    state: State,
+    action: ReceiveUserProfileAction
+  ) => ({
+    ...state,
+    userProfile: action.payload
+  })
+});
 
-export function selectUserProfile(state: CombinedState) {
+export function selectUserProfile(
+  state: CombinedState
+): UserProfile | undefined {
   return state.userProfile.userProfile;
 }

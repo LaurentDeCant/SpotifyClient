@@ -1,16 +1,24 @@
 import React, { Component } from "react";
 import UserProfile from "../types/UserProfile";
-import { authorize } from "../services/authorization";
+import { authorize } from "../helpers/authorization";
 
 interface Props {
+  isAuthorized: boolean;
   userProfile?: UserProfile;
-  fetchUserProfile: () => any;
+  getAuthorization: () => void;
+  getUserProfile: () => void;
 }
 
 class Header extends Component<Props> {
+  componentDidUpdate() {
+    const { isAuthorized, userProfile, getUserProfile } = this.props;
+    if (isAuthorized && !userProfile) {
+      getUserProfile();
+    }
+  }
+
   handleClick = async () => {
-    await authorize();
-    this.props.fetchUserProfile();
+    await this.props.getAuthorization();
   };
 
   render() {
@@ -19,7 +27,6 @@ class Header extends Component<Props> {
     return (
       <div>
         <h1>Spotify Client</h1>
-
         {userProfile ? (
           <h2>{userProfile.display_name}</h2>
         ) : (

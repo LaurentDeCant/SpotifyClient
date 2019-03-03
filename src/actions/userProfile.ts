@@ -1,13 +1,13 @@
-import { Dispatch } from "redux";
-import { authorizedFetch } from "../services/authorization";
+import { Action, Dispatch } from "redux";
 import UserProfile from "../types/UserProfile";
+import { authorizedFetch } from "../helpers/authorization";
 
 export enum ActionType {
   REQUEST_USER_PROFILE = "REQUEST_USER_PROFILE",
   RECEIVE_USER_PROFILE = "RECEIVE_USER_PROFILE"
 }
 
-interface RequestUserProfileAction {
+export interface RequestUserProfileAction extends Action {
   type: ActionType.REQUEST_USER_PROFILE;
 }
 
@@ -17,7 +17,7 @@ function requetUserProfile(): RequestUserProfileAction {
   };
 }
 
-interface ReceiveUserProfileAction {
+export interface ReceiveUserProfileAction extends Action {
   type: ActionType.RECEIVE_USER_PROFILE;
   payload: UserProfile;
 }
@@ -31,13 +31,15 @@ function receiveUserProfile(
   };
 }
 
-export type Action = RequestUserProfileAction | ReceiveUserProfileAction;
-
 export function getUserProfile() {
-  return function(dispatch: Dispatch<Action>) {
+  return async (
+    dispatch: Dispatch<RequestUserProfileAction | ReceiveUserProfileAction>
+  ) => {
     dispatch(requetUserProfile());
-    authorizedFetch(`${process.env.REACT_APP_BASE_URL}/me`)
-      .then(reponse => reponse.json())
-      .then(json => dispatch(receiveUserProfile(json)));
+    const response = await authorizedFetch(
+      `${process.env.REACT_APP_BASE_URL}/me`
+    );
+    const json = await response.json();
+    dispatch(receiveUserProfile(json));
   };
 }

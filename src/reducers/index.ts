@@ -1,10 +1,18 @@
 import { combineReducers } from "redux";
-import userProfileReducer, { State as userProfileState } from "./userProfile";
+import authorization, { State as AuthorizationState } from "./authorization";
+import userProfile, { State as UserProfileState } from "./userProfile";
 
 export interface State {
-  userProfile: userProfileState;
+  logging: any;
+  authorization: AuthorizationState;
+  userProfile: UserProfileState;
 }
 
 export default combineReducers<State>({
-  userProfile: userProfileReducer
+  logging: (state = {}, action) => {
+    console.log(action);
+    return state;
+  },
+  authorization,
+  userProfile
 });

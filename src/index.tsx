@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import rootReducer from "./reducers";
 import App from "./components/App";
-import { checkAuthorized } from "./services/authorization";
+import { checkAuthorized } from "./helpers/authorization";
 
 checkAuthorized();
 

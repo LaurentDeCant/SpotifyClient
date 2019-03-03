@@ -5,7 +5,7 @@ const REGEX = /#access_token=(.*?)&token_type=(.*?)&expires_in=(.*)$/;
 const KEY = "token";
 
 function authorize() {
-  const promise = new Promise((resolve, reject) => {
+  const promise = new Promise<string>((resolve, reject) => {
     const handleStorage = (event: StorageEvent) => {
       if (event.key === KEY) {
         window.removeEventListener("storage", handleStorage);
@@ -15,11 +15,10 @@ function authorize() {
     window.addEventListener("storage", handleStorage);
     window.open(URL, undefined, "width=640,height=720");
   });
-
   return promise;
 }
 
-function checkAuthorized() {
+function checkAuthorize() {
   const match = window.location.hash.match(REGEX);
   if (match) {
     localStorage.setItem(KEY, match[1]);
@@ -27,14 +26,13 @@ function checkAuthorized() {
   }
 }
 
-function authorizedFetch(url: string, options = {}) {
+function authorizedFetch(url: string): Promise<Response> {
   const token = localStorage.getItem(KEY);
   return fetch(url, {
-    ...options,
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
 }
 
-export { authorize, checkAuthorized, authorizedFetch };
+export { authorize, checkAuthorize as checkAuthorized, authorizedFetch };
