@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import UserProfile from "../types/UserProfile";
+import Title from "./Title";
+import User from "./User";
 
 interface Props {
   isAuthorized: boolean;
@@ -19,15 +20,8 @@ const Wrapper = styled.header`
   padding: 0 30px;
 `;
 
-const Title = styled(Link)`
-  color: ${props => props.theme.foreground};
-  font-size: 20px;
-  font-weight: 800;
-  text-decoration: none;
-`;
-
 const LoginButton = styled.button`
-  background: ${props => props.theme.primary};
+  background: ${props => props.theme.backgroundDark};
   border: none;
   color: ${props => props.theme.foreground};
   cursor: pointer;
@@ -36,7 +30,6 @@ const LoginButton = styled.button`
   padding: 0 20px;
 
   &:hover {
-    background: ${props => props.theme.foreground};
     color: ${props => props.theme.primary};
   }
 
@@ -64,10 +57,10 @@ class Header extends Component<Props> {
 
     return (
       <Wrapper>
-        <Title to="/">Spotify</Title>
+        <Title />
 
         {userProfile ? (
-          <span>{userProfile.display_name}</span>
+          <User {...userProfile} />
         ) : (
           <LoginButton onClick={this.handleClick}>Log In</LoginButton>
         )}

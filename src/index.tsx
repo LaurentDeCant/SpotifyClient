@@ -20,10 +20,25 @@ const theme = {
 
 const GlobalStyle = createGlobalStyle`
   html, body, #root {
-    color: ${theme.foreground}
     height: 100%;
+  }
+
+  body, ul {
     margin: 0;
     padding: 0;
+  }
+
+  body {
+    color: ${theme.foreground};
+  }
+
+  a {
+    color: ${theme.foreground};
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
   }
 `;
 

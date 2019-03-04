@@ -5,6 +5,7 @@ import styled from "styled-components";
 import UserProfile from "../types/UserProfile";
 import { State } from "../reducers";
 import Header from "../components/Header";
+import Menu from "../components/Menu";
 import { isAuthorized } from "../reducers/authorization";
 import { selectUserProfile } from "../reducers/userProfile";
 import { getAuthorization } from "../actions/authorization";
@@ -29,13 +30,8 @@ const Body = styled.div`
   flex: 1;
 `;
 
-const Nav = styled.nav`
-  background: ${props => props.theme.background}
-  width: 250px;
-`;
-
 const Content = styled.div`
-  background: ${props => props.theme.backgroundLight}
+  background: ${props => props.theme.backgroundLight};
   flex: 1;
 `;
 
@@ -46,7 +42,7 @@ class App extends Component<Props> {
         <Wrapper>
           <Header {...this.props} />
           <Body>
-            <Nav />
+            <Menu />
             <Content />
           </Body>
         </Wrapper>
