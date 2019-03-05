@@ -39,7 +39,6 @@ const StyledIcon = styled(Icon)`
 `;
 
 const Menu = (props: any) => {
-  console.log("Menu", props);
   return (
     <Wrapper>
       <ul>

@@ -7,7 +7,7 @@ const URL = `https://accounts.spotify.com/authorize?client_id=${
 const REGEX = /#access_token=(.*?)&token_type=(.*?)&expires_in=(.*)$/;
 const ACCESS_TOKEN = "token";
 const TOKEN_TYPE = "tokenType";
-const EXPIRES_IN = "expiresIn";
+const EXPIRES_AT = "expiresAt";
 
 function authorize(): Promise<any> {
   const promise = new Promise((resolve, reject) => {
@@ -26,23 +26,27 @@ function authorize(): Promise<any> {
 function checkRedirection(): void {
   const match = window.location.hash.match(REGEX);
   if (match) {
-    console.log(match);
-    localStorage.setItem(ACCESS_TOKEN, match[1]);
-    localStorage.setItem(TOKEN_TYPE, match[2]);
-    localStorage.setItem(EXPIRES_IN, match[3]);
+    localStorage[ACCESS_TOKEN] = match[1];
+    localStorage[TOKEN_TYPE] = match[2];
+    const date = new Date();
+    date.setSeconds(date.getSeconds() + parseInt(match[3]));
+    localStorage[EXPIRES_AT] = date.toString();
     window.close();
   }
 }
 
 function initAuthorization(dispatch: Dispatch<any>): void {
-  if (!!localStorage.getItem(ACCESS_TOKEN)) {
+  if (
+    !!localStorage[ACCESS_TOKEN] &&
+    Date.parse(localStorage[EXPIRES_AT]) > Date.now()
+  ) {
     dispatch(receiveAuthorization());
   }
 }
 
 function authorizedFetch(url: string): Promise<Response> {
-  const tokenType = localStorage.getItem(TOKEN_TYPE);
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const tokenType = localStorage[TOKEN_TYPE];
+  const accessToken = localStorage[ACCESS_TOKEN];
   return fetch(url, {
     headers: {
       Authorization: `${tokenType} ${accessToken}`

@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import Categories from "../types/categories";
+import Categories from "../types/browse";
 import { authorizedFetch } from "../helpers/authorization";
 
 export enum ActionType {
@@ -30,14 +30,12 @@ function receiveCategories(categories: Categories): ReceiveCategoriesAction {
 }
 
 export function getCategories() {
-  return async (
+  return (
     dispatch: Dispatch<RequestCategoriesAction | ReceiveCategoriesAction>
   ) => {
     dispatch(requestCategories());
-    const response = await authorizedFetch(
-      `${process.env.REACT_APP_BASE_URL}/browse/categories`
-    );
-    const json = await response.json();
-    dispatch(receiveCategories(json));
+    authorizedFetch(`${process.env.REACT_APP_BASE_URL}/browse/categories`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveCategories(json.categories)));
   };
 }

@@ -4,7 +4,7 @@ interface Icon {
   width: number;
 }
 
-interface Category {
+export interface Category {
   href: string;
   icons: Icon[];
   id: string;

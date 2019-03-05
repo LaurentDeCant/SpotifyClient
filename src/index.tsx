@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import rootReducer from "./reducers";
-import App from "./containers/App";
+import App from "./components/App";
 import { checkRedirection, initAuthorization } from "./helpers/authorization";
-import { receiveAuthorization } from "./actions/authorization";
 
 checkRedirection();
 
@@ -51,7 +51,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunkMiddleware))
+);
 initAuthorization(store.dispatch);
 
 ReactDOM.render(

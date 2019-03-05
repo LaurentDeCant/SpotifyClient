@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../components/Header";
-import Menu from "../components/Menu";
-import Browse from "../components/Browse";
-import Search from "../components/Search";
+import Header from "./Header";
+import Menu from "./Menu";
+import Browse from "./Browse";
+import Search from "./Search";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,7 +24,6 @@ const Routes = styled.div`
 
 class App extends Component {
   render() {
-    console.log("App.render", this.props);
     return (
       <Router>
         <Wrapper>
