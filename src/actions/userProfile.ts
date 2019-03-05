@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import UserProfile from "../types/UserProfile";
+import UserProfile from "../types/userProfile";
 import { authorizedFetch } from "../helpers/authorization";
 
 export enum ActionType {

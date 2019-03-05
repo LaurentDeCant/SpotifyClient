@@ -1,22 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled from "styled-components";
-import UserProfile from "../types/UserProfile";
-import { State } from "../reducers";
 import Header from "../components/Header";
 import Menu from "../components/Menu";
-import { isAuthorized } from "../reducers/authorization";
-import { selectUserProfile } from "../reducers/userProfile";
-import { getAuthorization } from "../actions/authorization";
-import { getUserProfile } from "../actions/userProfile";
-
-interface Props {
-  isAuthorized: boolean;
-  userProfile?: UserProfile;
-  getAuthorization: () => void;
-  getUserProfile: () => void;
-}
+import Browse from "../components/Browse";
+import Search from "../components/Search";
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,20 +18,23 @@ const Body = styled.div`
   flex: 1;
 `;
 
-const Content = styled.div`
-  background: ${props => props.theme.backgroundLight};
+const Routes = styled.div`
   flex: 1;
 `;
 
-class App extends Component<Props> {
+class App extends Component {
   render() {
+    console.log("App.render", this.props);
     return (
       <Router>
         <Wrapper>
-          <Header {...this.props} />
+          <Header />
           <Body>
             <Menu />
-            <Content />
+            <Routes>
+              <Route exact path="/" component={Browse} />
+              <Route path="/search" component={Search} />
+            </Routes>
           </Body>
         </Wrapper>
       </Router>
@@ -51,17 +42,4 @@ class App extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  isAuthorized: isAuthorized(state),
-  userProfile: selectUserProfile(state)
-});
-
-const mapDispatchToProps = {
-  getAuthorization: getAuthorization,
-  getUserProfile: getUserProfile
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;

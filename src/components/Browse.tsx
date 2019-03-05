@@ -1,9 +1,28 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getCategories } from "../actions/browse";
 
-class Browse extends Component {
+interface Props {
+  getCategories: () => void;
+}
+
+class Browse extends Component<Props> {
+  componentDidUpdate() {
+    this.props.getCategories();
+  }
+
   render() {
     return <h2>Browse</h2>;
   }
 }
 
-export default Browse;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {
+  getCategories: getCategories
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Browse);

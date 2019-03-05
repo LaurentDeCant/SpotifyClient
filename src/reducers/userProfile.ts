@@ -1,5 +1,5 @@
 import createReducer from "../helpers/createReducer";
-import UserProfile from "../types/UserProfile";
+import UserProfile from "../types/userProfile";
 import { ActionType, ReceiveUserProfileAction } from "../actions/userProfile";
 import { State as CombinedState } from "./index";
 

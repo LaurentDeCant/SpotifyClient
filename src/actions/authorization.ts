@@ -2,27 +2,27 @@ import { Action, Dispatch } from "redux";
 import { authorize } from "../helpers/authorization";
 
 export enum ActionType {
-  REQUEST_AUTHORIZATION = "REQUEST_AUTHORIZATION",
-  RECEIVE_AUTHORIZATION = "RECEIVE_AUTHORIZATION"
+  RequestAuthorization = "REQUEST_AUTHORIZATION",
+  ReceiveAuthorization = "RECEIVE_AUTHORIZATION"
 }
 
 export interface RequestAuthorizationAction extends Action {
-  type: ActionType.REQUEST_AUTHORIZATION;
+  type: ActionType.RequestAuthorization;
 }
 
 function requestAuthorization(): RequestAuthorizationAction {
   return {
-    type: ActionType.REQUEST_AUTHORIZATION
+    type: ActionType.RequestAuthorization
   };
 }
 
 export interface ReceiveAuthorizationAction extends Action {
-  type: ActionType.RECEIVE_AUTHORIZATION;
+  type: ActionType.ReceiveAuthorization;
 }
 
-function receiveAuthorization(): ReceiveAuthorizationAction {
+export function receiveAuthorization(): ReceiveAuthorizationAction {
   return {
-    type: ActionType.RECEIVE_AUTHORIZATION
+    type: ActionType.ReceiveAuthorization
   };
 }
 

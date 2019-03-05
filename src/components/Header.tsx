@@ -1,6 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
-import UserProfile from "../types/UserProfile";
+import UserProfile from "../types/userProfile";
+import { State } from "../reducers";
+import { isAuthorized } from "../reducers/authorization";
+import { selectUserProfile } from "../reducers/userProfile";
+import { getAuthorization } from "../actions/authorization";
+import { getUserProfile } from "../actions/userProfile";
 import Title from "./Title";
 import User from "./User";
 
@@ -14,23 +20,29 @@ interface Props {
 const Wrapper = styled.header`
   align-items: center;
   display: flex;
-  background: ${props => props.theme.backgroundDark};
+  background: ${props => props.theme.primary};
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   height: 50px;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 50px;
+  z-index: 2;
 `;
 
 const LoginButton = styled.button`
-  background: ${props => props.theme.backgroundDark};
+  background: transparent;
   border: none;
-  color: ${props => props.theme.foreground};
+  color: ${props => props.theme.foreground.default};
   cursor: pointer;
   font-size: 15px;
-  height: 50px;
+  height: 100%;
   padding: 0 20px;
 
   &:hover {
-    color: ${props => props.theme.primary};
+    background: ${props => props.theme.background.hover};
+  }
+
+  &:active {
+    background: ${props => props.theme.background.active};
   }
 
   &:focus {
@@ -38,9 +50,14 @@ const LoginButton = styled.button`
   }
 `;
 
-const UserName = styled.span``;
-
 class Header extends Component<Props> {
+  componentDidMount() {
+    const { isAuthorized, getUserProfile } = this.props;
+    if (isAuthorized) {
+      getUserProfile();
+    }
+  }
+
   componentDidUpdate() {
     const { isAuthorized, userProfile, getUserProfile } = this.props;
     if (isAuthorized && !userProfile) {
@@ -69,4 +86,17 @@ class Header extends Component<Props> {
   }
 }
 
-export default Header;
+const mapStateToProps = (state: State) => ({
+  isAuthorized: isAuthorized(state),
+  userProfile: selectUserProfile(state)
+});
+
+const mapDispatchToProps = {
+  getAuthorization: getAuthorization,
+  getUserProfile: getUserProfile
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

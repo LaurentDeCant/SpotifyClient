@@ -1,22 +1,63 @@
 import React from "react";
+import { NavLink, withRouter } from "react-router-dom";
 import styled from "styled-components";
-import MenuItem from "./MenuItem";
+import Icon, { IconType } from "./Icon";
 
 const Wrapper = styled.nav`
-  background: ${props => props.theme.background};
-  padding: 15px 0;
+  background: ${props => props.theme.background.dark};
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  padding: 25px 0;
   width: 250px;
+  z-index: 1;
 `;
 
-const Menu = () => {
+const StyledNavLink = styled(NavLink)`
+  align-items: center;
+  color: ${props => props.theme.foreground.dark};
+  display: flex;
+  height: 50px;
+  padding: 0 50px;
+
+  &:hover {
+    background: ${props => props.theme.background.hover};
+    color: ${props => props.theme.foreground.default};
+  }
+
+  &:active {
+    background: ${props => props.theme.background.active};
+  }
+
+  &.active {
+    border-right: 5px solid ${props => props.theme.primary};
+    color: ${props => props.theme.foreground.default};
+    padding-right: 45px;
+  }
+`;
+
+const StyledIcon = styled(Icon)`
+  margin-right: 15px;
+`;
+
+const Menu = (props: any) => {
+  console.log("Menu", props);
   return (
     <Wrapper>
       <ul>
-        <MenuItem exact={true} icon="home" label="Home" to="/" />
-        <MenuItem icon="search" label="Search" to="/search" />
+        <li>
+          <StyledNavLink exact to="/">
+            <StyledIcon type={IconType.ViewModule} />
+            <span>Browse</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/search">
+            <StyledIcon type={IconType.Search} />
+            <span>Search</span>
+          </StyledNavLink>
+        </li>
       </ul>
     </Wrapper>
   );
 };
 
-export default Menu;
+export default withRouter(Menu);

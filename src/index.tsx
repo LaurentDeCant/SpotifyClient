@@ -6,15 +6,23 @@ import thunkMiddleware from "redux-thunk";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import rootReducer from "./reducers";
 import App from "./containers/App";
-import { checkAuthorized } from "./helpers/authorization";
+import { checkRedirection, initAuthorization } from "./helpers/authorization";
+import { receiveAuthorization } from "./actions/authorization";
 
-checkAuthorized();
+checkRedirection();
 
 const theme = {
-  background: "#424242",
-  backgroundLight: "#6d6d6d",
-  backgroundDark: "#1b1b1b",
-  foreground: "#ffffff",
+  background: {
+    light: "#424242",
+    default: "#303030",
+    dark: "#212121",
+    hover: "rgba(255, 255, 255, 0.1)",
+    active: "rgba(255, 255, 255, 0.2)"
+  },
+  foreground: {
+    default: "#ffffff",
+    dark: "rgba(255, 255, 255, 0.5)"
+  },
   primary: "#1db954"
 };
 
@@ -29,11 +37,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    color: ${theme.foreground};
+    background: ${theme.background.default}; 
+    color: ${theme.foreground.default};
   }
 
   a {
-    color: ${theme.foreground};
+    color: ${theme.foreground.default};
     text-decoration: none;
   }
 
@@ -43,6 +52,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+initAuthorization(store.dispatch);
 
 ReactDOM.render(
   <>

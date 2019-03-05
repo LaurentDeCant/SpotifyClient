@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import UserProfile from "../types/UserProfile";
-import MaterialIcon from "./MaterialIcon";
+import UserProfile from "../types/userProfile";
+import Icon, { IconType } from "./Icon";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const Icon = styled(MaterialIcon)`
+const StyledIcon = styled(Icon)`
   margin-right: 10px;
 `;
 
@@ -17,7 +17,7 @@ const User = (props: UserProfile) => {
 
   return (
     <Wrapper>
-      <Icon>face</Icon>
+      <StyledIcon type={IconType.Person} />
       <span>{display_name}</span>
     </Wrapper>
   );

@@ -14,7 +14,7 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.RECEIVE_AUTHORIZATION]: (
+  [ActionType.ReceiveAuthorization]: (
     state: State,
     action: ReceiveAuthorizationAction
   ) => ({

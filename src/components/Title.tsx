@@ -1,26 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import MaterialIcon from "./MaterialIcon";
+import Icon, { IconType } from "./Icon";
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  font-weight: 800;
 `;
 
-const Icon = styled(MaterialIcon)`
-  margin-right: 10px;
+const StyledIcon = styled(Icon)`
+  margin-right: 15px;
 `;
 
 const Label = styled(Link)`
   font-size: 20px;
-  font-weight: 800;
 `;
 
 const Title = () => {
   return (
     <Wrapper>
-      <Icon>wifi</Icon>
+      <StyledIcon type={IconType.Wifi} />
       <Label to="/">Spotify</Label>
     </Wrapper>
   );
