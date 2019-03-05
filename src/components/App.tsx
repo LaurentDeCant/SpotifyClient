@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route
+} from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
@@ -31,8 +36,11 @@ class App extends Component {
           <Body>
             <Menu />
             <Routes>
-              <Route exact path="/" component={Browse} />
+              {/* <Switch> */}
+              <Redirect from="/" to="/browse" />
+              <Route path="/browse" component={Browse} />
               <Route path="/search" component={Search} />
+              {/* </Switch> */}
             </Routes>
           </Body>
         </Wrapper>

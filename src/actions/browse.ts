@@ -30,12 +30,12 @@ function receiveCategories(categories: Categories): ReceiveCategoriesAction {
 }
 
 export function getCategories() {
-  return (
-    dispatch: Dispatch<RequestCategoriesAction | ReceiveCategoriesAction>
-  ) => {
+  return async (dispatch: Dispatch) => {
     dispatch(requestCategories());
-    authorizedFetch(`${process.env.REACT_APP_BASE_URL}/browse/categories`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveCategories(json.categories)));
+    const response = await authorizedFetch(
+      `${process.env.REACT_APP_BASE_URL}/browse/categories`
+    );
+    const json = await response.json();
+    dispatch(receiveCategories(json.categories));
   };
 }

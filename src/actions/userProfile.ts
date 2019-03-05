@@ -32,9 +32,7 @@ function receiveUserProfile(
 }
 
 export function getUserProfile() {
-  return async (
-    dispatch: Dispatch<RequestUserProfileAction | ReceiveUserProfileAction>
-  ) => {
+  return async (dispatch: Dispatch) => {
     dispatch(requetUserProfile());
     const response = await authorizedFetch(
       `${process.env.REACT_APP_BASE_URL}/me`

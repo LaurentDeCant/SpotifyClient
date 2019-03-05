@@ -3,7 +3,7 @@ import { NavLink, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import Icon, { IconType } from "./Icon";
 
-const Wrapper = styled.nav`
+const Wrapper = styled.ul`
   background: ${props => props.theme.background.dark};
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   padding: 25px 0;
@@ -41,20 +41,18 @@ const StyledIcon = styled(Icon)`
 const Menu = (props: any) => {
   return (
     <Wrapper>
-      <ul>
-        <li>
-          <StyledNavLink exact to="/">
-            <StyledIcon type={IconType.ViewModule} />
-            <span>Browse</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/search">
-            <StyledIcon type={IconType.Search} />
-            <span>Search</span>
-          </StyledNavLink>
-        </li>
-      </ul>
+      <li>
+        <StyledNavLink to="/browse">
+          <StyledIcon type={IconType.ViewModule} />
+          <span>Browse</span>
+        </StyledNavLink>
+      </li>
+      <li>
+        <StyledNavLink to="/search">
+          <StyledIcon type={IconType.Search} />
+          <span>Search</span>
+        </StyledNavLink>
+      </li>
     </Wrapper>
   );
 };

@@ -44,23 +44,12 @@ const LoginButton = styled.button`
   &:active {
     background: ${props => props.theme.background.active};
   }
-
-  &:focus {
-    outline: none;
-  }
 `;
 
 class Header extends Component<Props> {
   componentDidMount() {
     const { isAuthorized, getUserProfile } = this.props;
     if (isAuthorized) {
-      getUserProfile();
-    }
-  }
-
-  componentDidUpdate() {
-    const { isAuthorized, userProfile, getUserProfile } = this.props;
-    if (isAuthorized && !userProfile) {
       getUserProfile();
     }
   }

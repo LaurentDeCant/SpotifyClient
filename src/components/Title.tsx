@@ -21,7 +21,7 @@ const Title = () => {
   return (
     <Wrapper>
       <StyledIcon type={IconType.Wifi} />
-      <Label to="/">Spotify</Label>
+      <Label to="/browse">Spotify</Label>
     </Wrapper>
   );
 };
