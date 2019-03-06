@@ -9,7 +9,6 @@ import rootReducer from "./reducers";
 import App from "./components/App";
 import { checkRedirection, initAuthorization } from "./helpers/authorization";
 import GlobalStyle, { theme } from "./styles";
-import "./styles/normalize.css";
 
 checkRedirection();
 const store = createStore(

@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
@@ -25,6 +20,8 @@ const Body = styled.div`
 
 const Routes = styled.div`
   flex: 1;
+  height: 100%;
+  overflow-y: auto;
 `;
 
 class App extends Component {
@@ -36,11 +33,9 @@ class App extends Component {
           <Body>
             <Menu />
             <Routes>
-              {/* <Switch> */}
               <Redirect from="/" to="/browse" />
               <Route path="/browse" component={Browse} />
               <Route path="/search" component={Search} />
-              {/* </Switch> */}
             </Routes>
           </Body>
         </Wrapper>

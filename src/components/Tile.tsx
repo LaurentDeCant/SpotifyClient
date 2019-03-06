@@ -9,8 +9,10 @@ interface Props {
 
 const Button = styled.button`
   background: transparent;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
+  position: relative;
 
   &:hover::before {
     background: ${props => props.theme.background.hover};
@@ -26,12 +28,12 @@ const Button = styled.button`
 `;
 
 const Image = styled.img`
-  height: 250px;
-  width: 250px;
+  height: 200px;
+  width: 200px;
 `;
 
 const Text = styled.span`
-  bottom: 50px;
+  bottom: 25%;
   color: ${props => props.theme.foreground.default}
   font-size: 20px;
   left: 50%;

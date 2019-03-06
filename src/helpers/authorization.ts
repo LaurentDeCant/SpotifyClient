@@ -18,7 +18,7 @@ function authorize(): Promise<any> {
       }
     };
     window.addEventListener("storage", handleStorage);
-    window.open(URL, undefined, "width=640,height=720");
+    window.open(URL, undefined, "width=auto,height=auto");
   });
   return promise;
 }

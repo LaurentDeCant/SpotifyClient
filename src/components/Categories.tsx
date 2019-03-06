@@ -14,17 +14,16 @@ interface Props extends RouteComponentProps {
 }
 
 const StyledList = styled.ul`
+  align-content: flex-start;
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+  justify-content: center;
   margin: -10px;
 `;
 
 const StyledItem = styled.li`
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  display: flex;
+  display: block;
   margin: 10px;
-  position: relative;
 `;
 
 class Categories extends Component<Props> {

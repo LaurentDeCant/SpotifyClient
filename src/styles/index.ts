@@ -8,6 +8,11 @@ export const theme = {
     hover: "rgba(255, 255, 255, 0.1)",
     active: "rgba(255, 255, 255, 0.2)"
   },
+  font: {
+    light: 300,
+    medium: 400,
+    bold: 500
+  },
   foreground: {
     default: "#ffffff",
     dark: "rgba(255, 255, 255, 0.5)"

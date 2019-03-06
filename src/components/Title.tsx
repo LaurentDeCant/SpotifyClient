@@ -6,7 +6,7 @@ import Icon, { IconType } from "./Icon";
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  font-weight: 800;
+  font-weight: ${props => props.theme.font.bold};
 `;
 
 const StyledIcon = styled(Icon)`
