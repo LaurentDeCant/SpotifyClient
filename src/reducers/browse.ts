@@ -1,20 +1,23 @@
-import { Category, Album } from "../types/browse";
+import { Category, Album, Playlist } from "../types/browse";
 import createReducer from "../helpers/createReducer";
 import {
   ActionType,
   ReceiveCategoriesAction,
-  ReceiveNewReleasesAction
+  ReceiveNewReleasesAction,
+  ReceiveFeaturedPlaylistsAction
 } from "../actions/browse";
 import { State as CombinedState } from "./index";
 
 export interface State {
   categories: Category[];
   newReleases: Album[];
+  featuredPlaylists: Playlist[];
 }
 
 const initialState: State = {
   categories: [],
-  newReleases: []
+  newReleases: [],
+  featuredPlaylists: []
 };
 
 export default createReducer(initialState, {
@@ -31,6 +34,13 @@ export default createReducer(initialState, {
   ) => ({
     ...state,
     newReleases: action.payload
+  }),
+  [ActionType.ReceiveFeaturedPlaylists]: (
+    state: State,
+    action: ReceiveFeaturedPlaylistsAction
+  ) => ({
+    ...state,
+    featuredPlaylists: action.payload
   })
 });
 
@@ -40,4 +50,8 @@ export function selectCategories(state: CombinedState): Category[] {
 
 export function selectNewReleases(state: CombinedState): Album[] {
   return state.browse.newReleases;
+}
+
+export function selectFeaturedPlaylists(state: CombinedState): Playlist[] {
+  return state.browse.featuredPlaylists;
 }

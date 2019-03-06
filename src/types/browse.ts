@@ -22,6 +22,11 @@ export interface Artist {
 
 export interface ExternalUrl {}
 
+export interface Restriction {
+  reason: string;
+  market: string;
+}
+
 export interface Album {
   album_group?: string;
   album_type: string;
@@ -34,17 +39,38 @@ export interface Album {
   name: string;
   release_date: string;
   release_date_precision: string;
-  restrictions: { reason: string; market: string }[];
+  restrictions: Restriction[];
   type: string;
   uri: string;
 }
 
-export default interface PagingObject<T> {
-  href: string;
-  items: T[];
-  limit: number;
-  next: string;
-  offset: number;
-  previous: string;
+export interface Endpoint {
+  href: string | null;
   total: number;
+}
+
+export interface User {
+  display_name: string;
+  external_urls: ExternalUrl[];
+  followers: Endpoint;
+  href: string;
+  id: string;
+  images: Image[];
+  type: string;
+  uri: string;
+}
+
+export interface Playlist {
+  collaborative: boolean;
+  external_urls: ExternalUrl[];
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  owner: User[];
+  public: boolean | null;
+  snapshot_id: string;
+  tracks: Endpoint;
+  type: string;
+  uri: string;
 }

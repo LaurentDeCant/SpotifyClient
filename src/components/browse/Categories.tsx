@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Category } from "../types/browse";
-import { State } from "../reducers";
-import { selectCategories } from "../reducers/browse";
-import { getCategories } from "../actions/browse";
+import { Category } from "../../types/browse";
+import { State } from "../../reducers";
+import { selectCategories } from "../../reducers/browse";
+import { getCategories } from "../../actions/browse";
 import Tiles from "./Tiles";
 
 interface Props {
@@ -30,15 +30,15 @@ class Categories extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapState = (state: State) => ({
   categories: selectCategories(state)
 });
 
-const mapDispatchToProps = {
+const mapDispatch = {
   getCategories: getCategories
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(Categories);

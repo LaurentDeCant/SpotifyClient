@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { Album } from "../types/browse";
-import { State } from "../reducers";
-import { selectNewReleases } from "../reducers/browse";
-import { getNewReleases } from "../actions/browse";
+import { Album } from "../../types/browse";
+import { State } from "../../reducers";
+import { selectNewReleases } from "../../reducers/browse";
+import { getNewReleases } from "../../actions/browse";
 import Tiles from "./Tiles";
 
 interface Props {
@@ -31,15 +31,15 @@ class NewReleases extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapState = (state: State) => ({
   newReleases: selectNewReleases(state)
 });
 
-const mapDispatchToProps = {
+const mapDispatch = {
   getNewReleases: getNewReleases
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(NewReleases);

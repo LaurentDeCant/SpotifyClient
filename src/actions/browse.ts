@@ -1,17 +1,19 @@
 import { Action, Dispatch } from "redux";
-import { Category, Album } from "../types/browse";
+import { Category, Album, Playlist } from "../types/browse";
 import { authorizedFetch } from "../helpers/authorization";
+import PayloadAction from "./types";
 
 export enum ActionType {
   RequestCategories = "REQUEST_CATEGORIES",
   ReceiveCategories = "RECEIVE_CATEGORIES",
   RequestNewReleases = "REQUEST_NEW_RELEASES",
-  ReceiveNewReleases = "RECEIVE_NEW_RELEASES"
+  ReceiveNewReleases = "RECEIVE_NEW_RELEASES",
+  RequestFeaturedPlaylists = "REQUEST_FEATURED_PLAYLISTS",
+  ReceiveFeaturedPlaylists = "RECEIVE_FEATURED_PLAYLISTS"
 }
 
-export interface RequestCategoriesAction extends Action {
-  type: ActionType.RequestCategories;
-}
+export interface RequestCategoriesAction
+  extends Action<ActionType.RequestCategories> {}
 
 function requestCategories(): RequestCategoriesAction {
   return {
@@ -19,10 +21,8 @@ function requestCategories(): RequestCategoriesAction {
   };
 }
 
-export interface ReceiveCategoriesAction extends Action {
-  type: ActionType.ReceiveCategories;
-  payload: Category[];
-}
+export interface ReceiveCategoriesAction
+  extends PayloadAction<ActionType.ReceiveCategories, Category[]> {}
 
 function receiveCategories(categories: Category[]): ReceiveCategoriesAction {
   return {
@@ -43,19 +43,16 @@ export function getCategories() {
   };
 }
 
-export interface RequestNewReleasesAction extends Action {
-  type: ActionType.RequestNewReleases;
-}
+export interface RequestNewReleasesAction
+  extends Action<ActionType.RequestNewReleases> {}
 
 function requestNewReleases(): RequestNewReleasesAction {
   return {
     type: ActionType.RequestNewReleases
   };
 }
-export interface ReceiveNewReleasesAction extends Action {
-  type: ActionType.ReceiveNewReleases;
-  payload: Album[];
-}
+export interface ReceiveNewReleasesAction
+  extends PayloadAction<ActionType.ReceiveNewReleases, Album[]> {}
 
 function receiveNewReleases(newReleases: Album[]): ReceiveNewReleasesAction {
   return {
@@ -65,7 +62,6 @@ function receiveNewReleases(newReleases: Album[]): ReceiveNewReleasesAction {
 }
 
 export function getNewReleases() {
-  console.log("getNewReleases");
   return async (dispatch: Dispatch) => {
     dispatch(requestNewReleases());
     const response = await authorizedFetch(
@@ -74,5 +70,38 @@ export function getNewReleases() {
     const json = await response.json();
     const items = json.albums ? json.albums.items : [];
     dispatch(receiveNewReleases(items));
+  };
+}
+
+export interface RequestFeaturedPlaylistsAction
+  extends Action<ActionType.RequestFeaturedPlaylists> {}
+
+function requestFeaturedPlaylists(): RequestFeaturedPlaylistsAction {
+  return {
+    type: ActionType.RequestFeaturedPlaylists
+  };
+}
+
+export interface ReceiveFeaturedPlaylistsAction
+  extends PayloadAction<ActionType.ReceiveFeaturedPlaylists, Playlist[]> {}
+
+function receiveFeaturedPlaylists(
+  featuredPlaylists: Playlist[]
+): ReceiveFeaturedPlaylistsAction {
+  return {
+    type: ActionType.ReceiveFeaturedPlaylists,
+    payload: featuredPlaylists
+  };
+}
+
+export function getFeaturedPlaylists() {
+  return async (dispatch: Dispatch) => {
+    dispatch(requestFeaturedPlaylists());
+    const response = await authorizedFetch(
+      `${process.env.REACT_APP_BASE_URL}/browse/featured-playlists`
+    );
+    const json = await response.json();
+    const items = json.playlists ? json.playlists.items : [];
+    dispatch(receiveFeaturedPlaylists(items));
   };
 }

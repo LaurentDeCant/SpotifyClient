@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
-import Browse from "./Browse";
+import Browse from "./browse/Browse";
 import Search from "./Search";
 
 const Wrapper = styled.div`

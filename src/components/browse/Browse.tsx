@@ -9,6 +9,7 @@ import {
 import styled from "styled-components";
 import Categories from "./Categories";
 import NewReleases from "./NewReleases";
+import FeaturedPlaylists from "./FeaturedPlaylists";
 
 const Wrapper = styled.div`
   height: calc(100% - 50px);
@@ -49,7 +50,7 @@ const StyledNavLink = styled(NavLink)`
     left: 50%;
     position: absolute;
     transform: translate(-50%, 0);
-    width: 50px;
+    width: 25px;
   }
 `;
 
@@ -70,7 +71,7 @@ class Browse extends Component<RouteComponentProps> {
       {
         url: "/featured-playist",
         label: "Featured Playlists",
-        component: undefined
+        component: FeaturedPlaylists
       }
     ];
 

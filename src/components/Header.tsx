@@ -76,17 +76,17 @@ class Header extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
+const mapState = (state: State) => ({
   isAuthorized: isAuthorized(state),
   userProfile: selectUserProfile(state)
 });
 
-const mapDispatchToProps = {
+const mapDispatch = {
   getAuthorization: getAuthorization,
   getUserProfile: getUserProfile
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapState,
+  mapDispatch
 )(Header);
