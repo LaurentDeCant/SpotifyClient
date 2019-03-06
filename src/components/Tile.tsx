@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 interface Props {
   image: string;
-  text: string;
+  label: string;
   onClick: () => void;
 }
 
@@ -20,6 +20,7 @@ const Button = styled.button`
     height: 100%;
     position: absolute;
     width: 100%;
+    z-index: 1;
   }
 
   &:active::before {
@@ -32,13 +33,16 @@ const Image = styled.img`
   width: 200px;
 `;
 
-const Text = styled.span`
-  bottom: 25%;
-  color: ${props => props.theme.foreground.default}
+const Label = styled.span`
+  background: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  color: ${props => props.theme.foreground.default};
   font-size: 20px;
   left: 50%;
+  padding: 10px;
   position: absolute;
   transform: translate(-50%, 0);
+  width: calc(100% - 20px);
 `;
 
 class Tile extends Component<Props> {
@@ -47,12 +51,12 @@ class Tile extends Component<Props> {
   };
 
   render() {
-    const { image, text } = this.props;
+    const { image, label } = this.props;
 
     return (
       <Button onClick={this.handleClick}>
         <Image src={image} />
-        <Text>{text}</Text>
+        <Label>{label}</Label>
       </Button>
     );
   }

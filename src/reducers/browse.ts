@@ -1,13 +1,20 @@
-import Categories, { Category } from "../types/browse";
+import { Category, Album } from "../types/browse";
 import createReducer from "../helpers/createReducer";
-import { ActionType, ReceiveCategoriesAction } from "../actions/browse";
+import {
+  ActionType,
+  ReceiveCategoriesAction,
+  ReceiveNewReleasesAction
+} from "../actions/browse";
+import { State as CombinedState } from "./index";
 
 export interface State {
-  categories?: Categories;
+  categories: Category[];
+  newReleases: Album[];
 }
 
 const initialState: State = {
-  categories: undefined
+  categories: [],
+  newReleases: []
 };
 
 export default createReducer(initialState, {
@@ -17,10 +24,20 @@ export default createReducer(initialState, {
   ) => ({
     ...state,
     categories: action.payload
+  }),
+  [ActionType.ReceiveNewReleases]: (
+    state: State,
+    action: ReceiveNewReleasesAction
+  ) => ({
+    ...state,
+    newReleases: action.payload
   })
 });
 
-export function selectCategories(state: { browse: State }): Category[] {
-  const categories = state.browse.categories;
-  return categories ? categories.items : [];
+export function selectCategories(state: CombinedState): Category[] {
+  return state.browse.categories;
+}
+
+export function selectNewReleases(state: CombinedState): Album[] {
+  return state.browse.newReleases;
 }

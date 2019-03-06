@@ -1,30 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { Category } from "../types/browse";
 import { State } from "../reducers";
 import { selectCategories } from "../reducers/browse";
 import { getCategories } from "../actions/browse";
-import Tile from "./Tile";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import Tiles from "./Tiles";
 
-interface Props extends RouteComponentProps {
+interface Props {
   categories: Category[];
   getCategories: () => void;
 }
-
-const StyledList = styled.ul`
-  align-content: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: -10px;
-`;
-
-const StyledItem = styled.li`
-  display: block;
-  margin: 10px;
-`;
 
 class Categories extends Component<Props> {
   componentDidMount() {
@@ -35,20 +20,13 @@ class Categories extends Component<Props> {
 
   render() {
     const { categories } = this.props;
+    const items = categories.map(category => ({
+      id: category.id,
+      image: category.icons[0].url,
+      label: category.name
+    }));
 
-    return (
-      <StyledList>
-        {categories.map(category => (
-          <StyledItem key={category.id}>
-            <Tile
-              image={category.icons[0].url}
-              text={category.name}
-              onClick={this.handleClick}
-            />
-          </StyledItem>
-        ))}
-      </StyledList>
-    );
+    return <Tiles items={items} />;
   }
 }
 
@@ -60,9 +38,7 @@ const mapDispatchToProps = {
   getCategories: getCategories
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Categories)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Categories);

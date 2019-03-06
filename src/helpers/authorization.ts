@@ -10,28 +10,26 @@ const TOKEN_TYPE = "tokenType";
 const EXPIRES_AT = "expiresAt";
 
 function authorize(): Promise<any> {
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const handleStorage = (event: StorageEvent) => {
       if (event.key === ACCESS_TOKEN) {
-        window.removeEventListener("storage", handleStorage);
+        removeEventListener("storage", handleStorage);
         resolve();
       }
     };
-    window.addEventListener("storage", handleStorage);
-    window.open(URL, undefined, "width=auto,height=auto");
+    addEventListener("storage", handleStorage);
+    location.assign(URL);
   });
-  return promise;
 }
 
 function checkRedirection(): void {
-  const match = window.location.hash.match(REGEX);
+  const match = location.hash.match(REGEX);
   if (match) {
     localStorage[ACCESS_TOKEN] = match[1];
     localStorage[TOKEN_TYPE] = match[2];
     const date = new Date();
     date.setSeconds(date.getSeconds() + parseInt(match[3]));
     localStorage[EXPIRES_AT] = date.toString();
-    window.close();
   }
 }
 

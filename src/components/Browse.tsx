@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import Categories from "./Categories";
+import NewReleases from "./NewReleases";
 
 const Wrapper = styled.div`
   height: calc(100% - 50px);
@@ -55,29 +56,45 @@ const StyledNavLink = styled(NavLink)`
 class Browse extends Component<RouteComponentProps> {
   render() {
     const { match } = this.props;
+    const links = [
+      {
+        url: "/categories",
+        label: "Categories",
+        component: Categories
+      },
+      {
+        url: "/new-releases",
+        label: "New Releases",
+        component: NewReleases
+      },
+      {
+        url: "/featured-playist",
+        label: "Featured Playlists",
+        component: undefined
+      }
+    ];
 
     return (
       <Wrapper>
         <StyledList>
-          <li>
-            <StyledNavLink to={`${match.url}/categories`}>
-              Categories
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to={`${match.url}/featured-playist`}>
-              Featured Playlists
-            </StyledNavLink>
-          </li>
-          <li>
-            <StyledNavLink to={`${match.url}/new-releases`}>
-              New Releases
-            </StyledNavLink>
-          </li>
+          {links.map(link => (
+            <li key={link.url}>
+              <StyledNavLink to={`${match.url}${link.url}`}>
+                {link.label}
+              </StyledNavLink>
+            </li>
+          ))}
         </StyledList>
 
         <Redirect from={`${match.path}`} to={`${match.path}/categories`} />
-        <Route path={`${match.path}/categories`} component={Categories} />
+
+        {links.map(link => (
+          <Route
+            key={link.url}
+            path={`${match.path}${link.url}`}
+            component={link.component}
+          />
+        ))}
       </Wrapper>
     );
   }
