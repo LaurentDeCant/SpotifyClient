@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
+import DefaultRoute from "./DefaultRoute";
 import Browse from "./browse/Browse";
 import Search from "./Search";
+import PlaylistTracks from "./PlaylistTracks";
+import AlbumTracks from "./AlbumTracks";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,8 +23,9 @@ const Body = styled.div`
 
 const Routes = styled.div`
   flex: 1;
-  height: 100%;
+  height: calc(100% - 50px);
   overflow-y: auto;
+  padding: 25px;
 `;
 
 class App extends Component {
@@ -33,9 +37,14 @@ class App extends Component {
           <Body>
             <Menu />
             <Routes>
-              <Redirect from="/" to="/browse" />
+              <DefaultRoute from="/" to="/browse" />
               <Route path="/browse" component={Browse} />
               <Route path="/search" component={Search} />
+              <Route
+                path={"/playlists/:playlistId/tracks"}
+                component={PlaylistTracks}
+              />
+              <Route path={"/albums/:albumId/tracks"} component={AlbumTracks} />
             </Routes>
           </Body>
         </Wrapper>

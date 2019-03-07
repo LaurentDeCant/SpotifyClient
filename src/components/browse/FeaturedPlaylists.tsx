@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Playlist } from "../../types/browse";
 import { State } from "../../reducers";
 import { selectFeaturedPlaylists } from "../../reducers/browse";
 import { getFeaturedPlaylists } from "../../actions/browse";
-import Tiles from "./Tiles";
+import Covers from "./Covers";
 
-interface Props {
+interface Props extends RouteComponentProps {
   playlists: Playlist[];
   getPlaylists: () => void;
 }
@@ -16,6 +17,11 @@ class FeaturedPlaylists extends Component<Props> {
     this.props.getPlaylists();
   }
 
+  handleClick = (playlistId: string) => {
+    const { history } = this.props;
+    history.push(`/playlists/${playlistId}/tracks`);
+  };
+
   render() {
     const { playlists } = this.props;
     const items = playlists.map(playlists => ({
@@ -24,7 +30,7 @@ class FeaturedPlaylists extends Component<Props> {
       label: playlists.name
     }));
 
-    return <Tiles items={items} />;
+    return <Covers items={items} onClick={this.handleClick} />;
   }
 }
 
@@ -36,7 +42,9 @@ const mapDispatch = {
   getPlaylists: getFeaturedPlaylists
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(FeaturedPlaylists);
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(FeaturedPlaylists)
+);

@@ -39,7 +39,7 @@ const StyledIcon = styled(Icon)`
   margin-right: 15px;
 `;
 
-const Menu = (props: any) => {
+const Menu = () => {
   return (
     <Wrapper>
       <li>

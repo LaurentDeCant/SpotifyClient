@@ -64,6 +64,13 @@ export function selectCategories(state: CombinedState): Category[] {
   return state.browse.categories;
 }
 
+export function selectCategory(
+  state: CombinedState,
+  categoryId: string
+): Category | undefined {
+  return state.browse.categories.find(category => category.id === categoryId);
+}
+
 export function selectNewReleases(state: CombinedState): Album[] {
   return state.browse.newReleases;
 }

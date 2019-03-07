@@ -1,17 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router";
-import { Playlist } from "../../types/browse";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import styled from "styled-components";
+import { Category, Playlist } from "../../types/browse";
 import { State } from "../../reducers";
-import { selectCategoryPlaylist } from "../../reducers/browse";
+import { selectCategory, selectCategoryPlaylist } from "../../reducers/browse";
 import { getCategoryPlaylists } from "../../actions/browse";
-import Tiles from "./Tiles";
+import Covers from "./Covers";
 
 interface Params {
-  id: string;
+  categoryId: string;
 }
 
+const Title = styled.h1`
+  text-align: center;
+  font-size: 25px;
+  font-weight: ${props => props.theme.font.bold};
+  margin: 0 0 25px 0;
+`;
+
 interface Props extends RouteComponentProps<Params> {
+  category?: Category;
   playlists: Playlist[];
   getPlaylists: (id: string) => void;
 }
@@ -19,25 +28,37 @@ interface Props extends RouteComponentProps<Params> {
 class CategoryPlaylists extends Component<Props> {
   componentDidMount() {
     const { match } = this.props;
-    this.props.getPlaylists(match.params.id);
+    this.props.getPlaylists(match.params.categoryId);
   }
 
+  handleClick = (playlistId: string) => {
+    const { history } = this.props;
+    history.push(`/playlists/${playlistId}/tracks`);
+  };
+
   render() {
-    const { playlists } = this.props;
+    const { category, playlists } = this.props;
     const items = playlists.map(playlists => ({
       id: playlists.id,
       image: playlists.images[0].url,
       label: playlists.name
     }));
 
-    return <Tiles items={items} />;
+    return (
+      <div>
+        <Title>{category && category.name}</Title>
+        <Covers items={items} onClick={this.handleClick} />
+      </div>
+    );
   }
 }
 
 const mapState = (state: State, ownProps: Props) => {
   const { match } = ownProps;
+  const categoryId = match.params.categoryId;
   return {
-    playlists: selectCategoryPlaylist(state, match.params.id)
+    category: selectCategory(state, categoryId),
+    playlists: selectCategoryPlaylist(state, categoryId)
   };
 };
 

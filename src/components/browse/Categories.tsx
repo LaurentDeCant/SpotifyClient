@@ -5,7 +5,7 @@ import { Category } from "../../types/browse";
 import { State } from "../../reducers";
 import { selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
-import Tiles from "./Tiles";
+import Covers from "./Covers";
 
 interface Props extends RouteComponentProps {
   categories: Category[];
@@ -30,7 +30,7 @@ class Categories extends Component<Props> {
       label: category.name
     }));
 
-    return <Tiles items={items} onClick={this.handleClick} />;
+    return <Covers items={items} onClick={this.handleClick} />;
   }
 }
 

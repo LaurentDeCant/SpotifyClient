@@ -7,7 +7,7 @@ interface Props {
     image: string;
     label: string;
   }[];
-  onClick?: (id: string) => void;
+  onClick: (id: string) => void;
 }
 
 const StyledList = styled.ul`
@@ -61,7 +61,7 @@ const Label = styled.span`
   width: calc(100% - 20px);
 `;
 
-class Tiles extends Component<Props> {
+class Covers extends Component<Props> {
   handleClick(id: string) {
     const { onClick } = this.props;
     onClick && onClick(id);
@@ -85,4 +85,4 @@ class Tiles extends Component<Props> {
   }
 }
 
-export default Tiles;
+export default Covers;

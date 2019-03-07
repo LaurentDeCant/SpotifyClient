@@ -2,20 +2,18 @@ import React, { Component } from "react";
 import {
   RouteComponentProps,
   NavLink,
-  Redirect,
-  Switch,
   Route,
   withRouter
 } from "react-router-dom";
 import styled from "styled-components";
+import DefaultRoute from "../DefaultRoute";
 import Categories from "./Categories";
 import CategoryPlaylists from "./CategoryPlaylists";
 import NewReleases from "./NewReleases";
 import FeaturedPlaylists from "./FeaturedPlaylists";
 
 const Wrapper = styled.div`
-  height: calc(100% - 50px);
-  padding: 25px;
+  height: 100%;
 `;
 
 const StyledList = styled.ul`
@@ -23,7 +21,7 @@ const StyledList = styled.ul`
   display: flex;
   flex-flow: row;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -86,24 +84,17 @@ class Browse extends Component<RouteComponentProps> {
           ))}
         </StyledList>
 
-        <Redirect from={`${match.path}`} to={`${match.path}/categories`} />
-
-        <Switch>
-          <Route
-            exact
-            path={`${match.path}/categories`}
-            component={Categories}
-          />
-          <Route
-            path={`${match.path}/categories/:id/playlists`}
-            component={CategoryPlaylists}
-          />
-          <Route path={`${match.path}/new-releases`} component={NewReleases} />
-          <Route
-            path={`${match.path}/featured-playist`}
-            component={FeaturedPlaylists}
-          />
-        </Switch>
+        <DefaultRoute from={`${match.path}`} to={`${match.path}/categories`} />
+        <Route exact path={`${match.path}/categories`} component={Categories} />
+        <Route
+          path={`${match.path}/categories/:categoryId/playlists`}
+          component={CategoryPlaylists}
+        />
+        <Route path={`${match.path}/new-releases`} component={NewReleases} />
+        <Route
+          path={`${match.path}/featured-playist`}
+          component={FeaturedPlaylists}
+        />
       </Wrapper>
     );
   }

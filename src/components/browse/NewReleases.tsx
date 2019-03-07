@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Album } from "../../types/browse";
 import { State } from "../../reducers";
 import { selectNewReleases } from "../../reducers/browse";
 import { getNewReleases } from "../../actions/browse";
-import Tiles from "./Tiles";
+import Covers from "./Covers";
 
-interface Props {
+interface Props extends RouteComponentProps {
   albums: Album[];
   getAlbums: () => void;
 }
@@ -16,7 +17,10 @@ class NewReleases extends Component<Props> {
     this.props.getAlbums();
   }
 
-  handleClick() {}
+  handleClick = (albumId: string) => {
+    const { history } = this.props;
+    history.push(`/albums/${albumId}/tracks`);
+  };
 
   render() {
     const { albums } = this.props;
@@ -26,7 +30,7 @@ class NewReleases extends Component<Props> {
       label: album.name
     }));
 
-    return <Tiles items={items} />;
+    return <Covers items={items} onClick={this.handleClick} />;
   }
 }
 
@@ -38,7 +42,9 @@ const mapDispatch = {
   getAlbums: getNewReleases
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(NewReleases);
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(NewReleases)
+);
