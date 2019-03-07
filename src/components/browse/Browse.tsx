@@ -3,11 +3,13 @@ import {
   RouteComponentProps,
   NavLink,
   Redirect,
+  Switch,
   Route,
   withRouter
 } from "react-router-dom";
 import styled from "styled-components";
 import Categories from "./Categories";
+import CategoryPlaylists from "./CategoryPlaylists";
 import NewReleases from "./NewReleases";
 import FeaturedPlaylists from "./FeaturedPlaylists";
 
@@ -60,18 +62,15 @@ class Browse extends Component<RouteComponentProps> {
     const links = [
       {
         url: "/categories",
-        label: "Categories",
-        component: Categories
+        label: "Categories"
       },
       {
         url: "/new-releases",
-        label: "New Releases",
-        component: NewReleases
+        label: "New Releases"
       },
       {
         url: "/featured-playist",
-        label: "Featured Playlists",
-        component: FeaturedPlaylists
+        label: "Featured Playlists"
       }
     ];
 
@@ -89,13 +88,22 @@ class Browse extends Component<RouteComponentProps> {
 
         <Redirect from={`${match.path}`} to={`${match.path}/categories`} />
 
-        {links.map(link => (
+        <Switch>
           <Route
-            key={link.url}
-            path={`${match.path}${link.url}`}
-            component={link.component}
+            exact
+            path={`${match.path}/categories`}
+            component={Categories}
           />
-        ))}
+          <Route
+            path={`${match.path}/categories/:id/playlists`}
+            component={CategoryPlaylists}
+          />
+          <Route path={`${match.path}/new-releases`} component={NewReleases} />
+          <Route
+            path={`${match.path}/featured-playist`}
+            component={FeaturedPlaylists}
+          />
+        </Switch>
       </Wrapper>
     );
   }

@@ -9,7 +9,9 @@ export enum ActionType {
   RequestNewReleases = "REQUEST_NEW_RELEASES",
   ReceiveNewReleases = "RECEIVE_NEW_RELEASES",
   RequestFeaturedPlaylists = "REQUEST_FEATURED_PLAYLISTS",
-  ReceiveFeaturedPlaylists = "RECEIVE_FEATURED_PLAYLISTS"
+  ReceiveFeaturedPlaylists = "RECEIVE_FEATURED_PLAYLISTS",
+  RequestCategoryPlaylists = "REQUEST_CATEGORY_PLAYLISTS",
+  ReceiveCategoryPlaylists = "RECEIVE_CATEGORY_PLAYLISTS"
 }
 
 export interface RequestCategoriesAction
@@ -54,10 +56,10 @@ function requestNewReleases(): RequestNewReleasesAction {
 export interface ReceiveNewReleasesAction
   extends PayloadAction<ActionType.ReceiveNewReleases, Album[]> {}
 
-function receiveNewReleases(newReleases: Album[]): ReceiveNewReleasesAction {
+function receiveNewReleases(albums: Album[]): ReceiveNewReleasesAction {
   return {
     type: ActionType.ReceiveNewReleases,
-    payload: newReleases
+    payload: albums
   };
 }
 
@@ -86,11 +88,11 @@ export interface ReceiveFeaturedPlaylistsAction
   extends PayloadAction<ActionType.ReceiveFeaturedPlaylists, Playlist[]> {}
 
 function receiveFeaturedPlaylists(
-  featuredPlaylists: Playlist[]
+  playlists: Playlist[]
 ): ReceiveFeaturedPlaylistsAction {
   return {
     type: ActionType.ReceiveFeaturedPlaylists,
-    payload: featuredPlaylists
+    payload: playlists
   };
 }
 
@@ -103,5 +105,44 @@ export function getFeaturedPlaylists() {
     const json = await response.json();
     const items = json.playlists ? json.playlists.items : [];
     dispatch(receiveFeaturedPlaylists(items));
+  };
+}
+
+export interface RequestCategoryPlaylistsAction
+  extends Action<ActionType.RequestCategoryPlaylists> {}
+
+function requestCategoryPlaylists(): RequestCategoryPlaylistsAction {
+  return {
+    type: ActionType.RequestCategoryPlaylists
+  };
+}
+
+export interface ReceiveCategoryPlaylistsAction
+  extends PayloadAction<
+    ActionType.ReceiveCategoryPlaylists,
+    { categoryId: string; playlists: Playlist[] }
+  > {}
+
+function receiveCategoryPlaylists(
+  categoryId: string,
+  playlists: Playlist[]
+): ReceiveCategoryPlaylistsAction {
+  return {
+    type: ActionType.ReceiveCategoryPlaylists,
+    payload: { categoryId, playlists }
+  };
+}
+
+export function getCategoryPlaylists(categoryId: string) {
+  return async (dispatch: Dispatch) => {
+    dispatch(requestCategoryPlaylists());
+    const response = await authorizedFetch(
+      `${
+        process.env.REACT_APP_BASE_URL
+      }/browse/categories/${categoryId}/playlists`
+    );
+    const json = await response.json();
+    const items = json.playlists ? json.playlists.items : [];
+    dispatch(receiveCategoryPlaylists(categoryId, items));
   };
 }

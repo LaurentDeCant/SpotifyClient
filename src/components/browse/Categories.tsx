@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Category } from "../../types/browse";
 import { State } from "../../reducers";
 import { selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
 import Tiles from "./Tiles";
 
-interface Props {
+interface Props extends RouteComponentProps {
   categories: Category[];
   getCategories: () => void;
 }
@@ -16,7 +17,10 @@ class Categories extends Component<Props> {
     this.props.getCategories();
   }
 
-  handleClick() {}
+  handleClick = (categoryId: string) => {
+    const { history, match } = this.props;
+    history.push(`${match.path}/${categoryId}/playlists`);
+  };
 
   render() {
     const { categories } = this.props;
@@ -26,7 +30,7 @@ class Categories extends Component<Props> {
       label: category.name
     }));
 
-    return <Tiles items={items} />;
+    return <Tiles items={items} onClick={this.handleClick} />;
   }
 }
 
@@ -38,7 +42,9 @@ const mapDispatch = {
   getCategories: getCategories
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Categories);
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Categories)
+);

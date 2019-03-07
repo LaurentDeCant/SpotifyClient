@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { Album } from "../../types/browse";
 import { State } from "../../reducers";
 import { selectNewReleases } from "../../reducers/browse";
@@ -8,23 +7,23 @@ import { getNewReleases } from "../../actions/browse";
 import Tiles from "./Tiles";
 
 interface Props {
-  newReleases: Album[];
-  getNewReleases: () => void;
+  albums: Album[];
+  getAlbums: () => void;
 }
 
 class NewReleases extends Component<Props> {
   componentDidMount() {
-    this.props.getNewReleases();
+    this.props.getAlbums();
   }
 
   handleClick() {}
 
   render() {
-    const { newReleases } = this.props;
-    const items = newReleases.map(newRelease => ({
-      id: newRelease.id,
-      image: newRelease.images[0].url,
-      label: newRelease.name
+    const { albums } = this.props;
+    const items = albums.map(album => ({
+      id: album.id,
+      image: album.images[0].url,
+      label: album.name
     }));
 
     return <Tiles items={items} />;
@@ -32,11 +31,11 @@ class NewReleases extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  newReleases: selectNewReleases(state)
+  albums: selectNewReleases(state)
 });
 
 const mapDispatch = {
-  getNewReleases: getNewReleases
+  getAlbums: getNewReleases
 };
 
 export default connect(

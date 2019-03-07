@@ -7,21 +7,21 @@ import { getFeaturedPlaylists } from "../../actions/browse";
 import Tiles from "./Tiles";
 
 interface Props {
-  featuredPlaylists: Playlist[];
-  getFeaturedPlaylists: () => void;
+  playlists: Playlist[];
+  getPlaylists: () => void;
 }
 
 class FeaturedPlaylists extends Component<Props> {
   componentDidMount() {
-    this.props.getFeaturedPlaylists();
+    this.props.getPlaylists();
   }
 
   render() {
-    const { featuredPlaylists } = this.props;
-    const items = featuredPlaylists.map(featuredPlaylist => ({
-      id: featuredPlaylist.id,
-      image: featuredPlaylist.images[0].url,
-      label: featuredPlaylist.name
+    const { playlists } = this.props;
+    const items = playlists.map(playlists => ({
+      id: playlists.id,
+      image: playlists.images[0].url,
+      label: playlists.name
     }));
 
     return <Tiles items={items} />;
@@ -29,11 +29,11 @@ class FeaturedPlaylists extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  featuredPlaylists: selectFeaturedPlaylists(state)
+  playlists: selectFeaturedPlaylists(state)
 });
 
 const mapDispatch = {
-  getFeaturedPlaylists: getFeaturedPlaylists
+  getPlaylists: getFeaturedPlaylists
 };
 
 export default connect(
