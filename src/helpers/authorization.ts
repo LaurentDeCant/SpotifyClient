@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch } from "redux";
 import { receiveAuthorization } from "../actions/authorization";
 
 const URL = `https://accounts.spotify.com/authorize?client_id=${
@@ -33,7 +33,7 @@ function checkRedirection(): void {
   }
 }
 
-function initAuthorization(dispatch: Dispatch<any>): void {
+function initAuthorization(dispatch: Dispatch): void {
   if (
     !!localStorage[ACCESS_TOKEN] &&
     Date.parse(localStorage[EXPIRES_AT]) > Date.now()
@@ -45,6 +45,7 @@ function initAuthorization(dispatch: Dispatch<any>): void {
 function authorizedFetch(url: string): Promise<Response> {
   const tokenType = localStorage[TOKEN_TYPE];
   const accessToken = localStorage[ACCESS_TOKEN];
+
   return fetch(url, {
     headers: {
       Authorization: `${tokenType} ${accessToken}`

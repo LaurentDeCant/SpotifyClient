@@ -1,6 +1,6 @@
 import createReducer from "../helpers/createReducer";
 import { PlaylistTrack, Track } from "../types";
-import { ActionType, ReceivePlaylistTracksAction } from "../actions/playlists";
+import { ActionType, PlaylistTracksSuccessAction } from "../actions/playlists";
 import { State as CombinedState } from ".";
 
 export interface State {
@@ -12,9 +12,9 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.ReceivePlaylistTracks]: (
+  [ActionType.PlaylistTracksSuccess]: (
     state: State,
-    action: ReceivePlaylistTracksAction
+    action: PlaylistTracksSuccessAction
   ) => ({
     ...state,
     playlistTracks: action.payload
@@ -22,7 +22,7 @@ export default createReducer(initialState, {
 });
 
 export function selectPlaylistTracks(state: CombinedState): Track[] {
-  return state.playlists.playlistTracks.map(
-    playlistTrack => playlistTrack.track
-  );
+  return state.playlists.playlistTracks
+    .filter(playlistTrack => playlistTrack.track)
+    .map(playlistTrack => playlistTrack.track);
 }

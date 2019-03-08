@@ -102,6 +102,7 @@ class Tracks extends Component<Props> {
 
   render() {
     const { tracks } = this.props;
+
     return (
       <List>
         {tracks.map(track => (

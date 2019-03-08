@@ -1,6 +1,6 @@
 import createReducer from "../helpers/createReducer";
 import { Track } from "../types";
-import { ActionType, ReceiveAlbumTracksAction } from "../actions/albums";
+import { ActionType, AlbumTracksSuccessAction } from "../actions/albums";
 import { State as CombinedState } from ".";
 
 export interface State {
@@ -12,9 +12,9 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.ReceiveAlbumTracks]: (
+  [ActionType.AlbumTracksSuccess]: (
     state: State,
-    action: ReceiveAlbumTracksAction
+    action: AlbumTracksSuccessAction
   ) => ({
     ...state,
     tracks: action.payload

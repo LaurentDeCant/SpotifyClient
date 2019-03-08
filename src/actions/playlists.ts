@@ -1,41 +1,29 @@
-import { Action, Dispatch } from "redux";
+import { Action } from "redux";
 import { PlaylistTrack } from "../types";
-import PayloadAction from "./types";
-import { authorizedFetch } from "../helpers/authorization";
+import { FetchDispatch, PayloadAction } from "./types";
 
 export enum ActionType {
-  RequestPlaylistTracks = "REQUEST_PLAYLIST_TRACKS",
-  ReceivePlaylistTracks = "RECEIVE_PLAYLIST_TRACKS"
+  PlaylistTracksRequest = "PLAYLIST_TRACKS_REQUEST",
+  PlaylistTracksSuccess = "PLAYLIST_TRACKS_SUCCESS",
+  PlaylistTracksFailure = "PLAYLIST_TRACKS_FAILURE"
 }
 
-export interface RequestPlaylistTracksAction
-  extends Action<ActionType.RequestPlaylistTracks> {}
+export interface PlaylistTracksRequestAction
+  extends Action<ActionType.PlaylistTracksRequest> {}
 
-function requestPlaylistTracks(): RequestPlaylistTracksAction {
-  return {
-    type: ActionType.RequestPlaylistTracks
-  };
-}
-
-export interface ReceivePlaylistTracksAction
-  extends PayloadAction<ActionType.ReceivePlaylistTracks, PlaylistTrack[]> {}
-
-function receivePlaylistTracks(
-  tracks: PlaylistTrack[]
-): ReceivePlaylistTracksAction {
-  return {
-    type: ActionType.ReceivePlaylistTracks,
-    payload: tracks
-  };
-}
+export interface PlaylistTracksSuccessAction
+  extends PayloadAction<ActionType.PlaylistTracksSuccess, PlaylistTrack[]> {}
 
 export function getPlaylistTracks(playlistId: string) {
-  return async (dispatch: Dispatch) => {
-    dispatch(requestPlaylistTracks());
-    const response = await authorizedFetch(
-      `${process.env.REACT_APP_BASE_URL}/playlists/${playlistId}/tracks`
-    );
-    const json = await response.json();
-    dispatch(receivePlaylistTracks(json.items));
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.PlaylistTracksRequest,
+        ActionType.PlaylistTracksSuccess,
+        ActionType.PlaylistTracksFailure
+      ],
+      path: `playlists/${playlistId}/tracks`,
+      select: (object: any) => object.items
+    });
   };
 }

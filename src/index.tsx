@@ -8,12 +8,13 @@ import { ThemeProvider } from "styled-components";
 import rootReducer from "./reducers";
 import App from "./components/App";
 import { checkRedirection, initAuthorization } from "./helpers/authorization";
+import fetchMiddleware from "./middlewares/fetchMiddleware";
 import GlobalStyle, { theme } from "./styles";
 
 checkRedirection();
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(thunkMiddleware))
+  composeWithDevTools(applyMiddleware(thunkMiddleware, fetchMiddleware))
 );
 initAuthorization(store.dispatch);
 

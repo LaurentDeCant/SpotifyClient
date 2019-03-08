@@ -1,6 +1,6 @@
 import createReducer from "../helpers/createReducer";
 import { UserProfile } from "../types";
-import { ActionType, ReceiveUserProfileAction } from "../actions/userProfile";
+import { ActionType, UserProfileSuccessAction } from "../actions/userProfile";
 import { State as CombinedState } from ".";
 
 export interface State {
@@ -12,9 +12,9 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.ReceiveUserProfile]: (
+  [ActionType.UserProfileSuccess]: (
     state: State,
-    action: ReceiveUserProfileAction
+    action: UserProfileSuccessAction
   ) => ({
     ...state,
     userProfile: action.payload

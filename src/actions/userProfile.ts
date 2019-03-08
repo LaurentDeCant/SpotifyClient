@@ -1,41 +1,29 @@
-import { Action, Dispatch } from "redux";
+import { Action } from "redux";
 import { UserProfile } from "../types";
-import PayloadAction from "./types";
-import { authorizedFetch } from "../helpers/authorization";
+import { FetchDispatch, PayloadAction } from "./types";
 
 export enum ActionType {
-  RequestUserProfile = "REQUEST_USER_PROFILE",
-  ReceiveUserProfile = "RECEIVE_USER_PROFILE"
+  UserProfileRequest = "USER_PROFILE_REQUEST",
+  UserProfileSuccess = "USER_PROFILE_SUCCESS",
+  UserProfileFailure = "USER_PROFILE_FAILURE"
 }
 
-export interface RequestUserProfileAction
-  extends Action<ActionType.RequestUserProfile> {}
+export interface UserProfileRequestAction
+  extends Action<ActionType.UserProfileRequest> {}
 
-function requetUserProfile(): RequestUserProfileAction {
-  return {
-    type: ActionType.RequestUserProfile
-  };
-}
-
-export interface ReceiveUserProfileAction
-  extends PayloadAction<ActionType.ReceiveUserProfile, UserProfile> {}
-
-function receiveUserProfile(
-  userProfile: UserProfile
-): ReceiveUserProfileAction {
-  return {
-    type: ActionType.ReceiveUserProfile,
-    payload: userProfile
-  };
-}
+export interface UserProfileSuccessAction
+  extends PayloadAction<ActionType.UserProfileSuccess, UserProfile> {}
 
 export function getUserProfile() {
-  return async (dispatch: Dispatch) => {
-    dispatch(requetUserProfile());
-    const response = await authorizedFetch(
-      `${process.env.REACT_APP_BASE_URL}/me`
-    );
-    const json = await response.json();
-    dispatch(receiveUserProfile(json));
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.UserProfileRequest,
+        ActionType.UserProfileSuccess,
+        ActionType.UserProfileFailure
+      ],
+      path: "me",
+      select: (object: any) => object
+    });
   };
 }

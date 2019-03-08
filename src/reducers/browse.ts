@@ -2,10 +2,10 @@ import { Album, Category, Playlist } from "../types";
 import createReducer from "../helpers/createReducer";
 import {
   ActionType,
-  ReceiveCategoriesAction,
-  ReceiveNewReleasesAction,
-  ReceiveFeaturedPlaylistsAction,
-  ReceiveCategoryPlaylistsAction
+  CategoriesSuccessAction,
+  NewReleasesSuccessAction,
+  FeaturedPlaylistsSuccessAction,
+  CategoryPlaylistsSuccessAction
 } from "../actions/browse";
 import { State as CombinedState } from ".";
 
@@ -24,30 +24,30 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.ReceiveCategories]: (
+  [ActionType.CategoriesSuccess]: (
     state: State,
-    action: ReceiveCategoriesAction
+    action: CategoriesSuccessAction
   ) => ({
     ...state,
     categories: action.payload
   }),
-  [ActionType.ReceiveNewReleases]: (
+  [ActionType.NewReleasesSuccess]: (
     state: State,
-    action: ReceiveNewReleasesAction
+    action: NewReleasesSuccessAction
   ) => ({
     ...state,
     newReleases: action.payload
   }),
-  [ActionType.ReceiveFeaturedPlaylists]: (
+  [ActionType.FeaturedPlaylistsSuccess]: (
     state: State,
-    action: ReceiveFeaturedPlaylistsAction
+    action: FeaturedPlaylistsSuccessAction
   ) => ({
     ...state,
     featuredPlaylists: action.payload
   }),
-  [ActionType.ReceiveCategoryPlaylists]: (
+  [ActionType.CategoryPlaylistsSuccess]: (
     state: State,
-    action: ReceiveCategoryPlaylistsAction
+    action: CategoryPlaylistsSuccessAction
   ) => ({
     ...state,
     categoryPlaylists: action.payload
