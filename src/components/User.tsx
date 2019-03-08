@@ -4,8 +4,8 @@ import { UserProfile } from "../types";
 import Icon, { IconType } from "./Icon";
 
 const Wrapper = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
 `;
 
 const StyledIcon = styled(Icon)`

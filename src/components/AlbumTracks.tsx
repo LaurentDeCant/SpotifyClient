@@ -23,7 +23,6 @@ class AlbumTracks extends Component<Props> {
   }
 
   render() {
-    console.log(this.props);
     const { tracks } = this.props;
 
     return <Tracks tracks={tracks} />;

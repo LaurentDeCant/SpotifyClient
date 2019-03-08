@@ -24,7 +24,6 @@ class PlaylistTracks extends Component<Props> {
 
   render() {
     const { tracks } = this.props;
-    console.log(tracks);
 
     return <Tracks tracks={tracks} />;
   }

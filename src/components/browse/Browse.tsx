@@ -20,6 +20,8 @@ const StyledList = styled.ul`
   align-items: center;
   display: flex;
   flex-flow: row;
+  font-size: ${props => props.theme.font.size.medum};
+  font-weight: ${props => props.theme.font.weight.light};
   justify-content: center;
   margin-bottom: 25px;
 `;
@@ -28,7 +30,6 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   color: ${props => props.theme.foreground.dark};
   display: flex;
-  font-weight: ${props => props.theme.font.light};
   height: 50px;
   justify-content: center;
   padding: 0 25px;

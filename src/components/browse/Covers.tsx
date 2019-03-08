@@ -25,9 +25,11 @@ const StyledItem = styled.li`
 
 const Button = styled.button`
   background: transparent;
+  border-radius: 5px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
+  overflow: hidden;
   position: relative;
 
   &:hover::before {

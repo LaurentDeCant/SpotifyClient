@@ -11,7 +11,6 @@ import AlbumTracks from "./AlbumTracks";
 
 const Wrapper = styled.div`
   display: flex;
-  font-family: "Roboto", sans-serif;
   flex-direction: column;
   height: 100%;
 `;

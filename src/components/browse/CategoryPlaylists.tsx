@@ -14,8 +14,8 @@ interface Params {
 
 const Title = styled.h1`
   text-align: center;
-  font-size: 25px;
-  font-weight: ${props => props.theme.font.bold};
+  font-size: ${props => props.theme.font.size.extraExtraLarge};
+  font-weight: ${props => props.theme.font.weight.bold};
   margin: 0 0 25px 0;
 `;
 

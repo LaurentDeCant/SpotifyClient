@@ -9,9 +9,18 @@ export const theme = {
     active: "rgba(255, 255, 255, 0.2)"
   },
   font: {
-    light: 300,
-    medium: 400,
-    bold: 500
+    size: {
+      small: "12px",
+      medium: "16px",
+      large: "20px",
+      extraLarge: "24px",
+      extraExtraLarge: "34px"
+    },
+    weight: {
+      light: 300,
+      normal: 400,
+      bold: 500
+    }
   },
   foreground: {
     default: "#ffffff",
@@ -33,6 +42,10 @@ export default createGlobalStyle`
   body {
     background: ${theme.background.default}; 
     color: ${theme.foreground.default};
+    font-family: "Roboto", sans-serif;
+    font-size: ${theme.font.size.medium};
+    font-seight: ${theme.font.weight.normal};
+    user-select: none;
   }
 
   a {

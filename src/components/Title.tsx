@@ -6,22 +6,19 @@ import Icon, { IconType } from "./Icon";
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  font-weight: ${props => props.theme.font.bold};
+  font-size: ${props => props.theme.font.size.large};
+  font-weight: ${props => props.theme.font.weight.bold};
 `;
 
 const StyledIcon = styled(Icon)`
   margin-right: 15px;
 `;
 
-const Label = styled(Link)`
-  font-size: 20px;
-`;
-
 const Title = () => {
   return (
     <Wrapper>
       <StyledIcon type={IconType.Wifi} />
-      <Label to="/browse">Spotify</Label>
+      <Link to="/browse">Spotify</Link>
     </Wrapper>
   );
 };

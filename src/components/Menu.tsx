@@ -15,7 +15,6 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   color: ${props => props.theme.foreground.dark};
   display: flex;
-  font: ${props => props.theme.font.normal};
   height: 50px;
   padding: 0 50px;
 
