@@ -1,4 +1,4 @@
-import { Category, Album, Playlist } from "../types/browse";
+import { Album, Category, Playlist } from "../types";
 import createReducer from "../helpers/createReducer";
 import {
   ActionType,
@@ -7,20 +7,20 @@ import {
   ReceiveFeaturedPlaylistsAction,
   ReceiveCategoryPlaylistsAction
 } from "../actions/browse";
-import { State as CombinedState } from "./index";
+import { State as CombinedState } from ".";
 
 export interface State {
   categories: Category[];
   newReleases: Album[];
   featuredPlaylists: Playlist[];
-  categoryPlaylists: { [categoryId: string]: Playlist[] };
+  categoryPlaylists: Playlist[];
 }
 
 const initialState: State = {
   categories: [],
   newReleases: [],
   featuredPlaylists: [],
-  categoryPlaylists: {}
+  categoryPlaylists: []
 };
 
 export default createReducer(initialState, {
@@ -48,16 +48,10 @@ export default createReducer(initialState, {
   [ActionType.ReceiveCategoryPlaylists]: (
     state: State,
     action: ReceiveCategoryPlaylistsAction
-  ) => {
-    const { categoryId, playlists } = action.payload;
-    return {
-      ...state,
-      categoryPlaylists: {
-        ...state.categoryPlaylists,
-        [categoryId]: playlists
-      }
-    };
-  }
+  ) => ({
+    ...state,
+    categoryPlaylists: action.payload
+  })
 });
 
 export function selectCategories(state: CombinedState): Category[] {
@@ -79,9 +73,6 @@ export function selectFeaturedPlaylists(state: CombinedState): Playlist[] {
   return state.browse.featuredPlaylists;
 }
 
-export function selectCategoryPlaylist(
-  state: CombinedState,
-  categoryId: string
-): Playlist[] {
-  return state.browse.categoryPlaylists[categoryId] || [];
+export function selectCategoryPlaylists(state: CombinedState): Playlist[] {
+  return state.browse.categoryPlaylists;
 }

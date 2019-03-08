@@ -1,32 +1,30 @@
 import { Action, Dispatch } from "redux";
-import UserProfile from "../types/userProfile";
+import { UserProfile } from "../types";
+import PayloadAction from "./types";
 import { authorizedFetch } from "../helpers/authorization";
 
 export enum ActionType {
-  REQUEST_USER_PROFILE = "REQUEST_USER_PROFILE",
-  RECEIVE_USER_PROFILE = "RECEIVE_USER_PROFILE"
+  RequestUserProfile = "REQUEST_USER_PROFILE",
+  ReceiveUserProfile = "RECEIVE_USER_PROFILE"
 }
 
-export interface RequestUserProfileAction extends Action {
-  type: ActionType.REQUEST_USER_PROFILE;
-}
+export interface RequestUserProfileAction
+  extends Action<ActionType.RequestUserProfile> {}
 
 function requetUserProfile(): RequestUserProfileAction {
   return {
-    type: ActionType.REQUEST_USER_PROFILE
+    type: ActionType.RequestUserProfile
   };
 }
 
-export interface ReceiveUserProfileAction extends Action {
-  type: ActionType.RECEIVE_USER_PROFILE;
-  payload: UserProfile;
-}
+export interface ReceiveUserProfileAction
+  extends PayloadAction<ActionType.ReceiveUserProfile, UserProfile> {}
 
 function receiveUserProfile(
   userProfile: UserProfile
 ): ReceiveUserProfileAction {
   return {
-    type: ActionType.RECEIVE_USER_PROFILE,
+    type: ActionType.ReceiveUserProfile,
     payload: userProfile
   };
 }

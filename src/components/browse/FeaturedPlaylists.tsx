@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Playlist } from "../../types/browse";
+import { Playlist } from "../../types";
 import { State } from "../../reducers";
 import { selectFeaturedPlaylists } from "../../reducers/browse";
 import { getFeaturedPlaylists } from "../../actions/browse";

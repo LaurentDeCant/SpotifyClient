@@ -1,4 +1,4 @@
-export default interface UserProfile {
+export interface UserProfile {
   birtdate: string;
   country: string;
   display_name: string;

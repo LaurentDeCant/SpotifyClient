@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Album } from "../../types/browse";
+import { Album } from "../../types";
 import { State } from "../../reducers";
 import { selectNewReleases } from "../../reducers/browse";
 import { getNewReleases } from "../../actions/browse";

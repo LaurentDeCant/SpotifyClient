@@ -1,6 +1,7 @@
 import createReducer from "../helpers/createReducer";
-import UserProfile from "../types/userProfile";
+import { UserProfile } from "../types";
 import { ActionType, ReceiveUserProfileAction } from "../actions/userProfile";
+import { State as CombinedState } from ".";
 
 export interface State {
   userProfile?: UserProfile;
@@ -11,7 +12,7 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.RECEIVE_USER_PROFILE]: (
+  [ActionType.ReceiveUserProfile]: (
     state: State,
     action: ReceiveUserProfileAction
   ) => ({
@@ -20,8 +21,8 @@ export default createReducer(initialState, {
   })
 });
 
-export function selectUserProfile(state: {
-  userProfile: State;
-}): UserProfile | undefined {
+export function selectUserProfile(
+  state: CombinedState
+): UserProfile | undefined {
   return state.userProfile.userProfile;
 }

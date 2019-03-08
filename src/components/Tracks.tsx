@@ -1,8 +1,20 @@
 import React, { Component } from "react";
+import { Track } from "../types";
 
-class Tracks extends Component {
+interface Props {
+  tracks: Track[];
+}
+
+class Tracks extends Component<Props> {
   render() {
-    return <h2>Tracks</h2>;
+    const { tracks } = this.props;
+    return (
+      <ul>
+        {tracks.map(track => (
+          <li key={track.id}>{track.name}</li>
+        ))}
+      </ul>
+    );
   }
 }
 

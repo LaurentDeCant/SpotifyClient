@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import styled from "styled-components";
-import { Category, Playlist } from "../../types/browse";
+import { Category, Playlist } from "../../types";
 import { State } from "../../reducers";
-import { selectCategory, selectCategoryPlaylist } from "../../reducers/browse";
+import { selectCategory, selectCategoryPlaylists } from "../../reducers/browse";
 import { getCategoryPlaylists } from "../../actions/browse";
 import Covers from "./Covers";
 
@@ -22,13 +22,13 @@ const Title = styled.h1`
 interface Props extends RouteComponentProps<Params> {
   category?: Category;
   playlists: Playlist[];
-  getPlaylists: (id: string) => void;
+  getPlaylists: (categoryId: string) => void;
 }
 
 class CategoryPlaylists extends Component<Props> {
   componentDidMount() {
-    const { match } = this.props;
-    this.props.getPlaylists(match.params.categoryId);
+    const { getPlaylists, match } = this.props;
+    getPlaylists(match.params.categoryId);
   }
 
   handleClick = (playlistId: string) => {
@@ -58,12 +58,12 @@ const mapState = (state: State, ownProps: Props) => {
   const categoryId = match.params.categoryId;
   return {
     category: selectCategory(state, categoryId),
-    playlists: selectCategoryPlaylist(state, categoryId)
+    playlists: selectCategoryPlaylists(state)
   };
 };
 
 const mapDispatch = {
-  getPlaylists: (id: string) => getCategoryPlaylists(id)
+  getPlaylists: (categoryId: string) => getCategoryPlaylists(categoryId)
 };
 
 export default withRouter(

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Category } from "../../types/browse";
+import { Category } from "../../types";
 import { State } from "../../reducers";
 import { selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";

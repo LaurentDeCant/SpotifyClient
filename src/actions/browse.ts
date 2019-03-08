@@ -1,7 +1,7 @@
 import { Action, Dispatch } from "redux";
-import { Category, Album, Playlist } from "../types/browse";
-import { authorizedFetch } from "../helpers/authorization";
+import { Album, Category, Playlist } from "../types";
 import PayloadAction from "./types";
+import { authorizedFetch } from "../helpers/authorization";
 
 export enum ActionType {
   RequestCategories = "REQUEST_CATEGORIES",
@@ -118,18 +118,14 @@ function requestCategoryPlaylists(): RequestCategoryPlaylistsAction {
 }
 
 export interface ReceiveCategoryPlaylistsAction
-  extends PayloadAction<
-    ActionType.ReceiveCategoryPlaylists,
-    { categoryId: string; playlists: Playlist[] }
-  > {}
+  extends PayloadAction<ActionType.ReceiveCategoryPlaylists, Playlist[]> {}
 
 function receiveCategoryPlaylists(
-  categoryId: string,
   playlists: Playlist[]
 ): ReceiveCategoryPlaylistsAction {
   return {
     type: ActionType.ReceiveCategoryPlaylists,
-    payload: { categoryId, playlists }
+    payload: playlists
   };
 }
 
@@ -143,6 +139,6 @@ export function getCategoryPlaylists(categoryId: string) {
     );
     const json = await response.json();
     const items = json.playlists ? json.playlists.items : [];
-    dispatch(receiveCategoryPlaylists(categoryId, items));
+    dispatch(receiveCategoryPlaylists(items));
   };
 }

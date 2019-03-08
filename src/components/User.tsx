@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import UserProfile from "../types/userProfile";
+import { UserProfile } from "../types";
 import Icon, { IconType } from "./Icon";
 
 const Wrapper = styled.div`

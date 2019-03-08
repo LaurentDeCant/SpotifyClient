@@ -3,7 +3,7 @@ import {
   ActionType,
   ReceiveAuthorizationAction
 } from "../actions/authorization";
-import { State as CombinedState } from "./index";
+import { State as CombinedState } from ".";
 
 export interface State {
   isAuthorized: boolean;
