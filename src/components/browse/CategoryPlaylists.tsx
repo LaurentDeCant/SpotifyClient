@@ -4,12 +4,24 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { Category, Playlist } from "../../types";
 import { State } from "../../reducers";
-import { selectCategory, selectCategoryPlaylists } from "../../reducers/browse";
+import {
+  selectIsFetching,
+  selectCategory,
+  selectCategoryPlaylists
+} from "../../reducers/browse";
 import { getCategoryPlaylists } from "../../actions/browse";
 import Covers from "./Covers";
+import withLoader from "../withLoader";
 
 interface Params {
   categoryId: string;
+}
+
+interface Props extends RouteComponentProps<Params> {
+  isLoading: boolean;
+  category?: Category;
+  playlists: Playlist[];
+  getPlaylists: (categoryId: string) => void;
 }
 
 const Title = styled.h1`
@@ -18,12 +30,6 @@ const Title = styled.h1`
   font-weight: ${props => props.theme.font.weight.bold};
   margin: 0 0 25px 0;
 `;
-
-interface Props extends RouteComponentProps<Params> {
-  category?: Category;
-  playlists: Playlist[];
-  getPlaylists: (categoryId: string) => void;
-}
 
 class CategoryPlaylists extends Component<Props> {
   componentDidMount() {
@@ -56,7 +62,9 @@ class CategoryPlaylists extends Component<Props> {
 const mapState = (state: State, ownProps: Props) => {
   const { match } = ownProps;
   const categoryId = match.params.categoryId;
+
   return {
+    isLoading: selectIsFetching(state),
     category: selectCategory(state, categoryId),
     playlists: selectCategoryPlaylists(state)
   };
@@ -70,5 +78,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(CategoryPlaylists)
+  )(withLoader(CategoryPlaylists))
 );

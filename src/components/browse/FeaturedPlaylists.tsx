@@ -3,11 +3,16 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Playlist } from "../../types";
 import { State } from "../../reducers";
-import { selectFeaturedPlaylists } from "../../reducers/browse";
+import {
+  selectIsFetching,
+  selectFeaturedPlaylists
+} from "../../reducers/browse";
 import { getFeaturedPlaylists } from "../../actions/browse";
 import Covers from "./Covers";
+import withLoader from "../withLoader";
 
 interface Props extends RouteComponentProps {
+  isLoading: boolean;
   playlists: Playlist[];
   getPlaylists: () => void;
 }
@@ -35,6 +40,7 @@ class FeaturedPlaylists extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
+  isLoading: selectIsFetching(state),
   playlists: selectFeaturedPlaylists(state)
 });
 
@@ -46,5 +52,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(FeaturedPlaylists)
+  )(withLoader(FeaturedPlaylists))
 );

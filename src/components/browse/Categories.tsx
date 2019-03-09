@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Category } from "../../types";
 import { State } from "../../reducers";
-import { selectCategories } from "../../reducers/browse";
+import { selectIsFetching, selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
 import Covers from "./Covers";
+import withLoader from "../withLoader";
 
 interface Props extends RouteComponentProps {
+  isLoading: boolean;
   categories: Category[];
   getCategories: () => void;
 }
@@ -35,6 +37,7 @@ class Categories extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
+  isLoading: selectIsFetching(state),
   categories: selectCategories(state)
 });
 
@@ -46,5 +49,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(Categories)
+  )(withLoader(Categories))
 );

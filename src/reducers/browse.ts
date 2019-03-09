@@ -8,6 +8,7 @@ import {
   CategoryPlaylistsSuccessAction
 } from "../actions/browse";
 import { State as CombinedState } from ".";
+import { startFetching, endFetching } from "./fetching";
 
 export interface State {
   isFetching: boolean;
@@ -26,10 +27,7 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.CategoriesRequest]: (state: State) => ({
-    ...state,
-    isFetching: true
-  }),
+  [ActionType.CategoriesRequest]: startFetching,
   [ActionType.CategoriesSuccess]: (
     state: State,
     action: CategoriesSuccessAction
@@ -38,27 +36,37 @@ export default createReducer(initialState, {
     isFetching: false,
     categories: action.payload
   }),
+  [ActionType.CategoriesFailure]: endFetching,
+  [ActionType.NewReleasesRequest]: startFetching,
   [ActionType.NewReleasesSuccess]: (
     state: State,
     action: NewReleasesSuccessAction
   ) => ({
     ...state,
+    isFetching: false,
     newReleases: action.payload
   }),
+  [ActionType.NewReleasesFailure]: endFetching,
+  [ActionType.FeaturedPlaylistsRequest]: startFetching,
   [ActionType.FeaturedPlaylistsSuccess]: (
     state: State,
     action: FeaturedPlaylistsSuccessAction
   ) => ({
     ...state,
+    isFetching: false,
     featuredPlaylists: action.payload
   }),
+  [ActionType.FeaturedPlaylistsFailure]: endFetching,
+  [ActionType.CategoryPlaylistsRequest]: startFetching,
   [ActionType.CategoryPlaylistsSuccess]: (
     state: State,
     action: CategoryPlaylistsSuccessAction
   ) => ({
     ...state,
+    isFetching: false,
     categoryPlaylists: action.payload
-  })
+  }),
+  [ActionType.CategoryPlaylistsFailure]: endFetching
 });
 
 export function selectIsFetching(state: CombinedState): boolean {

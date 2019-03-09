@@ -3,15 +3,17 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Track } from "../types";
 import { State } from "../reducers";
-import { selectAlbumTracks } from "../reducers/albums";
+import { selectAlbumTracks, selectIsFetching } from "../reducers/albums";
 import { getAlbumTracks } from "../actions/albums";
 import Tracks from "./Tracks";
+import withLoader from "./withLoader";
 
 interface Params {
   albumId: string;
 }
 
 interface Props extends RouteComponentProps<Params> {
+  isLoading: boolean;
   tracks: Track[];
   getTracks: (albumId: string) => void;
 }
@@ -30,6 +32,7 @@ class AlbumTracks extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
+  isLoading: selectIsFetching(state),
   tracks: selectAlbumTracks(state)
 });
 
@@ -41,5 +44,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(AlbumTracks)
+  )(withLoader(AlbumTracks))
 );
