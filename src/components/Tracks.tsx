@@ -97,7 +97,11 @@ class Tracks extends Component<Props> {
     const minutes = Math.floor(seconds / 60);
     seconds = Math.floor(seconds % 60);
 
-    return <Duration>{`${minutes}:${seconds}`}</Duration>;
+    return (
+      <Duration>{`${minutes}:${
+        seconds < 10 ? "0" + seconds : seconds
+      }`}</Duration>
+    );
   }
 
   render() {

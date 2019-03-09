@@ -5,6 +5,7 @@ export enum IconType {
   MusicOff = "music_off",
   Person = "person",
   PlayArrow = "play_arrow",
+  Refresh = "refresh",
   Search = "search",
   ViewModule = "view_module",
   Wifi = "wifi"

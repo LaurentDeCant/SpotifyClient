@@ -10,6 +10,7 @@ import {
 import { State as CombinedState } from ".";
 
 export interface State {
+  isFetching: boolean;
   categories: Category[];
   newReleases: Album[];
   featuredPlaylists: Playlist[];
@@ -17,6 +18,7 @@ export interface State {
 }
 
 const initialState: State = {
+  isFetching: false,
   categories: [],
   newReleases: [],
   featuredPlaylists: [],
@@ -24,11 +26,16 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
+  [ActionType.CategoriesRequest]: (state: State) => ({
+    ...state,
+    isFetching: true
+  }),
   [ActionType.CategoriesSuccess]: (
     state: State,
     action: CategoriesSuccessAction
   ) => ({
     ...state,
+    isFetching: false,
     categories: action.payload
   }),
   [ActionType.NewReleasesSuccess]: (
@@ -53,6 +60,10 @@ export default createReducer(initialState, {
     categoryPlaylists: action.payload
   })
 });
+
+export function selectIsFetching(state: CombinedState): boolean {
+  return state.browse.isFetching;
+}
 
 export function selectCategories(state: CombinedState): Category[] {
   return state.browse.categories;

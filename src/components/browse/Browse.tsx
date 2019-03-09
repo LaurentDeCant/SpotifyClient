@@ -11,6 +11,14 @@ import Categories from "./Categories";
 import CategoryPlaylists from "./CategoryPlaylists";
 import NewReleases from "./NewReleases";
 import FeaturedPlaylists from "./FeaturedPlaylists";
+import withLoader from "../withLoader";
+import { connect } from "react-redux";
+import { selectIsFetching } from "../../reducers/browse";
+import { State } from "../../reducers";
+
+interface Props extends RouteComponentProps {
+  isLoading: boolean;
+}
 
 const Wrapper = styled.div`
   height: 100%;
@@ -55,7 +63,7 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-class Browse extends Component<RouteComponentProps> {
+class Browse extends Component<Props> {
   render() {
     const { match } = this.props;
     const links = [
@@ -101,4 +109,13 @@ class Browse extends Component<RouteComponentProps> {
   }
 }
 
-export default withRouter(Browse);
+const mapState = (state: State) => ({
+  isLoading: selectIsFetching(state)
+});
+
+export default withRouter(
+  connect(
+    mapState,
+    {}
+  )(withLoader(Browse))
+);

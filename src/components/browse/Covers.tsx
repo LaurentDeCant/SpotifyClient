@@ -52,7 +52,7 @@ const Image = styled.img`
 `;
 
 const Label = styled.span`
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
   bottom: 0;
   color: ${props => props.theme.foreground.default};
   font-size: 15px;
