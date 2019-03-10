@@ -9,7 +9,7 @@ import {
   selectCategory,
   selectCategoryPlaylists
 } from "../../reducers/browse";
-import { getCategoryPlaylists } from "../../actions/browse";
+import { getCategory, getCategoryPlaylists } from "../../actions/browse";
 import Covers from "./Covers";
 import withLoader from "../withLoader";
 
@@ -21,6 +21,7 @@ interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   category?: Category;
   playlists: Playlist[];
+  getCategory: (categoryId: string) => void;
   getPlaylists: (categoryId: string) => void;
 }
 
@@ -33,8 +34,12 @@ const Title = styled.h1`
 
 class CategoryPlaylists extends Component<Props> {
   componentDidMount() {
-    const { getPlaylists, match } = this.props;
-    getPlaylists(match.params.categoryId);
+    const { category, getCategory, getPlaylists, match } = this.props;
+    const { categoryId } = match.params;
+    if (!category) {
+      getCategory(categoryId);
+    }
+    getPlaylists(categoryId);
   }
 
   handleClick = (playlistId: string) => {
@@ -47,7 +52,7 @@ class CategoryPlaylists extends Component<Props> {
     const items = playlists.map(playlists => ({
       id: playlists.id,
       image: playlists.images[0].url,
-      label: playlists.name
+      title: playlists.name
     }));
 
     return (
@@ -71,6 +76,7 @@ const mapState = (state: State, ownProps: Props) => {
 };
 
 const mapDispatch = {
+  getCategory: (categoryId: string) => getCategory(categoryId),
   getPlaylists: (categoryId: string) => getCategoryPlaylists(categoryId)
 };
 

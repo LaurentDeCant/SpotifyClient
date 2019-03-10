@@ -7,7 +7,7 @@ export interface Playlist {
   id: string;
   images: Image[];
   name: string;
-  owner: User[];
+  owner: User;
   public: boolean | null;
   snapshot_id: string;
   tracks: Endpoint;

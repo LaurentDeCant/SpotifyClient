@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Track } from "../types";
+import { Playlist, Track } from "../types";
 import { State } from "../reducers";
-import { selectPlaylistTracks, selectIsFetching } from "../reducers/playlists";
-import { getPlaylistTracks } from "../actions/playlists";
+import {
+  selectIsFetching,
+  selectPlaylistTracks,
+  selectPlaylist
+} from "../reducers/playlists";
+import { getPlaylistTracks, getPlaylist } from "../actions/playlists";
+import Cover from "./Cover";
 import Tracks from "./Tracks";
 import withLoader from "./withLoader";
 
@@ -14,29 +19,46 @@ interface Params {
 
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
+  playlist?: Playlist;
   tracks: Track[];
+  getPlaylist: (playlistId: string) => void;
   getTracks: (playlistId: string) => void;
 }
 
 class PlaylistTracks extends Component<Props> {
   componentDidMount() {
-    const { match } = this.props;
-    this.props.getTracks(match.params.playlistId);
+    const { getPlaylist, getTracks, match } = this.props;
+    const { playlistId } = match.params;
+    getPlaylist(playlistId);
+    getTracks(playlistId);
   }
 
   render() {
-    const { tracks } = this.props;
+    const { playlist, tracks } = this.props;
 
-    return <Tracks tracks={tracks} />;
+    return (
+      <div>
+        {playlist && (
+          <Cover
+            image={playlist.images[0].url}
+            title={playlist.name}
+            author={playlist.owner.display_name}
+          />
+        )}
+        <Tracks tracks={tracks} />
+      </div>
+    );
   }
 }
 
 const mapState = (state: State) => ({
   isLoading: selectIsFetching(state),
+  playlist: selectPlaylist(state),
   tracks: selectPlaylistTracks(state)
 });
 
 const mapDispatch = {
+  getPlaylist: (playlistId: string) => getPlaylist(playlistId),
   getTracks: (playlistId: string) => getPlaylistTracks(playlistId)
 };
 

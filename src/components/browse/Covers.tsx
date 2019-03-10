@@ -5,7 +5,8 @@ interface Props {
   items: {
     id: string;
     image: string;
-    label: string;
+    title: string;
+    author?: string;
   }[];
   onClick: (id: string) => void;
 }
@@ -19,18 +20,21 @@ const StyledList = styled.ul`
 `;
 
 const StyledItem = styled.li`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: 10px;
 `;
 
 const Button = styled.button`
-  background: transparent;
   border-radius: 5px;
-  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
   overflow: hidden;
   position: relative;
+  margin-bottom: 10px;
 
   &:hover::before {
     background: ${props => props.theme.background.hover};
@@ -51,16 +55,15 @@ const Image = styled.img`
   width: 200px;
 `;
 
-const Label = styled.span`
-  background: rgba(0, 0, 0, 0.5);
-  bottom: 0;
-  color: ${props => props.theme.foreground.default};
-  font-size: 15px;
-  left: 50%;
-  padding: 10px;
-  position: absolute;
-  transform: translate(-50%, 0);
-  width: calc(100% - 20px);
+const Title = styled.span`
+  margin-bottom: 5px;
+  text-align: center;
+  width: 200px;
+`;
+
+const Author = styled.span`
+  color: ${props => props.theme.foreground.dark};
+  font-weight: ${props => props.theme.font.weight.light};
 `;
 
 class Covers extends Component<Props> {
@@ -78,8 +81,9 @@ class Covers extends Component<Props> {
           <StyledItem key={item.id}>
             <Button onClick={() => this.handleClick(item.id)}>
               <Image src={item.image} />
-              <Label>{item.label}</Label>
             </Button>
+            <Title>{item.title}</Title>
+            {item.author && <Author>{item.author}</Author>}
           </StyledItem>
         ))}
       </StyledList>

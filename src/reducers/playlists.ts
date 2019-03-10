@@ -1,34 +1,56 @@
 import createReducer from "../helpers/createReducer";
-import { PlaylistTrack, Track } from "../types";
-import { ActionType, PlaylistTracksSuccessAction } from "../actions/playlists";
+import { Playlist, PlaylistTrack, Track } from "../types";
+import {
+  ActionType,
+  PlaylistSuccessAction,
+  PlaylistTracksSuccessAction
+} from "../actions/playlists";
 import { State as CombinedState } from ".";
-import { startFetching, endFetching } from "./fetching";
+import {
+  FetchableState,
+  startFetching,
+  endFetching,
+  isFetching
+} from "./fetching";
 
-export interface State {
-  isFetching: boolean;
+export interface State extends FetchableState {
+  playlist?: Playlist;
   playlistTracks: PlaylistTrack[];
 }
 
 const initialState: State = {
-  isFetching: true,
+  fetchs: 0,
+  playlist: undefined,
   playlistTracks: []
 };
 
 export default createReducer(initialState, {
+  [ActionType.PlaylistRequest]: startFetching,
+  [ActionType.PlaylistSuccess]: (state: State, action: PlaylistSuccessAction) =>
+    endFetching({
+      ...state,
+      playlist: action.payload
+    }),
+  [ActionType.PlaylistFailure]: endFetching,
+
   [ActionType.PlaylistTracksRequest]: startFetching,
   [ActionType.PlaylistTracksSuccess]: (
     state: State,
     action: PlaylistTracksSuccessAction
-  ) => ({
-    ...state,
-    isFetching: false,
-    playlistTracks: action.payload
-  }),
+  ) =>
+    endFetching({
+      ...state,
+      playlistTracks: action.payload
+    }),
   [ActionType.PlaylistTracksFailure]: endFetching
 });
 
 export function selectIsFetching(state: CombinedState): boolean {
-  return state.playlists.isFetching;
+  return isFetching(state.playlists);
+}
+
+export function selectPlaylist(state: CombinedState): Playlist | undefined {
+  return state.playlists.playlist;
 }
 
 export function selectPlaylistTracks(state: CombinedState): Track[] {

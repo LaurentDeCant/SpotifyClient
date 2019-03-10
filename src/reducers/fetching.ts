@@ -1,11 +1,16 @@
-import { State } from ".";
+export interface FetchableState {
+  fetchs: number;
+}
 
-export const startFetching = (state: State) => ({
+export const startFetching = <S extends FetchableState>(state: S): S => ({
   ...state,
-  isFetching: true
+  fetchs: state.fetchs + 1
 });
 
-export const endFetching = (state: State) => ({
+export const endFetching = <S extends FetchableState>(state: S): S => ({
   ...state,
-  isFetching: false
+  fetchs: state.fetchs - 1
 });
+
+export const isFetching = <S extends FetchableState>(state: S): boolean =>
+  state.fetchs !== 0;

@@ -1,4 +1,3 @@
-import { Action } from "redux";
 import { UserProfile } from "../types";
 import { FetchDispatch, PayloadAction } from "./types";
 
@@ -7,9 +6,6 @@ export enum ActionType {
   UserProfileSuccess = "USER_PROFILE_SUCCESS",
   UserProfileFailure = "USER_PROFILE_FAILURE"
 }
-
-export interface UserProfileRequestAction
-  extends Action<ActionType.UserProfileRequest> {}
 
 export interface UserProfileSuccessAction
   extends PayloadAction<ActionType.UserProfileSuccess, UserProfile> {}
@@ -22,8 +18,7 @@ export function getUserProfile() {
         ActionType.UserProfileSuccess,
         ActionType.UserProfileFailure
       ],
-      path: "me",
-      select: (object: any) => object
+      path: "me"
     });
   };
 }

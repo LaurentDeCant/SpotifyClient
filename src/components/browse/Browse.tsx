@@ -8,7 +8,6 @@ import {
 import styled from "styled-components";
 import DefaultRoute from "../DefaultRoute";
 import Categories from "./Categories";
-import CategoryPlaylists from "./CategoryPlaylists";
 import NewReleases from "./NewReleases";
 import FeaturedPlaylists from "./FeaturedPlaylists";
 
@@ -87,10 +86,6 @@ class Browse extends Component<RouteComponentProps> {
 
         <DefaultRoute from={`${match.path}`} to={`${match.path}/categories`} />
         <Route exact path={`${match.path}/categories`} component={Categories} />
-        <Route
-          path={`${match.path}/categories/:categoryId/playlists`}
-          component={CategoryPlaylists}
-        />
         <Route path={`${match.path}/new-releases`} component={NewReleases} />
         <Route
           path={`${match.path}/featured-playist`}

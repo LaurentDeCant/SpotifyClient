@@ -1,4 +1,3 @@
-import { Action } from "redux";
 import { Album, Category, Playlist } from "../types";
 import { FetchDispatch, PayloadAction } from "./types";
 
@@ -6,6 +5,9 @@ export enum ActionType {
   CategoriesRequest = "CATEGORIES_REQUEST",
   CategoriesSuccess = "CATEGORIES_SUCCESS",
   CategoriesFailure = "CATEGORIES_FAILURE",
+  CategoryRequest = "CATEGORY_REQUEST",
+  CategorySuccess = "CATEGORY_SUCCESS",
+  CategoryFailure = "CATEGORY_FAILURE",
   NewReleasesRequest = "NEW_RELEASES_REQUEST",
   NewReleasesSuccess = "NEW_RELEASES_SUCCESS",
   NewReleasesFailure = "NEW_RELEASES_FAILURE",
@@ -16,9 +18,6 @@ export enum ActionType {
   CategoryPlaylistsSuccess = "CATEGORY_PLAYLISTS_SUCCESS",
   CategoryPlaylistsFailure = "CATEGORY_PLAYLISTS_FAILURE"
 }
-
-export interface CategoriesRequestAction
-  extends Action<ActionType.CategoriesRequest> {}
 
 export interface CategoriesSuccessAction
   extends PayloadAction<ActionType.CategoriesSuccess, Category[]> {}
@@ -37,8 +36,21 @@ export function getCategories() {
   };
 }
 
-export interface NewReleasesRequestAction
-  extends Action<ActionType.NewReleasesRequest> {}
+export interface CategorySuccessAction
+  extends PayloadAction<ActionType.CategorySuccess, Category> {}
+
+export function getCategory(categoryId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.CategoryRequest,
+        ActionType.CategorySuccess,
+        ActionType.CategoryFailure
+      ],
+      path: `browse/categories/${categoryId}`
+    });
+  };
+}
 
 export interface NewReleasesSuccessAction
   extends PayloadAction<ActionType.NewReleasesSuccess, Album[]> {}
@@ -57,9 +69,6 @@ export function getNewReleases() {
   };
 }
 
-export interface FeaturedPlaylistsRequestAction
-  extends Action<ActionType.FeaturedPlaylistsRequest> {}
-
 export interface FeaturedPlaylistsSuccessAction
   extends PayloadAction<ActionType.FeaturedPlaylistsSuccess, Playlist[]> {}
 
@@ -76,9 +85,6 @@ export function getFeaturedPlaylists() {
     });
   };
 }
-
-export interface CategoryPlaylistsRequestAction
-  extends Action<ActionType.CategoryPlaylistsRequest> {}
 
 export interface CategoryPlaylistsSuccessAction
   extends PayloadAction<ActionType.CategoryPlaylistsSuccess, Playlist[]> {}

@@ -5,6 +5,7 @@ import { Album } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectNewReleases } from "../../reducers/browse";
 import { getNewReleases } from "../../actions/browse";
+import { getArtistNames } from "../../helpers/album";
 import Covers from "./Covers";
 import withLoader from "../withLoader";
 
@@ -29,7 +30,8 @@ class NewReleases extends Component<Props> {
     const items = albums.map(album => ({
       id: album.id,
       image: album.images[0].url,
-      label: album.name
+      title: album.name,
+      author: getArtistNames(album)
     }));
 
     return <Covers items={items} onClick={this.handleClick} />;

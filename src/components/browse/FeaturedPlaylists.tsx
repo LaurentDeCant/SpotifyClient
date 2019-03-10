@@ -29,10 +29,10 @@ class FeaturedPlaylists extends Component<Props> {
 
   render() {
     const { playlists } = this.props;
-    const items = playlists.map(playlists => ({
-      id: playlists.id,
-      image: playlists.images[0].url,
-      label: playlists.name
+    const items = playlists.map(playlist => ({
+      id: playlist.id,
+      image: playlist.images[0].url,
+      title: playlist.name
     }));
 
     return <Covers items={items} onClick={this.handleClick} />;

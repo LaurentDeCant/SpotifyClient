@@ -1,15 +1,30 @@
-import { Action } from "redux";
-import { PlaylistTrack } from "../types";
+import { PlaylistTrack, Playlist } from "../types";
 import { FetchDispatch, PayloadAction } from "./types";
 
 export enum ActionType {
+  PlaylistRequest = "PLAYLIST_REQUEST",
+  PlaylistSuccess = "PLAYLIST_SUCCESS",
+  PlaylistFailure = "PLAYLIST_FAILURE",
   PlaylistTracksRequest = "PLAYLIST_TRACKS_REQUEST",
   PlaylistTracksSuccess = "PLAYLIST_TRACKS_SUCCESS",
   PlaylistTracksFailure = "PLAYLIST_TRACKS_FAILURE"
 }
 
-export interface PlaylistTracksRequestAction
-  extends Action<ActionType.PlaylistTracksRequest> {}
+export interface PlaylistSuccessAction
+  extends PayloadAction<ActionType.PlaylistSuccess, Playlist> {}
+
+export function getPlaylist(playlistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.PlaylistRequest,
+        ActionType.PlaylistSuccess,
+        ActionType.PlaylistFailure
+      ],
+      path: `playlists/${playlistId}`
+    });
+  };
+}
 
 export interface PlaylistTracksSuccessAction
   extends PayloadAction<ActionType.PlaylistTracksSuccess, PlaylistTrack[]> {}

@@ -6,6 +6,7 @@ import Menu from "./Menu";
 import DefaultRoute from "./DefaultRoute";
 import Browse from "./browse/Browse";
 import Search from "./Search";
+import CategoryPlaylists from "./browse/CategoryPlaylists";
 import PlaylistTracks from "./PlaylistTracks";
 import AlbumTracks from "./AlbumTracks";
 
@@ -25,6 +26,7 @@ const Routes = styled.div`
   height: calc(100% - 50px);
   overflow-y: auto;
   padding: 25px;
+  position: relative;
 `;
 
 class App extends Component {
@@ -39,6 +41,10 @@ class App extends Component {
               <DefaultRoute from="/" to="/browse" />
               <Route path="/browse" component={Browse} />
               <Route path="/search" component={Search} />
+              <Route
+                path={`/categories/:categoryId/playlists`}
+                component={CategoryPlaylists}
+              />
               <Route
                 path={"/playlists/:playlistId/tracks"}
                 component={PlaylistTracks}

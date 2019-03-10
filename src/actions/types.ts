@@ -3,7 +3,7 @@ import { Action } from "redux";
 export interface FetchAction {
   types: string[];
   path: string;
-  select: (json: object) => object;
+  select?: (json: object) => object;
 }
 
 export interface FetchDispatch {

@@ -20,8 +20,8 @@ class Categories extends Component<Props> {
   }
 
   handleClick = (categoryId: string) => {
-    const { history, match } = this.props;
-    history.push(`${match.path}/${categoryId}/playlists`);
+    const { history } = this.props;
+    history.push(`/categories/${categoryId}/playlists`);
   };
 
   render() {
@@ -29,7 +29,7 @@ class Categories extends Component<Props> {
     const items = categories.map(category => ({
       id: category.id,
       image: category.icons[0].url,
-      label: category.name
+      title: category.name
     }));
 
     return <Covers items={items} onClick={this.handleClick} />;
