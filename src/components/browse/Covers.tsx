@@ -1,16 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-interface Props {
-  items: {
-    id: string;
-    image: string;
-    title: string;
-    author?: string;
-  }[];
-  onClick: (id: string) => void;
-}
-
 const StyledList = styled.ul`
   align-content: flex-start;
   display: flex;
@@ -29,7 +19,7 @@ const StyledItem = styled.li`
 
 const Button = styled.button`
   border-radius: 5px;
-  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   display: flex;
   overflow: hidden;
@@ -65,6 +55,16 @@ const Author = styled.span`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.font.weight.light};
 `;
+
+interface Props {
+  items: {
+    id: string;
+    image: string;
+    title: string;
+    author?: string;
+  }[];
+  onClick: (id: string) => void;
+}
 
 class Covers extends Component<Props> {
   handleClick(id: string) {

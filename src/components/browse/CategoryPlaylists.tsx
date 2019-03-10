@@ -13,6 +13,13 @@ import { getCategory, getCategoryPlaylists } from "../../actions/browse";
 import Covers from "./Covers";
 import withLoader from "../withLoader";
 
+const Title = styled.h1`
+  text-align: center;
+  font-size: ${props => props.theme.font.size.extraExtraLarge};
+  font-weight: ${props => props.theme.font.weight.bold};
+  margin: 0 0 25px 0;
+`;
+
 interface Params {
   categoryId: string;
 }
@@ -24,13 +31,6 @@ interface Props extends RouteComponentProps<Params> {
   getCategory: (categoryId: string) => void;
   getPlaylists: (categoryId: string) => void;
 }
-
-const Title = styled.h1`
-  text-align: center;
-  font-size: ${props => props.theme.font.size.extraExtraLarge};
-  font-weight: ${props => props.theme.font.weight.bold};
-  margin: 0 0 25px 0;
-`;
 
 class CategoryPlaylists extends Component<Props> {
   componentDidMount() {

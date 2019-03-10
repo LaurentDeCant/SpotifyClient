@@ -6,9 +6,8 @@ export enum ActionType {
   ReceiveAuthorization = "RECEIVE_AUTHORIZATION"
 }
 
-export interface RequestAuthorizationAction extends Action {
-  type: ActionType.RequestAuthorization;
-}
+export interface RequestAuthorizationAction
+  extends Action<ActionType.RequestAuthorization> {}
 
 function requestAuthorization(): RequestAuthorizationAction {
   return {
@@ -16,9 +15,8 @@ function requestAuthorization(): RequestAuthorizationAction {
   };
 }
 
-export interface ReceiveAuthorizationAction extends Action {
-  type: ActionType.ReceiveAuthorization;
-}
+export interface ReceiveAuthorizationAction
+  extends Action<ActionType.ReceiveAuthorization> {}
 
 export function receiveAuthorization(): ReceiveAuthorizationAction {
   return {

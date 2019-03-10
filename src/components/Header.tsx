@@ -10,18 +10,11 @@ import { getUserProfile } from "../actions/userProfile";
 import Title from "./Title";
 import User from "./User";
 
-interface Props {
-  isAuthorized: boolean;
-  userProfile?: UserProfile;
-  getAuthorization: () => void;
-  getUserProfile: () => void;
-}
-
 const Wrapper = styled.header`
   align-items: center;
   display: flex;
   background: ${props => props.theme.primary};
-  box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
   height: 50px;
   justify-content: space-between;
@@ -46,6 +39,13 @@ const LoginButton = styled.button`
     background: ${props => props.theme.background.active};
   }
 `;
+
+interface Props {
+  isAuthorized: boolean;
+  userProfile?: UserProfile;
+  getAuthorization: () => void;
+  getUserProfile: () => void;
+}
 
 class Header extends Component<Props> {
   componentDidMount() {

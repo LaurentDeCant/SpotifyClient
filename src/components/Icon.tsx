@@ -3,10 +3,13 @@ import React, { Props } from "react";
 export enum IconType {
   MusicNote = "music_note",
   MusicOff = "music_off",
+  Pause = "pause",
   Person = "person",
   PlayArrow = "play_arrow",
   Refresh = "refresh",
   Search = "search",
+  SkipNext = "skip_next",
+  SkipPrevious = "skip_previous",
   ViewModule = "view_module",
   Wifi = "wifi"
 }

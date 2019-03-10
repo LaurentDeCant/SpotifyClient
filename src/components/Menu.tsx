@@ -5,7 +5,6 @@ import Icon, { IconType } from "./Icon";
 
 const Wrapper = styled.ul`
   background: ${props => props.theme.background.dark};
-  box-shadow: 2px 0 4px 2px rgba(0, 0, 0, 0.1);
   padding: 25px 0;
   width: 250px;
   z-index: 1;

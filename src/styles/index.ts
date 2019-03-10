@@ -2,9 +2,9 @@ import { createGlobalStyle } from "styled-components";
 
 export const theme = {
   background: {
-    light: "#424242",
-    default: "#303030",
-    dark: "#212121",
+    light: "#303030",
+    default: "#202020",
+    dark: "#101010",
     hover: "rgba(255, 255, 255, 0.1)",
     active: "rgba(255, 255, 255, 0.2)"
   },

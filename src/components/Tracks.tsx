@@ -3,10 +3,6 @@ import styled from "styled-components";
 import { Track } from "../types";
 import Icon, { IconType } from "./Icon";
 
-interface Props {
-  tracks: Track[];
-}
-
 const List = styled.ul``;
 
 const Item = styled.li`
@@ -73,6 +69,10 @@ const Artists = styled.span`
 const Duration = styled.span`
   color: ${props => props.theme.foreground.dark};
 `;
+
+interface Props {
+  tracks: Track[];
+}
 
 class Tracks extends Component<Props> {
   renderIcon(track: Track) {

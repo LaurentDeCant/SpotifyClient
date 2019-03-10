@@ -9,6 +9,7 @@ import Search from "./Search";
 import CategoryPlaylists from "./browse/CategoryPlaylists";
 import PlaylistTracks from "./PlaylistTracks";
 import AlbumTracks from "./AlbumTracks";
+import Player from "./Player";
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,6 +53,7 @@ class App extends Component {
               <Route path={"/albums/:albumId/tracks"} component={AlbumTracks} />
             </Routes>
           </Body>
+          <Player />
         </Wrapper>
       </Router>
     );
