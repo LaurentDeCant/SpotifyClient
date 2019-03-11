@@ -29,18 +29,18 @@ const Artist = styled.span`
 interface Props {
   image: string;
   title: string;
-  author: string;
+  artist: string;
 }
 
 class Cover extends Component<Props> {
   render() {
-    const { image, title, author } = this.props;
+    const { image, title, artist } = this.props;
 
     return (
       <Wrapper>
         <Image src={image} />
         <Title>{title}</Title>
-        <Artist>{author}</Artist>
+        <Artist>{artist}</Artist>
       </Wrapper>
     );
   }

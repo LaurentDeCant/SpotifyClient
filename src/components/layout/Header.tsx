@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { UserProfile } from "../types";
-import { State } from "../reducers";
-import { isAuthorized } from "../reducers/authorization";
-import { selectUserProfile } from "../reducers/userProfile";
-import { getAuthorization } from "../actions/authorization";
-import { getUserProfile } from "../actions/userProfile";
+import { UserProfile } from "../../types";
+import { State } from "../../reducers";
+import { isAuthorized } from "../../reducers/authorization";
+import { selectUserProfile } from "../../reducers/userProfile";
+import { getAuthorization } from "../../actions/authorization";
+import { getUserProfile } from "../../actions/userProfile";
 import Title from "./Title";
 import User from "./User";
 

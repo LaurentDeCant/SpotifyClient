@@ -50,7 +50,7 @@ const Title = styled.span`
   width: 200px;
 `;
 
-const Author = styled.span`
+const Artist = styled.span`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.font.weight.light};
 `;
@@ -60,7 +60,7 @@ interface Props {
     id: string;
     image: string;
     title: string;
-    author?: string;
+    artist?: string;
   }[];
   onClick: (id: string) => void;
 }
@@ -82,7 +82,7 @@ class Covers extends Component<Props> {
               <Image src={item.image} />
             </Button>
             <Title>{item.title}</Title>
-            {item.author && <Author>{item.author}</Author>}
+            {item.artist && <Artist>{item.artist}</Artist>}
           </StyledItem>
         ))}
       </StyledList>

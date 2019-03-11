@@ -1,24 +1,23 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { Track } from "../types";
-import { playTrack } from "../actions/player";
-import { joinArtistNames } from "../helpers/utils";
-import Icon, { IconType } from "./Icon";
+import { Track } from "../../types";
+import { loadTrack } from "../../actions/player";
+import { joinArtistNames } from "../../helpers/utils";
+import Icon, { IconType } from "../Icon";
 
 const Button = styled.button`
   align-items: center;
   border-radius: 5px;
-  cursor: pointer;
   display: flex;
   padding: 10px;
   width: 100%;
 
-  &:hover {
+  &:not(:disabled):hover {
     background: ${props => props.theme.background.hover};
   }
 
-  &:active {
+  &:not(:disabled):active {
     background: ${props => props.theme.background.active};
   }
 `;
@@ -60,7 +59,7 @@ const Title = styled.span`
   flex-grow: 1;
 `;
 
-const Artists = styled.span`
+const Artist = styled.span`
   align-items: center;
   color: ${props => props.theme.foreground.dark};
   display: flex;
@@ -81,6 +80,10 @@ class Tracks extends Component<Props> {
     this.props.playTrack(trackId);
   };
 
+  hasPreview(track: Track) {
+    return !!track.preview_url;
+  }
+
   renderIcon(track: Track) {
     return track.preview_url ? (
       <>
@@ -92,10 +95,8 @@ class Tracks extends Component<Props> {
     );
   }
 
-  renderArtists(track: Track) {
-    const names = track.artists.map(artist => artist.name).join(", ");
-
-    return <Artists>{names}</Artists>;
+  renderArtist(track: Track) {
+    return <Artist>{joinArtistNames(track.artists)}</Artist>;
   }
 
   renderDuration(track: Track) {
@@ -117,11 +118,14 @@ class Tracks extends Component<Props> {
       <ul>
         {tracks.map(track => (
           <li key={track.id}>
-            <Button onClick={() => this.handleClick(track.id)}>
+            <Button
+              onClick={() => this.handleClick(track.id)}
+              disabled={!this.hasPreview(track)}
+            >
               {this.renderIcon(track)}
               <Div>
                 <Title>{track.name}</Title>
-                <Artists>{joinArtistNames(track.artists)}</Artists>
+                {this.renderArtist(track)}
               </Div>
               {this.renderDuration(track)}
             </Button>
@@ -135,7 +139,7 @@ class Tracks extends Component<Props> {
 const mapState = () => ({});
 
 const mapDispatch = {
-  playTrack: playTrack
+  playTrack: loadTrack
 };
 
 export default connect(

@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./Header";
 import Menu from "./Menu";
-import DefaultRoute from "./DefaultRoute";
-import Browse from "./browse/Browse";
-import Search from "./Search";
-import CategoryPlaylists from "./browse/CategoryPlaylists";
-import PlaylistTracks from "./PlaylistTracks";
-import AlbumTracks from "./AlbumTracks";
-import Player from "./Player";
+import DefaultRoute from "../DefaultRoute";
+import Browse from "../browse/Browse";
+import Search from "../search/Search";
+import CategoryPlaylists from "../browse/CategoryPlaylists";
+import PlaylistTracks from "../tracks/PlaylistTracks";
+import AlbumTracks from "../tracks/AlbumTracks";
+import Player from "../player/Player";
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,6 +53,7 @@ class App extends Component {
               <Route path={"/albums/:albumId/tracks"} component={AlbumTracks} />
             </Routes>
           </Body>
+
           <Player />
         </Wrapper>
       </Router>

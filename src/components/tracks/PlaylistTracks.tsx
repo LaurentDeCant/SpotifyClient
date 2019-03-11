@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Playlist, Track } from "../types";
-import { State } from "../reducers";
+import { Playlist, Track } from "../../types";
+import { State } from "../../reducers";
 import {
   selectIsFetching,
   selectPlaylistTracks,
   selectPlaylist
-} from "../reducers/playlists";
-import { getPlaylistTracks, getPlaylist } from "../actions/playlists";
+} from "../../reducers/playlists";
+import { getPlaylistTracks, getPlaylist } from "../../actions/playlists";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
-import withLoader from "./withLoader";
+import withLoader from "../withLoader";
 
 interface Params {
   playlistId: string;
@@ -42,7 +42,7 @@ class PlaylistTracks extends Component<Props> {
           <Cover
             image={playlist.images[0].url}
             title={playlist.name}
-            author={playlist.owner.display_name}
+            artist={playlist.owner.display_name}
           />
         )}
         <Tracks tracks={tracks} />

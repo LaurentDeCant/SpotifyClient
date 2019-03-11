@@ -6,7 +6,7 @@ import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { ThemeProvider } from "styled-components";
 import rootReducer from "./reducers";
-import App from "./components/App";
+import App from "./components/layout/App";
 import { checkRedirection, initAuthorization } from "./helpers/authorization";
 import fetchMiddleware from "./middlewares/fetchMiddleware";
 import GlobalStyle, { theme } from "./styles";

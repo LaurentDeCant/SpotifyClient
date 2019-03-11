@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import styled from "styled-components";
-import Icon, { IconType } from "./Icon";
+import Icon, { IconType } from "../Icon";
 
 const Wrapper = styled.ul`
   background: ${props => props.theme.background.dark};

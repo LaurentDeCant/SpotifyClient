@@ -29,10 +29,13 @@ export default createGlobalStyle`
     background: transparent;
     border: 0;
     color: ${theme.foreground.default};
-    cursor: pointer;
     font-family: "Roboto", sans-serif;
     font-size: ${theme.font.size.medium};
     font-weight: ${theme.font.weight.normal};
+
+    &:not(:disabled) {
+      cursor: pointer;
+    }
 
     &:focus {
       outline: none;
