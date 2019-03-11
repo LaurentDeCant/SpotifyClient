@@ -20,7 +20,6 @@ const StyledItem = styled.li`
 const Button = styled.button`
   border-radius: 5px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
   display: flex;
   overflow: hidden;
   position: relative;

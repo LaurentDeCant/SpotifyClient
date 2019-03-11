@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import { Track } from "../types";
+import { playTrack } from "../actions/player";
+import { joinArtistNames } from "../helpers/utils";
 import Icon, { IconType } from "./Icon";
 
-const List = styled.ul``;
-
-const Item = styled.li`
+const Button = styled.button`
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
   display: flex;
-  height: 50px;
   padding: 10px;
+  width: 100%;
 
   &:hover {
     background: ${props => props.theme.background.hover};
@@ -26,7 +27,7 @@ const Preview = styled(Icon)`
   color: ${props => props.theme.foreground.dark};
   margin-right: 15px;
 
-  ${Item}:hover & {
+  ${Button}:hover & {
     display: none;
   }
 `;
@@ -40,7 +41,7 @@ const Play = styled(Icon)`
   display: none;
   margin-right: 15px;
 
-  ${Item}:hover & {
+  ${Button}:hover & {
     display: block;
   }
 `;
@@ -72,9 +73,14 @@ const Duration = styled.span`
 
 interface Props {
   tracks: Track[];
+  playTrack: (trackId: string) => void;
 }
 
 class Tracks extends Component<Props> {
+  handleClick = (trackId: string) => {
+    this.props.playTrack(trackId);
+  };
+
   renderIcon(track: Track) {
     return track.preview_url ? (
       <>
@@ -108,20 +114,31 @@ class Tracks extends Component<Props> {
     const { tracks } = this.props;
 
     return (
-      <List>
+      <ul>
         {tracks.map(track => (
-          <Item key={track.id}>
-            {this.renderIcon(track)}
-            <Div>
-              <Title>{track.name}</Title>
-              {this.renderArtists(track)}
-            </Div>
-            {this.renderDuration(track)}
-          </Item>
+          <li key={track.id}>
+            <Button onClick={() => this.handleClick(track.id)}>
+              {this.renderIcon(track)}
+              <Div>
+                <Title>{track.name}</Title>
+                <Artists>{joinArtistNames(track.artists)}</Artists>
+              </Div>
+              {this.renderDuration(track)}
+            </Button>
+          </li>
         ))}
-      </List>
+      </ul>
     );
   }
 }
 
-export default Tracks;
+const mapState = () => ({});
+
+const mapDispatch = {
+  playTrack: playTrack
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Tracks);

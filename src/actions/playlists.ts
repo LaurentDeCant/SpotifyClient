@@ -1,5 +1,5 @@
 import { PlaylistTrack, Playlist } from "../types";
-import { FetchDispatch, PayloadAction } from "./types";
+import { PayloadAction, FetchDispatch } from "./types";
 
 export enum ActionType {
   PlaylistRequest = "PLAYLIST_REQUEST",

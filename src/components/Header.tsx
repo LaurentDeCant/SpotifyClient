@@ -23,10 +23,8 @@ const Wrapper = styled.header`
 `;
 
 const LoginButton = styled.button`
-  background: transparent;
   border: none;
   color: ${props => props.theme.foreground.default};
-  cursor: pointer;
   font-size: 15px;
   height: 100%;
   padding: 0 20px;

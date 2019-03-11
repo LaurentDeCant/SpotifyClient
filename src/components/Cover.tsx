@@ -12,7 +12,7 @@ const Image = styled.img`
   border-radius: 5px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 300px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   width: 300px;
 `;
 

@@ -1,5 +1,5 @@
 import { Album, Track } from "../types";
-import { FetchDispatch, PayloadAction } from "./types";
+import { PayloadAction, FetchDispatch } from "./types";
 
 export enum ActionType {
   AlbumRequest = "ALBUM_REQUEST",

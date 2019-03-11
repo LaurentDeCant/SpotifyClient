@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 import { State } from "../reducers";
-import { isPlaying } from "../reducers/player";
+import { selectIsPlaying, selectSource } from "../reducers/player";
 import { play, pause } from "../actions/player";
 import Icon, { IconType } from "./Icon";
 
@@ -24,10 +24,8 @@ const Controls = styled.div`
 `;
 
 const StyledButton = styled.button`
-  background: transparent;
   border-radius: 50%;
   color: ${props => props.theme.foreground.dark};
-  cursor: pointer;
   display: flex;
   margin: 0 10px;
   padding: 5px;
@@ -69,9 +67,7 @@ const ProgressBar = styled.div`
 `;
 
 const Cursor = styled.button`
-  background: transparent;
   border-radius: 10px;
-  cursor: pointer;
   height: 25px;
   left: 50%;
   position: absolute;
@@ -95,12 +91,45 @@ const Cursor = styled.button`
 `;
 
 interface Props {
+  source?: string;
   isPlaying: boolean;
   play: () => void;
   pause: () => void;
 }
 
 class Player extends Component<Props> {
+  audio = createRef<HTMLAudioElement>();
+
+  componentDidMount() {
+    const { current } = this.audio;
+    if (current) {
+      current.onloadedmetadata = x => {
+        console.log("loadedmetadata", x);
+      };
+      current.onplay = () => {
+        console.log("play");
+      };
+      current.ontimeupdate = x => {
+        console.log("timeupdate", x);
+      };
+      current.onpause = () => {
+        console.log("pause");
+      };
+    }
+  }
+
+  componentDidUpdate() {
+    const { current } = this.audio;
+    if (current) {
+      const { isPlaying } = this.props;
+      if (isPlaying) {
+        current.play();
+      } else if (!isPlaying) {
+        current.pause();
+      }
+    }
+  }
+
   handlePlayClick = () => {
     this.props.play();
   };
@@ -110,7 +139,7 @@ class Player extends Component<Props> {
   };
 
   render() {
-    const { isPlaying } = this.props;
+    const { source, isPlaying } = this.props;
 
     return (
       <Wrapper>
@@ -135,13 +164,16 @@ class Player extends Component<Props> {
         <ProgressBar>
           <Cursor />
         </ProgressBar>
+
+        <audio ref={this.audio} src={source} />
       </Wrapper>
     );
   }
 }
 
 const mapState = (state: State) => ({
-  isPlaying: isPlaying(state)
+  source: selectSource(state),
+  isPlaying: selectIsPlaying(state)
 });
 
 const mapDispatch = {

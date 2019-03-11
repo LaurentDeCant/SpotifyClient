@@ -9,7 +9,7 @@ import {
   selectAlbumTracks
 } from "../reducers/albums";
 import { getAlbum, getAlbumTracks } from "../actions/albums";
-import { getArtistNames } from "../helpers/album";
+import { joinArtistNames } from "../helpers/utils";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
 import withLoader from "./withLoader";
@@ -43,7 +43,7 @@ class AlbumTracks extends Component<Props> {
           <Cover
             image={album.images[0].url}
             title={album.name}
-            author={getArtistNames(album)}
+            author={joinArtistNames(album.artists)}
           />
         )}
         <Tracks tracks={tracks} />

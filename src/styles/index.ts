@@ -1,33 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
-export const theme = {
-  background: {
-    light: "#303030",
-    default: "#202020",
-    dark: "#101010",
-    hover: "rgba(255, 255, 255, 0.1)",
-    active: "rgba(255, 255, 255, 0.2)"
-  },
-  font: {
-    size: {
-      small: "12px",
-      medium: "16px",
-      large: "20px",
-      extraLarge: "24px",
-      extraExtraLarge: "34px"
-    },
-    weight: {
-      light: 300,
-      normal: 400,
-      bold: 500
-    }
-  },
-  foreground: {
-    default: "#ffffff",
-    dark: "rgba(255, 255, 255, 0.4)"
-  },
-  primary: "#1db954"
-};
+import theme from "./theme";
 
 export default createGlobalStyle`
   html, body, #root {
@@ -44,7 +16,7 @@ export default createGlobalStyle`
     color: ${theme.foreground.default};
     font-family: "Roboto", sans-serif;
     font-size: ${theme.font.size.medium};
-    font-seight: ${theme.font.weight.normal};
+    font-weight: ${theme.font.weight.normal};
     user-select: none;
   }
 
@@ -54,7 +26,13 @@ export default createGlobalStyle`
   }
 
   button {
+    background: transparent;
     border: 0;
+    color: ${theme.foreground.default};
+    cursor: pointer;
+    font-family: "Roboto", sans-serif;
+    font-size: ${theme.font.size.medium};
+    font-weight: ${theme.font.weight.normal};
 
     &:focus {
       outline: none;
@@ -65,3 +43,5 @@ export default createGlobalStyle`
     list-style: none;
   }
 `;
+
+export { default as theme } from "./theme";
