@@ -1,12 +1,13 @@
 import React, { Component, createRef, SyntheticEvent } from "react";
 import { connect } from "react-redux";
+import { Track } from "../../types";
 import { State } from "../../reducers";
-import { Context, selectSource, selectContext } from "../../reducers/player";
+import { selectCurrent, Commands, selectCommands } from "../../reducers/player";
 import { loaded, playing, update, paused } from "../../actions/player";
 
 interface Props {
-  source?: string;
-  context: Context;
+  track?: Track;
+  commands: Commands;
   loaded: (duration: number) => void;
   playing: () => void;
   update: (elaped: number) => void;
@@ -19,7 +20,7 @@ class Audio extends Component<Props> {
   componentDidUpdate() {
     const { current } = this.audio;
     if (current) {
-      const { shouldPlay, shouldPause } = this.props.context;
+      const { shouldPlay, shouldPause } = this.props.commands;
       if (shouldPlay) {
         current.play();
       } else if (shouldPause) {
@@ -47,12 +48,12 @@ class Audio extends Component<Props> {
   };
 
   render() {
-    const { source } = this.props;
+    const { track } = this.props;
 
     return (
       <audio
         ref={this.audio}
-        src={source}
+        src={track && track.preview_url}
         onLoadedMetadata={this.handleLoaded}
         onPlay={this.handlePlay}
         onTimeUpdate={this.handleUpdate}
@@ -63,8 +64,8 @@ class Audio extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  source: selectSource(state),
-  context: selectContext(state)
+  track: selectCurrent(state),
+  commands: selectCommands(state)
 });
 
 const mapDispatch = {

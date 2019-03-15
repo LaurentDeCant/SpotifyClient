@@ -5,7 +5,7 @@ import {
   Route,
   withRouter
 } from "react-router-dom";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 import DefaultRoute from "../DefaultRoute";
 import Categories from "./Categories";
 import NewReleases from "./NewReleases";
@@ -19,7 +19,7 @@ const StyledList = styled.ul`
   align-items: center;
   display: flex;
   flex-flow: row;
-  font-size: ${props => props.theme.font.size.medum};
+  font-size: ${props => props.theme.font.size.medium};
   font-weight: ${props => props.theme.font.weight.light};
   justify-content: center;
   margin-bottom: 25px;

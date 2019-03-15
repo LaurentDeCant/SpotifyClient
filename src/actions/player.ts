@@ -10,8 +10,8 @@ export enum ActionType {
   Playing = "PLAYING",
   Update = "UPDATE",
   Paused = "PAUSED",
-  TryPlay = "TRY_PLAY",
-  TryPause = "TRY_PAUSE"
+  PlayCurrent = "PLAY_CURRENT",
+  PauseCurrent = "PAUSE_CURRENT"
 }
 
 export interface PlayTrackSuccessAction
@@ -70,18 +70,18 @@ export function paused() {
   };
 }
 
-export function tryPlay() {
+export function playCurrent() {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.TryPlay
+      type: ActionType.PlayCurrent
     });
   };
 }
 
-export function tryPause() {
+export function pauseCurrent() {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.TryPause
+      type: ActionType.PauseCurrent
     });
   };
 }

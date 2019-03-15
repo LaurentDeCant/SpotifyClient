@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 import { State } from "../../reducers";
-import { Context, selectContext } from "../../reducers/player";
-import { tryPlay, tryPause } from "../../actions/player";
+import {
+  TrackState,
+  selectState,
+  Times,
+  selectTimes
+} from "../../reducers/player";
+import { playCurrent, pauseCurrent } from "../../actions/player";
 import Icon, { IconType } from "../Icon";
 import Audio from "./Audio";
 
@@ -85,22 +90,20 @@ const ProgressBar = styled.div`
 `;
 
 interface Props {
-  context: Context;
-  tryPlay: () => void;
-  tryPause: () => void;
+  state: TrackState;
+  times: Times;
+  playCurrent: () => void;
+  pauseCurrent: () => void;
 }
 
 class Player extends Component<Props> {
   handleToggleClick = () => {
-    const {
-      context: { isPlaying },
-      tryPlay,
-      tryPause
-    } = this.props;
-    if (isPlaying) {
-      tryPause();
-    } else {
-      tryPlay();
+    const { state, playCurrent, pauseCurrent } = this.props;
+
+    if (state === TrackState.isPlaying) {
+      pauseCurrent();
+    } else if (state === TrackState.isPaused) {
+      playCurrent();
     }
   };
 
@@ -117,12 +120,9 @@ class Player extends Component<Props> {
 
   render() {
     const {
-      isLoaded,
-      duration,
-      isPlaying,
-      elapsed,
-      remaining
-    } = this.props.context;
+      state,
+      times: { duration, elapsed, remaining }
+    } = this.props;
     const progress = elapsed / duration;
 
     return (
@@ -132,9 +132,16 @@ class Player extends Component<Props> {
             <StyledIcon type={IconType.SkipPrevious} />
           </StyledButton>
 
-          <MainButton onClick={this.handleToggleClick} disabled={!isLoaded}>
+          <MainButton
+            onClick={this.handleToggleClick}
+            disabled={state === TrackState.None}
+          >
             <StyledIcon
-              type={isPlaying ? IconType.Pause : IconType.PlayArrow}
+              type={
+                state === TrackState.isPlaying
+                  ? IconType.Pause
+                  : IconType.PlayArrow
+              }
             />
           </MainButton>
 
@@ -156,12 +163,13 @@ class Player extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  context: selectContext(state)
+  state: selectState(state),
+  times: selectTimes(state)
 });
 
 const mapDispatch = {
-  tryPlay: tryPlay,
-  tryPause: tryPause
+  playCurrent: playCurrent,
+  pauseCurrent: pauseCurrent
 };
 
 export default connect(

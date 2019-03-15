@@ -4,12 +4,13 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "./styles/styled";
 import rootReducer from "./reducers";
 import App from "./components/layout/App";
 import { checkRedirection, initAuthorization } from "./helpers/authorization";
 import fetchMiddleware from "./middlewares/fetchMiddleware";
-import GlobalStyle, { theme } from "./styles";
+import { theme } from "./styles/theme";
+import GlobalStyle from "./styles/global";
 
 checkRedirection();
 const store = createStore(

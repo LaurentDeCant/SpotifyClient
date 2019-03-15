@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 import { Category, Playlist } from "../../types";
 import { State } from "../../reducers";
 import {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
 import { State } from "../../reducers";
 import { isAuthorized } from "../../reducers/authorization";

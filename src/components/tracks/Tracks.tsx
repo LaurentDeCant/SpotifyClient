@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 import { connect } from "react-redux";
 import { Track } from "../../types";
-import { loadTrack } from "../../actions/player";
+import { State } from "../../reducers";
+import { selectCurrent, TrackState, selectState } from "../../reducers/player";
+import { loadTrack, playCurrent, pauseCurrent } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Icon, { IconType } from "../Icon";
 
@@ -22,26 +24,33 @@ const Button = styled.button`
   }
 `;
 
-const Preview = styled(Icon)`
-  color: ${props => props.theme.foreground.dark};
+const StyedIcon = styled(Icon)`
   margin-right: 15px;
+`;
+
+const EnabledIcon = styled(StyedIcon)`
+  color: ${props => props.theme.foreground.dark};
 
   ${Button}:hover & {
     display: none;
   }
 `;
 
-const NoPreview = styled(Icon)`
+const DisabledIcon = styled(StyedIcon)`
   color: ${props => props.theme.foreground.dark};
-  margin-right: 15px;
 `;
 
-const Play = styled(Icon)`
+const ActionIcon = styled(StyedIcon)`
   display: none;
-  margin-right: 15px;
 
   ${Button}:hover & {
     display: block;
+  }
+`;
+
+const StateIcon = styled(StyedIcon)`
+  ${Button}:hover & {
+    display: none;
   }
 `;
 
@@ -57,6 +66,7 @@ const Title = styled.span`
   align-items: center;
   display: flex;
   flex-grow: 1;
+  margin-bottom: 5px;
 `;
 
 const Artist = styled.span`
@@ -72,12 +82,24 @@ const Duration = styled.span`
 
 interface Props {
   tracks: Track[];
-  playTrack: (trackId: string) => void;
+  current: Track | undefined;
+  state: TrackState;
+  loadTrack: (trackId: string) => void;
+  playCurrent: () => void;
+  pauseCurrent: () => void;
 }
 
 class Tracks extends Component<Props> {
   handleClick = (trackId: string) => {
-    this.props.playTrack(trackId);
+    const { current, state, loadTrack, playCurrent, pauseCurrent } = this.props;
+
+    if (state === TrackState.None || (current && current.id !== trackId)) {
+      loadTrack(trackId);
+    } else if (state === TrackState.isPlaying) {
+      pauseCurrent();
+    } else if (state === TrackState.isPaused) {
+      playCurrent();
+    }
   };
 
   hasPreview(track: Track) {
@@ -85,13 +107,24 @@ class Tracks extends Component<Props> {
   }
 
   renderIcon(track: Track) {
-    return track.preview_url ? (
+    const { current, state } = this.props;
+    const hasPreview = track.preview_url;
+    const isLoaded =
+      state !== TrackState.None && current && current.id === track.id;
+    const isPlaying =
+      state === TrackState.isPlaying && current && current.id === track.id;
+
+    return hasPreview ? (
       <>
-        <Preview type={IconType.MusicNote} />
-        <Play type={IconType.PlayArrow} />
+        {isPlaying ? (
+          <StateIcon type={IconType.VolumeUp} />
+        ) : (
+          <EnabledIcon type={IconType.MusicNote} />
+        )}
+        <ActionIcon type={isPlaying ? IconType.Pause : IconType.PlayArrow} />
       </>
     ) : (
-      <NoPreview type={IconType.MusicOff} />
+      <DisabledIcon type={IconType.MusicOff} />
     );
   }
 
@@ -136,10 +169,15 @@ class Tracks extends Component<Props> {
   }
 }
 
-const mapState = () => ({});
+const mapState = (state: State) => ({
+  current: selectCurrent(state),
+  state: selectState(state)
+});
 
 const mapDispatch = {
-  playTrack: loadTrack
+  loadTrack: loadTrack,
+  playCurrent: playCurrent,
+  pauseCurrent: pauseCurrent
 };
 
 export default connect(

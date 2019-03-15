@@ -1,4 +1,33 @@
-export default {
+export interface Theme {
+  background: {
+    light: string;
+    default: string;
+    dark: string;
+    hover: string;
+    active: string;
+  };
+  font: {
+    size: {
+      small: string;
+      medium: string;
+      large: string;
+      extraLarge: string;
+      extraExtraLarge: string;
+    };
+    weight: {
+      light: number;
+      normal: number;
+      bold: number;
+    };
+  };
+  foreground: {
+    default: string;
+    dark: string;
+  };
+  primary: string;
+}
+
+export const theme: Theme = {
   background: {
     light: "#303030",
     default: "#202020",

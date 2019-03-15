@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ComponentType } from "react";
-import styled from "styled-components";
+import styled from "../styles/styled";
 
 const Fader = styled.div`
   opacity: ${(props: Props) => (props.isLoading ? "0" : "1")};

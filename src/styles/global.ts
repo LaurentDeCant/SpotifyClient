@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import theme from "./theme";
+import { theme } from "./theme";
 
 export default createGlobalStyle`
   html, body, #root {
@@ -46,5 +46,3 @@ export default createGlobalStyle`
     list-style: none;
   }
 `;
-
-export { default as theme } from "./theme";

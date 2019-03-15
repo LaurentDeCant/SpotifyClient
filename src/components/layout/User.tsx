@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
 import Icon, { IconType } from "../Icon";
 

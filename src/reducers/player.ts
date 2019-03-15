@@ -1,4 +1,5 @@
 import createReducer from "../helpers/createReducer";
+import { Track } from "../types";
 import {
   ActionType,
   LoadedAction,
@@ -7,11 +8,19 @@ import {
 } from "../actions/player";
 import { State as CombinedState } from ".";
 
+export enum TrackState {
+  None,
+  isLoaded,
+  isPlaying,
+  isPaused
+}
+
 export interface State {
-  source?: string;
-  isLoaded: boolean;
+  current?: Track;
+  state: TrackState;
+  // isLoaded: boolean;
   duration: number;
-  isPlaying: boolean;
+  // isPlaying: boolean;
   elapsed: number;
   remaining: number;
   shouldPlay: boolean;
@@ -19,9 +28,10 @@ export interface State {
 }
 
 const initialState: State = {
-  isLoaded: false,
+  state: TrackState.None,
+  // isLoaded: false,
   duration: 0,
-  isPlaying: false,
+  // isPlaying: false,
   elapsed: 0,
   remaining: 0,
   shouldPlay: false,
@@ -32,65 +42,78 @@ export default createReducer(initialState, {
   [ActionType.LoadTrackSuccess]: (
     state: State,
     action: PlayTrackSuccessAction
-  ) => ({
+  ): State => ({
     ...state,
-    source: action.payload.preview_url,
-    isLoaded: true,
+    current: action.payload,
+    // isLoaded: true,
+    state: TrackState.isLoaded,
     shouldPlay: true,
     shouldPause: false
   }),
-  [ActionType.Loaded]: (state: State, action: LoadedAction) => ({
+  [ActionType.Loaded]: (state: State, action: LoadedAction): State => ({
     ...state,
     duration: action.payload
   }),
-  [ActionType.Playing]: (state: State) => ({
+  [ActionType.Playing]: (state: State): State => ({
     ...state,
-    isPlaying: true
+    // isPlaying: true
+    state: TrackState.isPlaying
   }),
-  [ActionType.Update]: (state: State, action: UpdateAction) => ({
+  [ActionType.Update]: (state: State, action: UpdateAction): State => ({
     ...state,
     elapsed: action.payload,
     remaining: state.duration - action.payload
   }),
-  [ActionType.Paused]: (state: State) => ({
+  [ActionType.Paused]: (state: State): State => ({
     ...state,
-    isPlaying: false
+    // isPlaying: false
+    state: TrackState.isPaused
   }),
-  [ActionType.TryPlay]: (state: State) => ({
+  [ActionType.PlayCurrent]: (state: State): State => ({
     ...state,
     shouldPlay: true,
     shouldPause: false
   }),
-  [ActionType.TryPause]: (state: State) => ({
+  [ActionType.PauseCurrent]: (state: State): State => ({
     ...state,
     shouldPlay: false,
     shouldPause: true
   })
 });
 
-export interface Context {
-  isLoaded: boolean;
+export function selectCurrent(state: CombinedState): Track | undefined {
+  return state.player.current;
+}
+
+export function selectState(state: CombinedState): TrackState {
+  return state.player.state;
+}
+
+export interface Times {
   duration: number;
-  isPlaying: boolean;
   elapsed: number;
   remaining: number;
+}
+
+export function selectTimes(state: CombinedState): Times {
+  const { player } = state;
+
+  return {
+    duration: player.duration,
+    elapsed: player.elapsed,
+    remaining: player.remaining
+  };
+}
+
+export interface Commands {
   shouldPlay: boolean;
   shouldPause: boolean;
 }
 
-export function selectSource(state: CombinedState): string | undefined {
-  return state.player.source;
-}
-
-export function selectContext(state: CombinedState): Context {
+export function selectCommands(state: CombinedState): Commands {
   const { player } = state;
 
   return {
-    isLoaded: player.isLoaded,
-    duration: player.duration,
-    isPlaying: player.isPlaying,
-    elapsed: player.elapsed,
-    remaining: player.remaining,
     shouldPlay: player.shouldPlay,
     shouldPause: player.shouldPause
   };

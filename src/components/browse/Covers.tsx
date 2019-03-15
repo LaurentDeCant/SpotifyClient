@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 
 const StyledList = styled.ul`
   align-content: flex-start;

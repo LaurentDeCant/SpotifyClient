@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import styled from "styled-components";
+import styled from "../../styles/styled";
 import Header from "./Header";
 import Menu from "./Menu";
 import DefaultRoute from "../DefaultRoute";
