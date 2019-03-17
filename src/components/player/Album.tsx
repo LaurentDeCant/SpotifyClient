@@ -25,7 +25,6 @@ const Title = styled.span`
 
 const Artist = styled.span`
   color: ${props => props.theme.foreground.dark};
-  font-size: ${props => props.theme.font.size.small}
   font-weight: ${props => props.theme.font.weight.light};
 `;
 

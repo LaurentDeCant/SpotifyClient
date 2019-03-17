@@ -8,9 +8,11 @@ import { loadTrack, playCurrent, pauseCurrent } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Icon, { IconType } from "../Icon";
 
-const Button = styled.button`
+const Button = styled.button<{ isLoaded: boolean }>`
   align-items: center;
   border-radius: 5px;
+  color: ${props =>
+    props.isLoaded ? props.theme.primaryLight : props.theme.foreground.default};
   display: flex;
   margin-bottom: 5px;
   padding: 10px;
@@ -25,33 +27,14 @@ const Button = styled.button`
   }
 `;
 
-const StyedIcon = styled(Icon)`
+const StyledIcon = styled(Icon)<{
+  isHidden?: boolean;
+}>`
+  display: ${props => (props.isHidden ? "none" : "block")};
   margin-right: 15px;
-`;
 
-const EnabledIcon = styled(StyedIcon)`
-  color: ${props => props.theme.foreground.dark};
-
-  ${Button}:hover & {
-    display: none;
-  }
-`;
-
-const DisabledIcon = styled(StyedIcon)`
-  color: ${props => props.theme.foreground.dark};
-`;
-
-const ActionIcon = styled(StyedIcon)`
-  display: none;
-
-  ${Button}:hover & {
-    display: block;
-  }
-`;
-
-const StateIcon = styled(StyedIcon)`
-  ${Button}:hover & {
-    display: none;
+  ${Button}:not(:disabled):hover & {
+    display: ${props => (props.isHidden ? "block" : "none")};
   }
 `;
 
@@ -63,10 +46,8 @@ const Infos = styled.div`
   height: 100%;
 `;
 
-const Title = styled.span<{ isLoaded: boolean }>`
+const Title = styled.span`
   align-items: center;
-  color: ${props =>
-    props.isLoaded ? props.theme.primaryLight : props.theme.foreground.default}
   display: flex;
   flex-grow: 1;
   margin-bottom: 5px;
@@ -122,15 +103,14 @@ class Tracks extends Component<Props> {
 
     return hasPreview ? (
       <>
-        {isPlaying ? (
-          <StateIcon type={IconType.VolumeUp} />
-        ) : (
-          <EnabledIcon type={IconType.MusicNote} />
-        )}
-        <ActionIcon type={isPlaying ? IconType.Pause : IconType.PlayArrow} />
+        <StyledIcon type={isPlaying ? IconType.VolumeUp : IconType.MusicNote} />
+        <StyledIcon
+          type={isPlaying ? IconType.Pause : IconType.PlayArrow}
+          isHidden={true}
+        />
       </>
     ) : (
-      <DisabledIcon type={IconType.MusicOff} />
+      <StyledIcon type={IconType.MusicOff} />
     );
   }
 
@@ -163,11 +143,12 @@ class Tracks extends Component<Props> {
               <Button
                 onClick={() => this.handleClick(track.id)}
                 disabled={!this.isDisabled(track)}
+                isLoaded={this.isLoaded(track)}
               >
                 {this.renderIcon(track, isLoaded)}
 
                 <Infos>
-                  <Title isLoaded={isLoaded}>{track.name}</Title>
+                  <Title>{track.name}</Title>
                   {this.renderArtist(track)}
                 </Infos>
 

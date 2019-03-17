@@ -1,4 +1,4 @@
-import createReducer from "../helpers/createReducer";
+import createReducer from "../helpers/reducer";
 import { UserProfile } from "../types";
 import { ActionType, UserProfileSuccessAction } from "../actions/userProfile";
 import { State as CombinedState } from ".";

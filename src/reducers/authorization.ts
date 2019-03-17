@@ -1,4 +1,4 @@
-import createReducer from "../helpers/createReducer";
+import createReducer from "../helpers/reducer";
 import {
   ActionType,
   ReceiveAuthorizationAction

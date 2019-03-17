@@ -1,4 +1,4 @@
-function averageColor(image: HTMLImageElement) {
+export default function averageColor(image: HTMLImageElement) {
   const rgb = [0, 0, 0];
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
@@ -19,5 +19,3 @@ function averageColor(image: HTMLImageElement) {
 
   return rgb;
 }
-
-export default averageColor;
