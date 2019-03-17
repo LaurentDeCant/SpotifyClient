@@ -18,9 +18,7 @@ export enum TrackState {
 export interface State {
   current?: Track;
   state: TrackState;
-  // isLoaded: boolean;
   duration: number;
-  // isPlaying: boolean;
   elapsed: number;
   remaining: number;
   shouldPlay: boolean;
@@ -29,9 +27,7 @@ export interface State {
 
 const initialState: State = {
   state: TrackState.None,
-  // isLoaded: false,
   duration: 0,
-  // isPlaying: false,
   elapsed: 0,
   remaining: 0,
   shouldPlay: false,
@@ -45,7 +41,6 @@ export default createReducer(initialState, {
   ): State => ({
     ...state,
     current: action.payload,
-    // isLoaded: true,
     state: TrackState.isLoaded,
     shouldPlay: true,
     shouldPause: false
@@ -56,8 +51,8 @@ export default createReducer(initialState, {
   }),
   [ActionType.Playing]: (state: State): State => ({
     ...state,
-    // isPlaying: true
-    state: TrackState.isPlaying
+    state: TrackState.isPlaying,
+    shouldPlay: false
   }),
   [ActionType.Update]: (state: State, action: UpdateAction): State => ({
     ...state,
@@ -66,8 +61,8 @@ export default createReducer(initialState, {
   }),
   [ActionType.Paused]: (state: State): State => ({
     ...state,
-    // isPlaying: false
-    state: TrackState.isPaused
+    state: TrackState.isPaused,
+    shouldPause: false
   }),
   [ActionType.PlayCurrent]: (state: State): State => ({
     ...state,

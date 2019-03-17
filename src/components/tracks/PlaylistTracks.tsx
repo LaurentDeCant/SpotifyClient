@@ -41,7 +41,7 @@ class PlaylistTracks extends Component<Props> {
         {playlist && (
           <Cover
             image={playlist.images[0].url}
-            title={playlist.name}
+            name={playlist.name}
             artist={playlist.owner.display_name}
           />
         )}

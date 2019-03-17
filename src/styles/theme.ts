@@ -24,7 +24,11 @@ export interface Theme {
     default: string;
     dark: string;
   };
+  primaryLight: string;
   primary: string;
+  filter: {
+    darken: string;
+  };
 }
 
 export const theme: Theme = {
@@ -53,5 +57,9 @@ export const theme: Theme = {
     default: "#ffffff",
     dark: "rgba(255, 255, 255, 0.4)"
   },
-  primary: "#1db954"
+  primary: "#1db954",
+  primaryLight: "#1ed760",
+  filter: {
+    darken: "brightness(0.5)"
+  }
 };

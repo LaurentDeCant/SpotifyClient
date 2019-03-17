@@ -42,7 +42,7 @@ class AlbumTracks extends Component<Props> {
         {album && (
           <Cover
             image={album.images[0].url}
-            title={album.name}
+            name={album.name}
             artist={joinArtistNames(album.artists)}
           />
         )}

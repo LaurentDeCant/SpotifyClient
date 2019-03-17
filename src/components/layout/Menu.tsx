@@ -27,7 +27,7 @@ const StyledNavLink = styled(NavLink)`
   }
 
   &.active {
-    border-right: 5px solid ${props => props.theme.primary};
+    border-right: 5px solid ${props => props.theme.primaryLight};
     color: ${props => props.theme.foreground.default};
     padding-right: 45px;
   }

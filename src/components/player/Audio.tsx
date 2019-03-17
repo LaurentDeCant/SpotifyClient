@@ -19,8 +19,10 @@ class Audio extends Component<Props> {
 
   componentDidUpdate() {
     const { current } = this.audio;
+
     if (current) {
       const { shouldPlay, shouldPause } = this.props.commands;
+
       if (shouldPlay) {
         current.play();
       } else if (shouldPause) {

@@ -43,7 +43,7 @@ const StyledNavLink = styled(NavLink)`
   }
 
   &.active&::after {
-    background: ${props => props.theme.primary};
+    background: ${props => props.theme.primaryLight};
     bottom: 0;
     content: "";
     height: 2.5px;

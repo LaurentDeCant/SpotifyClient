@@ -1,18 +1,18 @@
 import React, { FunctionComponent, ComponentType } from "react";
 import styled from "../styles/styled";
 
-const Fader = styled.div`
-  opacity: ${(props: Props) => (props.isLoading ? "0" : "1")};
-  transition: ${(props: Props) => (props.isLoading ? "all 0" : "all 0.2s")};
+const Fader = styled.div<{ isLoading: number }>`
+  opacity: ${props => (props.isLoading ? "0" : "1")};
+  transition: ${props => (props.isLoading ? "all 0" : "all 0.2s")};
 `;
 
-const Loader = styled.div`
+const Loader = styled.div<{ isLoading: number }>`
   height: 5px;
   left: 0;
   position: absolute;
-  opacity: ${(props: Props) => (props.isLoading ? "1" : "0")};
+  opacity: ${props => (props.isLoading ? "1" : "0")};
   top: 0;
-  transition: ${(props: Props) => (props.isLoading ? "all 0" : "all 0.2s")};
+  transition: ${props => (props.isLoading ? "all 0" : "all 0.2s")};
   width: 100%;
 
   &::before {

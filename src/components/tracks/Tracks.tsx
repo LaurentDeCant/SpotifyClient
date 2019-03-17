@@ -12,6 +12,7 @@ const Button = styled.button`
   align-items: center;
   border-radius: 5px;
   display: flex;
+  margin-bottom: 5px;
   padding: 10px;
   width: 100%;
 
@@ -54,7 +55,7 @@ const StateIcon = styled(StyedIcon)`
   }
 `;
 
-const Div = styled.div`
+const Infos = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -62,8 +63,10 @@ const Div = styled.div`
   height: 100%;
 `;
 
-const Title = styled.span`
+const Title = styled.span<{ isLoaded: boolean }>`
   align-items: center;
+  color: ${props =>
+    props.isLoaded ? props.theme.primaryLight : props.theme.foreground.default}
   display: flex;
   flex-grow: 1;
   margin-bottom: 5px;
@@ -102,17 +105,20 @@ class Tracks extends Component<Props> {
     }
   };
 
-  hasPreview(track: Track) {
+  isLoaded(track: Track) {
+    const { current } = this.props;
+
+    return !!current && current.id === track.id;
+  }
+
+  isDisabled(track: Track) {
     return !!track.preview_url;
   }
 
-  renderIcon(track: Track) {
-    const { current, state } = this.props;
+  renderIcon(track: Track, isLoaded: boolean) {
+    const { state } = this.props;
     const hasPreview = track.preview_url;
-    const isLoaded =
-      state !== TrackState.None && current && current.id === track.id;
-    const isPlaying =
-      state === TrackState.isPlaying && current && current.id === track.id;
+    const isPlaying = isLoaded && state === TrackState.isPlaying;
 
     return hasPreview ? (
       <>
@@ -149,21 +155,27 @@ class Tracks extends Component<Props> {
 
     return (
       <ul>
-        {tracks.map(track => (
-          <li key={track.id}>
-            <Button
-              onClick={() => this.handleClick(track.id)}
-              disabled={!this.hasPreview(track)}
-            >
-              {this.renderIcon(track)}
-              <Div>
-                <Title>{track.name}</Title>
-                {this.renderArtist(track)}
-              </Div>
-              {this.renderDuration(track)}
-            </Button>
-          </li>
-        ))}
+        {tracks.map(track => {
+          const isLoaded = this.isLoaded(track);
+
+          return (
+            <li key={track.id}>
+              <Button
+                onClick={() => this.handleClick(track.id)}
+                disabled={!this.isDisabled(track)}
+              >
+                {this.renderIcon(track, isLoaded)}
+
+                <Infos>
+                  <Title isLoaded={isLoaded}>{track.name}</Title>
+                  {this.renderArtist(track)}
+                </Infos>
+
+                {this.renderDuration(track)}
+              </Button>
+            </li>
+          );
+        })}
       </ul>
     );
   }

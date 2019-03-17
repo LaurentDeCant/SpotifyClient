@@ -44,7 +44,7 @@ const Image = styled.img`
   width: 200px;
 `;
 
-const Title = styled.span`
+const Name = styled.span`
   margin-bottom: 5px;
   text-align: center;
   width: 200px;
@@ -81,7 +81,7 @@ class Covers extends Component<Props> {
             <Button onClick={() => this.handleClick(item.id)}>
               <Image src={item.image} />
             </Button>
-            <Title>{item.title}</Title>
+            <Name>{item.title}</Name>
             {item.artist && <Artist>{item.artist}</Artist>}
           </StyledItem>
         ))}
