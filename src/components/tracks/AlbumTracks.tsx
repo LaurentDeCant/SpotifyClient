@@ -8,7 +8,7 @@ import {
   selectAlbum,
   selectAlbumTracks
 } from "../../reducers/albums";
-import { getAlbum, getAlbumTracks } from "../../actions/albums";
+import { getAlbum } from "../../actions/albums";
 import { joinArtistNames } from "../../helpers/utils";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
@@ -23,15 +23,17 @@ interface Props extends RouteComponentProps<Params> {
   album?: Album;
   tracks: Track[];
   getAlbum: (albumId: string) => void;
-  getTracks: (albumId: string) => void;
 }
 
 class AlbumTracks extends Component<Props> {
   componentDidMount() {
-    const { getAlbum, getTracks, match } = this.props;
-    const { albumId } = match.params;
+    const {
+      getAlbum,
+      match: {
+        params: { albumId }
+      }
+    } = this.props;
     getAlbum(albumId);
-    getTracks(albumId);
   }
 
   render() {
@@ -59,8 +61,7 @@ const mapState = (state: State) => ({
 });
 
 const mapDispatch = {
-  getAlbum: (albumId: string) => getAlbum(albumId),
-  getTracks: (albumId: string) => getAlbumTracks(albumId)
+  getAlbum: (albumId: string) => getAlbum(albumId)
 };
 
 export default withRouter(

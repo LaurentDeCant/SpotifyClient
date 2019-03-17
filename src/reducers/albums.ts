@@ -15,13 +15,11 @@ import {
 
 export interface State extends FetchableState {
   album?: Album;
-  tracks: Track[];
 }
 
 const initialState: State = {
   fetchs: 0,
-  album: undefined,
-  tracks: []
+  album: undefined
 };
 
 export default createReducer(initialState, {
@@ -31,18 +29,7 @@ export default createReducer(initialState, {
       ...state,
       album: action.payload
     }),
-  [ActionType.AlbumFailure]: endFetching,
-
-  [ActionType.AlbumTracksRequest]: startFetching,
-  [ActionType.AlbumTracksSuccess]: (
-    state: State,
-    action: AlbumTracksSuccessAction
-  ) =>
-    endFetching({
-      ...state,
-      tracks: action.payload
-    }),
-  [ActionType.AlbumTracksFailure]: endFetching
+  [ActionType.AlbumFailure]: endFetching
 });
 
 export function selectIsFetching(state: CombinedState): boolean {
@@ -54,5 +41,6 @@ export function selectAlbum(state: CombinedState): Album | undefined {
 }
 
 export function selectAlbumTracks(state: CombinedState): Track[] {
-  return state.albums.tracks;
+  const { album } = state.albums;
+  return album ? album.tracks.items : [];
 }

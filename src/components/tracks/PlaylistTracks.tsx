@@ -8,7 +8,7 @@ import {
   selectPlaylistTracks,
   selectPlaylist
 } from "../../reducers/playlists";
-import { getPlaylistTracks, getPlaylist } from "../../actions/playlists";
+import { getPlaylist } from "../../actions/playlists";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
 import withLoader from "../withLoader";
@@ -22,15 +22,17 @@ interface Props extends RouteComponentProps<Params> {
   playlist?: Playlist;
   tracks: Track[];
   getPlaylist: (playlistId: string) => void;
-  getTracks: (playlistId: string) => void;
 }
 
 class PlaylistTracks extends Component<Props> {
   componentDidMount() {
-    const { getPlaylist, getTracks, match } = this.props;
-    const { playlistId } = match.params;
+    const {
+      getPlaylist,
+      match: {
+        params: { playlistId }
+      }
+    } = this.props;
     getPlaylist(playlistId);
-    getTracks(playlistId);
   }
 
   render() {
@@ -58,8 +60,7 @@ const mapState = (state: State) => ({
 });
 
 const mapDispatch = {
-  getPlaylist: (playlistId: string) => getPlaylist(playlistId),
-  getTracks: (playlistId: string) => getPlaylistTracks(playlistId)
+  getPlaylist: (playlistId: string) => getPlaylist(playlistId)
 };
 
 export default withRouter(

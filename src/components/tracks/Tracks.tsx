@@ -68,17 +68,17 @@ interface Props {
   tracks: Track[];
   current: Track | undefined;
   state: TrackState;
-  loadTrack: (track: Track) => void;
+  loadTrack: (trackId: string) => void;
   playCurrent: () => void;
   pauseCurrent: () => void;
 }
 
 class Tracks extends Component<Props> {
-  handleClick = (track: Track) => {
+  handleClick = (trackId: string) => {
     const { current, state, loadTrack, playCurrent, pauseCurrent } = this.props;
 
-    if (state === TrackState.None || (current && current.id !== track.id)) {
-      loadTrack(track);
+    if (state === TrackState.None || (current && current.id !== trackId)) {
+      loadTrack(trackId);
     } else if (state === TrackState.isPlaying) {
       pauseCurrent();
     } else if (state === TrackState.isPaused) {
@@ -141,7 +141,7 @@ class Tracks extends Component<Props> {
           return (
             <li key={track.id}>
               <Button
-                onClick={() => this.handleClick(track)}
+                onClick={() => this.handleClick(track.id)}
                 disabled={!this.isDisabled(track)}
                 isLoaded={this.isLoaded(track)}
               >

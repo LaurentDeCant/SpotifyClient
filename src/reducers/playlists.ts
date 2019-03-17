@@ -1,10 +1,6 @@
 import createReducer from "../helpers/reducer";
-import { Playlist, PlaylistTrack, Track } from "../types";
-import {
-  ActionType,
-  PlaylistSuccessAction,
-  PlaylistTracksSuccessAction
-} from "../actions/playlists";
+import { Playlist, Track } from "../types";
+import { ActionType, PlaylistSuccessAction } from "../actions/playlists";
 import { State as CombinedState } from ".";
 import {
   FetchableState,
@@ -15,13 +11,11 @@ import {
 
 export interface State extends FetchableState {
   playlist?: Playlist;
-  playlistTracks: PlaylistTrack[];
 }
 
 const initialState: State = {
   fetchs: 0,
-  playlist: undefined,
-  playlistTracks: []
+  playlist: undefined
 };
 
 export default createReducer(initialState, {
@@ -31,18 +25,7 @@ export default createReducer(initialState, {
       ...state,
       playlist: action.payload
     }),
-  [ActionType.PlaylistFailure]: endFetching,
-
-  [ActionType.PlaylistTracksRequest]: startFetching,
-  [ActionType.PlaylistTracksSuccess]: (
-    state: State,
-    action: PlaylistTracksSuccessAction
-  ) =>
-    endFetching({
-      ...state,
-      playlistTracks: action.payload
-    }),
-  [ActionType.PlaylistTracksFailure]: endFetching
+  [ActionType.PlaylistFailure]: endFetching
 });
 
 export function selectIsFetching(state: CombinedState): boolean {
@@ -54,7 +37,11 @@ export function selectPlaylist(state: CombinedState): Playlist | undefined {
 }
 
 export function selectPlaylistTracks(state: CombinedState): Track[] {
-  return state.playlists.playlistTracks
-    .filter(playlistTrack => playlistTrack.track)
-    .map(playlistTrack => playlistTrack.track);
+  const { playlist } = state.playlists;
+
+  return playlist
+    ? playlist.tracks.items
+        .filter(playlistTrack => playlistTrack.track)
+        .map(playlistTrack => playlistTrack.track)
+    : [];
 }
