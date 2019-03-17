@@ -1,11 +1,9 @@
 import { Dispatch } from "redux";
 import { Track } from "../types";
-import { FetchDispatch, PayloadAction } from "./types";
+import { PayloadAction } from "./types";
 
 export enum ActionType {
-  LoadTrackRequest = "LOAD_TRACK_REQUEST",
-  LoadTrackSuccess = "LOAD_TRACK_SUCCESS",
-  LoadTrackFailure = "LOAD_TRACK_FAILURE",
+  LoadTrack = "LOAD_TRACK",
   Loaded = "LOADED",
   Playing = "PLAYING",
   Update = "UPDATE",
@@ -14,18 +12,14 @@ export enum ActionType {
   PauseCurrent = "PAUSE_CURRENT"
 }
 
-export interface PlayTrackSuccessAction
-  extends PayloadAction<ActionType.LoadTrackSuccess, Track> {}
+export interface LoadTrackAction
+  extends PayloadAction<ActionType.LoadTrack, Track> {}
 
-export function loadTrack(trackId: string) {
-  return (dispatch: FetchDispatch) => {
+export function loadTrack(track: Track) {
+  return (dispatch: Dispatch) => {
     dispatch({
-      types: [
-        ActionType.LoadTrackRequest,
-        ActionType.LoadTrackSuccess,
-        ActionType.LoadTrackFailure
-      ],
-      path: `tracks/${trackId}`
+      type: ActionType.Loaded,
+      payload: track
     });
   };
 }

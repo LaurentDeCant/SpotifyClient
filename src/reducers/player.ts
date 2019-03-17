@@ -4,7 +4,7 @@ import {
   ActionType,
   LoadedAction,
   UpdateAction,
-  PlayTrackSuccessAction
+  LoadTrackAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
 
@@ -35,10 +35,7 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.LoadTrackSuccess]: (
-    state: State,
-    action: PlayTrackSuccessAction
-  ): State => ({
+  [ActionType.LoadTrack]: (state: State, action: LoadTrackAction): State => ({
     ...state,
     current: action.payload,
     state: TrackState.isLoaded,

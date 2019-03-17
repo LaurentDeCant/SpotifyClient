@@ -59,15 +59,15 @@ class Browse extends Component<RouteComponentProps> {
     const { match } = this.props;
     const links = [
       {
-        url: "/categories",
+        url: "categories",
         label: "Categories"
       },
       {
-        url: "/new-releases",
+        url: "new-releases",
         label: "New Releases"
       },
       {
-        url: "/featured-playist",
+        url: "featured-playist",
         label: "Featured Playlists"
       }
     ];
@@ -77,7 +77,7 @@ class Browse extends Component<RouteComponentProps> {
         <StyledList>
           {links.map(link => (
             <li key={link.url}>
-              <StyledNavLink to={`${match.url}${link.url}`}>
+              <StyledNavLink to={`${match.url}/${link.url}`}>
                 {link.label}
               </StyledNavLink>
             </li>

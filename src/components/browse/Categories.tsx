@@ -21,7 +21,9 @@ class Categories extends Component<Props> {
 
   handleClick = (categoryId: string) => {
     const { history } = this.props;
-    history.push(`/categories/${categoryId}/playlists`);
+    history.push(
+      `${process.env.PUBLIC_URL}/categories/${categoryId}/playlists`
+    );
   };
 
   render() {

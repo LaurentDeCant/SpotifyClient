@@ -3,6 +3,7 @@ import { authorizedFetch } from "../helpers/authorization";
 
 export default () => (next: Dispatch) => (action: any) => {
   const { types, path, select } = action;
+
   if (types) {
     const [requestType, successType, failureType] = types;
     next({ type: requestType });

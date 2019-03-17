@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "../../styles/styled";
 import Icon, { IconType } from "../Icon";
 
@@ -41,13 +41,13 @@ const Menu = () => {
   return (
     <Wrapper>
       <li>
-        <StyledNavLink to="/browse">
+        <StyledNavLink to={`${process.env.PUBLIC_URL}/browse`}>
           <StyledIcon type={IconType.ViewModule} />
           <span>Browse</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to="/search">
+        <StyledNavLink to={`${process.env.PUBLIC_URL}/search`}>
           <StyledIcon type={IconType.Search} />
           <span>Search</span>
         </StyledNavLink>
@@ -56,4 +56,4 @@ const Menu = () => {
   );
 };
 
-export default withRouter(Menu);
+export default Menu;

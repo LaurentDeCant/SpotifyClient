@@ -24,7 +24,7 @@ class FeaturedPlaylists extends Component<Props> {
 
   handleClick = (playlistId: string) => {
     const { history } = this.props;
-    history.push(`/playlists/${playlistId}/tracks`);
+    history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
   };
 
   render() {

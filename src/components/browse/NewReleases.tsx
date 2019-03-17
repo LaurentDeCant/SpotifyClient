@@ -22,7 +22,7 @@ class NewReleases extends Component<Props> {
 
   handleClick = (albumId: string) => {
     const { history } = this.props;
-    history.push(`/albums/${albumId}/tracks`);
+    history.push(`${process.env.PUBLIC_URL}/albums/${albumId}/tracks`);
   };
 
   render() {
