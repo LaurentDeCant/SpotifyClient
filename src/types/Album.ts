@@ -4,13 +4,13 @@ import {
   ExternalId,
   ExternalUrl,
   Image,
-  Paging,
   Restriction,
   Track
 } from ".";
 
 export interface Album {
   album_type: string;
+  artistIds: string[];
   artists: Artist[];
   available_markets: string[];
   coyrights: Copyright[];
@@ -26,7 +26,8 @@ export interface Album {
   release_date: string;
   release_date_precision: string;
   restrictions: Restriction[];
-  tracks: Paging<Track>;
+  trackIds: string[];
+  tracks: Track[];
   type: string;
   uri: string;
 }

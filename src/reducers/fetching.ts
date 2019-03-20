@@ -1,16 +1,16 @@
 export interface FetchableState {
-  fetchs: number;
+  isFetching: boolean;
 }
 
 export const startFetching = <S extends FetchableState>(state: S): S => ({
   ...state,
-  fetchs: state.fetchs + 1
+  isFetching: true
 });
 
 export const endFetching = <S extends FetchableState>(state: S): S => ({
   ...state,
-  fetchs: state.fetchs - 1
+  isFetching: false
 });
 
 export const isFetching = <S extends FetchableState>(state: S): boolean =>
-  state.fetchs !== 0;
+  state.isFetching;

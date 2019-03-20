@@ -3,6 +3,7 @@ export * from "./Artist";
 export * from "./Category";
 export * from "./Copyright";
 export * from "./Endpoint";
+export * from "./Entities";
 export * from "./ExternalId";
 export * from "./ExternalUrl";
 export * from "./Followers";

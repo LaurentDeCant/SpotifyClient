@@ -15,20 +15,22 @@ import {
   endFetching,
   isFetching
 } from "./fetching";
+import { selectPlaylists } from "./playlists";
+import { selectAlbums } from "./albums";
 
 export interface State extends FetchableState {
-  categories: Category[];
-  newReleases: Album[];
-  featuredPlaylists: Playlist[];
-  categoryPlaylists: Playlist[];
+  categoriesById: { [id: string]: Category };
+  categoryPlaylistIds: string[];
+  featuredPlaylistIds: string[];
+  newReleaseIds: string[];
 }
 
 const initialState: State = {
-  fetchs: 0,
-  categories: [],
-  newReleases: [],
-  featuredPlaylists: [],
-  categoryPlaylists: []
+  isFetching: false,
+  categoriesById: {},
+  categoryPlaylistIds: [],
+  featuredPlaylistIds: [],
+  newReleaseIds: []
 };
 
 export default createReducer(initialState, {
@@ -36,53 +38,56 @@ export default createReducer(initialState, {
   [ActionType.CategoriesSuccess]: (
     state: State,
     action: CategoriesSuccessAction
-  ) =>
+  ): State =>
     endFetching({
       ...state,
-      categories: action.payload
+      categoriesById: action.payload.categories
     }),
   [ActionType.CategoriesFailure]: endFetching,
 
   [ActionType.CategoryRequest]: startFetching,
-  [ActionType.CategorySuccess]: (state: State, action: CategorySuccessAction) =>
+  [ActionType.CategorySuccess]: (
+    state: State,
+    action: CategorySuccessAction
+  ): State =>
     endFetching({
       ...state,
-      categories: [...state.categories, action.payload]
+      categoriesById: action.payload.categories
     }),
   [ActionType.CategoryFailure]: endFetching,
-
-  [ActionType.NewReleasesRequest]: startFetching,
-  [ActionType.NewReleasesSuccess]: (
-    state: State,
-    action: NewReleasesSuccessAction
-  ) =>
-    endFetching({
-      ...state,
-      newReleases: action.payload
-    }),
-  [ActionType.NewReleasesFailure]: endFetching,
-
-  [ActionType.FeaturedPlaylistsRequest]: startFetching,
-  [ActionType.FeaturedPlaylistsSuccess]: (
-    state: State,
-    action: FeaturedPlaylistsSuccessAction
-  ) =>
-    endFetching({
-      ...state,
-      featuredPlaylists: action.payload
-    }),
-  [ActionType.FeaturedPlaylistsFailure]: endFetching,
 
   [ActionType.CategoryPlaylistsRequest]: startFetching,
   [ActionType.CategoryPlaylistsSuccess]: (
     state: State,
     action: CategoryPlaylistsSuccessAction
-  ) =>
+  ): State =>
     endFetching({
       ...state,
-      categoryPlaylists: action.payload
+      categoryPlaylistIds: Object.keys(action.payload.playlists)
     }),
-  [ActionType.CategoryPlaylistsFailure]: endFetching
+  [ActionType.CategoryPlaylistsFailure]: endFetching,
+
+  [ActionType.FeaturedPlaylistsRequest]: startFetching,
+  [ActionType.FeaturedPlaylistsSuccess]: (
+    state: State,
+    action: FeaturedPlaylistsSuccessAction
+  ): State =>
+    endFetching({
+      ...state,
+      featuredPlaylistIds: Object.keys(action.payload.playlists)
+    }),
+  [ActionType.FeaturedPlaylistsFailure]: endFetching,
+
+  [ActionType.NewReleasesRequest]: startFetching,
+  [ActionType.NewReleasesSuccess]: (
+    state: State,
+    action: NewReleasesSuccessAction
+  ): State =>
+    endFetching({
+      ...state,
+      newReleaseIds: Object.keys(action.payload.albums)
+    }),
+  [ActionType.NewReleasesFailure]: endFetching
 });
 
 export function selectIsFetching(state: CombinedState): boolean {
@@ -90,24 +95,24 @@ export function selectIsFetching(state: CombinedState): boolean {
 }
 
 export function selectCategories(state: CombinedState): Category[] {
-  return state.browse.categories;
+  return Object.values(state.browse.categoriesById);
 }
 
 export function selectCategory(
   state: CombinedState,
   categoryId: string
 ): Category | undefined {
-  return state.browse.categories.find(category => category.id === categoryId);
-}
-
-export function selectNewReleases(state: CombinedState): Album[] {
-  return state.browse.newReleases;
-}
-
-export function selectFeaturedPlaylists(state: CombinedState): Playlist[] {
-  return state.browse.featuredPlaylists;
+  return state.browse.categoriesById[categoryId];
 }
 
 export function selectCategoryPlaylists(state: CombinedState): Playlist[] {
-  return state.browse.categoryPlaylists;
+  return selectPlaylists(state, state.browse.categoryPlaylistIds);
+}
+
+export function selectFeaturedPlaylists(state: CombinedState): Playlist[] {
+  return selectPlaylists(state, state.browse.featuredPlaylistIds);
+}
+
+export function selectNewReleases(state: CombinedState): Album[] {
+  return selectAlbums(state, state.browse.newReleaseIds);
 }

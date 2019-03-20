@@ -9,6 +9,7 @@ import {
 
 export interface Track {
   album: Album;
+  artistIds: string[];
   artists: Artist[];
   available_markets: string[];
   disc_number: number;

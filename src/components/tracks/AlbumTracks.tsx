@@ -3,11 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Album, Track } from "../../types";
 import { State } from "../../reducers";
-import {
-  selectIsFetching,
-  selectAlbum,
-  selectAlbumTracks
-} from "../../reducers/albums";
+import { selectIsFetching, selectAlbum } from "../../reducers/albums";
 import { getAlbum } from "../../actions/albums";
 import { joinArtistNames } from "../../helpers/utils";
 import Cover from "./Cover";
@@ -21,7 +17,6 @@ interface Params {
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   album?: Album;
-  tracks: Track[];
   getAlbum: (albumId: string) => void;
 }
 
@@ -37,28 +32,32 @@ class AlbumTracks extends Component<Props> {
   }
 
   render() {
-    const { album, tracks } = this.props;
+    const { album } = this.props;
 
-    return (
-      <div>
-        {album && (
-          <Cover
-            image={album.images[0].url}
-            name={album.name}
-            artist={joinArtistNames(album.artists)}
-          />
-        )}
-        <Tracks tracks={tracks} />
-      </div>
+    return album ? (
+      <>
+        <Cover
+          image={album.images[0].url}
+          name={album.name}
+          artist={joinArtistNames(album.artists)}
+        />
+        <Tracks tracks={album.tracks} />
+      </>
+    ) : (
+      <></>
     );
   }
 }
 
-const mapState = (state: State) => ({
-  isLoading: selectIsFetching(state),
-  album: selectAlbum(state),
-  tracks: selectAlbumTracks(state)
-});
+const mapState = (state: State, ownProps: Props) => {
+  const { match } = ownProps;
+  const { albumId } = match.params;
+
+  return {
+    isLoading: selectIsFetching(state),
+    album: selectAlbum(state, albumId)
+  };
+};
 
 const mapDispatch = {
   getAlbum: (albumId: string) => getAlbum(albumId)

@@ -1,6 +1,9 @@
+import merge from "lodash/merge";
 import createReducer from "../helpers/reducer";
-import { Playlist, Track } from "../types";
+import { Playlist } from "../types";
+import { EntitiesAction } from "../actions/types";
 import { ActionType, PlaylistSuccessAction } from "../actions/playlists";
+import { ActionType as BrowseActionType } from "../actions/browse";
 import { State as CombinedState } from ".";
 import {
   FetchableState,
@@ -8,40 +11,50 @@ import {
   endFetching,
   isFetching
 } from "./fetching";
+import { selectTracks } from "./tracks";
 
 export interface State extends FetchableState {
-  playlist?: Playlist;
+  byId: { [id: string]: Playlist };
 }
 
 const initialState: State = {
-  fetchs: 0,
-  playlist: undefined
+  isFetching: false,
+  byId: {}
 };
+
+function mergePlaylists(state: State, action: EntitiesAction<any>): State {
+  return merge({}, state, { byId: action.payload.playlists });
+}
 
 export default createReducer(initialState, {
   [ActionType.PlaylistRequest]: startFetching,
-  [ActionType.PlaylistSuccess]: (state: State, action: PlaylistSuccessAction) =>
-    endFetching({
-      ...state,
-      playlist: action.payload
-    }),
-  [ActionType.PlaylistFailure]: endFetching
+  [ActionType.PlaylistSuccess]: (
+    state: State,
+    action: PlaylistSuccessAction
+  ): State => endFetching(mergePlaylists(state, action)),
+  [ActionType.PlaylistFailure]: endFetching,
+
+  [BrowseActionType.CategoryPlaylistsSuccess]: mergePlaylists,
+  [BrowseActionType.FeaturedPlaylistsSuccess]: mergePlaylists
 });
 
 export function selectIsFetching(state: CombinedState): boolean {
   return isFetching(state.playlists);
 }
 
-export function selectPlaylist(state: CombinedState): Playlist | undefined {
-  return state.playlists.playlist;
+export function selectPlaylist(
+  state: CombinedState,
+  playlistId: string
+): Playlist {
+  const playlist = state.playlists.byId[playlistId];
+  playlist.tracks = selectTracks(state, playlist.trackIds);
+
+  return playlist;
 }
 
-export function selectPlaylistTracks(state: CombinedState): Track[] {
-  const { playlist } = state.playlists;
-
-  return playlist
-    ? playlist.tracks.items
-        .filter(playlistTrack => playlistTrack.track)
-        .map(playlistTrack => playlistTrack.track)
-    : [];
+export function selectPlaylists(
+  state: CombinedState,
+  playlistIds: string[]
+): Playlist[] {
+  return playlistIds.map(id => selectPlaylist(state, id));
 }

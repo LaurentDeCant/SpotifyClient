@@ -1,4 +1,4 @@
-import { ExternalUrl, Followers, Image, Paging, PlaylistTrack, User } from ".";
+import { ExternalUrl, Followers, Image, Track, User } from ".";
 
 export interface Playlist {
   collaborative: boolean;
@@ -12,7 +12,8 @@ export interface Playlist {
   owner: User;
   public: boolean | null;
   snapshot_id: string;
-  tracks: Paging<PlaylistTrack>;
+  trackIds: string[];
+  tracks: Track[];
   type: string;
   uri: string;
 }

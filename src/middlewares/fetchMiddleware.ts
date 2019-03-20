@@ -1,8 +1,9 @@
 import { Dispatch } from "redux";
+import { normalize } from "normalizr";
 import { authorizedFetch } from "../helpers/authorization";
 
 export default () => (next: Dispatch) => (action: any) => {
-  const { types, path, select } = action;
+  const { types, path, schema } = action;
 
   if (types) {
     const [requestType, successType, failureType] = types;
@@ -12,7 +13,10 @@ export default () => (next: Dispatch) => (action: any) => {
       response =>
         response.json().then(json => {
           if (response.ok) {
-            next({ type: successType, payload: select ? select(json) : json });
+            next({
+              type: successType,
+              payload: schema ? normalize(json, schema).entities : json
+            });
           } else {
             next({ type: failureType, payload: json.error });
           }

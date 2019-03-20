@@ -1,9 +1,11 @@
 import { Action } from "redux";
+import { schema } from "normalizr";
+import { Entities } from "../types";
 
 export interface FetchAction {
   types: string[];
   path: string;
-  select?: (json: object) => object;
+  schema?: schema.Entity;
 }
 
 export interface FetchDispatch {
@@ -13,3 +15,5 @@ export interface FetchDispatch {
 export interface PayloadAction<T, P> extends Action<T> {
   payload: P;
 }
+
+export interface EntitiesAction<T> extends PayloadAction<T, Entities> {}

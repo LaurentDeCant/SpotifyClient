@@ -3,11 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Playlist, Track } from "../../types";
 import { State } from "../../reducers";
-import {
-  selectIsFetching,
-  selectPlaylistTracks,
-  selectPlaylist
-} from "../../reducers/playlists";
+import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
 import { getPlaylist } from "../../actions/playlists";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
@@ -20,7 +16,6 @@ interface Params {
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   playlist?: Playlist;
-  tracks: Track[];
   getPlaylist: (playlistId: string) => void;
 }
 
@@ -36,28 +31,32 @@ class PlaylistTracks extends Component<Props> {
   }
 
   render() {
-    const { playlist, tracks } = this.props;
+    const { playlist } = this.props;
 
-    return (
-      <div>
-        {playlist && (
-          <Cover
-            image={playlist.images[0].url}
-            name={playlist.name}
-            artist={playlist.owner.display_name}
-          />
-        )}
-        <Tracks tracks={tracks} />
-      </div>
+    return playlist ? (
+      <>
+        <Cover
+          image={playlist.images[0].url}
+          name={playlist.name}
+          artist={playlist.owner.display_name}
+        />
+        <Tracks tracks={playlist.tracks} />
+      </>
+    ) : (
+      <></>
     );
   }
 }
 
-const mapState = (state: State) => ({
-  isLoading: selectIsFetching(state),
-  playlist: selectPlaylist(state),
-  tracks: selectPlaylistTracks(state)
-});
+const mapState = (state: State, ownProps: Props) => {
+  const { match } = ownProps;
+  const { playlistId } = match.params;
+
+  return {
+    isLoading: selectIsFetching(state),
+    playlist: selectPlaylist(state, playlistId)
+  };
+};
 
 const mapDispatch = {
   getPlaylist: (playlistId: string) => getPlaylist(playlistId)
