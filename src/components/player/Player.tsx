@@ -10,7 +10,7 @@ import {
   Times,
   selectTimes
 } from "../../reducers/player";
-import { playCurrent, pauseCurrent } from "../../actions/player";
+import { play, pause, seek } from "../../actions/player";
 import Album from "./Album";
 import Controls from "./Controls";
 import Progress from "./Progress";
@@ -43,13 +43,14 @@ interface Props {
   current?: Track;
   state: TrackState;
   times: Times;
-  playCurrent: () => void;
-  pauseCurrent: () => void;
+  play: () => void;
+  pause: () => void;
+  seek: (time: number) => void;
 }
 
 class Player extends Component<Props> {
   render() {
-    const { current, state, times, playCurrent, pauseCurrent } = this.props;
+    const { current, state, times, play, pause, seek } = this.props;
     const album = current && current.album;
 
     return (
@@ -69,13 +70,13 @@ class Player extends Component<Props> {
             <Controls
               state={state}
               times={times}
-              playCurrent={playCurrent}
-              pauseCurrent={pauseCurrent}
+              onPlay={play}
+              onPause={pause}
             />
             <Progress
               duration={times.duration}
-              elapsed={times.elapsed}
-              remaining={times.remaining}
+              currentTime={times.currentTime}
+              onSeek={seek}
             />
           </CenterWrapper>
 
@@ -95,8 +96,9 @@ const mapState = (state: State) => ({
 });
 
 const mapDispatch = {
-  playCurrent: playCurrent,
-  pauseCurrent: pauseCurrent
+  play: play,
+  pause: pause,
+  seek: seek
 };
 
 export default connect(

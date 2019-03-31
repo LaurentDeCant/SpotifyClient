@@ -1,4 +1,4 @@
-import React, { Props } from "react";
+import React from "react";
 
 export enum IconType {
   MusicNote = "music_note",
@@ -15,12 +15,12 @@ export enum IconType {
   Wifi = "wifi"
 }
 
-interface OwnProps {
+interface Props {
   type: IconType;
   className?: string;
 }
 
-const Icon = (props: OwnProps) => {
+const Icon = (props: Props) => {
   const { type, className } = props;
 
   return <i className={`material-icons ${className}`}>{type}</i>;

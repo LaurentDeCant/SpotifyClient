@@ -54,15 +54,15 @@ const Albums = new schema.Entity(
 const Track = new schema.Entity(
   "tracks",
   {
-    album: Album,
+    albumId: Album,
     artistIds: [Artist]
   },
   {
     processStrategy: (value, parent) => {
-      const { artists, ...rest } = value;
+      const { album, artists, ...rest } = value;
       return {
         ...rest,
-        album: parent["type"] === "album" ? parent : undefined,
+        albumId: parent["type"] === "album" ? parent : album,
         artistIds: artists
       };
     }

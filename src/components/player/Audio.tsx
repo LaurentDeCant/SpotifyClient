@@ -2,31 +2,45 @@ import React, { Component, createRef, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 import { Track } from "../../types";
 import { State } from "../../reducers";
-import { selectCurrent, Commands, selectCommands } from "../../reducers/player";
-import { loaded, playing, update, paused } from "../../actions/player";
+import {
+  selectCurrent,
+  Times,
+  Commands,
+  selectTimes,
+  selectCommands
+} from "../../reducers/player";
+import { loaded, playing, update, paused, seeked } from "../../actions/player";
 
 interface Props {
   track?: Track;
+  times: Times;
   commands: Commands;
   loaded: (duration: number) => void;
   playing: () => void;
   update: (elaped: number) => void;
   paused: () => void;
+  seeked: () => void;
 }
 
 class Audio extends Component<Props> {
   audio = createRef<HTMLAudioElement>();
 
   componentDidUpdate() {
-    const { current } = this.audio;
+    const audio = this.audio.current;
 
-    if (current) {
-      const { shouldPlay, shouldPause } = this.props.commands;
+    if (audio) {
+      const {
+        times: { currentTime },
+        commands: { shouldPlay, shouldPause, shouldSeek }
+      } = this.props;
 
       if (shouldPlay) {
-        current.play();
+        audio.play();
       } else if (shouldPause) {
-        current.pause();
+        audio.pause();
+      } else if (shouldSeek) {
+        console.log("seek");
+        audio.currentTime = currentTime;
       }
     }
   }
@@ -49,6 +63,10 @@ class Audio extends Component<Props> {
     this.props.paused();
   };
 
+  handleSeeked = () => {
+    this.props.seeked();
+  };
+
   render() {
     const { track } = this.props;
 
@@ -60,6 +78,7 @@ class Audio extends Component<Props> {
         onPlay={this.handlePlay}
         onTimeUpdate={this.handleUpdate}
         onPause={this.handlePause}
+        onSeeked={this.handleSeeked}
       />
     );
   }
@@ -67,6 +86,7 @@ class Audio extends Component<Props> {
 
 const mapState = (state: State) => ({
   track: selectCurrent(state),
+  times: selectTimes(state),
   commands: selectCommands(state)
 });
 
@@ -74,7 +94,8 @@ const mapDispatch = {
   loaded: loaded,
   playing: playing,
   update: update,
-  paused: paused
+  paused: paused,
+  seeked: seeked
 };
 
 export default connect(

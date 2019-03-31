@@ -47,7 +47,10 @@ export function selectPlaylist(
   playlistId: string
 ): Playlist {
   const playlist = state.playlists.byId[playlistId];
-  playlist.tracks = selectTracks(state, playlist.trackIds);
+
+  if (playlist) {
+    playlist.tracks = selectTracks(state, playlist.trackIds);
+  }
 
   return playlist;
 }

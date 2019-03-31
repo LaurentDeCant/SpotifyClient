@@ -1,31 +1,25 @@
 import { Dispatch } from "redux";
-import { Track } from "../types";
-import { FetchDispatch, PayloadAction } from "./types";
+import { PayloadAction } from "./types";
 
 export enum ActionType {
-  LoadTrackRequest = "LOAD_TRACK_REQUEST",
-  LoadTrackSuccess = "LOAD_TRACK_SUCCESS",
-  LoadTrackFailure = "LOAD_TRACK_FAILURE",
+  Load = "LOAD",
   Loaded = "LOADED",
   Playing = "PLAYING",
   Update = "UPDATE",
+  Play = "PLAY",
+  Pause = "PAUSE",
   Paused = "PAUSED",
-  PlayCurrent = "PLAY_CURRENT",
-  PauseCurrent = "PAUSE_CURRENT"
+  Seek = "SEEK",
+  Seeked = "SEEKED"
 }
 
-export interface PlayTrackSuccessAction
-  extends PayloadAction<ActionType.LoadTrackSuccess, Track> {}
+export interface LoadAction extends PayloadAction<ActionType.Load, string> {}
 
-export function loadTrack(trackId: string) {
-  return (dispatch: FetchDispatch) => {
+export function load(trackId: string) {
+  return (dispatch: Dispatch) => {
     dispatch({
-      types: [
-        ActionType.LoadTrackRequest,
-        ActionType.LoadTrackSuccess,
-        ActionType.LoadTrackFailure
-      ],
-      path: `tracks/${trackId}`
+      type: ActionType.Load,
+      payload: trackId
     });
   };
 }
@@ -62,6 +56,22 @@ export function update(elapsed: number) {
   };
 }
 
+export function play() {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.Play
+    });
+  };
+}
+
+export function pause() {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.Pause
+    });
+  };
+}
+
 export function paused() {
   return (dispatch: Dispatch) => {
     dispatch({
@@ -70,18 +80,21 @@ export function paused() {
   };
 }
 
-export function playCurrent() {
+export interface SeekAction extends PayloadAction<ActionType.Seek, number> {}
+
+export function seek(time: number) {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.PlayCurrent
+      type: ActionType.Seek,
+      payload: time
     });
   };
 }
 
-export function pauseCurrent() {
+export function seeked() {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.PauseCurrent
+      type: ActionType.Seeked
     });
   };
 }

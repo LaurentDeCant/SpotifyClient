@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
+import Slider from "./Slider";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -15,30 +16,14 @@ const ProgressTime = styled.div`
   font-weight: ${props => props.theme.font.weight.light};
 `;
 
-const ProgressBar = styled.div<{ progress: number }>`
-  background: ${props => props.theme.foreground.dark};
-  border-radius: 5px;
-  flex-grow: 1;
-  height: 2.5px;
-  margin: 0 10px;
-  position: relative;
-
-  &::before {
-    background: ${props => props.theme.primaryLight};
-    border-radius: 5px;
-    content: "";
-    height: 100%;
-    position: absolute;
-    width: ${props => props.progress * 100}%;
-
-    transition: width 0.2s;
-  }
+const StyledSlider = styled(Slider)`
+  margin: 0 15px;
 `;
 
 interface Props {
   duration: number;
-  elapsed: number;
-  remaining: number;
+  currentTime: number;
+  onSeek: (time: number) => void;
 }
 
 class Progress extends Component<Props> {
@@ -53,15 +38,20 @@ class Progress extends Component<Props> {
     );
   }
 
+  handleChange = (value: number) => {
+    const { duration, onSeek } = this.props;
+    onSeek(duration * value);
+  };
+
   render() {
-    const { duration, elapsed, remaining } = this.props;
-    const progress = elapsed / duration;
+    const { duration, currentTime } = this.props;
+    const progress = duration ? currentTime / duration : 0;
 
     return (
       <Wrapper>
-        {this.renderTime(elapsed)}
-        <ProgressBar progress={progress} />
-        {this.renderTime(remaining)}
+        {this.renderTime(currentTime)}
+        <StyledSlider value={progress} onChange={this.handleChange} />
+        {this.renderTime(duration)}
       </Wrapper>
     );
   }

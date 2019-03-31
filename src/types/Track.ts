@@ -8,6 +8,7 @@ import {
 } from ".";
 
 export interface Track {
+  albumId: string;
   album: Album;
   artistIds: string[];
   artists: Artist[];

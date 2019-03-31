@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import { selectCurrent, TrackState, selectState } from "../../reducers/player";
-import { loadTrack, playCurrent, pauseCurrent } from "../../actions/player";
+import { load, play, pause } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Icon, { IconType } from "../Icon";
 
@@ -68,21 +68,21 @@ interface Props {
   tracks: Track[];
   current: Track | undefined;
   state: TrackState;
-  loadTrack: (trackId: string) => void;
-  playCurrent: () => void;
-  pauseCurrent: () => void;
+  load: (trackId: string) => void;
+  play: () => void;
+  pause: () => void;
 }
 
 class Tracks extends Component<Props> {
   handleClick = (trackId: string) => {
-    const { current, state, loadTrack, playCurrent, pauseCurrent } = this.props;
+    const { current, state, load, play, pause } = this.props;
 
     if (state === TrackState.None || (current && current.id !== trackId)) {
-      loadTrack(trackId);
+      load(trackId);
     } else if (state === TrackState.isPlaying) {
-      pauseCurrent();
+      pause();
     } else if (state === TrackState.isPaused) {
-      playCurrent();
+      play();
     }
   };
 
@@ -168,9 +168,9 @@ const mapState = (state: State) => ({
 });
 
 const mapDispatch = {
-  loadTrack: loadTrack,
-  playCurrent: playCurrent,
-  pauseCurrent: pauseCurrent
+  load: load,
+  play: play,
+  pause: pause
 };
 
 export default connect(

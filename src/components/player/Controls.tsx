@@ -37,23 +37,23 @@ const StyledIcon = styled(Icon)`
 interface Props {
   state: TrackState;
   times: Times;
-  playCurrent: () => void;
-  pauseCurrent: () => void;
+  onPlay: () => void;
+  onPause: () => void;
 }
 
 class Controls extends Component<Props> {
   handleToggleClick = () => {
-    const { state, playCurrent, pauseCurrent } = this.props;
+    const { state, onPlay, onPause } = this.props;
 
     if (state === TrackState.isPlaying) {
-      pauseCurrent();
+      onPause();
     } else if (state === TrackState.isPaused) {
-      playCurrent();
+      onPlay();
     }
   };
 
   render() {
-    const { state, times } = this.props;
+    const { state } = this.props;
 
     return (
       <Wrapper>

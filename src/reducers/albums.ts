@@ -4,6 +4,7 @@ import { Album } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType, AlbumSuccessAction } from "../actions/albums";
 import { ActionType as BrowseActionType } from "../actions/browse";
+import { ActionType as PlaylistActionType } from "../actions/playlists";
 import { State as CombinedState } from ".";
 import {
   FetchableState,
@@ -35,7 +36,8 @@ export default createReducer(initialState, {
   ): State => endFetching(mergeAlbums(state, action)),
   [ActionType.AlbumFailure]: endFetching,
 
-  [BrowseActionType.NewReleasesSuccess]: mergeAlbums
+  [BrowseActionType.NewReleasesSuccess]: mergeAlbums,
+  [PlaylistActionType.PlaylistSuccess]: mergeAlbums
 });
 
 export function selectIsFetching(state: CombinedState): boolean {
@@ -44,8 +46,11 @@ export function selectIsFetching(state: CombinedState): boolean {
 
 export function selectAlbum(state: CombinedState, albumId: string): Album {
   const album = state.albums.byId[albumId];
-  album.artists = selectArtists(state, album.artistIds);
-  album.tracks = selectTracks(state, album.trackIds);
+
+  if (album) {
+    album.artists = selectArtists(state, album.artistIds);
+    album.tracks = selectTracks(state, album.trackIds);
+  }
 
   return album;
 }
