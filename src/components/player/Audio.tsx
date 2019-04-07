@@ -39,7 +39,6 @@ class Audio extends Component<Props> {
       } else if (shouldPause) {
         audio.pause();
       } else if (shouldSeek) {
-        console.log("seek");
         audio.currentTime = currentTime;
       }
     }

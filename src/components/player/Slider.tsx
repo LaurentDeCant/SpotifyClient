@@ -1,11 +1,11 @@
 import React, { Component, createRef } from "react";
 import styled from "../../styles/styled";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isDisabled: boolean }>`
   align-items: center;
   border-radius: 2.5px;
   display: flex;
-  cursor: pointer;
+  cursor: ${props => (props.isDisabled ? "default" : "pointer")};
   height: 20px;
   position: relative;
   width: 100%;
@@ -20,7 +20,7 @@ const Left = styled.div<{ width: number }>`
   width: calc(${props => props.width * 100}%);
 `;
 
-const Thumb = styled.div<{ position: number }>`
+const Thumb = styled.div<{ position: number; isDisabled: boolean }>`
   background: transparent;
   border-radius: 50%;
   height: 20px;
@@ -59,6 +59,7 @@ const Right = styled.div<{ width: number }>`
 interface Props {
   className?: string;
   value: number;
+  canChange: boolean;
   onChange?: (value: number) => void;
 }
 
@@ -68,6 +69,10 @@ interface State {
 }
 
 class Slider extends Component<Props, State> {
+  static defaultProps = {
+    canChange: true
+  };
+
   wrapper = createRef<HTMLDivElement>();
   thumb = createRef<HTMLDivElement>();
   state = {
@@ -94,6 +99,11 @@ class Slider extends Component<Props, State> {
   }
 
   handleMouseDown = (event: React.MouseEvent<HTMLElement>) => {
+    const { canChange } = this.props;
+    if (!canChange) {
+      return;
+    }
+
     this.setState({
       isDown: true,
       value: this.getValue(event.pageX)
@@ -127,17 +137,20 @@ class Slider extends Component<Props, State> {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, canChange } = this.props;
     const value = this.getCurrentValue();
 
     return (
       <Wrapper
         ref={this.wrapper}
         onMouseDown={this.handleMouseDown}
+        isDisabled={!canChange}
         className={className}
       >
         <Left width={value} />
-        <Thumb ref={this.thumb} position={value} />
+        {canChange && (
+          <Thumb ref={this.thumb} position={value} isDisabled={!canChange} />
+        )}
         <Right width={value} />
       </Wrapper>
     );

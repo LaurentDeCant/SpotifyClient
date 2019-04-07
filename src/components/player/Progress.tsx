@@ -23,6 +23,7 @@ const StyledSlider = styled(Slider)`
 interface Props {
   duration: number;
   currentTime: number;
+  canSeek: boolean;
   onSeek: (time: number) => void;
 }
 
@@ -44,13 +45,17 @@ class Progress extends Component<Props> {
   };
 
   render() {
-    const { duration, currentTime } = this.props;
+    const { duration, currentTime, canSeek } = this.props;
     const progress = duration ? currentTime / duration : 0;
 
     return (
       <Wrapper>
         {this.renderTime(currentTime)}
-        <StyledSlider value={progress} onChange={this.handleChange} />
+        <StyledSlider
+          value={progress}
+          onChange={this.handleChange}
+          canChange={canSeek}
+        />
         {this.renderTime(duration)}
       </Wrapper>
     );

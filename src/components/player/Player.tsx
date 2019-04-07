@@ -49,9 +49,15 @@ interface Props {
 }
 
 class Player extends Component<Props> {
+  canSeek() {
+    const { state } = this.props;
+    return state !== TrackState.None;
+  }
+
   render() {
     const { current, state, times, play, pause, seek } = this.props;
     const album = current && current.album;
+    const canSeek = this.canSeek();
 
     return (
       <>
@@ -76,6 +82,7 @@ class Player extends Component<Props> {
             <Progress
               duration={times.duration}
               currentTime={times.currentTime}
+              canSeek={canSeek}
               onSeek={seek}
             />
           </CenterWrapper>
