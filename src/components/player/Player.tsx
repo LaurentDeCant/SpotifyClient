@@ -8,13 +8,16 @@ import {
   TrackState,
   selectState,
   Times,
-  selectTimes
+  selectTimes,
+  Levels,
+  selectLevels
 } from "../../reducers/player";
-import { play, pause, seek } from "../../actions/player";
+import { play, pause, seek, change } from "../../actions/player";
 import Album from "./Album";
-import Controls from "./Controls";
-import Progress from "./Progress";
 import Audio from "./Audio";
+import Controls from "./Controls";
+import Playback from "./Playback";
+import Volume from "./Volume";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -31,6 +34,8 @@ const ThirdWrapper = styled.div`
   width: 33%;
 `;
 
+const LeftWrapper = styled(ThirdWrapper)``;
+
 const CenterWrapper = styled(ThirdWrapper)`
   align-items: center;
   display: flex;
@@ -39,13 +44,20 @@ const CenterWrapper = styled(ThirdWrapper)`
   justify-content: space-evenly;
 `;
 
+const RightWrapper = styled(ThirdWrapper)`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 interface Props {
   current?: Track;
   state: TrackState;
   times: Times;
+  levels: Levels;
   play: () => void;
   pause: () => void;
   seek: (time: number) => void;
+  changeVolume: (volume: number, isMuted: boolean) => void;
 }
 
 class Player extends Component<Props> {
@@ -55,14 +67,23 @@ class Player extends Component<Props> {
   }
 
   render() {
-    const { current, state, times, play, pause, seek } = this.props;
+    const {
+      current,
+      state,
+      times,
+      levels,
+      play,
+      pause,
+      seek,
+      changeVolume
+    } = this.props;
     const album = current && current.album;
     const canSeek = this.canSeek();
 
     return (
       <>
         <Wrapper>
-          <ThirdWrapper>
+          <LeftWrapper>
             {album && (
               <Album
                 image={album.images[0].url}
@@ -70,7 +91,7 @@ class Player extends Component<Props> {
                 artist={album.artists[0].name}
               />
             )}
-          </ThirdWrapper>
+          </LeftWrapper>
 
           <CenterWrapper>
             <Controls
@@ -79,7 +100,7 @@ class Player extends Component<Props> {
               onPlay={play}
               onPause={pause}
             />
-            <Progress
+            <Playback
               duration={times.duration}
               currentTime={times.currentTime}
               canSeek={canSeek}
@@ -87,7 +108,13 @@ class Player extends Component<Props> {
             />
           </CenterWrapper>
 
-          <ThirdWrapper />
+          <RightWrapper>
+            <Volume
+              volume={levels.volume}
+              isMuted={levels.isMuted}
+              onChange={changeVolume}
+            />
+          </RightWrapper>
         </Wrapper>
 
         <Audio />
@@ -99,13 +126,15 @@ class Player extends Component<Props> {
 const mapState = (state: State) => ({
   current: selectCurrent(state),
   state: selectState(state),
-  times: selectTimes(state)
+  times: selectTimes(state),
+  levels: selectLevels(state)
 });
 
 const mapDispatch = {
-  play: play,
-  pause: pause,
-  seek: seek
+  play,
+  pause,
+  seek,
+  changeVolume: change
 };
 
 export default connect(

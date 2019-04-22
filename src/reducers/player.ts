@@ -5,7 +5,8 @@ import {
   LoadedAction,
   UpdateAction,
   LoadAction,
-  SeekAction
+  SeekAction,
+  ChangeVolumeAction as ChangeAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
 import { selectTrack } from "./tracks";
@@ -25,6 +26,9 @@ export interface State {
   shouldPlay: boolean;
   shouldPause: boolean;
   shouldSeek: boolean;
+  volume: number;
+  isMuted: boolean;
+  shouldChange: boolean;
 }
 
 const initialState: State = {
@@ -33,7 +37,10 @@ const initialState: State = {
   currentTime: 0,
   shouldPlay: false,
   shouldPause: false,
-  shouldSeek: false
+  shouldSeek: false,
+  volume: 1,
+  isMuted: false,
+  shouldChange: false
 };
 
 export default createReducer(initialState, {
@@ -81,6 +88,15 @@ export default createReducer(initialState, {
   [ActionType.Seeked]: (state: State): State => ({
     ...state,
     shouldSeek: false
+  }),
+  [ActionType.Change]: (state: State, action: ChangeAction): State => ({
+    ...state,
+    ...action.payload,
+    shouldChange: true
+  }),
+  [ActionType.Changed]: (state: State): State => ({
+    ...state,
+    shouldChange: false
   })
 });
 
@@ -114,16 +130,34 @@ export interface Commands {
   shouldPlay: boolean;
   shouldPause: boolean;
   shouldSeek: boolean;
+  shouldChange: boolean;
 }
 
 export function selectCommands(state: CombinedState): Commands {
   const {
-    player: { shouldPlay, shouldPause, shouldSeek }
+    player: { shouldPlay, shouldPause, shouldSeek, shouldChange }
   } = state;
 
   return {
     shouldPlay,
     shouldPause,
-    shouldSeek
+    shouldSeek,
+    shouldChange
+  };
+}
+
+export interface Levels {
+  volume: number;
+  isMuted: boolean;
+}
+
+export function selectLevels(state: CombinedState): Levels {
+  const {
+    player: { volume, isMuted }
+  } = state;
+
+  return {
+    volume,
+    isMuted
   };
 }

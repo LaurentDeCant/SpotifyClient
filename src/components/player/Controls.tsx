@@ -1,37 +1,16 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
 import { TrackState, Times } from "../../reducers/player";
-import Icon, { IconType } from "../Icon";
+import { IconType } from "../Icon";
+import RoundButton from "./RoundButton";
 
 const Wrapper = styled.div`
   align-items: center;
   display: flex;
 `;
 
-const RoundButton = styled.button`
-  border-radius: 50%;
-  color: ${props => props.theme.foreground.dark};
-  display: flex;
-  margin: 0 10px;
-  padding: 5px;
-  position: relative;
-
-  &:not(:disabled):hover {
-    background: ${props => props.theme.background.hover};
-    color: ${props => props.theme.foreground.default};
-  }
-
-  &:not(:disabled):active {
-    background: ${props => props.theme.background.active};
-  }
-`;
-
 const MainButton = styled(RoundButton)`
   transform: scale(1.25);
-`;
-
-const StyledIcon = styled(Icon)`
-  font-size: 25px;
 `;
 
 interface Props {
@@ -57,26 +36,17 @@ class Controls extends Component<Props> {
 
     return (
       <Wrapper>
-        <RoundButton disabled={true}>
-          <StyledIcon type={IconType.SkipPrevious} />
-        </RoundButton>
+        <RoundButton disabled={true} iconType={IconType.SkipPrevious} />
 
         <MainButton
           onClick={this.handleToggleClick}
           disabled={state === TrackState.None}
-        >
-          <StyledIcon
-            type={
-              state === TrackState.isPlaying
-                ? IconType.Pause
-                : IconType.PlayArrow
-            }
-          />
-        </MainButton>
+          iconType={
+            state === TrackState.isPlaying ? IconType.Pause : IconType.PlayArrow
+          }
+        />
 
-        <RoundButton disabled={true}>
-          <StyledIcon type={IconType.SkipNext} />
-        </RoundButton>
+        <RoundButton disabled={true} iconType={IconType.SkipNext} />
       </Wrapper>
     );
   }

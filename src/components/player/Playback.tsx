@@ -27,7 +27,7 @@ interface Props {
   onSeek: (time: number) => void;
 }
 
-class Progress extends Component<Props> {
+class Playback extends Component<Props> {
   renderTime(seconds: number) {
     const minutes = Math.floor(seconds / 60);
     seconds = Math.round(seconds);
@@ -62,4 +62,4 @@ class Progress extends Component<Props> {
   }
 }
 
-export default Progress;
+export default Playback;

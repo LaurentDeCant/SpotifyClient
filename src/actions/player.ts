@@ -10,7 +10,9 @@ export enum ActionType {
   Pause = "PAUSE",
   Paused = "PAUSED",
   Seek = "SEEK",
-  Seeked = "SEEKED"
+  Seeked = "SEEKED",
+  Change = "CHANGE",
+  Changed = "CHANGED"
 }
 
 export interface LoadAction extends PayloadAction<ActionType.Load, string> {}
@@ -95,6 +97,32 @@ export function seeked() {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ActionType.Seeked
+    });
+  };
+}
+
+export interface ChangeVolumeAction
+  extends PayloadAction<
+    ActionType.Change,
+    { volume: number; isMuted: boolean }
+  > {}
+
+export function change(volume: number, isMuted: boolean) {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.Change,
+      payload: {
+        volume,
+        isMuted
+      }
+    });
+  };
+}
+
+export function changed() {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.Changed
     });
   };
 }

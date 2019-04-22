@@ -11,6 +11,7 @@ export enum IconType {
   SkipNext = "skip_next",
   SkipPrevious = "skip_previous",
   ViewModule = "view_module",
+  VolumeOff = "volume_off",
   VolumeUp = "volume_up",
   Wifi = "wifi"
 }

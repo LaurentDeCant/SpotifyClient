@@ -5,21 +5,32 @@ import { State } from "../../reducers";
 import {
   selectCurrent,
   Times,
-  Commands,
   selectTimes,
-  selectCommands
+  Commands,
+  selectCommands,
+  Levels,
+  selectLevels
 } from "../../reducers/player";
-import { loaded, playing, update, paused, seeked } from "../../actions/player";
+import {
+  loaded,
+  playing,
+  update,
+  paused,
+  seeked,
+  changed
+} from "../../actions/player";
 
 interface Props {
   track?: Track;
   times: Times;
   commands: Commands;
+  levels: Levels;
   loaded: (duration: number) => void;
   playing: () => void;
   update: (elaped: number) => void;
   paused: () => void;
   seeked: () => void;
+  changed: () => void;
 }
 
 class Audio extends Component<Props> {
@@ -31,7 +42,8 @@ class Audio extends Component<Props> {
     if (audio) {
       const {
         times: { currentTime },
-        commands: { shouldPlay, shouldPause, shouldSeek }
+        levels: { volume, isMuted },
+        commands: { shouldPlay, shouldPause, shouldSeek, shouldChange }
       } = this.props;
 
       if (shouldPlay) {
@@ -40,6 +52,8 @@ class Audio extends Component<Props> {
         audio.pause();
       } else if (shouldSeek) {
         audio.currentTime = currentTime;
+      } else if (shouldChange) {
+        audio.volume = isMuted ? 0 : volume;
       }
     }
   }
@@ -66,6 +80,10 @@ class Audio extends Component<Props> {
     this.props.seeked();
   };
 
+  handleChange = () => {
+    this.props.changed();
+  };
+
   render() {
     const { track } = this.props;
 
@@ -78,6 +96,7 @@ class Audio extends Component<Props> {
         onTimeUpdate={this.handleUpdate}
         onPause={this.handlePause}
         onSeeked={this.handleSeeked}
+        onVolumeChange={this.handleChange}
       />
     );
   }
@@ -86,15 +105,17 @@ class Audio extends Component<Props> {
 const mapState = (state: State) => ({
   track: selectCurrent(state),
   times: selectTimes(state),
-  commands: selectCommands(state)
+  commands: selectCommands(state),
+  levels: selectLevels(state)
 });
 
 const mapDispatch = {
-  loaded: loaded,
-  playing: playing,
-  update: update,
-  paused: paused,
-  seeked: seeked
+  loaded,
+  playing,
+  update,
+  paused,
+  seeked,
+  changed
 };
 
 export default connect(

@@ -69,7 +69,8 @@ interface State {
 }
 
 class Slider extends Component<Props, State> {
-  static defaultProps = {
+  public static defaultProps = {
+    value: 0,
     canChange: true
   };
 
