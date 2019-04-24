@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
+import Button from "../Button";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -12,7 +13,7 @@ const Image = styled.img`
   border-radius: 5px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 300px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   width: 300px;
 `;
 
@@ -24,6 +25,18 @@ const Title = styled.span`
 const Artist = styled.span`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.font.weight.light};
+  margin-bottom: 20px;
+`;
+
+const StyledButton = styled(Button)`
+  background: ${props => props.theme.primary};
+  border-radius: 20px;
+  color: ${props => props.theme.foreground.default};
+  padding: 10px 40px;
+
+  &::before {
+    border-radius: 20px;
+  }
 `;
 
 interface Props {
@@ -41,6 +54,7 @@ class Cover extends Component<Props> {
         <Image src={image} />
         <Title>{name}</Title>
         <Artist>{artist}</Artist>
+        <StyledButton>Play</StyledButton>
       </Wrapper>
     );
   }

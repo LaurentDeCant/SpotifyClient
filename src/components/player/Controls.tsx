@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "../../styles/styled";
 import { TrackState, Times } from "../../reducers/player";
 import { IconType } from "../Icon";
-import RoundButton from "./RoundButton";
+import RoundButton from "../RoundButton";
 
 const Wrapper = styled.div`
   align-items: center;

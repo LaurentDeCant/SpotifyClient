@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
 import { IconType } from "../Icon";
-import RoundButton from "./RoundButton";
+import RoundButton from "../RoundButton";
 import Slider from "./Slider";
 
 const Wrapper = styled.div`
