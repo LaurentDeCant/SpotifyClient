@@ -1,6 +1,6 @@
 import merge from "lodash/merge";
 import createReducer from "../helpers/reducer";
-import { Track } from "../types";
+import { Album, Track } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
 import { ActionType as AlbumActionType } from "../actions/albums";
@@ -25,12 +25,19 @@ export default createReducer(initialState, {
   [PlaylistActionType.PlaylistSuccess]: mergeTracks
 });
 
-export function selectTrack(state: CombinedState, trackId: string): Track {
-  const track = state.tracks.byId[trackId];
+export function selectTrack(
+  state: CombinedState,
+  trackId: string,
+  album: Album | undefined = undefined
+): Track {
+  let track = state.tracks.byId[trackId];
 
   if (track) {
-    track.album = selectAlbum(state, track.albumId);
-    track.artists = selectArtists(state, track.artistIds);
+    track = {
+      ...track,
+      album: album ? album : selectAlbum(state, track.albumId),
+      artists: selectArtists(state, track.artistIds)
+    };
   }
 
   return track;
@@ -38,7 +45,8 @@ export function selectTrack(state: CombinedState, trackId: string): Track {
 
 export function selectTracks(
   state: CombinedState,
-  trackIds: string[]
+  trackIds: string[],
+  album: Album | undefined = undefined
 ): Track[] {
-  return trackIds.map(id => selectTrack(state, id));
+  return trackIds ? trackIds.map(id => selectTrack(state, id, album)) : [];
 }

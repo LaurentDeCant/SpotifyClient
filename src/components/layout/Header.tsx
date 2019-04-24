@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
+import { ripple } from "../../styles/effects";
 import { UserProfile } from "../../types";
 import { State } from "../../reducers";
 import { isAuthorized } from "../../reducers/authorization";
@@ -23,19 +24,10 @@ const Wrapper = styled.header`
 `;
 
 const LoginButton = styled.button`
-  border: none;
-  color: ${props => props.theme.foreground.default};
+  ${ripple}
   font-size: 15px;
   height: 100%;
   padding: 0 20px;
-
-  &:hover {
-    background: ${props => props.theme.background.hover};
-  }
-
-  &:active {
-    background: ${props => props.theme.background.active};
-  }
 `;
 
 interface Props {

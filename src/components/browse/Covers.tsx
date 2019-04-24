@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
+import { ripple } from "../../styles/effects";
 
 const StyledList = styled.ul`
   align-content: flex-start;
@@ -17,26 +18,12 @@ const StyledItem = styled.li`
   margin: 10px;
 `;
 
-const Button = styled.button`
+const StyledButton = styled.button`
+  ${ripple}
   border-radius: 5px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
-  overflow: hidden;
-  position: relative;
   margin-bottom: 10px;
-
-  &:hover::before {
-    background: ${props => props.theme.background.hover};
-    content: "";
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-  }
-
-  &:active::before {
-    background: ${props => props.theme.background.active};
-  }
 `;
 
 const Image = styled.img`
@@ -78,9 +65,9 @@ class Covers extends Component<Props> {
       <StyledList>
         {items.map(item => (
           <StyledItem key={item.id}>
-            <Button onClick={() => this.handleClick(item.id)}>
+            <StyledButton onClick={() => this.handleClick(item.id)}>
               <Image src={item.image} />
-            </Button>
+            </StyledButton>
             <Name>{item.title}</Name>
             {item.artist && <Artist>{item.artist}</Artist>}
           </StyledItem>

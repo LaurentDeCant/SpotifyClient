@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import styled from "../../styles/styled";
 import { connect } from "react-redux";
+import styled from "../../styles/styled";
+import { ripple } from "../../styles/effects";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import { selectCurrent, TrackState, selectState } from "../../reducers/player";
@@ -8,7 +9,8 @@ import { load, play, pause } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Icon, { IconType } from "../Icon";
 
-const Button = styled.button<{ isLoaded: boolean }>`
+const StyledButton = styled.button<{ isLoaded: boolean }>`
+  ${ripple}
   align-items: center;
   border-radius: 5px;
   color: ${props =>
@@ -17,14 +19,6 @@ const Button = styled.button<{ isLoaded: boolean }>`
   margin-bottom: 5px;
   padding: 10px;
   width: 100%;
-
-  &:not(:disabled):hover {
-    background: ${props => props.theme.background.hover};
-  }
-
-  &:not(:disabled):active {
-    background: ${props => props.theme.background.active};
-  }
 `;
 
 const StyledIcon = styled(Icon)<{
@@ -33,7 +27,7 @@ const StyledIcon = styled(Icon)<{
   display: ${props => (props.isHidden ? "none" : "block")};
   margin-right: 15px;
 
-  ${Button}:not(:disabled):hover & {
+  ${StyledButton}:not(:disabled):hover & {
     display: ${props => (props.isHidden ? "block" : "none")};
   }
 `;
@@ -140,7 +134,7 @@ class Tracks extends Component<Props> {
 
           return (
             <li key={track.id}>
-              <Button
+              <StyledButton
                 onClick={() => this.handleClick(track.id)}
                 disabled={!this.isDisabled(track)}
                 isLoaded={this.isLoaded(track)}
@@ -153,7 +147,7 @@ class Tracks extends Component<Props> {
                 </Infos>
 
                 {this.renderDuration(track)}
-              </Button>
+              </StyledButton>
             </li>
           );
         })}

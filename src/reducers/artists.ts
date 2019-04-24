@@ -25,9 +25,13 @@ export default createReducer(initialState, {
   [BrowseActionType.NewReleasesSuccess]: mergeArtists
 });
 
+export function selectArtist(state: CombinedState, artistId: string): Artist {
+  return state.artists.byId[artistId];
+}
+
 export function selectArtists(
   state: CombinedState,
   artistIds: string[]
 ): Artist[] {
-  return artistIds.map(id => state.artists.byId[id]);
+  return artistIds ? artistIds.map(id => selectArtist(state, id)) : [];
 }

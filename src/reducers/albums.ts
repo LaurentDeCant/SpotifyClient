@@ -45,11 +45,14 @@ export function selectIsFetching(state: CombinedState): boolean {
 }
 
 export function selectAlbum(state: CombinedState, albumId: string): Album {
-  const album = state.albums.byId[albumId];
+  let album = state.albums.byId[albumId];
 
   if (album) {
-    album.artists = selectArtists(state, album.artistIds);
-    album.tracks = selectTracks(state, album.trackIds);
+    album = {
+      ...album,
+      artists: selectArtists(state, album.artistIds),
+      tracks: selectTracks(state, album.trackIds, album)
+    };
   }
 
   return album;
@@ -59,5 +62,5 @@ export function selectAlbums(
   state: CombinedState,
   albumIds: string[]
 ): Album[] {
-  return albumIds.map(id => selectAlbum(state, id));
+  return albumIds ? albumIds.map(id => selectAlbum(state, id)) : [];
 }

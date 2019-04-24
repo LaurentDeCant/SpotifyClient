@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
-import Button from "../Button";
+import { ripple } from "../../styles/effects";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -28,7 +28,8 @@ const Artist = styled.span`
   margin-bottom: 20px;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
+  ${ripple}
   background: ${props => props.theme.primary};
   border-radius: 20px;
   color: ${props => props.theme.foreground.default};

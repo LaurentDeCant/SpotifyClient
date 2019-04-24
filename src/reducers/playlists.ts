@@ -46,10 +46,10 @@ export function selectPlaylist(
   state: CombinedState,
   playlistId: string
 ): Playlist {
-  const playlist = state.playlists.byId[playlistId];
+  let playlist = state.playlists.byId[playlistId];
 
   if (playlist) {
-    playlist.tracks = selectTracks(state, playlist.trackIds);
+    playlist = { ...playlist, tracks: selectTracks(state, playlist.trackIds) };
   }
 
   return playlist;
@@ -59,5 +59,5 @@ export function selectPlaylists(
   state: CombinedState,
   playlistIds: string[]
 ): Playlist[] {
-  return playlistIds.map(id => selectPlaylist(state, id));
+  return playlistIds ? playlistIds.map(id => selectPlaylist(state, id)) : [];
 }
