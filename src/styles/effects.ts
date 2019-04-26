@@ -15,9 +15,10 @@ const ripple = (props: any) => `
   &::after {
     background: radial-gradient(circle, ${
       props.theme.background.active
-    } .1%, transparent .1%) center/200000%;
+    } 20%, transparent 20%);
     opacity: 0;
-    transition: background 0.8s, opacity 0.2s 0.2s;
+    transform: scale(5, 5);
+    transition: transform .2s, opacity 0s .2s;
   }
   
   &:not(:disabled):hover {
@@ -29,7 +30,7 @@ const ripple = (props: any) => `
   }
 
   &:not(:disabled):active::after {
-    background-size: 100%;
+    transform: scale(0, 0);
     opacity: 1;
     transition: 0s;
   }
