@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { ripple } from "../../styles/effects";
 import { UserProfile } from "../../types";
 import { State } from "../../reducers";
 import { isAuthorized } from "../../reducers/authorization";
 import { selectUserProfile } from "../../reducers/userProfile";
 import { getAuthorization } from "../../actions/authorization";
 import { getUserProfile } from "../../actions/userProfile";
+import Button from "../Button";
 import Title from "./Title";
 import User from "./User";
 
@@ -23,8 +23,7 @@ const Wrapper = styled.header`
   z-index: 2;
 `;
 
-const LoginButton = styled.button`
-  ${ripple}
+const LoginButton = styled(Button)`
   font-size: 15px;
   height: 100%;
   padding: 0 20px;

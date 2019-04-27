@@ -31,6 +31,8 @@ class AlbumTracks extends Component<Props> {
     getAlbum(albumId);
   }
 
+  handleToggle = () => {};
+
   render() {
     const { album } = this.props;
 
@@ -40,6 +42,7 @@ class AlbumTracks extends Component<Props> {
           image={album.images[0].url}
           name={album.name}
           artist={joinArtistNames(album.artists)}
+          onToggle={this.handleToggle}
         />
         <Tracks tracks={album.tracks} />
       </>

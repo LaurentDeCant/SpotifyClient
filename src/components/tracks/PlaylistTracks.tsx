@@ -30,6 +30,8 @@ class PlaylistTracks extends Component<Props> {
     getPlaylist(playlistId);
   }
 
+  handleToggle = () => {};
+
   render() {
     const { playlist } = this.props;
 
@@ -39,6 +41,7 @@ class PlaylistTracks extends Component<Props> {
           image={playlist.images[0].url}
           name={playlist.name}
           artist={playlist.owner.display_name}
+          onToggle={this.handleToggle}
         />
         <Tracks tracks={playlist.tracks} />
       </>

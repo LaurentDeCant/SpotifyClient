@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import {
-  selectCurrent,
+  selectLoadedTrack,
   Times,
   selectTimes,
   Commands,
@@ -17,11 +17,11 @@ import {
   update,
   paused,
   seeked,
-  changed
+  volumeChanged
 } from "../../actions/player";
 
 interface Props {
-  track?: Track;
+  loadedTrack?: Track;
   times: Times;
   commands: Commands;
   levels: Levels;
@@ -30,7 +30,7 @@ interface Props {
   update: (elaped: number) => void;
   paused: () => void;
   seeked: () => void;
-  changed: () => void;
+  volumeChanged: () => void;
 }
 
 class Audio extends Component<Props> {
@@ -81,16 +81,16 @@ class Audio extends Component<Props> {
   };
 
   handleChange = () => {
-    this.props.changed();
+    this.props.volumeChanged();
   };
 
   render() {
-    const { track } = this.props;
+    const { loadedTrack } = this.props;
 
     return (
       <audio
         ref={this.audio}
-        src={track && track.preview_url}
+        src={loadedTrack && loadedTrack.preview_url}
         onLoadedMetadata={this.handleLoaded}
         onPlay={this.handlePlay}
         onTimeUpdate={this.handleUpdate}
@@ -103,7 +103,7 @@ class Audio extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  track: selectCurrent(state),
+  loadedTrack: selectLoadedTrack(state),
   times: selectTimes(state),
   commands: selectCommands(state),
   levels: selectLevels(state)
@@ -115,7 +115,7 @@ const mapDispatch = {
   update,
   paused,
   seeked,
-  changed
+  volumeChanged
 };
 
 export default connect(

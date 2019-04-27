@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
-import { ripple } from "../../styles/effects";
+import Button from "../Button";
 
 const StyledList = styled.ul`
   align-content: flex-start;
@@ -18,8 +18,7 @@ const StyledItem = styled.li`
   margin: 10px;
 `;
 
-const StyledButton = styled.button`
-  ${ripple}
+const StyledButton = styled(Button)`
   border-radius: 5px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;

@@ -11,8 +11,10 @@ export enum ActionType {
   Paused = "PAUSED",
   Seek = "SEEK",
   Seeked = "SEEKED",
-  Change = "CHANGE",
-  Changed = "CHANGED"
+  ChangeVolume = "CHANGE_VOLUME",
+  VolumeChanged = "VOLUME_CHANGED",
+  LoadAlbum = "LOAD_ALBUM",
+  LadPlaylist = "LOAD_PLAYLIST"
 }
 
 export interface LoadAction extends PayloadAction<ActionType.Load, string> {}
@@ -103,14 +105,14 @@ export function seeked() {
 
 export interface ChangeVolumeAction
   extends PayloadAction<
-    ActionType.Change,
+    ActionType.ChangeVolume,
     { volume: number; isMuted: boolean }
   > {}
 
-export function change(volume: number, isMuted: boolean) {
+export function changeVolume(volume: number, isMuted: boolean) {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.Change,
+      type: ActionType.ChangeVolume,
       payload: {
         volume,
         isMuted
@@ -119,10 +121,10 @@ export function change(volume: number, isMuted: boolean) {
   };
 }
 
-export function changed() {
+export function volumeChanged() {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.Changed
+      type: ActionType.VolumeChanged
     });
   };
 }

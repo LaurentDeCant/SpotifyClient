@@ -2,11 +2,11 @@ import createReducer from "../helpers/reducer";
 import { Track } from "../types";
 import {
   ActionType,
+  LoadAction,
   LoadedAction,
   UpdateAction,
-  LoadAction,
   SeekAction,
-  ChangeVolumeAction as ChangeAction
+  ChangeVolumeAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
 import { selectTrack } from "./tracks";
@@ -19,7 +19,7 @@ export enum TrackState {
 }
 
 export interface State {
-  currentId?: string;
+  trackId?: string;
   state: TrackState;
   duration: number;
   currentTime: number;
@@ -46,7 +46,7 @@ const initialState: State = {
 export default createReducer(initialState, {
   [ActionType.Load]: (state: State, action: LoadAction): State => ({
     ...state,
-    currentId: action.payload,
+    trackId: action.payload,
     state: TrackState.isLoaded,
     shouldPlay: true,
     shouldPause: false
@@ -89,22 +89,25 @@ export default createReducer(initialState, {
     ...state,
     shouldSeek: false
   }),
-  [ActionType.Change]: (state: State, action: ChangeAction): State => ({
+  [ActionType.ChangeVolume]: (
+    state: State,
+    action: ChangeVolumeAction
+  ): State => ({
     ...state,
     ...action.payload,
     shouldChange: true
   }),
-  [ActionType.Changed]: (state: State): State => ({
+  [ActionType.VolumeChanged]: (state: State): State => ({
     ...state,
     shouldChange: false
   })
 });
 
-export function selectCurrent(state: CombinedState): Track | undefined {
-  const { currentId } = state.player;
+export function selectLoadedTrack(state: CombinedState): Track | undefined {
+  const { trackId } = state.player;
 
-  if (currentId) {
-    return selectTrack(state, currentId);
+  if (trackId) {
+    return selectTrack(state, trackId);
   }
 }
 

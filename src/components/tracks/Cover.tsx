@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
-import { ripple } from "../../styles/effects";
+import Button from "../Button";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -28,8 +28,7 @@ const Artist = styled.span`
   margin-bottom: 20px;
 `;
 
-const StyledButton = styled.button`
-  ${ripple}
+const StyledButton = styled(Button)`
   background: ${props => props.theme.primary};
   border-radius: 20px;
   color: ${props => props.theme.foreground.default};
@@ -44,18 +43,19 @@ interface Props {
   image: string;
   name: string;
   artist: string;
+  onToggle: () => void;
 }
 
 class Cover extends Component<Props> {
   render() {
-    const { image, name, artist } = this.props;
+    const { image, name, artist, onToggle } = this.props;
 
     return (
       <Wrapper>
         <Image src={image} />
         <Title>{name}</Title>
         <Artist>{artist}</Artist>
-        <StyledButton>Play</StyledButton>
+        <StyledButton onClick={onToggle}>Play</StyledButton>
       </Wrapper>
     );
   }

@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { ripple } from "../../styles/effects";
 import { Track } from "../../types";
 import { State } from "../../reducers";
-import { selectCurrent, TrackState, selectState } from "../../reducers/player";
+import {
+  selectLoadedTrack,
+  TrackState,
+  selectState
+} from "../../reducers/player";
 import { load, play, pause } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
+import Button from "../Button";
 import Icon, { IconType } from "../Icon";
 
-const StyledButton = styled.button<{ isLoaded: boolean }>`
-  ${ripple}
+const StyledButton = styled(Button)<{ isLoaded: boolean }>`
   align-items: center;
   border-radius: 5px;
   color: ${props =>
@@ -60,7 +63,7 @@ const Duration = styled.span`
 
 interface Props {
   tracks: Track[];
-  current: Track | undefined;
+  loadedTrack: Track | undefined;
   state: TrackState;
   load: (trackId: string) => void;
   play: () => void;
@@ -69,9 +72,12 @@ interface Props {
 
 class Tracks extends Component<Props> {
   handleClick = (trackId: string) => {
-    const { current, state, load, play, pause } = this.props;
+    const { loadedTrack, state, load, play, pause } = this.props;
 
-    if (state === TrackState.None || (current && current.id !== trackId)) {
+    if (
+      state === TrackState.None ||
+      (loadedTrack && loadedTrack.id !== trackId)
+    ) {
       load(trackId);
     } else if (state === TrackState.isPlaying) {
       pause();
@@ -81,9 +87,9 @@ class Tracks extends Component<Props> {
   };
 
   isLoaded(track: Track) {
-    const { current } = this.props;
+    const { loadedTrack } = this.props;
 
-    return !!current && current.id === track.id;
+    return !!loadedTrack && loadedTrack.id === track.id;
   }
 
   isDisabled(track: Track) {
@@ -157,7 +163,7 @@ class Tracks extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  current: selectCurrent(state),
+  loadedTrack: selectLoadedTrack(state),
   state: selectState(state)
 });
 

@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { ripple } from "../styles/effects";
+import Button from "./Button";
 import Icon, { IconType } from "./Icon";
 
-const StyedButton = styled.button`
-  ${ripple}
+const StyedButton = styled(Button)`
   border-radius: 50%;
   display: flex;
   margin: 10px;

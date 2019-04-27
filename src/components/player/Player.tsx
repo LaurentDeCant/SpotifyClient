@@ -4,7 +4,7 @@ import styled from "../../styles/styled";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import {
-  selectCurrent,
+  selectLoadedTrack,
   TrackState,
   selectState,
   Times,
@@ -12,7 +12,7 @@ import {
   Levels,
   selectLevels
 } from "../../reducers/player";
-import { play, pause, seek, change } from "../../actions/player";
+import { play, pause, seek, changeVolume } from "../../actions/player";
 import Album from "./Album";
 import Audio from "./Audio";
 import Controls from "./Controls";
@@ -50,7 +50,7 @@ const RightWrapper = styled(ThirdWrapper)`
 `;
 
 interface Props {
-  current?: Track;
+  loadedTrack?: Track;
   state: TrackState;
   times: Times;
   levels: Levels;
@@ -68,7 +68,7 @@ class Player extends Component<Props> {
 
   render() {
     const {
-      current,
+      loadedTrack,
       state,
       times,
       levels,
@@ -77,7 +77,7 @@ class Player extends Component<Props> {
       seek,
       changeVolume
     } = this.props;
-    const album = current && current.album;
+    const album = loadedTrack && loadedTrack.album;
     const canSeek = this.canSeek();
 
     return (
@@ -124,7 +124,7 @@ class Player extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  current: selectCurrent(state),
+  loadedTrack: selectLoadedTrack(state),
   state: selectState(state),
   times: selectTimes(state),
   levels: selectLevels(state)
@@ -134,7 +134,7 @@ const mapDispatch = {
   play,
   pause,
   seek,
-  changeVolume: change
+  changeVolume
 };
 
 export default connect(
