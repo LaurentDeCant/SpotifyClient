@@ -1,5 +1,8 @@
 import { Dispatch } from "redux";
 import { PayloadAction } from "./types";
+import { State } from "../reducers";
+import { selectPlayableTrackIds as selectAlbumTrackIds } from "../reducers/albums";
+import { selectPlayableTrackIds as selectPlaylistTrackIds } from "../reducers/playlists";
 
 export enum ActionType {
   Load = "LOAD",
@@ -13,8 +16,7 @@ export enum ActionType {
   Seeked = "SEEKED",
   ChangeVolume = "CHANGE_VOLUME",
   VolumeChanged = "VOLUME_CHANGED",
-  LoadAlbum = "LOAD_ALBUM",
-  LadPlaylist = "LOAD_PLAYLIST"
+  LoadCollection = "LOAD_COLLECTION"
 }
 
 export interface LoadAction extends PayloadAction<ActionType.Load, string> {}
@@ -104,10 +106,7 @@ export function seeked() {
 }
 
 export interface ChangeVolumeAction
-  extends PayloadAction<
-    ActionType.ChangeVolume,
-    { volume: number; isMuted: boolean }
-  > {}
+  extends PayloadAction<ActionType.ChangeVolume, string[]> {}
 
 export function changeVolume(volume: number, isMuted: boolean) {
   return (dispatch: Dispatch) => {
@@ -125,6 +124,29 @@ export function volumeChanged() {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ActionType.VolumeChanged
+    });
+  };
+}
+
+export interface LoadCollectionAction
+  extends PayloadAction<ActionType.ChangeVolume, string[]> {}
+
+export function loadAlbum(albumId: string) {
+  return (dispatch: Dispatch, getState: () => State) => {
+    const trackIds = selectAlbumTrackIds(getState(), albumId);
+    dispatch({
+      type: ActionType.LoadCollection,
+      payload: trackIds
+    });
+  };
+}
+
+export function loadPlaylist(playlistId: string) {
+  return (dispatch: Dispatch, getState: () => State) => {
+    const trackIds = selectPlaylistTrackIds(getState(), playlistId);
+    dispatch({
+      type: ActionType.LoadCollection,
+      payload: trackIds
     });
   };
 }

@@ -61,3 +61,12 @@ export function selectPlaylists(
 ): Playlist[] {
   return playlistIds ? playlistIds.map(id => selectPlaylist(state, id)) : [];
 }
+
+export function selectPlayableTrackIds(
+  state: CombinedState,
+  playlistId: string
+): string[] {
+  const playlist = state.playlists.byId[playlistId];
+  const tracks = selectTracks(state, playlist.trackIds);
+  return tracks.filter(track => track.preview_url).map(track => track.id);
+}

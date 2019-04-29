@@ -64,3 +64,12 @@ export function selectAlbums(
 ): Album[] {
   return albumIds ? albumIds.map(id => selectAlbum(state, id)) : [];
 }
+
+export function selectPlayableTrackIds(
+  state: CombinedState,
+  albumId: string
+): string[] {
+  const album = state.albums.byId[albumId];
+  const tracks = selectTracks(state, album.trackIds);
+  return tracks.filter(track => track.preview_url).map(track => track.id);
+}

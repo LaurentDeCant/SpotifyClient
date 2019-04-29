@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Album, Track } from "../../types";
+import { Album } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectAlbum } from "../../reducers/albums";
 import { getAlbum } from "../../actions/albums";
+import { loadAlbum } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
@@ -18,9 +19,12 @@ interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   album?: Album;
   getAlbum: (albumId: string) => void;
+  loadAlbum: (albumId: string) => void;
 }
 
 class AlbumTracks extends Component<Props> {
+  albumId = "";
+
   componentDidMount() {
     const {
       getAlbum,
@@ -28,10 +32,14 @@ class AlbumTracks extends Component<Props> {
         params: { albumId }
       }
     } = this.props;
+    this.albumId = albumId;
     getAlbum(albumId);
   }
 
-  handleToggle = () => {};
+  handleToggle = () => {
+    const { loadAlbum } = this.props;
+    loadAlbum(this.albumId);
+  };
 
   render() {
     const { album } = this.props;
@@ -63,7 +71,8 @@ const mapState = (state: State, ownProps: Props) => {
 };
 
 const mapDispatch = {
-  getAlbum: (albumId: string) => getAlbum(albumId)
+  getAlbum,
+  loadAlbum
 };
 
 export default withRouter(

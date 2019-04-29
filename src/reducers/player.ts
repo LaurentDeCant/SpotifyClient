@@ -6,7 +6,8 @@ import {
   LoadedAction,
   UpdateAction,
   SeekAction,
-  ChangeVolumeAction
+  ChangeVolumeAction,
+  LoadCollectionAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
 import { selectTrack } from "./tracks";
@@ -80,9 +81,9 @@ export default createReducer(initialState, {
     state: TrackState.isPaused,
     shouldPause: false
   }),
-  [ActionType.Seek]: (state: State, Action: SeekAction): State => ({
+  [ActionType.Seek]: (state: State, action: SeekAction): State => ({
     ...state,
-    currentTime: Action.payload,
+    currentTime: action.payload,
     shouldSeek: true
   }),
   [ActionType.Seeked]: (state: State): State => ({
@@ -100,6 +101,16 @@ export default createReducer(initialState, {
   [ActionType.VolumeChanged]: (state: State): State => ({
     ...state,
     shouldChange: false
+  }),
+  [ActionType.LoadCollection]: (
+    state: State,
+    action: LoadCollectionAction
+  ): State => ({
+    ...state,
+    trackId: action.payload[0],
+    state: TrackState.isLoaded,
+    shouldPlay: true,
+    shouldPause: false
   })
 });
 

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Playlist, Track } from "../../types";
+import { Playlist } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
 import { getPlaylist } from "../../actions/playlists";
+import { loadPlaylist } from "../../actions/player";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
 import withLoader from "../withLoader";
@@ -17,9 +18,12 @@ interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   playlist?: Playlist;
   getPlaylist: (playlistId: string) => void;
+  loadPlaylist: (playlistId: string) => void;
 }
 
 class PlaylistTracks extends Component<Props> {
+  playlistId = "";
+
   componentDidMount() {
     const {
       getPlaylist,
@@ -27,10 +31,14 @@ class PlaylistTracks extends Component<Props> {
         params: { playlistId }
       }
     } = this.props;
+    this.playlistId = playlistId;
     getPlaylist(playlistId);
   }
 
-  handleToggle = () => {};
+  handleToggle = () => {
+    const { loadPlaylist } = this.props;
+    loadPlaylist(this.playlistId);
+  };
 
   render() {
     const { playlist } = this.props;
@@ -62,7 +70,8 @@ const mapState = (state: State, ownProps: Props) => {
 };
 
 const mapDispatch = {
-  getPlaylist: (playlistId: string) => getPlaylist(playlistId)
+  getPlaylist,
+  loadPlaylist
 };
 
 export default withRouter(

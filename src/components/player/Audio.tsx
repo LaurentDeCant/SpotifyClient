@@ -58,7 +58,7 @@ class Audio extends Component<Props> {
     }
   }
 
-  handleLoaded = (event: SyntheticEvent<HTMLAudioElement>) => {
+  handleLoadedMetadata = (event: SyntheticEvent<HTMLAudioElement>) => {
     const target = event.target as HTMLAudioElement;
     this.props.loaded(target.duration);
   };
@@ -67,7 +67,7 @@ class Audio extends Component<Props> {
     this.props.playing();
   };
 
-  handleUpdate = (event: SyntheticEvent<HTMLAudioElement>) => {
+  handleTimeUpdate = (event: SyntheticEvent<HTMLAudioElement>) => {
     const target = event.target as HTMLAudioElement;
     this.props.update(target.currentTime);
   };
@@ -80,9 +80,11 @@ class Audio extends Component<Props> {
     this.props.seeked();
   };
 
-  handleChange = () => {
+  handleVolumeChange = () => {
     this.props.volumeChanged();
   };
+
+  handleEnded = () => {};
 
   render() {
     const { loadedTrack } = this.props;
@@ -91,12 +93,13 @@ class Audio extends Component<Props> {
       <audio
         ref={this.audio}
         src={loadedTrack && loadedTrack.preview_url}
-        onLoadedMetadata={this.handleLoaded}
+        onLoadedMetadata={this.handleLoadedMetadata}
         onPlay={this.handlePlay}
-        onTimeUpdate={this.handleUpdate}
+        onTimeUpdate={this.handleTimeUpdate}
         onPause={this.handlePause}
         onSeeked={this.handleSeeked}
-        onVolumeChange={this.handleChange}
+        onVolumeChange={this.handleVolumeChange}
+        onEnded={this.handleEnded}
       />
     );
   }
