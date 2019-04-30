@@ -3,12 +3,8 @@ import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Track } from "../../types";
 import { State } from "../../reducers";
-import {
-  selectLoadedTrack,
-  TrackState,
-  selectState
-} from "../../reducers/player";
-import { load, play, pause } from "../../actions/player";
+import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
+import { load, toggle } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Button from "../Button";
 import Icon, { IconType } from "../Icon";
@@ -63,49 +59,38 @@ const Duration = styled.span`
 
 interface Props {
   tracks: Track[];
-  loadedTrack: Track | undefined;
-  state: TrackState;
+  isLoaded: (trackId: string) => boolean;
+  isPlaying: (trackId: string) => boolean;
   load: (trackId: string) => void;
-  play: () => void;
-  pause: () => void;
+  toggle: () => void;
 }
 
 class Tracks extends Component<Props> {
   handleClick = (trackId: string) => {
-    const { loadedTrack, state, load, play, pause } = this.props;
+    const { isLoaded, load, toggle } = this.props;
 
-    if (
-      state === TrackState.None ||
-      (loadedTrack && loadedTrack.id !== trackId)
-    ) {
+    if (isLoaded(trackId)) {
+      toggle();
+    } else {
       load(trackId);
-    } else if (state === TrackState.isPlaying) {
-      pause();
-    } else if (state === TrackState.isPaused) {
-      play();
     }
   };
-
-  isLoaded(track: Track) {
-    const { loadedTrack } = this.props;
-
-    return !!loadedTrack && loadedTrack.id === track.id;
-  }
 
   isDisabled(track: Track) {
     return !!track.preview_url;
   }
 
-  renderIcon(track: Track, isLoaded: boolean) {
-    const { state } = this.props;
+  renderIcon(track: Track) {
+    const { isPlaying } = this.props;
     const hasPreview = track.preview_url;
-    const isPlaying = isLoaded && state === TrackState.isPlaying;
 
     return hasPreview ? (
       <>
-        <StyledIcon type={isPlaying ? IconType.VolumeUp : IconType.MusicNote} />
         <StyledIcon
-          type={isPlaying ? IconType.Pause : IconType.PlayArrow}
+          type={isPlaying(track.id) ? IconType.VolumeUp : IconType.MusicNote}
+        />
+        <StyledIcon
+          type={isPlaying(track.id) ? IconType.Pause : IconType.PlayArrow}
           isHidden={true}
         />
       </>
@@ -131,21 +116,19 @@ class Tracks extends Component<Props> {
   }
 
   render() {
-    const { tracks } = this.props;
+    const { tracks, isLoaded } = this.props;
 
     return (
       <ul>
         {tracks.map(track => {
-          const isLoaded = this.isLoaded(track);
-
           return (
             <li key={track.id}>
               <StyledButton
                 onClick={() => this.handleClick(track.id)}
                 disabled={!this.isDisabled(track)}
-                isLoaded={this.isLoaded(track)}
+                isLoaded={isLoaded(track.id)}
               >
-                {this.renderIcon(track, isLoaded)}
+                {this.renderIcon(track)}
 
                 <Infos>
                   <Title>{track.name}</Title>
@@ -163,14 +146,13 @@ class Tracks extends Component<Props> {
 }
 
 const mapState = (state: State) => ({
-  loadedTrack: selectLoadedTrack(state),
-  state: selectState(state)
+  isLoaded: selectIsLoaded(state),
+  isPlaying: selectIsPlaying(state)
 });
 
 const mapDispatch = {
-  load: load,
-  play: play,
-  pause: pause
+  load,
+  toggle
 };
 
 export default connect(

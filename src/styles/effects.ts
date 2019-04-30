@@ -1,5 +1,4 @@
 const ripple = (props: any) => `
-  color: ${props.theme.foreground.dark};
   overflow: hidden;
   position relative;
   

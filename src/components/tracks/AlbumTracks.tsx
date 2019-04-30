@@ -4,8 +4,9 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Album } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectAlbum } from "../../reducers/albums";
+import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import { getAlbum } from "../../actions/albums";
-import { loadAlbum } from "../../actions/player";
+import { loadAlbum, toggle } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
@@ -18,8 +19,11 @@ interface Params {
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   album?: Album;
+  isLoaded: (albumId: string) => boolean;
+  isPlaying: (albumId: string) => boolean;
   getAlbum: (albumId: string) => void;
   loadAlbum: (albumId: string) => void;
+  toggle: () => void;
 }
 
 class AlbumTracks extends Component<Props> {
@@ -37,12 +41,16 @@ class AlbumTracks extends Component<Props> {
   }
 
   handleToggle = () => {
-    const { loadAlbum } = this.props;
-    loadAlbum(this.albumId);
+    const { isLoaded, loadAlbum, toggle } = this.props;
+    if (isLoaded(this.albumId)) {
+      toggle();
+    } else {
+      loadAlbum(this.albumId);
+    }
   };
 
   render() {
-    const { album } = this.props;
+    const { album, isPlaying } = this.props;
 
     return album ? (
       <>
@@ -50,6 +58,7 @@ class AlbumTracks extends Component<Props> {
           image={album.images[0].url}
           name={album.name}
           artist={joinArtistNames(album.artists)}
+          isPlaying={isPlaying(album.id)}
           onToggle={this.handleToggle}
         />
         <Tracks tracks={album.tracks} />
@@ -66,13 +75,16 @@ const mapState = (state: State, ownProps: Props) => {
 
   return {
     isLoading: selectIsFetching(state),
-    album: selectAlbum(state, albumId)
+    album: selectAlbum(state, albumId),
+    isLoaded: selectIsLoaded(state),
+    isPlaying: selectIsPlaying(state)
   };
 };
 
 const mapDispatch = {
   getAlbum,
-  loadAlbum
+  loadAlbum,
+  toggle
 };
 
 export default withRouter(

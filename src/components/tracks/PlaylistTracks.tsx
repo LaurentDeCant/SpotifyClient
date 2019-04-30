@@ -4,8 +4,9 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Playlist } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
+import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import { getPlaylist } from "../../actions/playlists";
-import { loadPlaylist } from "../../actions/player";
+import { loadPlaylist, toggle } from "../../actions/player";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
 import withLoader from "../withLoader";
@@ -17,8 +18,11 @@ interface Params {
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   playlist?: Playlist;
+  isLoaded: (playlistId: string) => boolean;
+  isPlaying: (playlistId: string) => boolean;
   getPlaylist: (playlistId: string) => void;
   loadPlaylist: (playlistId: string) => void;
+  toggle: () => void;
 }
 
 class PlaylistTracks extends Component<Props> {
@@ -36,12 +40,16 @@ class PlaylistTracks extends Component<Props> {
   }
 
   handleToggle = () => {
-    const { loadPlaylist } = this.props;
-    loadPlaylist(this.playlistId);
+    const { isLoaded, loadPlaylist, toggle } = this.props;
+    if (isLoaded(this.playlistId)) {
+      toggle();
+    } else {
+      loadPlaylist(this.playlistId);
+    }
   };
 
   render() {
-    const { playlist } = this.props;
+    const { playlist, isPlaying } = this.props;
 
     return playlist ? (
       <>
@@ -49,6 +57,7 @@ class PlaylistTracks extends Component<Props> {
           image={playlist.images[0].url}
           name={playlist.name}
           artist={playlist.owner.display_name}
+          isPlaying={isPlaying(playlist.id)}
           onToggle={this.handleToggle}
         />
         <Tracks tracks={playlist.tracks} />
@@ -65,13 +74,16 @@ const mapState = (state: State, ownProps: Props) => {
 
   return {
     isLoading: selectIsFetching(state),
-    playlist: selectPlaylist(state, playlistId)
+    playlist: selectPlaylist(state, playlistId),
+    isLoaded: selectIsLoaded(state),
+    isPlaying: selectIsPlaying(state)
   };
 };
 
 const mapDispatch = {
   getPlaylist,
-  loadPlaylist
+  loadPlaylist,
+  toggle
 };
 
 export default withRouter(

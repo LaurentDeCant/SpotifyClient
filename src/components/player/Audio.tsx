@@ -6,10 +6,10 @@ import {
   selectLoadedTrack,
   Times,
   selectTimes,
-  Commands,
-  selectCommands,
-  Levels,
-  selectLevels
+  Command,
+  selectCommand,
+  VolumeLevels,
+  selectVolumeLevels
 } from "../../reducers/player";
 import {
   loaded,
@@ -23,8 +23,8 @@ import {
 interface Props {
   loadedTrack?: Track;
   times: Times;
-  commands: Commands;
-  levels: Levels;
+  command: Command;
+  volumeLevels: VolumeLevels;
   loaded: (duration: number) => void;
   playing: () => void;
   update: (elaped: number) => void;
@@ -42,18 +42,22 @@ class Audio extends Component<Props> {
     if (audio) {
       const {
         times: { currentTime },
-        levels: { volume, isMuted },
-        commands: { shouldPlay, shouldPause, shouldSeek, shouldChange }
+        volumeLevels: { volume, isMuted },
+        command
       } = this.props;
 
-      if (shouldPlay) {
-        audio.play();
-      } else if (shouldPause) {
-        audio.pause();
-      } else if (shouldSeek) {
-        audio.currentTime = currentTime;
-      } else if (shouldChange) {
-        audio.volume = isMuted ? 0 : volume;
+      switch (command) {
+        case Command.Play:
+          audio.play();
+          break;
+        case Command.Pause:
+          audio.pause();
+          break;
+        case Command.Seek:
+          audio.currentTime = currentTime;
+          break;
+        case Command.ChangeVolume:
+          audio.volume = isMuted ? 0 : volume;
       }
     }
   }
@@ -108,8 +112,8 @@ class Audio extends Component<Props> {
 const mapState = (state: State) => ({
   loadedTrack: selectLoadedTrack(state),
   times: selectTimes(state),
-  commands: selectCommands(state),
-  levels: selectLevels(state)
+  command: selectCommand(state),
+  volumeLevels: selectVolumeLevels(state)
 });
 
 const mapDispatch = {

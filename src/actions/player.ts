@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { PayloadAction } from "./types";
 import { State } from "../reducers";
+import { selectIsPlaying } from "../reducers/player";
 import { selectPlayableTrackIds as selectAlbumTrackIds } from "../reducers/albums";
 import { selectPlayableTrackIds as selectPlaylistTrackIds } from "../reducers/playlists";
 
@@ -62,18 +63,11 @@ export function update(elapsed: number) {
   };
 }
 
-export function play() {
-  return (dispatch: Dispatch) => {
+export function toggle() {
+  return (dispatch: Dispatch, getState: () => State) => {
+    const isPlaying = selectIsPlaying(getState());
     dispatch({
-      type: ActionType.Play
-    });
-  };
-}
-
-export function pause() {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: ActionType.Pause
+      type: isPlaying() ? ActionType.Pause : ActionType.Play
     });
   };
 }
@@ -129,14 +123,20 @@ export function volumeChanged() {
 }
 
 export interface LoadCollectionAction
-  extends PayloadAction<ActionType.ChangeVolume, string[]> {}
+  extends PayloadAction<
+    ActionType.ChangeVolume,
+    { collectionId: string; trackIds: string[] }
+  > {}
 
 export function loadAlbum(albumId: string) {
   return (dispatch: Dispatch, getState: () => State) => {
     const trackIds = selectAlbumTrackIds(getState(), albumId);
     dispatch({
       type: ActionType.LoadCollection,
-      payload: trackIds
+      payload: {
+        collectionId: albumId,
+        trackIds
+      }
     });
   };
 }
@@ -146,7 +146,10 @@ export function loadPlaylist(playlistId: string) {
     const trackIds = selectPlaylistTrackIds(getState(), playlistId);
     dispatch({
       type: ActionType.LoadCollection,
-      payload: trackIds
+      payload: {
+        collectionId: playlistId,
+        trackIds
+      }
     });
   };
 }

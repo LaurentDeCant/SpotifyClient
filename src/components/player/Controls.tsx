@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "../../styles/styled";
-import { TrackState, Times } from "../../reducers/player";
+import { PlayerState, Times } from "../../reducers/player";
 import { IconType } from "../Icon";
 import RoundButton from "../RoundButton";
 
@@ -14,25 +14,18 @@ const MainButton = styled(RoundButton)`
 `;
 
 interface Props {
-  state: TrackState;
+  playerState: PlayerState;
   times: Times;
-  onPlay: () => void;
-  onPause: () => void;
+  onToggle: () => void;
 }
 
 class Controls extends Component<Props> {
   handleToggleClick = () => {
-    const { state, onPlay, onPause } = this.props;
-
-    if (state === TrackState.isPlaying) {
-      onPause();
-    } else if (state === TrackState.isPaused) {
-      onPlay();
-    }
+    this.props.onToggle();
   };
 
   render() {
-    const { state } = this.props;
+    const { playerState } = this.props;
 
     return (
       <Wrapper>
@@ -40,9 +33,11 @@ class Controls extends Component<Props> {
 
         <MainButton
           onClick={this.handleToggleClick}
-          disabled={state === TrackState.None}
+          disabled={playerState === PlayerState.None}
           iconType={
-            state === TrackState.isPlaying ? IconType.Pause : IconType.PlayArrow
+            playerState === PlayerState.isPlaying
+              ? IconType.Pause
+              : IconType.PlayArrow
           }
         />
 

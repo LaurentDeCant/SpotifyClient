@@ -5,14 +5,14 @@ import { Track } from "../../types";
 import { State } from "../../reducers";
 import {
   selectLoadedTrack,
-  TrackState,
-  selectState,
+  PlayerState,
+  selectPlayerState,
   Times,
   selectTimes,
-  Levels,
-  selectLevels
+  VolumeLevels,
+  selectVolumeLevels
 } from "../../reducers/player";
-import { play, pause, seek, changeVolume } from "../../actions/player";
+import { toggle, seek, changeVolume } from "../../actions/player";
 import Album from "./Album";
 import Audio from "./Audio";
 import Controls from "./Controls";
@@ -51,29 +51,27 @@ const RightWrapper = styled(ThirdWrapper)`
 
 interface Props {
   loadedTrack?: Track;
-  state: TrackState;
+  playerState: PlayerState;
   times: Times;
-  levels: Levels;
-  play: () => void;
-  pause: () => void;
+  volumeLevels: VolumeLevels;
+  toggle: () => void;
   seek: (time: number) => void;
   changeVolume: (volume: number, isMuted: boolean) => void;
 }
 
 class Player extends Component<Props> {
   canSeek() {
-    const { state } = this.props;
-    return state !== TrackState.None;
+    const { playerState } = this.props;
+    return playerState !== PlayerState.None;
   }
 
   render() {
     const {
       loadedTrack,
-      state,
+      playerState,
       times,
-      levels,
-      play,
-      pause,
+      volumeLevels,
+      toggle,
       seek,
       changeVolume
     } = this.props;
@@ -95,10 +93,9 @@ class Player extends Component<Props> {
 
           <CenterWrapper>
             <Controls
-              state={state}
+              playerState={playerState}
               times={times}
-              onPlay={play}
-              onPause={pause}
+              onToggle={toggle}
             />
             <Playback
               duration={times.duration}
@@ -110,8 +107,8 @@ class Player extends Component<Props> {
 
           <RightWrapper>
             <Volume
-              volume={levels.volume}
-              isMuted={levels.isMuted}
+              volume={volumeLevels.volume}
+              isMuted={volumeLevels.isMuted}
               onChange={changeVolume}
             />
           </RightWrapper>
@@ -125,14 +122,13 @@ class Player extends Component<Props> {
 
 const mapState = (state: State) => ({
   loadedTrack: selectLoadedTrack(state),
-  state: selectState(state),
+  playerState: selectPlayerState(state),
   times: selectTimes(state),
-  levels: selectLevels(state)
+  volumeLevels: selectVolumeLevels(state)
 });
 
 const mapDispatch = {
-  play,
-  pause,
+  toggle,
   seek,
   changeVolume
 };
