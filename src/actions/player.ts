@@ -6,8 +6,8 @@ import { selectPlayableTrackIds as selectAlbumTrackIds } from "../reducers/album
 import { selectPlayableTrackIds as selectPlaylistTrackIds } from "../reducers/playlists";
 
 export enum ActionType {
-  Load = "LOAD",
-  Loaded = "LOADED",
+  LoadTrack = "LOAD_TRACK",
+  TrackLoaded = "TRACK_LOADED",
   Playing = "PLAYING",
   Update = "UPDATE",
   Play = "PLAY",
@@ -17,27 +17,29 @@ export enum ActionType {
   Seeked = "SEEKED",
   ChangeVolume = "CHANGE_VOLUME",
   VolumeChanged = "VOLUME_CHANGED",
-  LoadCollection = "LOAD_COLLECTION"
+  LoadCollection = "LOAD_COLLECTION",
+  Ended = "ENDED"
 }
 
-export interface LoadAction extends PayloadAction<ActionType.Load, string> {}
+export interface LoadTrackAction
+  extends PayloadAction<ActionType.LoadTrack, string> {}
 
-export function load(trackId: string) {
+export function loadTrack(trackId: string) {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.Load,
+      type: ActionType.LoadTrack,
       payload: trackId
     });
   };
 }
 
-export interface LoadedAction
-  extends PayloadAction<ActionType.Loaded, number> {}
+export interface TrackLoadedAction
+  extends PayloadAction<ActionType.TrackLoaded, number> {}
 
-export function loaded(duration: number) {
+export function trackLoaded(duration: number) {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ActionType.Loaded,
+      type: ActionType.TrackLoaded,
       payload: duration
     });
   };
@@ -151,5 +153,11 @@ export function loadPlaylist(playlistId: string) {
         trackIds
       }
     });
+  };
+}
+
+export function ended() {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: ActionType.Ended });
   };
 }

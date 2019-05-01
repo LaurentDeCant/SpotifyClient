@@ -4,7 +4,7 @@ import styled from "../../styles/styled";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
-import { load, toggle } from "../../actions/player";
+import { loadTrack, toggle } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Button from "../Button";
 import Icon, { IconType } from "../Icon";
@@ -61,18 +61,18 @@ interface Props {
   tracks: Track[];
   isLoaded: (trackId: string) => boolean;
   isPlaying: (trackId: string) => boolean;
-  load: (trackId: string) => void;
+  loadTrack: (trackId: string) => void;
   toggle: () => void;
 }
 
 class Tracks extends Component<Props> {
   handleClick = (trackId: string) => {
-    const { isLoaded, load, toggle } = this.props;
+    const { isLoaded, loadTrack, toggle } = this.props;
 
     if (isLoaded(trackId)) {
       toggle();
     } else {
-      load(trackId);
+      loadTrack(trackId);
     }
   };
 
@@ -151,7 +151,7 @@ const mapState = (state: State) => ({
 });
 
 const mapDispatch = {
-  load,
+  loadTrack,
   toggle
 };
 

@@ -5,8 +5,9 @@ import { Track } from "../../types";
 import { State } from "../../reducers";
 import {
   selectLoadedTrack,
-  PlayerState,
-  selectPlayerState,
+  selectIsPlaying,
+  selectCanToggle,
+  selectCanSeek,
   Times,
   selectTimes,
   VolumeLevels,
@@ -51,7 +52,9 @@ const RightWrapper = styled(ThirdWrapper)`
 
 interface Props {
   loadedTrack?: Track;
-  playerState: PlayerState;
+  isPlaying: () => boolean;
+  canToggle: boolean;
+  canSeek: boolean;
   times: Times;
   volumeLevels: VolumeLevels;
   toggle: () => void;
@@ -60,15 +63,12 @@ interface Props {
 }
 
 class Player extends Component<Props> {
-  canSeek() {
-    const { playerState } = this.props;
-    return playerState !== PlayerState.None;
-  }
-
   render() {
     const {
       loadedTrack,
-      playerState,
+      isPlaying,
+      canToggle,
+      canSeek,
       times,
       volumeLevels,
       toggle,
@@ -76,7 +76,6 @@ class Player extends Component<Props> {
       changeVolume
     } = this.props;
     const album = loadedTrack && loadedTrack.album;
-    const canSeek = this.canSeek();
 
     return (
       <>
@@ -93,7 +92,8 @@ class Player extends Component<Props> {
 
           <CenterWrapper>
             <Controls
-              playerState={playerState}
+              isPlaying={isPlaying()}
+              canToggle={canToggle}
               times={times}
               onToggle={toggle}
             />
@@ -122,7 +122,9 @@ class Player extends Component<Props> {
 
 const mapState = (state: State) => ({
   loadedTrack: selectLoadedTrack(state),
-  playerState: selectPlayerState(state),
+  isPlaying: selectIsPlaying(state),
+  canToggle: selectCanToggle(state),
+  canSeek: selectCanSeek(state),
   times: selectTimes(state),
   volumeLevels: selectVolumeLevels(state)
 });

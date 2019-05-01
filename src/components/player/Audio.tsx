@@ -12,12 +12,13 @@ import {
   selectVolumeLevels
 } from "../../reducers/player";
 import {
-  loaded,
+  trackLoaded,
   playing,
   update,
   paused,
   seeked,
-  volumeChanged
+  volumeChanged,
+  ended
 } from "../../actions/player";
 
 interface Props {
@@ -25,12 +26,13 @@ interface Props {
   times: Times;
   command: Command;
   volumeLevels: VolumeLevels;
-  loaded: (duration: number) => void;
+  trackLoaded: (duration: number) => void;
   playing: () => void;
   update: (elaped: number) => void;
   paused: () => void;
   seeked: () => void;
   volumeChanged: () => void;
+  ended: () => void;
 }
 
 class Audio extends Component<Props> {
@@ -64,11 +66,7 @@ class Audio extends Component<Props> {
 
   handleLoadedMetadata = (event: SyntheticEvent<HTMLAudioElement>) => {
     const target = event.target as HTMLAudioElement;
-    this.props.loaded(target.duration);
-  };
-
-  handlePlay = () => {
-    this.props.playing();
+    this.props.trackLoaded(target.duration);
   };
 
   handleTimeUpdate = (event: SyntheticEvent<HTMLAudioElement>) => {
@@ -76,34 +74,27 @@ class Audio extends Component<Props> {
     this.props.update(target.currentTime);
   };
 
-  handlePause = () => {
-    this.props.paused();
-  };
-
-  handleSeeked = () => {
-    this.props.seeked();
-  };
-
-  handleVolumeChange = () => {
-    this.props.volumeChanged();
-  };
-
-  handleEnded = () => {};
-
   render() {
-    const { loadedTrack } = this.props;
+    const {
+      loadedTrack,
+      playing,
+      paused,
+      seeked,
+      volumeChanged,
+      ended
+    } = this.props;
 
     return (
       <audio
         ref={this.audio}
         src={loadedTrack && loadedTrack.preview_url}
         onLoadedMetadata={this.handleLoadedMetadata}
-        onPlay={this.handlePlay}
+        onPlay={playing}
         onTimeUpdate={this.handleTimeUpdate}
-        onPause={this.handlePause}
-        onSeeked={this.handleSeeked}
-        onVolumeChange={this.handleVolumeChange}
-        onEnded={this.handleEnded}
+        onPause={paused}
+        onSeeked={seeked}
+        onVolumeChange={volumeChanged}
+        onEnded={ended}
       />
     );
   }
@@ -117,12 +108,13 @@ const mapState = (state: State) => ({
 });
 
 const mapDispatch = {
-  loaded,
+  trackLoaded,
   playing,
   update,
   paused,
   seeked,
-  volumeChanged
+  volumeChanged,
+  ended
 };
 
 export default connect(

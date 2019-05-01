@@ -2,8 +2,8 @@ import createReducer from "../helpers/reducer";
 import { Track } from "../types";
 import {
   ActionType,
-  LoadAction,
-  LoadedAction,
+  LoadTrackAction,
+  TrackLoadedAction,
   UpdateAction,
   SeekAction,
   ChangeVolumeAction,
@@ -12,7 +12,7 @@ import {
 import { State as CombinedState } from ".";
 import { selectTrack } from "./tracks";
 
-export enum PlayerState {
+enum PlayerState {
   None,
   isLoaded,
   isPlaying,
@@ -52,7 +52,7 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.Load]: (state: State, action: LoadAction): State => ({
+  [ActionType.LoadTrack]: (state: State, action: LoadTrackAction): State => ({
     ...state,
     collectionId: null,
     trackIds: [action.payload],
@@ -60,7 +60,10 @@ export default createReducer(initialState, {
     playerState: PlayerState.isLoaded,
     command: Command.Play
   }),
-  [ActionType.Loaded]: (state: State, action: LoadedAction): State => ({
+  [ActionType.TrackLoaded]: (
+    state: State,
+    action: TrackLoadedAction
+  ): State => ({
     ...state,
     duration: action.payload
   }),
@@ -118,7 +121,8 @@ export default createReducer(initialState, {
     trackIndex: 0,
     playerState: PlayerState.isLoaded,
     command: Command.Play
-  })
+  }),
+  [ActionType.Ended]: (state: State): State => ({ ...state })
 });
 
 export function selectLoadedTrack(state: CombinedState): Track | undefined {
@@ -127,10 +131,6 @@ export function selectLoadedTrack(state: CombinedState): Track | undefined {
   if (trackIds) {
     return selectTrack(state, trackIds[trackIndex]);
   }
-}
-
-export function selectPlayerState(state: CombinedState): PlayerState {
-  return state.player.playerState;
 }
 
 export function selectIsLoaded(state: CombinedState) {
@@ -143,6 +143,14 @@ export function selectIsPlaying(state: CombinedState) {
   const { playerState } = state.player;
   return (id?: string) =>
     (!id || selectIsLoaded(state)(id)) && playerState === PlayerState.isPlaying;
+}
+
+export function selectCanToggle(state: CombinedState) {
+  return state.player.playerState !== PlayerState.None;
+}
+
+export function selectCanSeek(state: CombinedState) {
+  return state.player.playerState !== PlayerState.None;
 }
 
 export interface Times {
@@ -159,10 +167,6 @@ export function selectTimes(state: CombinedState): Times {
   };
 }
 
-export function selectCommand(state: CombinedState): Command {
-  return state.player.command;
-}
-
 export interface VolumeLevels {
   volume: number;
   isMuted: boolean;
@@ -177,4 +181,8 @@ export function selectVolumeLevels(state: CombinedState): VolumeLevels {
     volume,
     isMuted
   };
+}
+
+export function selectCommand(state: CombinedState): Command {
+  return state.player.command;
 }
