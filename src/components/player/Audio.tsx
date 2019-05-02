@@ -74,15 +74,15 @@ class Audio extends Component<Props> {
     this.props.update(target.currentTime);
   };
 
+  handlePause = (event: SyntheticEvent<HTMLAudioElement>) => {
+    const target = event.target as HTMLAudioElement;
+    if (target.currentTime !== target.duration) {
+      this.props.paused();
+    }
+  };
+
   render() {
-    const {
-      loadedTrack,
-      playing,
-      paused,
-      seeked,
-      volumeChanged,
-      ended
-    } = this.props;
+    const { loadedTrack, playing, seeked, volumeChanged, ended } = this.props;
 
     return (
       <audio
@@ -91,7 +91,7 @@ class Audio extends Component<Props> {
         onLoadedMetadata={this.handleLoadedMetadata}
         onPlay={playing}
         onTimeUpdate={this.handleTimeUpdate}
-        onPause={paused}
+        onPause={this.handlePause}
         onSeeked={seeked}
         onVolumeChange={volumeChanged}
         onEnded={ended}

@@ -11,20 +11,21 @@ import {
 } from "../actions/player";
 import { State as CombinedState } from ".";
 import { selectTrack } from "./tracks";
+import { combineReducers } from "redux";
 
 enum PlayerState {
-  None,
-  isLoaded,
-  isPlaying,
-  isPaused
+  None = "NONE",
+  isLoaded = "IS_LOADED",
+  isPlaying = "IS_PLAYING",
+  isPaused = "IS_PAUSED"
 }
 
 export enum Command {
-  None,
-  Play,
-  Pause,
-  Seek,
-  ChangeVolume
+  None = "NONE",
+  Play = "PLAY",
+  Pause = "PAUSE",
+  Seek = "SEEK",
+  ChangeVolume = "CHANGE_VOLUME"
 }
 
 export interface State {
@@ -99,18 +100,6 @@ export default createReducer(initialState, {
     ...state,
     command: Command.None
   }),
-  [ActionType.ChangeVolume]: (
-    state: State,
-    action: ChangeVolumeAction
-  ): State => ({
-    ...state,
-    ...action.payload,
-    command: Command.ChangeVolume
-  }),
-  [ActionType.VolumeChanged]: (state: State): State => ({
-    ...state,
-    command: Command.None
-  }),
   [ActionType.LoadCollection]: (
     state: State,
     action: LoadCollectionAction
@@ -122,7 +111,39 @@ export default createReducer(initialState, {
     playerState: PlayerState.isLoaded,
     command: Command.Play
   }),
-  [ActionType.Ended]: (state: State): State => ({ ...state })
+  [ActionType.Ended]: (state: State): State => {
+    const { trackIndex, trackIds } = state;
+    if (trackIndex === trackIds.length - 1) {
+      return { ...state };
+    }
+    return {
+      ...state,
+      trackIndex: trackIndex + 1,
+      command: Command.Play
+    };
+  },
+  [ActionType.Next]: (state: State): State => ({
+    ...state,
+    trackIndex: state.trackIndex + 1,
+    command: Command.Play
+  }),
+  [ActionType.Previous]: (state: State): State => ({
+    ...state,
+    trackIndex: state.trackIndex - 1,
+    command: Command.Play
+  }),
+  [ActionType.ChangeVolume]: (
+    state: State,
+    action: ChangeVolumeAction
+  ): State => ({
+    ...state,
+    ...action.payload,
+    command: Command.ChangeVolume
+  }),
+  [ActionType.VolumeChanged]: (state: State): State => ({
+    ...state,
+    command: Command.None
+  })
 });
 
 export function selectLoadedTrack(state: CombinedState): Track | undefined {
@@ -151,6 +172,16 @@ export function selectCanToggle(state: CombinedState) {
 
 export function selectCanSeek(state: CombinedState) {
   return state.player.playerState !== PlayerState.None;
+}
+
+export function selectCanNext(state: CombinedState) {
+  const { trackIds, trackIndex } = state.player;
+  return trackIds.length > 1 && trackIndex < trackIds.length - 1;
+}
+
+export function selectCanPrevious(state: CombinedState) {
+  const { trackIds, trackIndex } = state.player;
+  return trackIds.length > 1 && trackIndex > 0;
 }
 
 export interface Times {

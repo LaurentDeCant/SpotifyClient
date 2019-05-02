@@ -16,25 +16,44 @@ const MainButton = styled(RoundButton)`
 interface Props {
   isPlaying: boolean;
   canToggle: boolean;
-  times: Times;
+  canNext: boolean;
+  canPrevious: boolean;
   onToggle: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
 }
 
 class Controls extends Component<Props> {
   render() {
-    const { isPlaying, canToggle, onToggle } = this.props;
+    const {
+      canPrevious,
+      onPrevious,
+      isPlaying,
+      canToggle,
+      onToggle,
+      canNext,
+      onNext
+    } = this.props;
 
     return (
       <Wrapper>
-        <RoundButton disabled={true} iconType={IconType.SkipPrevious} />
+        <RoundButton
+          disabled={!canPrevious}
+          onClick={onPrevious}
+          iconType={IconType.SkipPrevious}
+        />
 
         <MainButton
-          onClick={onToggle}
           disabled={!canToggle}
+          onClick={onToggle}
           iconType={isPlaying ? IconType.Pause : IconType.PlayArrow}
         />
 
-        <RoundButton disabled={true} iconType={IconType.SkipNext} />
+        <RoundButton
+          disabled={!canNext}
+          onClick={onNext}
+          iconType={IconType.SkipNext}
+        />
       </Wrapper>
     );
   }

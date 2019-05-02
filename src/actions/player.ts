@@ -18,7 +18,9 @@ export enum ActionType {
   ChangeVolume = "CHANGE_VOLUME",
   VolumeChanged = "VOLUME_CHANGED",
   LoadCollection = "LOAD_COLLECTION",
-  Ended = "ENDED"
+  Ended = "ENDED",
+  Next = "NEXT",
+  Previous = "PREVIOUS"
 }
 
 export interface LoadTrackAction
@@ -104,26 +106,6 @@ export function seeked() {
 export interface ChangeVolumeAction
   extends PayloadAction<ActionType.ChangeVolume, string[]> {}
 
-export function changeVolume(volume: number, isMuted: boolean) {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: ActionType.ChangeVolume,
-      payload: {
-        volume,
-        isMuted
-      }
-    });
-  };
-}
-
-export function volumeChanged() {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: ActionType.VolumeChanged
-    });
-  };
-}
-
 export interface LoadCollectionAction
   extends PayloadAction<
     ActionType.ChangeVolume,
@@ -159,5 +141,37 @@ export function loadPlaylist(playlistId: string) {
 export function ended() {
   return (dispatch: Dispatch) => {
     dispatch({ type: ActionType.Ended });
+  };
+}
+
+export function next() {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: ActionType.Next });
+  };
+}
+
+export function previous() {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: ActionType.Previous });
+  };
+}
+
+export function changeVolume(volume: number, isMuted: boolean) {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.ChangeVolume,
+      payload: {
+        volume,
+        isMuted
+      }
+    });
+  };
+}
+
+export function volumeChanged() {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.VolumeChanged
+    });
   };
 }

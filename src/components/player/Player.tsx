@@ -7,13 +7,21 @@ import {
   selectLoadedTrack,
   selectIsPlaying,
   selectCanToggle,
-  selectCanSeek,
   Times,
   selectTimes,
+  selectCanSeek,
+  selectCanNext,
+  selectCanPrevious,
   VolumeLevels,
   selectVolumeLevels
 } from "../../reducers/player";
-import { toggle, seek, changeVolume } from "../../actions/player";
+import {
+  toggle,
+  seek,
+  next,
+  previous,
+  changeVolume
+} from "../../actions/player";
 import Album from "./Album";
 import Audio from "./Audio";
 import Controls from "./Controls";
@@ -53,12 +61,16 @@ const RightWrapper = styled(ThirdWrapper)`
 interface Props {
   loadedTrack?: Track;
   isPlaying: () => boolean;
+  times: Times;
   canToggle: boolean;
   canSeek: boolean;
-  times: Times;
+  canNext: boolean;
+  canPrevious: boolean;
   volumeLevels: VolumeLevels;
   toggle: () => void;
   seek: (time: number) => void;
+  next: () => void;
+  previous: () => void;
   changeVolume: (volume: number, isMuted: boolean) => void;
 }
 
@@ -67,12 +79,16 @@ class Player extends Component<Props> {
     const {
       loadedTrack,
       isPlaying,
+      times,
       canToggle,
       canSeek,
-      times,
+      canNext,
+      canPrevious,
       volumeLevels,
       toggle,
       seek,
+      next,
+      previous,
       changeVolume
     } = this.props;
     const album = loadedTrack && loadedTrack.album;
@@ -94,7 +110,10 @@ class Player extends Component<Props> {
             <Controls
               isPlaying={isPlaying()}
               canToggle={canToggle}
-              times={times}
+              canNext={canNext}
+              onNext={next}
+              canPrevious={canPrevious}
+              onPrevious={previous}
               onToggle={toggle}
             />
             <Playback
@@ -123,15 +142,19 @@ class Player extends Component<Props> {
 const mapState = (state: State) => ({
   loadedTrack: selectLoadedTrack(state),
   isPlaying: selectIsPlaying(state),
+  times: selectTimes(state),
   canToggle: selectCanToggle(state),
   canSeek: selectCanSeek(state),
-  times: selectTimes(state),
+  canNext: selectCanNext(state),
+  canPrevious: selectCanPrevious(state),
   volumeLevels: selectVolumeLevels(state)
 });
 
 const mapDispatch = {
   toggle,
   seek,
+  next,
+  previous,
   changeVolume
 };
 
