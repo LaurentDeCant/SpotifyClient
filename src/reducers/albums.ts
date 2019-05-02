@@ -44,6 +44,10 @@ export function selectIsFetching(state: CombinedState): boolean {
   return isFetching(state.albums);
 }
 
+export function selectHasAlbum(state: CombinedState, albumId: string): boolean {
+  return !!state.albums.byId[albumId];
+}
+
 export function selectAlbum(state: CombinedState, albumId: string): Album {
   let album = state.albums.byId[albumId];
 

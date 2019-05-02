@@ -4,9 +4,9 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Playlist } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
-import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
+import { selectIsPlaying } from "../../reducers/player";
 import { getPlaylist } from "../../actions/playlists";
-import { loadPlaylist, toggle } from "../../actions/player";
+import { toggle } from "../../actions/player";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
 import withLoader from "../withLoader";
@@ -18,11 +18,9 @@ interface Params {
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   playlist?: Playlist;
-  isLoaded: (playlistId: string) => boolean;
   isPlaying: (playlistId: string) => boolean;
   getPlaylist: (playlistId: string) => void;
-  loadPlaylist: (playlistId: string) => void;
-  toggle: () => void;
+  toggle: (collectionId: string, trackId?: string) => void;
 }
 
 class PlaylistTracks extends Component<Props> {
@@ -39,13 +37,8 @@ class PlaylistTracks extends Component<Props> {
     getPlaylist(playlistId);
   }
 
-  handleToggle = () => {
-    const { isLoaded, loadPlaylist, toggle } = this.props;
-    if (isLoaded(this.playlistId)) {
-      toggle();
-    } else {
-      loadPlaylist(this.playlistId);
-    }
+  handleToggle = (trackId?: string) => {
+    this.props.toggle(this.playlistId, trackId);
   };
 
   render() {
@@ -60,7 +53,7 @@ class PlaylistTracks extends Component<Props> {
           isPlaying={isPlaying(playlist.id)}
           onToggle={this.handleToggle}
         />
-        <Tracks tracks={playlist.tracks} />
+        <Tracks tracks={playlist.tracks} onToggle={this.handleToggle} />
       </>
     ) : (
       <></>
@@ -75,14 +68,12 @@ const mapState = (state: State, ownProps: Props) => {
   return {
     isLoading: selectIsFetching(state),
     playlist: selectPlaylist(state, playlistId),
-    isLoaded: selectIsLoaded(state),
     isPlaying: selectIsPlaying(state)
   };
 };
 
 const mapDispatch = {
   getPlaylist,
-  loadPlaylist,
   toggle
 };
 

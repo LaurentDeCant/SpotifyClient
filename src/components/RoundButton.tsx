@@ -9,6 +9,10 @@ const StyedButton = styled(Button)`
   display: flex;
   margin: 10px;
   padding: 5px;
+
+  &:disabled {
+    color: ${props => props.theme.foreground.darker};
+  }
 `;
 
 const StyledIcon = styled(Icon)`

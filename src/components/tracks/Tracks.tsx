@@ -4,7 +4,6 @@ import styled from "../../styles/styled";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
-import { loadTrack, toggle } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Button from "../Button";
 import Icon, { IconType } from "../Icon";
@@ -61,21 +60,10 @@ interface Props {
   tracks: Track[];
   isLoaded: (trackId: string) => boolean;
   isPlaying: (trackId: string) => boolean;
-  loadTrack: (trackId: string) => void;
-  toggle: () => void;
+  onToggle: (trackId: string) => void;
 }
 
 class Tracks extends Component<Props> {
-  handleClick = (trackId: string) => {
-    const { isLoaded, loadTrack, toggle } = this.props;
-
-    if (isLoaded(trackId)) {
-      toggle();
-    } else {
-      loadTrack(trackId);
-    }
-  };
-
   isDisabled(track: Track) {
     return !!track.preview_url;
   }
@@ -116,7 +104,7 @@ class Tracks extends Component<Props> {
   }
 
   render() {
-    const { tracks, isLoaded } = this.props;
+    const { tracks, isLoaded, onToggle } = this.props;
 
     return (
       <ul>
@@ -124,7 +112,7 @@ class Tracks extends Component<Props> {
           return (
             <li key={track.id}>
               <StyledButton
-                onClick={() => this.handleClick(track.id)}
+                onClick={() => onToggle(track.id)}
                 disabled={!this.isDisabled(track)}
                 isLoaded={isLoaded(track.id)}
               >
@@ -150,10 +138,7 @@ const mapState = (state: State) => ({
   isPlaying: selectIsPlaying(state)
 });
 
-const mapDispatch = {
-  loadTrack,
-  toggle
-};
+const mapDispatch = {};
 
 export default connect(
   mapState,

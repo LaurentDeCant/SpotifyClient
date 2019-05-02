@@ -42,6 +42,13 @@ export function selectIsFetching(state: CombinedState): boolean {
   return isFetching(state.playlists);
 }
 
+export function selectHasPlaylist(
+  state: CombinedState,
+  playlistId: string
+): boolean {
+  return !!state.playlists.byId[playlistId];
+}
+
 export function selectPlaylist(
   state: CombinedState,
   playlistId: string

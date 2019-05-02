@@ -23,6 +23,7 @@ export interface Theme {
   foreground: {
     default: string;
     dark: string;
+    darker: string;
   };
   primaryLight: string;
   primary: string;
@@ -55,7 +56,8 @@ export const theme: Theme = {
   },
   foreground: {
     default: "#ffffff",
-    dark: "rgba(255, 255, 255, 0.4)"
+    dark: "rgba(255, 255, 255, 0.4)",
+    darker: "rgba(255, 255, 255, 0.2)"
   },
   primary: "#1db954",
   primaryLight: "#1ed760",

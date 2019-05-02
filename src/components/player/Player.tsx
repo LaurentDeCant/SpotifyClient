@@ -75,6 +75,10 @@ interface Props {
 }
 
 class Player extends Component<Props> {
+  handleToggle = () => {
+    this.props.toggle();
+  };
+
   render() {
     const {
       loadedTrack,
@@ -85,7 +89,6 @@ class Player extends Component<Props> {
       canNext,
       canPrevious,
       volumeLevels,
-      toggle,
       seek,
       next,
       previous,
@@ -110,11 +113,11 @@ class Player extends Component<Props> {
             <Controls
               isPlaying={isPlaying()}
               canToggle={canToggle}
+              onToggle={this.handleToggle}
               canNext={canNext}
               onNext={next}
               canPrevious={canPrevious}
               onPrevious={previous}
-              onToggle={toggle}
             />
             <Playback
               duration={times.duration}

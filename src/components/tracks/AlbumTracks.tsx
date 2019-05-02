@@ -4,9 +4,9 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Album } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectAlbum } from "../../reducers/albums";
-import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
+import { selectIsPlaying } from "../../reducers/player";
 import { getAlbum } from "../../actions/albums";
-import { loadAlbum, toggle } from "../../actions/player";
+import { toggle } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
@@ -19,11 +19,9 @@ interface Params {
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   album?: Album;
-  isLoaded: (albumId: string) => boolean;
   isPlaying: (albumId: string) => boolean;
   getAlbum: (albumId: string) => void;
-  loadAlbum: (albumId: string) => void;
-  toggle: () => void;
+  toggle: (collectionId: string, trackId?: string) => void;
 }
 
 class AlbumTracks extends Component<Props> {
@@ -40,13 +38,8 @@ class AlbumTracks extends Component<Props> {
     getAlbum(albumId);
   }
 
-  handleToggle = () => {
-    const { isLoaded, loadAlbum, toggle } = this.props;
-    if (isLoaded(this.albumId)) {
-      toggle();
-    } else {
-      loadAlbum(this.albumId);
-    }
+  handleToggle = (trackId?: string) => {
+    this.props.toggle(this.albumId, trackId);
   };
 
   render() {
@@ -61,7 +54,7 @@ class AlbumTracks extends Component<Props> {
           isPlaying={isPlaying(album.id)}
           onToggle={this.handleToggle}
         />
-        <Tracks tracks={album.tracks} />
+        <Tracks tracks={album.tracks} onToggle={this.handleToggle} />
       </>
     ) : (
       <></>
@@ -76,14 +69,12 @@ const mapState = (state: State, ownProps: Props) => {
   return {
     isLoading: selectIsFetching(state),
     album: selectAlbum(state, albumId),
-    isLoaded: selectIsLoaded(state),
     isPlaying: selectIsPlaying(state)
   };
 };
 
 const mapDispatch = {
   getAlbum,
-  loadAlbum,
   toggle
 };
 

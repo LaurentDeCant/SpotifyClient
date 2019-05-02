@@ -48,15 +48,19 @@ interface Props {
 }
 
 class Cover extends Component<Props> {
+  handleClick = () => {
+    this.props.onToggle();
+  };
+
   render() {
-    const { image, name, artist, isPlaying, onToggle } = this.props;
+    const { image, name, artist, isPlaying } = this.props;
 
     return (
       <Wrapper>
         <Image src={image} />
         <Title>{name}</Title>
         <Artist>{artist}</Artist>
-        <StyledButton onClick={onToggle}>
+        <StyledButton onClick={this.handleClick}>
           {isPlaying ? "Pause" : "Play"}
         </StyledButton>
       </Wrapper>

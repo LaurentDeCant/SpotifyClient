@@ -2,20 +2,18 @@ import createReducer from "../helpers/reducer";
 import { Track } from "../types";
 import {
   ActionType,
+  LoadCollectionAction,
   LoadTrackAction,
   TrackLoadedAction,
   UpdateAction,
   SeekAction,
-  ChangeVolumeAction,
-  LoadCollectionAction
+  ChangeVolumeAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
 import { selectTrack } from "./tracks";
-import { combineReducers } from "redux";
 
 enum PlayerState {
   None = "NONE",
-  isLoaded = "IS_LOADED",
   isPlaying = "IS_PLAYING",
   isPaused = "IS_PAUSED"
 }
@@ -29,7 +27,7 @@ export enum Command {
 }
 
 export interface State {
-  collectionId: string | null;
+  collectionId?: string;
   trackIds: string[];
   trackIndex: number;
   playerState: PlayerState;
@@ -41,7 +39,6 @@ export interface State {
 }
 
 const initialState: State = {
-  collectionId: null,
   trackIds: [],
   trackIndex: 0,
   playerState: PlayerState.None,
@@ -53,12 +50,22 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.LoadTrack]: (state: State, action: LoadTrackAction): State => ({
+  [ActionType.LoadCollection]: (
+    state: State,
+    action: LoadCollectionAction
+  ): State => {
+    const { collectionId, trackIds, trackId } = action.payload;
+    return {
+      ...state,
+      collectionId: collectionId,
+      trackIds: trackIds,
+      trackIndex: trackId ? trackIds.indexOf(trackId) : 0,
+      command: Command.Play
+    };
+  },
+  [ActionType.LoadTrack]: (state: State, action: LoadTrackAction) => ({
     ...state,
-    collectionId: null,
-    trackIds: [action.payload],
-    trackIndex: 0,
-    playerState: PlayerState.isLoaded,
+    trackIndex: state.trackIds.indexOf(action.payload.trackId),
     command: Command.Play
   }),
   [ActionType.TrackLoaded]: (
@@ -99,17 +106,6 @@ export default createReducer(initialState, {
   [ActionType.Seeked]: (state: State): State => ({
     ...state,
     command: Command.None
-  }),
-  [ActionType.LoadCollection]: (
-    state: State,
-    action: LoadCollectionAction
-  ): State => ({
-    ...state,
-    collectionId: action.payload.collectionId,
-    trackIds: action.payload.trackIds,
-    trackIndex: 0,
-    playerState: PlayerState.isLoaded,
-    command: Command.Play
   }),
   [ActionType.Ended]: (state: State): State => {
     const { trackIndex, trackIds } = state;
