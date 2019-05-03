@@ -6,6 +6,7 @@ import browse, { State as BrowseState } from "./browse";
 import player, { State as PlayerState } from "./player";
 import playlists, { State as PlaylistsState } from "./playlists";
 import tracks, { State as TracksState } from "./tracks";
+import search, { State as SearchState } from "./search";
 import userProfile, { State as UserProfileState } from "./userProfile";
 
 export interface State {
@@ -16,6 +17,7 @@ export interface State {
   player: PlayerState;
   playlists: PlaylistsState;
   tracks: TracksState;
+  search: SearchState;
   userProfile: UserProfileState;
 }
 
@@ -27,5 +29,6 @@ export default combineReducers<State>({
   player,
   playlists,
   tracks,
+  search,
   userProfile
 });

@@ -6,6 +6,7 @@ import { State as CombinedState } from ".";
 import { ActionType as AlbumActionType } from "../actions/albums";
 import { ActionType as PlaylistActionType } from "../actions/playlists";
 import { ActionType as BrowseActionType } from "../actions/browse";
+import { ActionType as SearchActionType } from "../actions/search";
 
 export interface State {
   byId: { [id: string]: Artist };
@@ -22,7 +23,8 @@ function mergeArtists(state: State, action: EntitiesAction<any>): State {
 export default createReducer(initialState, {
   [AlbumActionType.AlbumSuccess]: mergeArtists,
   [PlaylistActionType.PlaylistSuccess]: mergeArtists,
-  [BrowseActionType.NewReleasesSuccess]: mergeArtists
+  [BrowseActionType.NewReleasesSuccess]: mergeArtists,
+  [SearchActionType.SearchSuccess]: mergeArtists
 });
 
 export function selectArtist(state: CombinedState, artistId: string): Artist {

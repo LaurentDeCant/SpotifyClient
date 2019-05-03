@@ -36,7 +36,9 @@ export default createGlobalStyle`
     &:not(:disabled) {
       cursor: pointer;
     }
+  }
 
+  button, input {
     &:focus {
       outline: none;
     }

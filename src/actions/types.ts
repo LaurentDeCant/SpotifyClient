@@ -5,7 +5,7 @@ import { Entities } from "../types";
 export interface FetchAction {
   types: string[];
   path: string;
-  schema?: schema.Entity;
+  schema?: schema.Entity | schema.Object;
 }
 
 export interface FetchDispatch {

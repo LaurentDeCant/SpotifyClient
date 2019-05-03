@@ -2,20 +2,9 @@ import { schema } from "normalizr";
 
 const Category = new schema.Entity("categories");
 
-const Categories = new schema.Entity(
-  "categoryItems",
-  {
-    items: [Category]
-  },
-  {
-    processStrategy: value => {
-      const { items } = value.categories;
-      return {
-        items
-      };
-    }
-  }
-);
+const Categories = new schema.Entity("categoryItems", {
+  categories: { items: [Category] }
+});
 
 const Artist = new schema.Entity("artists");
 
@@ -36,20 +25,9 @@ const Album = new schema.Entity(
   }
 );
 
-const Albums = new schema.Entity(
-  "albumItems",
-  {
-    items: [Album]
-  },
-  {
-    processStrategy: value => {
-      const { items } = value.albums;
-      return {
-        items
-      };
-    }
-  }
-);
+const Albums = new schema.Entity("albumItems", {
+  albums: { items: [Album] }
+});
 
 const Track = new schema.Entity(
   "tracks",
@@ -91,20 +69,15 @@ const Playlist = new schema.Entity(
   }
 );
 
-const Playlists = new schema.Entity(
-  "playlistItems",
-  {
-    items: [Playlist]
-  },
-  {
-    processStrategy: value => {
-      const { items } = value.playlists;
-      return {
-        items
-      };
-    }
-  }
-);
+const Playlists = new schema.Entity("playlistItems", {
+  playlists: { items: [Playlist] }
+});
+
+const Results = new schema.Object({
+  artists: { items: [Artist] },
+  albums: { items: [Album] },
+  tracks: { items: [Track] }
+});
 
 export const Schemas = {
   Artist,
@@ -114,5 +87,6 @@ export const Schemas = {
   Categories,
   Track,
   Playlist,
-  Playlists
+  Playlists,
+  Results
 };

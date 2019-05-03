@@ -5,6 +5,7 @@ import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
 import { ActionType as AlbumActionType } from "../actions/albums";
 import { ActionType as PlaylistActionType } from "../actions/playlists";
+import { ActionType as SearchActionType } from "../actions/search";
 import { selectAlbum } from "./albums";
 import { selectArtists } from "./artists";
 
@@ -22,7 +23,8 @@ function mergeTracks(state: State, action: EntitiesAction<any>): State {
 
 export default createReducer(initialState, {
   [AlbumActionType.AlbumSuccess]: mergeTracks,
-  [PlaylistActionType.PlaylistSuccess]: mergeTracks
+  [PlaylistActionType.PlaylistSuccess]: mergeTracks,
+  [SearchActionType.SearchSuccess]: mergeTracks
 });
 
 export function selectTrack(
