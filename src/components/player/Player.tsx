@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Track } from "../../types";
@@ -74,72 +74,70 @@ interface Props {
   changeVolume: (volume: number, isMuted: boolean) => void;
 }
 
-class Player extends Component<Props> {
-  handleToggle = () => {
-    this.props.toggle();
-  };
-
-  render() {
-    const {
-      loadedTrack,
-      isPlaying,
-      times,
-      canToggle,
-      canSeek,
-      canNext,
-      canPrevious,
-      volumeLevels,
-      seek,
-      next,
-      previous,
-      changeVolume
-    } = this.props;
-    const album = loadedTrack && loadedTrack.album;
-
-    return (
-      <>
-        <Wrapper>
-          <LeftWrapper>
-            {album && (
-              <Album
-                image={album.images[0].url}
-                name={album.name}
-                artist={album.artists[0].name}
-              />
-            )}
-          </LeftWrapper>
-
-          <CenterWrapper>
-            <Controls
-              isPlaying={isPlaying()}
-              canToggle={canToggle}
-              onToggle={this.handleToggle}
-              canNext={canNext}
-              onNext={next}
-              canPrevious={canPrevious}
-              onPrevious={previous}
-            />
-            <Playback
-              duration={times.duration}
-              currentTime={times.currentTime}
-              canSeek={canSeek}
-              onSeek={seek}
-            />
-          </CenterWrapper>
-
-          <RightWrapper>
-            <Volume
-              volume={volumeLevels.volume}
-              isMuted={volumeLevels.isMuted}
-              onChange={changeVolume}
-            />
-          </RightWrapper>
-        </Wrapper>
-
-        <Audio />
-      </>
-    );
+function Player({
+  loadedTrack,
+  isPlaying,
+  times,
+  canToggle,
+  canSeek,
+  canNext,
+  canPrevious,
+  volumeLevels,
+  toggle,
+  seek,
+  next,
+  previous,
+  changeVolume
+}: Props) {
+  function handleToggle() {
+    toggle();
   }
+
+  const album = loadedTrack && loadedTrack.album;
+
+  return (
+    <>
+      <Wrapper>
+        <LeftWrapper>
+          {album && (
+            <Album
+              image={album.images[0].url}
+              name={album.name}
+              artist={album.artists[0].name}
+            />
+          )}
+        </LeftWrapper>
+
+        <CenterWrapper>
+          <Controls
+            isPlaying={isPlaying()}
+            canToggle={canToggle}
+            onToggle={handleToggle}
+            canNext={canNext}
+            onNext={next}
+            canPrevious={canPrevious}
+            onPrevious={previous}
+          />
+          <Playback
+            duration={times.duration}
+            currentTime={times.currentTime}
+            canSeek={canSeek}
+            onSeek={seek}
+          />
+        </CenterWrapper>
+
+        <RightWrapper>
+          <Volume
+            volume={volumeLevels.volume}
+            isMuted={volumeLevels.isMuted}
+            onChange={changeVolume}
+          />
+        </RightWrapper>
+      </Wrapper>
+
+      <Audio />
+    </>
+  );
 }
 
 const mapState = (state: State) => ({

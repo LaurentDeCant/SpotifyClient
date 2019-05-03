@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "../../styles/styled";
 import { IconType } from "../Icon";
 import RoundButton from "../RoundButton";
@@ -20,33 +20,24 @@ interface Props {
   onChange: (volume: number, isMuted: boolean) => void;
 }
 
-class Volume extends Component<Props> {
-  handleClick = () => {
-    const { volume, isMuted, onChange } = this.props;
+function Volume({ volume, isMuted, onChange }: Props) {
+  function handleClick() {
     onChange(volume, !isMuted);
-  };
-
-  handleChange = (value: number) => {
-    const { onChange } = this.props;
-    onChange(value, false);
-  };
-
-  render() {
-    const { volume, isMuted } = this.props;
-
-    return (
-      <Wrapper>
-        <RoundButton
-          onClick={this.handleClick}
-          iconType={isMuted ? IconType.VolumeOff : IconType.VolumeUp}
-        />
-        <StyledSlider
-          value={isMuted ? 0 : volume}
-          onChange={this.handleChange}
-        />
-      </Wrapper>
-    );
   }
+
+  function handleChange(value: number) {
+    onChange(value, false);
+  }
+
+  return (
+    <Wrapper>
+      <RoundButton
+        onClick={handleClick}
+        iconType={isMuted ? IconType.VolumeOff : IconType.VolumeUp}
+      />
+      <StyledSlider value={isMuted ? 0 : volume} onChange={handleChange} />
+    </Wrapper>
+  );
 }
 
 export default Volume;

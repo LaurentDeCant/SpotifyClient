@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "../../styles/styled";
 import Slider from "./Slider";
 
@@ -27,8 +27,8 @@ interface Props {
   onSeek: (time: number) => void;
 }
 
-class Playback extends Component<Props> {
-  renderTime(seconds: number) {
+function Playback({ duration, currentTime, canSeek, onSeek }: Props) {
+  function renderTime(seconds: number) {
     const minutes = Math.floor(seconds / 60);
     seconds = Math.round(seconds);
 
@@ -39,27 +39,23 @@ class Playback extends Component<Props> {
     );
   }
 
-  handleChange = (value: number) => {
-    const { duration, onSeek } = this.props;
+  function handleChange(value: number) {
     onSeek(duration * value);
-  };
-
-  render() {
-    const { duration, currentTime, canSeek } = this.props;
-    const progress = duration ? currentTime / duration : 0;
-
-    return (
-      <Wrapper>
-        {this.renderTime(currentTime)}
-        <StyledSlider
-          value={progress}
-          onChange={this.handleChange}
-          canChange={canSeek}
-        />
-        {this.renderTime(duration)}
-      </Wrapper>
-    );
   }
+
+  const progress = duration ? currentTime / duration : 0;
+
+  return (
+    <Wrapper>
+      {renderTime(currentTime)}
+      <StyledSlider
+        value={progress}
+        onChange={handleChange}
+        canChange={canSeek}
+      />
+      {renderTime(duration)}
+    </Wrapper>
+  );
 }
 
 export default Playback;

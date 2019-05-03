@@ -21,10 +21,8 @@ interface Props {
   className?: string;
 }
 
-const Icon = (props: Props) => {
-  const { type, className } = props;
-
+function Icon({ type, className }: Props) {
   return <i className={`material-icons ${className}`}>{type}</i>;
-};
+}
 
 export default Icon;

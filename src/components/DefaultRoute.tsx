@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 interface Props {
@@ -6,12 +6,8 @@ interface Props {
   to: string;
 }
 
-class DefaultRoute extends Component<Props> {
-  render() {
-    const { from, to } = this.props;
-
-    return <Route exact path={from} render={() => <Redirect to={to} />} />;
-  }
+function DefaultRoute({ from, to }: Props) {
+  return <Route exact path={from} render={() => <Redirect to={to} />} />;
 }
 
 export default DefaultRoute;

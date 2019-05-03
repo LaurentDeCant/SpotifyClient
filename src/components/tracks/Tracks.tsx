@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Track } from "../../types";
@@ -63,13 +63,12 @@ interface Props {
   onToggle: (trackId: string) => void;
 }
 
-class Tracks extends Component<Props> {
-  isDisabled(track: Track) {
+function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
+  function isDisabled(track: Track) {
     return !!track.preview_url;
   }
 
-  renderIcon(track: Track) {
-    const { isPlaying } = this.props;
+  function renderIcon(track: Track) {
     const hasPreview = track.preview_url;
 
     return hasPreview ? (
@@ -87,11 +86,11 @@ class Tracks extends Component<Props> {
     );
   }
 
-  renderArtist(track: Track) {
+  function renderArtist(track: Track) {
     return <Artist>{joinArtistNames(track.artists)}</Artist>;
   }
 
-  renderDuration(track: Track) {
+  function renderDuration(track: Track) {
     let seconds = track.duration_ms / 1000;
     const minutes = Math.floor(seconds / 60);
     seconds = Math.floor(seconds % 60);
@@ -103,34 +102,30 @@ class Tracks extends Component<Props> {
     );
   }
 
-  render() {
-    const { tracks, isLoaded, onToggle } = this.props;
+  return (
+    <ul>
+      {tracks.map(track => {
+        return (
+          <li key={track.id}>
+            <StyledButton
+              onClick={() => onToggle(track.id)}
+              disabled={!isDisabled(track)}
+              isLoaded={isLoaded(track.id)}
+            >
+              {renderIcon(track)}
 
-    return (
-      <ul>
-        {tracks.map(track => {
-          return (
-            <li key={track.id}>
-              <StyledButton
-                onClick={() => onToggle(track.id)}
-                disabled={!this.isDisabled(track)}
-                isLoaded={isLoaded(track.id)}
-              >
-                {this.renderIcon(track)}
+              <Infos>
+                <Title>{track.name}</Title>
+                {renderArtist(track)}
+              </Infos>
 
-                <Infos>
-                  <Title>{track.name}</Title>
-                  {this.renderArtist(track)}
-                </Infos>
-
-                {this.renderDuration(track)}
-              </StyledButton>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
+              {renderDuration(track)}
+            </StyledButton>
+          </li>
+        );
+      })}
+    </ul>
+  );
 }
 
 const mapState = (state: State) => ({

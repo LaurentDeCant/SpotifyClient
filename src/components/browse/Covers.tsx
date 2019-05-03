@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "../../styles/styled";
 import Button from "../Button";
 
@@ -51,29 +51,27 @@ interface Props {
   onClick: (id: string) => void;
 }
 
-class Covers extends Component<Props> {
-  handleClick(id: string) {
-    const { onClick } = this.props;
+function Covers(props: Props) {
+  function handleClick(id: string) {
+    const { onClick } = props;
     onClick && onClick(id);
   }
 
-  render() {
-    const { items } = this.props;
+  const { items } = props;
 
-    return (
-      <StyledList>
-        {items.map(item => (
-          <StyledItem key={item.id}>
-            <StyledButton onClick={() => this.handleClick(item.id)}>
-              <Image src={item.image} />
-            </StyledButton>
-            <Name>{item.title}</Name>
-            {item.artist && <Artist>{item.artist}</Artist>}
-          </StyledItem>
-        ))}
-      </StyledList>
-    );
-  }
+  return (
+    <StyledList>
+      {items.map(item => (
+        <StyledItem key={item.id}>
+          <StyledButton onClick={() => handleClick(item.id)}>
+            <Image src={item.image} />
+          </StyledButton>
+          <Name>{item.title}</Name>
+          {item.artist && <Artist>{item.artist}</Artist>}
+        </StyledItem>
+      ))}
+    </StyledList>
+  );
 }
 
 export default Covers;

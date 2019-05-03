@@ -1,6 +1,10 @@
 import createReducer from "../helpers/reducer";
 import { ActionType, SearchSuccessAction } from "../actions/search";
+import { Artist, Album, Track } from "../types";
 import { State as CombinedState } from ".";
+import { selectArtists } from "./artists";
+import { selectAlbums } from "./albums";
+import { selectTracks } from "./tracks";
 
 export interface State {
   artistIds: string[];
@@ -27,11 +31,15 @@ export default createReducer(initialState, {
 });
 
 export interface Results {
-  artistIds: string[];
-  albumIds: string[];
-  trackIds: string[];
+  artists: Artist[];
+  albums: Album[];
+  tracks: Track[];
 }
 
 export function selectResults(state: CombinedState): Results {
-  return state.search;
+  const { artistIds, albumIds, trackIds } = state.search;
+  const artists = selectArtists(state, artistIds);
+  const albums = selectAlbums(state, albumIds);
+  const tracks = selectTracks(state, trackIds);
+  return { artists, albums, tracks };
 }

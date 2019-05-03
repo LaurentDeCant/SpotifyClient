@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
@@ -36,33 +36,33 @@ interface Props {
   getUserProfile: () => void;
 }
 
-class Header extends Component<Props> {
-  componentDidMount() {
-    const { isAuthorized, getUserProfile } = this.props;
+function Header({
+  isAuthorized,
+  userProfile,
+  getAuthorization,
+  getUserProfile
+}: Props) {
+  useEffect(() => {
     if (isAuthorized) {
       getUserProfile();
     }
+  }, []);
+
+  function handleClick() {
+    getAuthorization();
   }
 
-  handleClick = async () => {
-    await this.props.getAuthorization();
-  };
+  return (
+    <Wrapper>
+      <Title />
 
-  render() {
-    const { userProfile } = this.props;
-
-    return (
-      <Wrapper>
-        <Title />
-
-        {userProfile ? (
-          <User {...userProfile} />
-        ) : (
-          <LoginButton onClick={this.handleClick}>Log In</LoginButton>
-        )}
-      </Wrapper>
-    );
-  }
+      {userProfile ? (
+        <User {...userProfile} />
+      ) : (
+        <LoginButton onClick={handleClick}>Log In</LoginButton>
+      )}
+    </Wrapper>
+  );
 }
 
 const mapState = (state: State) => ({

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   RouteComponentProps,
   NavLink,
@@ -54,46 +54,43 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-class Browse extends Component<RouteComponentProps> {
-  render() {
-    const { match } = this.props;
-    const links = [
-      {
-        url: "categories",
-        label: "Categories"
-      },
-      {
-        url: "new-releases",
-        label: "New Releases"
-      },
-      {
-        url: "featured-playist",
-        label: "Featured Playlists"
-      }
-    ];
-
-    return (
-      <Wrapper>
-        <StyledList>
-          {links.map(link => (
-            <li key={link.url}>
-              <StyledNavLink to={`${match.url}/${link.url}`}>
-                {link.label}
-              </StyledNavLink>
-            </li>
-          ))}
-        </StyledList>
-
-        <DefaultRoute from={`${match.path}`} to={`${match.path}/categories`} />
-        <Route exact path={`${match.path}/categories`} component={Categories} />
-        <Route path={`${match.path}/new-releases`} component={NewReleases} />
-        <Route
-          path={`${match.path}/featured-playist`}
-          component={FeaturedPlaylists}
-        />
-      </Wrapper>
-    );
+const links = [
+  {
+    url: "categories",
+    label: "Categories"
+  },
+  {
+    url: "new-releases",
+    label: "New Releases"
+  },
+  {
+    url: "featured-playist",
+    label: "Featured Playlists"
   }
+];
+
+function Browse({ match }: RouteComponentProps) {
+  return (
+    <Wrapper>
+      <StyledList>
+        {links.map(link => (
+          <li key={link.url}>
+            <StyledNavLink to={`${match.url}/${link.url}`}>
+              {link.label}
+            </StyledNavLink>
+          </li>
+        ))}
+      </StyledList>
+
+      <DefaultRoute from={`${match.path}`} to={`${match.path}/categories`} />
+      <Route exact path={`${match.path}/categories`} component={Categories} />
+      <Route path={`${match.path}/new-releases`} component={NewReleases} />
+      <Route
+        path={`${match.path}/featured-playist`}
+        component={FeaturedPlaylists}
+      />
+    </Wrapper>
+  );
 }
 
 export default withRouter(Browse);

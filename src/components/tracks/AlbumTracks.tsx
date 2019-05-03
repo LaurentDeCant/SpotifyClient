@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Album } from "../../types";
@@ -24,42 +24,37 @@ interface Props extends RouteComponentProps<Params> {
   toggle: (collectionId: string, trackId?: string) => void;
 }
 
-class AlbumTracks extends Component<Props> {
-  albumId = "";
-
-  componentDidMount() {
-    const {
-      getAlbum,
-      match: {
-        params: { albumId }
-      }
-    } = this.props;
-    this.albumId = albumId;
+function AlbumTracks({
+  match: {
+    params: { albumId }
+  },
+  album,
+  isPlaying,
+  getAlbum,
+  toggle
+}: Props) {
+  useEffect(() => {
     getAlbum(albumId);
+  }, []);
+
+  function handleToggle(trackId?: string) {
+    toggle(albumId, trackId);
   }
 
-  handleToggle = (trackId?: string) => {
-    this.props.toggle(this.albumId, trackId);
-  };
-
-  render() {
-    const { album, isPlaying } = this.props;
-
-    return album ? (
-      <>
-        <Cover
-          image={album.images[0].url}
-          name={album.name}
-          artist={joinArtistNames(album.artists)}
-          isPlaying={isPlaying(album.id)}
-          onToggle={this.handleToggle}
-        />
-        <Tracks tracks={album.tracks} onToggle={this.handleToggle} />
-      </>
-    ) : (
-      <></>
-    );
-  }
+  return album ? (
+    <>
+      <Cover
+        image={album.images[0].url}
+        name={album.name}
+        artist={joinArtistNames(album.artists)}
+        isPlaying={isPlaying(album.id)}
+        onToggle={handleToggle}
+      />
+      <Tracks tracks={album.tracks} onToggle={handleToggle} />
+    </>
+  ) : (
+    <></>
+  );
 }
 
 const mapState = (state: State, ownProps: Props) => {

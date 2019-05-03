@@ -1,4 +1,4 @@
-import React, { Component, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { search } from "../../actions/search";
@@ -21,37 +21,26 @@ interface Props {
   search: (query: string) => void;
 }
 
-interface State {
-  query: string;
-}
+function Search({ search }: Props) {
+  const [query, setQuery] = useState("");
 
-class Search extends Component<Props, State> {
-  state = {
-    query: ""
-  };
-
-  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value: query } = event.target;
-    this.setState({ query }, this.search);
-  };
-
-  search() {
-    const { search } = this.props;
-    const { query } = this.state;
+  function trySearch() {
     if (query) {
       search(query);
     }
   }
 
-  render() {
-    const { query } = this.state;
-
-    return (
-      <div>
-        <StyledInput value={query} onChange={this.handleChange} />
-      </div>
-    );
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { value: query } = event.target;
+    setQuery(query);
+    useEffect(trySearch);
   }
+
+  return (
+    <div>
+      <StyledInput value={query} onChange={handleChange} />
+    </div>
+  );
 }
 
 const mapState = () => ({});

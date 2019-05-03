@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import styled from "../../styles/styled";
@@ -32,36 +32,38 @@ interface Props extends RouteComponentProps<Params> {
   getPlaylists: (categoryId: string) => void;
 }
 
-class CategoryPlaylists extends Component<Props> {
-  componentDidMount() {
-    const { category, getCategory, getPlaylists, match } = this.props;
+function CategoryPlaylists({
+  history,
+  match,
+  category,
+  playlists,
+  getCategory,
+  getPlaylists
+}: Props) {
+  useEffect(() => {
     const { categoryId } = match.params;
     if (!category) {
       getCategory(categoryId);
     }
     getPlaylists(categoryId);
-  }
+  }, []);
 
-  handleClick = (playlistId: string) => {
-    const { history } = this.props;
+  function handleClick(playlistId: string) {
     history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
-  };
-
-  render() {
-    const { category, playlists } = this.props;
-    const items = playlists.map(playlists => ({
-      id: playlists.id,
-      image: playlists.images[0].url,
-      title: playlists.name
-    }));
-
-    return (
-      <div>
-        <Title>{category && category.name}</Title>
-        <Covers items={items} onClick={this.handleClick} />
-      </div>
-    );
   }
+
+  const items = playlists.map(playlists => ({
+    id: playlists.id,
+    image: playlists.images[0].url,
+    title: playlists.name
+  }));
+
+  return (
+    <div>
+      <Title>{category && category.name}</Title>
+      <Covers items={items} onClick={handleClick} />
+    </div>
+  );
 }
 
 const mapState = (state: State, ownProps: Props) => {

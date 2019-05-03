@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Playlist } from "../../types";
@@ -17,26 +17,20 @@ interface Props extends RouteComponentProps {
   getPlaylists: () => void;
 }
 
-class FeaturedPlaylists extends Component<Props> {
-  componentDidMount() {
-    this.props.getPlaylists();
-  }
+function FeaturedPlaylists({ history, playlists, getPlaylists }: Props) {
+  useEffect(getPlaylists, []);
 
-  handleClick = (playlistId: string) => {
-    const { history } = this.props;
+  function handleClick(playlistId: string) {
     history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
-  };
-
-  render() {
-    const { playlists } = this.props;
-    const items = playlists.map(playlist => ({
-      id: playlist.id,
-      image: playlist.images[0].url,
-      title: playlist.name
-    }));
-
-    return <Covers items={items} onClick={this.handleClick} />;
   }
+
+  const items = playlists.map(playlist => ({
+    id: playlist.id,
+    image: playlist.images[0].url,
+    title: playlist.name
+  }));
+
+  return <Covers items={items} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({

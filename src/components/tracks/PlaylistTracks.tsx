@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Playlist } from "../../types";
@@ -23,42 +23,37 @@ interface Props extends RouteComponentProps<Params> {
   toggle: (collectionId: string, trackId?: string) => void;
 }
 
-class PlaylistTracks extends Component<Props> {
-  playlistId = "";
-
-  componentDidMount() {
-    const {
-      getPlaylist,
-      match: {
-        params: { playlistId }
-      }
-    } = this.props;
-    this.playlistId = playlistId;
+function PlaylistTracks({
+  match: {
+    params: { playlistId }
+  },
+  playlist,
+  isPlaying,
+  getPlaylist,
+  toggle
+}: Props) {
+  useEffect(() => {
     getPlaylist(playlistId);
+  }, []);
+
+  function handleToggle(trackId?: string) {
+    toggle(playlistId, trackId);
   }
 
-  handleToggle = (trackId?: string) => {
-    this.props.toggle(this.playlistId, trackId);
-  };
-
-  render() {
-    const { playlist, isPlaying } = this.props;
-
-    return playlist ? (
-      <>
-        <Cover
-          image={playlist.images[0].url}
-          name={playlist.name}
-          artist={playlist.owner.display_name}
-          isPlaying={isPlaying(playlist.id)}
-          onToggle={this.handleToggle}
-        />
-        <Tracks tracks={playlist.tracks} onToggle={this.handleToggle} />
-      </>
-    ) : (
-      <></>
-    );
-  }
+  return playlist ? (
+    <>
+      <Cover
+        image={playlist.images[0].url}
+        name={playlist.name}
+        artist={playlist.owner.display_name}
+        isPlaying={isPlaying(playlist.id)}
+        onToggle={handleToggle}
+      />
+      <Tracks tracks={playlist.tracks} onToggle={handleToggle} />
+    </>
+  ) : (
+    <></>
+  );
 }
 
 const mapState = (state: State, ownProps: Props) => {

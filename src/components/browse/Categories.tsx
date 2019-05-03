@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Category } from "../../types";
@@ -14,28 +14,22 @@ interface Props extends RouteComponentProps {
   getCategories: () => void;
 }
 
-class Categories extends Component<Props> {
-  componentDidMount() {
-    this.props.getCategories();
-  }
+function Categories({ history, categories, getCategories }: Props) {
+  useEffect(getCategories, []);
 
-  handleClick = (categoryId: string) => {
-    const { history } = this.props;
+  function handleClick(categoryId: string) {
     history.push(
       `${process.env.PUBLIC_URL}/categories/${categoryId}/playlists`
     );
-  };
-
-  render() {
-    const { categories } = this.props;
-    const items = categories.map(category => ({
-      id: category.id,
-      image: category.icons[0].url,
-      title: category.name
-    }));
-
-    return <Covers items={items} onClick={this.handleClick} />;
   }
+
+  const items = categories.map(category => ({
+    id: category.id,
+    image: category.icons[0].url,
+    title: category.name
+  }));
+
+  return <Covers items={items} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "../../styles/styled";
 import Button from "../Button";
 
@@ -47,25 +47,21 @@ interface Props {
   onToggle: () => void;
 }
 
-class Cover extends Component<Props> {
-  handleClick = () => {
-    this.props.onToggle();
-  };
-
-  render() {
-    const { image, name, artist, isPlaying } = this.props;
-
-    return (
-      <Wrapper>
-        <Image src={image} />
-        <Title>{name}</Title>
-        <Artist>{artist}</Artist>
-        <StyledButton onClick={this.handleClick}>
-          {isPlaying ? "Pause" : "Play"}
-        </StyledButton>
-      </Wrapper>
-    );
+function Cover({ image, name, artist, isPlaying, onToggle }: Props) {
+  function handleClick() {
+    onToggle();
   }
+
+  return (
+    <Wrapper>
+      <Image src={image} />
+      <Title>{name}</Title>
+      <Artist>{artist}</Artist>
+      <StyledButton onClick={handleClick}>
+        {isPlaying ? "Pause" : "Play"}
+      </StyledButton>
+    </Wrapper>
+  );
 }
 
 export default Cover;

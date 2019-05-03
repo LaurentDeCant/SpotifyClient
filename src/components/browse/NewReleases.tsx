@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Album } from "../../types";
@@ -15,27 +15,21 @@ interface Props extends RouteComponentProps {
   getAlbums: () => void;
 }
 
-class NewReleases extends Component<Props> {
-  componentDidMount() {
-    this.props.getAlbums();
-  }
+function NewReleases({ history, albums, getAlbums }: Props) {
+  useEffect(getAlbums, []);
 
-  handleClick = (albumId: string) => {
-    const { history } = this.props;
+  function handleClick(albumId: string) {
     history.push(`${process.env.PUBLIC_URL}/albums/${albumId}/tracks`);
-  };
-
-  render() {
-    const { albums } = this.props;
-    const items = albums.map(album => ({
-      id: album.id,
-      image: album.images[0].url,
-      title: album.name,
-      author: joinArtistNames(album.artists)
-    }));
-
-    return <Covers items={items} onClick={this.handleClick} />;
   }
+
+  const items = albums.map(album => ({
+    id: album.id,
+    image: album.images[0].url,
+    title: album.name,
+    author: joinArtistNames(album.artists)
+  }));
+
+  return <Covers items={items} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({

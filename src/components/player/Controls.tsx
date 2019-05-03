@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "../../styles/styled";
-import { Times } from "../../reducers/player";
 import { IconType } from "../Icon";
 import RoundButton from "../RoundButton";
 
@@ -23,40 +22,36 @@ interface Props {
   onPrevious: () => void;
 }
 
-class Controls extends Component<Props> {
-  render() {
-    const {
-      canPrevious,
-      onPrevious,
-      isPlaying,
-      canToggle,
-      onToggle,
-      canNext,
-      onNext
-    } = this.props;
+function Controls({
+  canPrevious,
+  onPrevious,
+  isPlaying,
+  canToggle,
+  onToggle,
+  canNext,
+  onNext
+}: Props) {
+  return (
+    <Wrapper>
+      <RoundButton
+        disabled={!canPrevious}
+        onClick={onPrevious}
+        iconType={IconType.SkipPrevious}
+      />
 
-    return (
-      <Wrapper>
-        <RoundButton
-          disabled={!canPrevious}
-          onClick={onPrevious}
-          iconType={IconType.SkipPrevious}
-        />
+      <MainButton
+        disabled={!canToggle}
+        onClick={onToggle}
+        iconType={isPlaying ? IconType.Pause : IconType.PlayArrow}
+      />
 
-        <MainButton
-          disabled={!canToggle}
-          onClick={onToggle}
-          iconType={isPlaying ? IconType.Pause : IconType.PlayArrow}
-        />
-
-        <RoundButton
-          disabled={!canNext}
-          onClick={onNext}
-          iconType={IconType.SkipNext}
-        />
-      </Wrapper>
-    );
-  }
+      <RoundButton
+        disabled={!canNext}
+        onClick={onNext}
+        iconType={IconType.SkipNext}
+      />
+    </Wrapper>
+  );
 }
 
 export default Controls;
