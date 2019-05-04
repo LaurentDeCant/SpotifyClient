@@ -24,16 +24,12 @@ interface Props {
 function Search({ search }: Props) {
   const [query, setQuery] = useState("");
 
-  function trySearch() {
-    if (query) {
-      search(query);
-    }
-  }
-
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value: query } = event.target;
     setQuery(query);
-    useEffect(trySearch);
+    if (query) {
+      search(query);
+    }
   }
 
   return (

@@ -72,7 +72,7 @@ const withLoader = <P extends Props>(
         <Fader isLoading={!hasLoaded}>
           <WrappedComponent {...rest} />
         </Fader>
-        <Loader isLoading={hasLoaded} />
+        <Loader isLoading={!hasLoaded} />
       </>
     );
   };
