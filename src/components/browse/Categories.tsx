@@ -6,7 +6,7 @@ import { State } from "../../reducers";
 import { selectIsFetching, selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
 import Covers from "./Covers";
-import withLoader from "../withLoader";
+import withReloader from "../withReloader";
 
 interface Props extends RouteComponentProps {
   isLoading: boolean;
@@ -29,7 +29,7 @@ function Categories({ history, categories, getCategories }: Props) {
     title: category.name
   }));
 
-  return <Covers items={items} onClick={handleClick} />;
+  return <Covers covers={items} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({
@@ -45,5 +45,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(withLoader(Categories))
+  )(withReloader(Categories))
 );

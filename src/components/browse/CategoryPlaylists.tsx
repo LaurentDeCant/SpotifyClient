@@ -11,7 +11,7 @@ import {
 } from "../../reducers/browse";
 import { getCategory, getCategoryPlaylists } from "../../actions/browse";
 import Covers from "./Covers";
-import withLoader from "../withLoader";
+import withReloader from "../withReloader";
 
 const Title = styled.h1`
   text-align: center;
@@ -52,16 +52,17 @@ function CategoryPlaylists({
     history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
   }
 
-  const items = playlists.map(playlists => ({
-    id: playlists.id,
-    image: playlists.images[0].url,
-    title: playlists.name
+  const items = playlists.map(playlist => ({
+    id: playlist.id,
+    image: playlist.images[0].url,
+    title: playlist.name,
+    subTitle: playlist.owner.display_name
   }));
 
   return (
     <div>
       <Title>{category && category.name}</Title>
-      <Covers items={items} onClick={handleClick} />
+      <Covers covers={items} onClick={handleClick} />
     </div>
   );
 }
@@ -86,5 +87,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(withLoader(CategoryPlaylists))
+  )(withReloader(CategoryPlaylists))
 );

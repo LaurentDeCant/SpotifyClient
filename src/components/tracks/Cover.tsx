@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "../../styles/styled";
 import Button from "../Button";
+import Text from "../Text";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -17,12 +18,12 @@ const Image = styled.img`
   width: 300px;
 `;
 
-const Title = styled.span`
+const Title = styled(Text)`
   font-size: ${props => props.theme.font.size.large}
   margin-bottom: 5px;
 `;
 
-const Artist = styled.span`
+const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.font.weight.light};
   margin-bottom: 20px;
@@ -41,13 +42,13 @@ const StyledButton = styled(Button)`
 
 interface Props {
   image: string;
-  name: string;
-  artist: string;
+  title: string;
+  subTitle: string;
   isPlaying: boolean;
   onToggle: () => void;
 }
 
-function Cover({ image, name, artist, isPlaying, onToggle }: Props) {
+function Cover({ image, title, subTitle, isPlaying, onToggle }: Props) {
   function handleClick() {
     onToggle();
   }
@@ -55,8 +56,8 @@ function Cover({ image, name, artist, isPlaying, onToggle }: Props) {
   return (
     <Wrapper>
       <Image src={image} />
-      <Title>{name}</Title>
-      <Artist>{artist}</Artist>
+      <Title>{title}</Title>
+      <SubTitle>{subTitle}</SubTitle>
       <StyledButton onClick={handleClick}>
         {isPlaying ? "Pause" : "Play"}
       </StyledButton>

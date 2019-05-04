@@ -6,7 +6,7 @@ export default createGlobalStyle`
     height: 100%;
   }
 
-  body, button, ul {
+  body, h1, h2, button, ul {
     margin: 0;
     padding: 0;
   }

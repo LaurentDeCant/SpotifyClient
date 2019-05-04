@@ -74,8 +74,9 @@ const Playlists = new schema.Entity("playlistItems", {
 });
 
 const Results = new schema.Object({
-  artists: { items: [Artist] },
   albums: { items: [Album] },
+  artists: { items: [Artist] },
+  playlists: { items: [Playlist] },
   tracks: { items: [Track] }
 });
 

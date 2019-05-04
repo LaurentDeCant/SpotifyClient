@@ -10,7 +10,7 @@ import { toggle } from "../../actions/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
-import withLoader from "../withLoader";
+import withReloader from "../withReloader";
 
 interface Params {
   albumId: string;
@@ -45,8 +45,8 @@ function AlbumTracks({
     <>
       <Cover
         image={album.images[0].url}
-        name={album.name}
-        artist={joinArtistNames(album.artists)}
+        title={album.name}
+        subTitle={joinArtistNames(album.artists)}
         isPlaying={isPlaying(album.id)}
         onToggle={handleToggle}
       />
@@ -77,5 +77,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(withLoader(AlbumTracks))
+  )(withReloader(AlbumTracks))
 );

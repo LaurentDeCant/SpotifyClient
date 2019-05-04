@@ -9,7 +9,7 @@ import { getPlaylist } from "../../actions/playlists";
 import { toggle } from "../../actions/player";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
-import withLoader from "../withLoader";
+import withReloader from "../withReloader";
 
 interface Params {
   playlistId: string;
@@ -44,8 +44,8 @@ function PlaylistTracks({
     <>
       <Cover
         image={playlist.images[0].url}
-        name={playlist.name}
-        artist={playlist.owner.display_name}
+        title={playlist.name}
+        subTitle={playlist.owner.display_name}
         isPlaying={isPlaying(playlist.id)}
         onToggle={handleToggle}
       />
@@ -76,5 +76,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(withLoader(PlaylistTracks))
+  )(withReloader(PlaylistTracks))
 );

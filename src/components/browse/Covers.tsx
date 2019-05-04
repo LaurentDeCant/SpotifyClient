@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "../../styles/styled";
 import Button from "../Button";
+import Text from "../Text";
 
 const StyledList = styled.ul`
   align-content: flex-start;
@@ -30,44 +31,39 @@ const Image = styled.img`
   width: 200px;
 `;
 
-const Name = styled.span`
+const Title = styled(Text)`
   margin-bottom: 5px;
   text-align: center;
   width: 200px;
 `;
 
-const Artist = styled.span`
+const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.font.weight.light};
 `;
 
+interface Cover {
+  id: string;
+  image: string;
+  title: string;
+  subTitle?: string;
+}
+
 interface Props {
-  items: {
-    id: string;
-    image: string;
-    title: string;
-    artist?: string;
-  }[];
+  covers: Cover[];
   onClick: (id: string) => void;
 }
 
-function Covers(props: Props) {
-  function handleClick(id: string) {
-    const { onClick } = props;
-    onClick && onClick(id);
-  }
-
-  const { items } = props;
-
+function Covers({ covers, onClick }: Props) {
   return (
     <StyledList>
-      {items.map(item => (
-        <StyledItem key={item.id}>
-          <StyledButton onClick={() => handleClick(item.id)}>
-            <Image src={item.image} />
+      {covers.map(cover => (
+        <StyledItem key={cover.id}>
+          <StyledButton onClick={() => onClick(cover.id)}>
+            <Image src={cover.image} />
           </StyledButton>
-          <Name>{item.title}</Name>
-          {item.artist && <Artist>{item.artist}</Artist>}
+          <Title>{cover.title}</Title>
+          {cover.subTitle && <SubTitle>{cover.subTitle}</SubTitle>}
         </StyledItem>
       ))}
     </StyledList>

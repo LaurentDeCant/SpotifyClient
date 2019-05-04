@@ -7,7 +7,7 @@ import { selectIsFetching, selectNewReleases } from "../../reducers/browse";
 import { getNewReleases } from "../../actions/browse";
 import { joinArtistNames } from "../../helpers/utils";
 import Covers from "./Covers";
-import withLoader from "../withLoader";
+import withReloader from "../withReloader";
 
 interface Props extends RouteComponentProps {
   isLoading: boolean;
@@ -26,10 +26,10 @@ function NewReleases({ history, albums, getAlbums }: Props) {
     id: album.id,
     image: album.images[0].url,
     title: album.name,
-    author: joinArtistNames(album.artists)
+    subTitle: joinArtistNames(album.artists)
   }));
 
-  return <Covers items={items} onClick={handleClick} />;
+  return <Covers covers={items} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({
@@ -45,5 +45,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(withLoader(NewReleases))
+  )(withReloader(NewReleases))
 );

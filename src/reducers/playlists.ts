@@ -4,6 +4,7 @@ import { Playlist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType, PlaylistSuccessAction } from "../actions/playlists";
 import { ActionType as BrowseActionType } from "../actions/browse";
+import { ActionType as SearchActionType } from "../actions/search";
 import { State as CombinedState } from ".";
 import {
   FetchableState,
@@ -35,7 +36,8 @@ export default createReducer(initialState, {
   [ActionType.PlaylistFailure]: endFetching,
 
   [BrowseActionType.CategoryPlaylistsSuccess]: mergePlaylists,
-  [BrowseActionType.FeaturedPlaylistsSuccess]: mergePlaylists
+  [BrowseActionType.FeaturedPlaylistsSuccess]: mergePlaylists,
+  [SearchActionType.SearchSuccess]: mergePlaylists
 });
 
 export function selectIsFetching(state: CombinedState): boolean {

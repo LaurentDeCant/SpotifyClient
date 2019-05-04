@@ -9,7 +9,7 @@ import {
 } from "../../reducers/browse";
 import { getFeaturedPlaylists } from "../../actions/browse";
 import Covers from "./Covers";
-import withLoader from "../withLoader";
+import withReloader from "../withReloader";
 
 interface Props extends RouteComponentProps {
   isLoading: boolean;
@@ -27,10 +27,11 @@ function FeaturedPlaylists({ history, playlists, getPlaylists }: Props) {
   const items = playlists.map(playlist => ({
     id: playlist.id,
     image: playlist.images[0].url,
-    title: playlist.name
+    title: playlist.name,
+    subTitle: playlist.owner.display_name
   }));
 
-  return <Covers items={items} onClick={handleClick} />;
+  return <Covers covers={items} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({
@@ -46,5 +47,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(withLoader(FeaturedPlaylists))
+  )(withReloader(FeaturedPlaylists))
 );

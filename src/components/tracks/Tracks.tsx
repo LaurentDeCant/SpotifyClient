@@ -7,6 +7,7 @@ import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import { joinArtistNames } from "../../helpers/utils";
 import Button from "../Button";
 import Icon, { IconType } from "../Icon";
+import Text from "../Text";
 
 const StyledButton = styled(Button)<{ isLoaded: boolean }>`
   align-items: center;
@@ -36,24 +37,23 @@ const Infos = styled.div`
   flex-grow: 1;
   font-weight: ${props => props.theme.font.weight.light};
   height: 100%;
+  margin-right: 15px;
+  overflow: hidden;
 `;
 
-const Title = styled.span`
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
+const Title = styled(Text)`
   margin-bottom: 5px;
+  text-align: left;
 `;
 
-const Artist = styled.span`
-  align-items: center;
+const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
-  display: flex;
-  flex-grow: 1;
+  text-align: left;
 `;
 
 const Duration = styled.span`
   color: ${props => props.theme.foreground.dark};
+  flex-shrink: 0;
 `;
 
 interface Props {
@@ -87,7 +87,7 @@ function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
   }
 
   function renderArtist(track: Track) {
-    return <Artist>{joinArtistNames(track.artists)}</Artist>;
+    return <SubTitle>{joinArtistNames(track.artists)}</SubTitle>;
   }
 
   function renderDuration(track: Track) {
@@ -104,26 +104,24 @@ function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
 
   return (
     <ul>
-      {tracks.map(track => {
-        return (
-          <li key={track.id}>
-            <StyledButton
-              onClick={() => onToggle(track.id)}
-              disabled={!isDisabled(track)}
-              isLoaded={isLoaded(track.id)}
-            >
-              {renderIcon(track)}
+      {tracks.map(track => (
+        <li key={track.id}>
+          <StyledButton
+            onClick={() => onToggle(track.id)}
+            disabled={!isDisabled(track)}
+            isLoaded={isLoaded(track.id)}
+          >
+            {renderIcon(track)}
 
-              <Infos>
-                <Title>{track.name}</Title>
-                {renderArtist(track)}
-              </Infos>
+            <Infos>
+              <Title>{track.name}</Title>
+              {renderArtist(track)}
+            </Infos>
 
-              {renderDuration(track)}
-            </StyledButton>
-          </li>
-        );
-      })}
+            {renderDuration(track)}
+          </StyledButton>
+        </li>
+      ))}
     </ul>
   );
 }

@@ -56,8 +56,8 @@ export const theme: Theme = {
   },
   foreground: {
     default: "#ffffff",
-    dark: "rgba(255, 255, 255, 0.4)",
-    darker: "rgba(255, 255, 255, 0.2)"
+    dark: "rgba(255, 255, 255, 0.6)",
+    darker: "rgba(255, 255, 255, 0.3)"
   },
   primary: "#1db954",
   primaryLight: "#1ed760",
