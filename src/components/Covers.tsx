@@ -1,7 +1,8 @@
 import React from "react";
-import styled from "../../styles/styled";
-import Button from "../Button";
-import Text from "../Text";
+import styled from "../styles/styled";
+import { Cover } from "../helpers/cover";
+import Button from "./Button";
+import Text from "./Text";
 
 const StyledList = styled.ul`
   align-content: flex-start;
@@ -27,6 +28,7 @@ const StyledButton = styled(Button)`
 
 const Image = styled.img`
   height: 200px;
+  object-fit: cover;
   width: 200px;
 `;
 
@@ -41,16 +43,9 @@ const SubTitle = styled(Text)`
   font-weight: ${props => props.theme.font.weight.light};
 `;
 
-interface Cover {
-  id: string;
-  image: string;
-  title: string;
-  subTitle?: string;
-}
-
 interface Props {
   covers: Cover[];
-  onClick: (id: string) => void;
+  onClick?: (id: string) => void;
 }
 
 function Covers({ covers, onClick }: Props) {
@@ -58,7 +53,7 @@ function Covers({ covers, onClick }: Props) {
     <StyledList>
       {covers.map(cover => (
         <StyledItem key={cover.id}>
-          <StyledButton onClick={() => onClick(cover.id)}>
+          <StyledButton onClick={() => onClick && onClick(cover.id)}>
             <Image src={cover.image} />
           </StyledButton>
           <Title>{cover.title}</Title>

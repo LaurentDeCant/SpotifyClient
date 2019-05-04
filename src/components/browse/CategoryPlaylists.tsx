@@ -10,7 +10,8 @@ import {
   selectCategoryPlaylists
 } from "../../reducers/browse";
 import { getCategory, getCategoryPlaylists } from "../../actions/browse";
-import Covers from "./Covers";
+import { getPlaylistCovers } from "../../helpers/cover";
+import Covers from "../Covers";
 import withReloader from "../withReloader";
 
 const Title = styled.h1`
@@ -52,17 +53,11 @@ function CategoryPlaylists({
     history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
   }
 
-  const items = playlists.map(playlist => ({
-    id: playlist.id,
-    image: playlist.images[0].url,
-    title: playlist.name,
-    subTitle: playlist.owner.display_name
-  }));
-
+  const covers = getPlaylistCovers(playlists);
   return (
     <div>
       <Title>{category && category.name}</Title>
-      <Covers covers={items} onClick={handleClick} />
+      <Covers covers={covers} onClick={handleClick} />
     </div>
   );
 }

@@ -5,8 +5,8 @@ import { Album } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectNewReleases } from "../../reducers/browse";
 import { getNewReleases } from "../../actions/browse";
-import { joinArtistNames } from "../../helpers/utils";
-import Covers from "./Covers";
+import { getAlbumCovers } from "../../helpers/cover";
+import Covers from "../Covers";
 import withReloader from "../withReloader";
 
 interface Props extends RouteComponentProps {
@@ -22,14 +22,8 @@ function NewReleases({ history, albums, getAlbums }: Props) {
     history.push(`${process.env.PUBLIC_URL}/albums/${albumId}/tracks`);
   }
 
-  const items = albums.map(album => ({
-    id: album.id,
-    image: album.images[0].url,
-    title: album.name,
-    subTitle: joinArtistNames(album.artists)
-  }));
-
-  return <Covers covers={items} onClick={handleClick} />;
+  const covers = getAlbumCovers(albums);
+  return <Covers covers={covers} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({

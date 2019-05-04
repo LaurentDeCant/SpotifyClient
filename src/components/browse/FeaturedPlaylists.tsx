@@ -8,7 +8,8 @@ import {
   selectFeaturedPlaylists
 } from "../../reducers/browse";
 import { getFeaturedPlaylists } from "../../actions/browse";
-import Covers from "./Covers";
+import { getPlaylistCovers } from "../../helpers/cover";
+import Covers from "../Covers";
 import withReloader from "../withReloader";
 
 interface Props extends RouteComponentProps {
@@ -24,14 +25,8 @@ function FeaturedPlaylists({ history, playlists, getPlaylists }: Props) {
     history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
   }
 
-  const items = playlists.map(playlist => ({
-    id: playlist.id,
-    image: playlist.images[0].url,
-    title: playlist.name,
-    subTitle: playlist.owner.display_name
-  }));
-
-  return <Covers covers={items} onClick={handleClick} />;
+  const covers = getPlaylistCovers(playlists);
+  return <Covers covers={covers} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({

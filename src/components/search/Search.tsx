@@ -8,7 +8,13 @@ import {
   selectResults
 } from "../../reducers/search";
 import { search } from "../../actions/search";
+import {
+  getAlbumCovers,
+  getArtistCovers,
+  getPlaylistCovers
+} from "../../helpers/cover";
 import withLoader from "../withLoader";
+import Covers from "../Covers";
 
 const StyledInput = styled.input`
   background: ${props => props.theme.background.light}
@@ -19,19 +25,18 @@ const StyledInput = styled.input`
   font-size: ${props => props.theme.font.size.extraLarge}
   font-weight: ${props => props.theme.font.weight.light}
   height: 50px;
-  margin: 0 0 30px 0;
+  margin: 0 0 40px 0;
   padding: 0 25px;
   width: calc(100% - 50px);
 `;
 
-const List = styled.ul`
-  margin-bottom: 20px;
+const Section = styled.section`
+  margin-bottom: 40px;
 `;
 
 const Header = styled.h2`
   font-size: ${props => props.theme.font.size.extraLarge}
-  font-weight: ${props => props.theme.font.weight.light}
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 interface Props {
@@ -40,10 +45,7 @@ interface Props {
   search: (query: string) => void;
 }
 
-function Search({
-  results: { albums, artists, playlists, tracks },
-  search
-}: Props) {
+function Search({ results: { albums, artists, playlists }, search }: Props) {
   const [query, setQuery] = useState("");
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -54,15 +56,9 @@ function Search({
     }
   }
 
-  function renderNames(items: Array<{ id: string; name: string }>) {
-    return (
-      <List>
-        {items.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </List>
-    );
-  }
+  const artistCovers = getArtistCovers(artists);
+  const albumCovers = getAlbumCovers(albums);
+  const playlistCovers = getPlaylistCovers(playlists);
 
   return (
     <div>
@@ -71,14 +67,18 @@ function Search({
         onChange={handleChange}
         placeholder="Search..."
       />
-      <Header>Albums</Header>
-      {renderNames(albums)}
-      <Header>Artists</Header>
-      {renderNames(artists)}
-      <Header>Playlists</Header>
-      {renderNames(playlists)}
-      <Header>Tracks</Header>
-      {renderNames(tracks)}
+      <Section>
+        <Header>Artists</Header>
+        <Covers covers={artistCovers} />
+      </Section>
+      <Section>
+        <Header>Albums</Header>
+        <Covers covers={albumCovers} />
+      </Section>
+      <Section>
+        <Header>Playlists</Header>
+        <Covers covers={playlistCovers} />
+      </Section>
     </div>
   );
 }

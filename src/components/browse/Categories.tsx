@@ -5,7 +5,8 @@ import { Category } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
-import Covers from "./Covers";
+import { getCategoryCovers } from "../../helpers/cover";
+import Covers from "../Covers";
 import withReloader from "../withReloader";
 
 interface Props extends RouteComponentProps {
@@ -23,13 +24,8 @@ function Categories({ history, categories, getCategories }: Props) {
     );
   }
 
-  const items = categories.map(category => ({
-    id: category.id,
-    image: category.icons[0].url,
-    title: category.name
-  }));
-
-  return <Covers covers={items} onClick={handleClick} />;
+  const covers = getCategoryCovers(categories);
+  return <Covers covers={covers} onClick={handleClick} />;
 }
 
 const mapState = (state: State) => ({

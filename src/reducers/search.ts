@@ -32,7 +32,6 @@ export default createReducer(initialState, {
   [ActionType.SearchRequest]: startFetching,
   [ActionType.SearchSuccess]: (state: State, action: SearchSuccessAction) => {
     const { albums, artists, playlists, tracks } = action.payload;
-    console.log(action);
     return endFetching({
       ...state,
       albumIds: albums ? Object.keys(albums) : [],
@@ -58,8 +57,11 @@ export interface Results {
 export function selectResults(state: CombinedState): Results {
   const { albumIds, artistIds, playlistIds, trackIds } = state.search;
   const albums = selectAlbums(state, albumIds);
-  const artists = selectArtists(state, artistIds);
+  const artists = selectArtists(state, artistIds).sort(
+    (x, y) => y.popularity - x.popularity
+  );
   const playlists = selectPlaylists(state, playlistIds);
   const tracks = selectTracks(state, trackIds);
+  console.log(artists);
   return { artists, albums, playlists, tracks };
 }

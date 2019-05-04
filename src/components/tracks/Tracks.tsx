@@ -4,7 +4,7 @@ import styled from "../../styles/styled";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
-import { joinArtistNames } from "../../helpers/utils";
+import { joinArtistNames } from "../../helpers/artist";
 import Button from "../Button";
 import Icon, { IconType } from "../Icon";
 import Text from "../Text";

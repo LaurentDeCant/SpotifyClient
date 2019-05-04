@@ -7,7 +7,7 @@ import { selectIsFetching, selectAlbum } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
 import { getAlbum } from "../../actions/albums";
 import { toggle } from "../../actions/player";
-import { joinArtistNames } from "../../helpers/utils";
+import { joinArtistNames } from "../../helpers/artist";
 import Cover from "./Cover";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
