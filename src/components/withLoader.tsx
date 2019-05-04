@@ -1,12 +1,12 @@
-import React, { FunctionComponent, ComponentType } from "react";
+import React, { FunctionComponent, ComponentType, useState } from "react";
 import styled from "../styles/styled";
 
-const Fader = styled.div<{ isLoading: number }>`
+const Fader = styled.div<{ isLoading: boolean }>`
   opacity: ${props => (props.isLoading ? "0" : "1")};
   transition: ${props => (props.isLoading ? "all 0" : "all 0.2s")};
 `;
 
-const Loader = styled.div<{ isLoading: number }>`
+const Loader = styled.div<{ isLoading: boolean }>`
   height: 5px;
   left: 0;
   position: absolute;
@@ -57,12 +57,22 @@ const withLoader = <P extends Props>(
   WrappedComponent: ComponentType<P>
 ): FunctionComponent<P> => {
   return ({ isLoading, ...rest }: any) => {
+    const [prevIsLoading, setPrevIsLoading] = useState(false);
+    const [hasLoaded, setHasLoaded] = useState(false);
+
+    if (prevIsLoading !== isLoading) {
+      if (!isLoading) {
+        setHasLoaded(true);
+      }
+      setPrevIsLoading(isLoading);
+    }
+
     return (
       <>
-        <Fader isLoading={isLoading}>
+        <Fader isLoading={!hasLoaded}>
           <WrappedComponent {...rest} />
         </Fader>
-        <Loader isLoading={isLoading} />
+        <Loader isLoading={hasLoaded} />
       </>
     );
   };
