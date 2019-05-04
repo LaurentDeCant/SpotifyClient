@@ -11,7 +11,6 @@ const Wrapper = styled.div`
 `;
 
 const Image = styled.img`
-  border-radius: 5px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 300px;
   margin-bottom: 10px;
@@ -34,10 +33,7 @@ const StyledButton = styled(Button)`
   border-radius: 20px;
   color: ${props => props.theme.foreground.default};
   padding: 10px 40px;
-
-  &::before {
-    border-radius: 20px;
-  }
+  width: 120px;
 `;
 
 interface Props {

@@ -20,7 +20,6 @@ const StyledItem = styled.li`
 `;
 
 const StyledButton = styled(Button)`
-  border-radius: 5px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   margin-bottom: 10px;

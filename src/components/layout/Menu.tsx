@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "../../styles/styled";
-import { ripple } from "../../styles/effects";
+import { click } from "../../styles/effects";
 import Icon, { IconType } from "../Icon";
 
 const Wrapper = styled.ul`
@@ -12,7 +12,7 @@ const Wrapper = styled.ul`
 `;
 
 const StyledNavLink = styled(NavLink)`
-  ${ripple}
+  ${click}
   align-items: center;
   color: ${props => props.theme.foreground.dark};
   display: flex;

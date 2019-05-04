@@ -11,12 +11,12 @@ import Text from "../Text";
 
 const StyledButton = styled(Button)<{ isLoaded: boolean }>`
   align-items: center;
-  border-radius: 5px;
+  border-radius: 40px;
   color: ${props =>
     props.isLoaded ? props.theme.primaryLight : props.theme.foreground.default};
   display: flex;
   margin-bottom: 5px;
-  padding: 10px;
+  padding: 10px 20px;
   width: 100%;
 `;
 
