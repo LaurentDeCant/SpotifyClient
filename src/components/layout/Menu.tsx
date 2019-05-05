@@ -6,8 +6,9 @@ import { Icon, IconType } from "../core";
 
 const Wrapper = styled.ul`
   background: ${props => props.theme.background.dark};
+  flex-shrink: 0;
   padding: 25px 0;
-  width: 250px;
+  width: 200px;
   z-index: 1;
 `;
 

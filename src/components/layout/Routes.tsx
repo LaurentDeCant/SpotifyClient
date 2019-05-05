@@ -9,8 +9,9 @@ import PlaylistTracks from "../tracks/PlaylistTracks";
 import AlbumTracks from "../tracks/AlbumTracks";
 
 const Wrapper = styled.div`
-  flex: 1;
-  height: calc(100% - 50px);
+  box-sizing: border-box;
+  flex-grow: 1;
+  height: 100%;
   overflow-y: auto;
   padding: 25px;
   position: relative;

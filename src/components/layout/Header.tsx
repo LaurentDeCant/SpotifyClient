@@ -30,6 +30,7 @@ const LoginButton = styled(Button)`
 `;
 
 interface Props {
+  className?: string;
   isAuthorized: boolean;
   userProfile?: UserProfile;
   getAuthorization: () => void;
@@ -37,6 +38,7 @@ interface Props {
 }
 
 function Header({
+  className,
   isAuthorized,
   userProfile,
   getAuthorization,
@@ -53,7 +55,7 @@ function Header({
   }
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Title />
 
       {userProfile ? (

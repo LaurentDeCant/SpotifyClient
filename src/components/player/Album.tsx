@@ -12,6 +12,7 @@ const StyedImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
   margin-right: 10px;
+  width: auto;
 `;
 
 const Infos = styled.div`

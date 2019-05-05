@@ -20,7 +20,7 @@ const StyledItem = styled.li`
 
 const length = 200;
 const StyledButton = styled(Button)<{ type: CoverType }>`
-  background: transparent;
+  background: ${props => props.theme.background.light};
   ${props => props.type === CoverType.Round && "border-radius: 100px"};
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;

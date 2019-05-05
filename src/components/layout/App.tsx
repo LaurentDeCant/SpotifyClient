@@ -12,22 +12,32 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
+const StyledHeader = styled(Header)`
+  flex-shrink: 0;
+`;
+
 const Body = styled.div`
   display: flex;
-  flex: 1;
+  flex-grow: 1;
+  height: calc(100% - 50px - 100px);
+`;
+
+const StyledPlayer = styled(Player)`
+  flex-shrink: 0;
 `;
 
 function App() {
   return (
     <Router>
       <Wrapper>
-        <Header />
+        <StyledHeader />
+
         <Body>
           <Menu />
           <Routes />
         </Body>
 
-        <Player />
+        <StyledPlayer />
       </Wrapper>
     </Router>
   );

@@ -6,7 +6,7 @@ const StyedButton = styled(Button)`
   border-radius: 50%;
   color: ${props => props.theme.foreground.dark};
   display: flex;
-  margin: 10px;
+  margin: 5px 10px;
   padding: 5px;
 
   &:disabled {

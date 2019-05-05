@@ -59,6 +59,7 @@ const RightWrapper = styled(ThirdWrapper)`
 `;
 
 interface Props {
+  className?: string;
   loadedTrack?: Track;
   isPlaying: () => boolean;
   times: Times;
@@ -75,6 +76,7 @@ interface Props {
 }
 
 function Player({
+  className,
   loadedTrack,
   isPlaying,
   times,
@@ -96,47 +98,45 @@ function Player({
   const album = loadedTrack && loadedTrack.album;
 
   return (
-    <>
-      <Wrapper>
-        <LeftWrapper>
-          {album && (
-            <Album
-              image={album.images[0].url}
-              name={album.name}
-              artist={album.artists[0].name}
-            />
-          )}
-        </LeftWrapper>
+    <Wrapper className={className}>
+      <LeftWrapper>
+        {album && (
+          <Album
+            image={album.images[0].url}
+            name={album.name}
+            artist={album.artists[0].name}
+          />
+        )}
+      </LeftWrapper>
 
-        <CenterWrapper>
-          <Controls
-            isPlaying={isPlaying()}
-            canToggle={canToggle}
-            onToggle={handleToggle}
-            canNext={canNext}
-            onNext={next}
-            canPrevious={canPrevious}
-            onPrevious={previous}
-          />
-          <Playback
-            duration={times.duration}
-            currentTime={times.currentTime}
-            canSeek={canSeek}
-            onSeek={seek}
-          />
-        </CenterWrapper>
+      <CenterWrapper>
+        <Controls
+          isPlaying={isPlaying()}
+          canToggle={canToggle}
+          onToggle={handleToggle}
+          canNext={canNext}
+          onNext={next}
+          canPrevious={canPrevious}
+          onPrevious={previous}
+        />
+        <Playback
+          duration={times.duration}
+          currentTime={times.currentTime}
+          canSeek={canSeek}
+          onSeek={seek}
+        />
+      </CenterWrapper>
 
-        <RightWrapper>
-          <Volume
-            volume={volumeLevels.volume}
-            isMuted={volumeLevels.isMuted}
-            onChange={changeVolume}
-          />
-        </RightWrapper>
-      </Wrapper>
+      <RightWrapper>
+        <Volume
+          volume={volumeLevels.volume}
+          isMuted={volumeLevels.isMuted}
+          onChange={changeVolume}
+        />
+      </RightWrapper>
 
       <Audio />
-    </>
+    </Wrapper>
   );
 }
 
