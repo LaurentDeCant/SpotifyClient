@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { IconType } from "../Icon";
-import RoundButton from "../RoundButton";
+import { IconType, RoundButton } from "../core";
 
 const Wrapper = styled.div`
   align-items: center;

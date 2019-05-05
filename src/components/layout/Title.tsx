@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "../../styles/styled";
-import Icon, { IconType } from "../Icon";
+import { Icon, IconType } from "../core";
 
 const Wrapper = styled.div`
   display: flex;

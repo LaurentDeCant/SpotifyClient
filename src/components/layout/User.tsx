@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
-import Icon, { IconType } from "../Icon";
+import { Icon, IconType } from "../core";
 
 const Wrapper = styled.div`
   align-items: center;

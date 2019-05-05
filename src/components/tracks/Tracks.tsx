@@ -5,9 +5,7 @@ import { Track } from "../../types";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import { joinArtistNames } from "../../helpers/artist";
-import Button from "../Button";
-import Icon, { IconType } from "../Icon";
-import Text from "../Text";
+import { Button, Icon, IconType, Text } from "../core";
 
 const StyledButton = styled(Button)<{ isLoaded: boolean }>`
   align-items: center;

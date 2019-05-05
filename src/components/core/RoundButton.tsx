@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
-import Icon, { IconType } from "./Icon";
+import { Button, Icon, IconType } from ".";
 
 const StyedButton = styled(Button)`
   border-radius: 50%;

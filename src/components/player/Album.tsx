@@ -1,5 +1,6 @@
 import React, { HTMLAttributes } from "react";
 import styled from "../../styles/styled";
+import { Image } from "../core";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -7,7 +8,7 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const Image = styled.img`
+const StyedImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 100%;
   margin-right: 10px;
@@ -36,7 +37,7 @@ interface Props extends HTMLAttributes<any> {
 function Album({ className, image, name, artist }: Props) {
   return (
     <Wrapper className={className}>
-      <Image src={image} />
+      <StyedImage source={image} />
       <Infos>
         <Title>{name}</Title>
         <Artist>{artist}</Artist>

@@ -1,5 +1,3 @@
-import AlbumCovers from "./AlbumCovers";
-import ArtistCovers from "./ArtistCovers";
-import PlaylistCovers from "./PlaylistCovers";
-
-export { AlbumCovers, ArtistCovers, PlaylistCovers };
+export { default as AlbumCovers } from "./AlbumCovers";
+export { default as ArtistCovers } from "./ArtistCovers";
+export { default as PlaylistCovers } from "./PlaylistCovers";

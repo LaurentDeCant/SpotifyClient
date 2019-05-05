@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import Button from "../Button";
-import Text from "../Text";
+import { Button, Image, Text } from "../core";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -10,7 +9,7 @@ const Wrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const Image = styled.img`
+const StyledImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 300px;
   margin-bottom: 10px;
@@ -51,7 +50,7 @@ function Cover({ image, title, subTitle, isPlaying, onToggle }: Props) {
 
   return (
     <Wrapper>
-      <Image src={image} />
+      <StyledImage source={image} />
       <Title>{title}</Title>
       <SubTitle>{subTitle}</SubTitle>
       <StyledButton onClick={handleClick}>

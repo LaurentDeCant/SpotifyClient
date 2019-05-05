@@ -17,11 +17,11 @@ export enum IconType {
 }
 
 interface Props {
-  type: IconType;
   className?: string;
+  type: IconType;
 }
 
-function Icon({ type, className }: Props) {
+function Icon({ className, type }: Props) {
   return <i className={`material-icons ${className}`}>{type}</i>;
 }
 

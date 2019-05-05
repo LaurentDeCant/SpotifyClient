@@ -7,7 +7,7 @@ import { isAuthorized } from "../../reducers/authorization";
 import { selectUserProfile } from "../../reducers/userProfile";
 import { getAuthorization } from "../../actions/authorization";
 import { getUserProfile } from "../../actions/userProfile";
-import Button from "../Button";
+import { Button } from "../core";
 import Title from "./Title";
 import User from "./User";
 

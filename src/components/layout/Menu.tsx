@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "../../styles/styled";
 import { click } from "../../styles/effects";
-import Icon, { IconType } from "../Icon";
+import { Icon, IconType } from "../core";
 
 const Wrapper = styled.ul`
   background: ${props => props.theme.background.dark};
