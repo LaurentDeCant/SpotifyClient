@@ -1,14 +1,8 @@
 import { Album, Artist, Category, Playlist } from "../types";
+import { Cover } from "../components/Covers";
 import { joinArtistNames } from "./artist";
 
-export interface Cover {
-  id: string;
-  image: string;
-  title: string;
-  subTitle?: string;
-}
-
-export function getAlbumCovers(albums: Album[]): Cover[] {
+export function convertAlbums(albums: Album[]): Cover[] {
   return albums
     .filter(album => album.images && album.images.length)
     .map(album => ({
@@ -19,7 +13,7 @@ export function getAlbumCovers(albums: Album[]): Cover[] {
     }));
 }
 
-export function getArtistCovers(artists: Artist[]): Cover[] {
+export function convertArtists(artists: Artist[]): Cover[] {
   return artists
     .filter(artist => artist.images && artist.images.length)
     .map(artist => ({
@@ -29,7 +23,7 @@ export function getArtistCovers(artists: Artist[]): Cover[] {
     }));
 }
 
-export function getCategoryCovers(categories: Category[]): Cover[] {
+export function convertCategories(categories: Category[]): Cover[] {
   return categories
     .filter(category => category.icons && category.icons.length)
     .map(category => ({
@@ -39,7 +33,7 @@ export function getCategoryCovers(categories: Category[]): Cover[] {
     }));
 }
 
-export function getPlaylistCovers(playlists: Playlist[]): Cover[] {
+export function convertPlaylists(playlists: Playlist[]): Cover[] {
   return playlists
     .filter(playlist => playlist.images && playlist.images.length)
     .map(playlist => ({

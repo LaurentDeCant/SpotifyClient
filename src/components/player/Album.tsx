@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes } from "react";
+import React, { HTMLAttributes } from "react";
 import styled from "../../styles/styled";
 
 const Wrapper = styled.div`
@@ -33,20 +33,16 @@ interface Props extends HTMLAttributes<any> {
   artist: string;
 }
 
-class Album extends Component<Props> {
-  render() {
-    const { className, image, name, artist } = this.props;
-
-    return (
-      <Wrapper className={className}>
-        <Image src={image} />
-        <Infos>
-          <Title>{name}</Title>
-          <Artist>{artist}</Artist>
-        </Infos>
-      </Wrapper>
-    );
-  }
+function Album({ className, image, name, artist }: Props) {
+  return (
+    <Wrapper className={className}>
+      <Image src={image} />
+      <Infos>
+        <Title>{name}</Title>
+        <Artist>{artist}</Artist>
+      </Infos>
+    </Wrapper>
+  );
 }
 
 export default Album;

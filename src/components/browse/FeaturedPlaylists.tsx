@@ -8,7 +8,7 @@ import {
   selectFeaturedPlaylists
 } from "../../reducers/browse";
 import { getFeaturedPlaylists } from "../../actions/browse";
-import { getPlaylistCovers } from "../../helpers/cover";
+import { convertPlaylists } from "../../helpers/cover";
 import Covers from "../Covers";
 import withReloader from "../withReloader";
 
@@ -25,7 +25,7 @@ function FeaturedPlaylists({ history, playlists, getPlaylists }: Props) {
     history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
   }
 
-  const covers = getPlaylistCovers(playlists);
+  const covers = convertPlaylists(playlists);
   return <Covers covers={covers} onClick={handleClick} />;
 }
 

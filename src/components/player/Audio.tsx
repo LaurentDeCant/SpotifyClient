@@ -1,4 +1,4 @@
-import React, { Component, createRef, SyntheticEvent } from "react";
+import React, { useEffect, useRef, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 import { Track } from "../../types";
 import { State } from "../../reducers";
@@ -35,69 +35,74 @@ interface Props {
   ended: () => void;
 }
 
-class Audio extends Component<Props> {
-  audio = createRef<HTMLAudioElement>();
+function Audio({
+  loadedTrack,
+  times,
+  volumeLevels,
+  command,
+  trackLoaded,
+  playing,
+  update,
+  paused,
+  seeked,
+  volumeChanged,
+  ended
+}: Props) {
+  const audio = useRef<HTMLAudioElement>(null);
 
-  componentDidUpdate() {
-    const audio = this.audio.current;
+  useEffect(() => {
+    const currentAudio = audio.current;
 
-    if (audio) {
-      const {
-        times: { currentTime },
-        volumeLevels: { volume, isMuted },
-        command
-      } = this.props;
+    if (currentAudio) {
+      const { currentTime } = times;
+      const { volume, isMuted } = volumeLevels;
 
       switch (command) {
         case Command.Play:
-          audio.play();
+          currentAudio.play();
           break;
         case Command.Pause:
-          audio.pause();
+          currentAudio.pause();
           break;
         case Command.Seek:
-          audio.currentTime = currentTime;
+          currentAudio.currentTime = currentTime;
           break;
         case Command.ChangeVolume:
-          audio.volume = isMuted ? 0 : volume;
+          currentAudio.volume = isMuted ? 0 : volume;
       }
     }
+  });
+
+  function handleLoadedMetadata(event: SyntheticEvent<HTMLAudioElement>) {
+    const target = event.target as HTMLAudioElement;
+    trackLoaded(target.duration);
   }
 
-  handleLoadedMetadata = (event: SyntheticEvent<HTMLAudioElement>) => {
+  function handleTimeUpdate(event: SyntheticEvent<HTMLAudioElement>) {
     const target = event.target as HTMLAudioElement;
-    this.props.trackLoaded(target.duration);
-  };
+    update(target.currentTime);
+  }
 
-  handleTimeUpdate = (event: SyntheticEvent<HTMLAudioElement>) => {
-    const target = event.target as HTMLAudioElement;
-    this.props.update(target.currentTime);
-  };
-
-  handlePause = (event: SyntheticEvent<HTMLAudioElement>) => {
+  function handlePause(event: SyntheticEvent<HTMLAudioElement>) {
     const target = event.target as HTMLAudioElement;
     if (target.currentTime !== target.duration) {
-      this.props.paused();
+      paused();
     }
-  };
-
-  render() {
-    const { loadedTrack, playing, seeked, volumeChanged, ended } = this.props;
-
-    return (
-      <audio
-        ref={this.audio}
-        src={loadedTrack && loadedTrack.preview_url}
-        onLoadedMetadata={this.handleLoadedMetadata}
-        onPlay={playing}
-        onTimeUpdate={this.handleTimeUpdate}
-        onPause={this.handlePause}
-        onSeeked={seeked}
-        onVolumeChange={volumeChanged}
-        onEnded={ended}
-      />
-    );
   }
+
+  return (
+    <audio
+      ref={audio}
+      src={loadedTrack && loadedTrack.preview_url}
+      onLoadedMetadata={handleLoadedMetadata}
+      onPlay={playing}
+      onTimeUpdate={handleTimeUpdate}
+      onPause={handlePause}
+      onSeeked={seeked}
+      onVolumeChange={volumeChanged}
+      onEnded={ended}
+    />
+  );
 }
 
 const mapState = (state: State) => ({

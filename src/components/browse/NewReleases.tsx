@@ -5,7 +5,7 @@ import { Album } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectNewReleases } from "../../reducers/browse";
 import { getNewReleases } from "../../actions/browse";
-import { getAlbumCovers } from "../../helpers/cover";
+import { convertAlbums } from "../../helpers/cover";
 import Covers from "../Covers";
 import withReloader from "../withReloader";
 
@@ -22,7 +22,7 @@ function NewReleases({ history, albums, getAlbums }: Props) {
     history.push(`${process.env.PUBLIC_URL}/albums/${albumId}/tracks`);
   }
 
-  const covers = getAlbumCovers(albums);
+  const covers = convertAlbums(albums);
   return <Covers covers={covers} onClick={handleClick} />;
 }
 

@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { useState, useRef } from "react";
 import styled from "../../styles/styled";
 
 const Wrapper = styled.div<{ isDisabled: boolean }>`
@@ -68,28 +68,22 @@ interface State {
   value: number;
 }
 
-class Slider extends Component<Props, State> {
-  public static defaultProps = {
-    value: 0,
-    canChange: true
-  };
+function Slider(props: Props) {
+  const [isDown, setIsDown] = useState(false);
+  const [value, setValue] = useState(0);
 
-  wrapper = createRef<HTMLDivElement>();
-  thumb = createRef<HTMLDivElement>();
-  state = {
-    isDown: false,
-    value: 0
-  };
+  const wrapper = useRef<HTMLDivElement>(null);
+  const thumb = useRef<HTMLDivElement>(null);
 
-  getValue(x: number) {
-    const wrapper = this.wrapper.current;
-    const thumb = this.thumb.current;
-    if (!wrapper || !thumb) {
+  function getValue(x: number) {
+    const currentWrapper = wrapper.current;
+    const currentTHunb = thumb.current;
+    if (!currentWrapper || !currentTHunb) {
       return 0;
     }
 
-    const clientRect = wrapper.getBoundingClientRect();
-    let value = (x - clientRect.left) / wrapper.clientWidth;
+    const clientRect = currentWrapper.getBoundingClientRect();
+    let value = (x - clientRect.left) / currentWrapper.clientWidth;
     if (value < 0) {
       value = 0;
     } else if (value > 1) {
@@ -99,63 +93,59 @@ class Slider extends Component<Props, State> {
     return value;
   }
 
-  handleMouseDown = (event: React.MouseEvent<HTMLElement>) => {
-    const { canChange } = this.props;
+  function handleMouseDown(event: React.MouseEvent<HTMLElement>) {
+    const { canChange } = props;
     if (!canChange) {
       return;
     }
 
-    this.setState({
-      isDown: true,
-      value: this.getValue(event.pageX)
-    });
-    document.addEventListener("mousemove", this.handleMouseMove);
-    document.addEventListener("mouseup", this.handleMouseUp);
-  };
+    setIsDown(true);
+    setValue(getValue(event.pageX));
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  }
 
-  handleMouseMove = (event: MouseEvent) => {
-    this.setState({
-      value: this.getValue(event.pageX)
-    });
-  };
+  function handleMouseMove(event: MouseEvent) {
+    setValue(getValue(event.pageX));
+  }
 
-  handleMouseUp = (event: MouseEvent) => {
-    document.removeEventListener("mousemove", this.handleMouseMove);
-    document.removeEventListener("mouseup", this.handleMouseUp);
-    this.setState({
-      isDown: false
-    });
-    const { onChange } = this.props;
+  function handleMouseUp(event: MouseEvent) {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+    setIsDown(false);
+    const { onChange } = props;
     if (onChange) {
-      const value = this.getValue(event.pageX);
+      const value = getValue(event.pageX);
       onChange(value);
     }
-  };
-
-  getCurrentValue() {
-    const { props, state } = this;
-    return state.isDown ? state.value : props.value;
   }
 
-  render() {
-    const { className, canChange } = this.props;
-    const value = this.getCurrentValue();
-
-    return (
-      <Wrapper
-        ref={this.wrapper}
-        onMouseDown={this.handleMouseDown}
-        isDisabled={!canChange}
-        className={className}
-      >
-        <Left width={value} />
-        {canChange && (
-          <Thumb ref={this.thumb} position={value} isDisabled={!canChange} />
-        )}
-        <Right width={value} />
-      </Wrapper>
-    );
+  function getCurrentValue() {
+    return isDown ? value : props.value;
   }
+
+  const { className, canChange } = props;
+  const currentValue = getCurrentValue();
+
+  return (
+    <Wrapper
+      ref={wrapper}
+      onMouseDown={handleMouseDown}
+      isDisabled={!canChange}
+      className={className}
+    >
+      <Left width={currentValue} />
+      {canChange && (
+        <Thumb ref={thumb} position={currentValue} isDisabled={!canChange} />
+      )}
+      <Right width={currentValue} />
+    </Wrapper>
+  );
 }
+
+Slider.defaultProps = {
+  value: 0,
+  canChange: true
+};
 
 export default Slider;

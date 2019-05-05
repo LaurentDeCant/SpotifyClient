@@ -10,7 +10,7 @@ import {
   selectCategoryPlaylists
 } from "../../reducers/browse";
 import { getCategory, getCategoryPlaylists } from "../../actions/browse";
-import { getPlaylistCovers } from "../../helpers/cover";
+import { convertPlaylists } from "../../helpers/cover";
 import Covers from "../Covers";
 import withReloader from "../withReloader";
 
@@ -53,7 +53,7 @@ function CategoryPlaylists({
     history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
   }
 
-  const covers = getPlaylistCovers(playlists);
+  const covers = convertPlaylists(playlists);
   return (
     <div>
       <Title>{category && category.name}</Title>

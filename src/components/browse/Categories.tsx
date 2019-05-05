@@ -5,7 +5,7 @@ import { Category } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
-import { getCategoryCovers } from "../../helpers/cover";
+import { convertCategories } from "../../helpers/cover";
 import Covers from "../Covers";
 import withReloader from "../withReloader";
 
@@ -24,7 +24,7 @@ function Categories({ history, categories, getCategories }: Props) {
     );
   }
 
-  const covers = getCategoryCovers(categories);
+  const covers = convertCategories(categories);
   return <Covers covers={covers} onClick={handleClick} />;
 }
 

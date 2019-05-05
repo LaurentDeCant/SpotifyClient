@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "../styles/styled";
-import { Cover } from "../helpers/cover";
 import Button from "./Button";
 import Text from "./Text";
 
@@ -20,7 +19,8 @@ const StyledItem = styled.li`
   margin: 10px;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button)<{ type: CoverType }>`
+  ${props => props.type === CoverType.Round && "border-radius: 100px"};
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   margin-bottom: 10px;
@@ -43,17 +43,33 @@ const SubTitle = styled(Text)`
   font-weight: ${props => props.theme.font.weight.light};
 `;
 
+export enum CoverType {
+  Square = "SQUARE",
+  Round = "ROUND"
+}
+
+export interface Cover {
+  id: string;
+  image: string;
+  title: string;
+  subTitle?: string;
+}
+
 interface Props {
   covers: Cover[];
+  type: CoverType;
   onClick?: (id: string) => void;
 }
 
-function Covers({ covers, onClick }: Props) {
+function Covers({ covers, type, onClick }: Props) {
   return (
     <StyledList>
       {covers.map(cover => (
         <StyledItem key={cover.id}>
-          <StyledButton onClick={() => onClick && onClick(cover.id)}>
+          <StyledButton
+            onClick={() => onClick && onClick(cover.id)}
+            type={type}
+          >
             <Image src={cover.image} />
           </StyledButton>
           <Title>{cover.title}</Title>
@@ -63,5 +79,9 @@ function Covers({ covers, onClick }: Props) {
     </StyledList>
   );
 }
+
+Covers.defaultProps = {
+  type: CoverType.Square
+};
 
 export default Covers;
