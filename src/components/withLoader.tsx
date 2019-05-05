@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ComponentType } from "react";
 import Loader from "./Loader";
+import Fader from "./Fader";
 
 interface Props {
   isLoading: boolean;
@@ -11,8 +12,10 @@ function withLoader<P extends Props>(
   return function({ isLoading, ...rest }: any) {
     return (
       <>
-        <WrappedComponent {...rest} />
         <Loader isLoading={isLoading} />
+        <Fader isLoading={isLoading}>
+          <WrappedComponent {...rest} />
+        </Fader>
       </>
     );
   };

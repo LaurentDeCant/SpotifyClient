@@ -1,31 +1,22 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Category } from "../../types";
 import { State } from "../../reducers";
 import { selectIsFetching, selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
-import { convertCategories } from "../../helpers/cover";
-import Covers from "../Covers";
 import withReloader from "../withReloader";
+import CategoryCovers from "../covers/CategoryCovers";
 
-interface Props extends RouteComponentProps {
+interface Props {
   isLoading: boolean;
   categories: Category[];
   getCategories: () => void;
 }
 
-function Categories({ history, categories, getCategories }: Props) {
+function Categories({ categories, getCategories }: Props) {
   useEffect(getCategories, []);
 
-  function handleClick(categoryId: string) {
-    history.push(
-      `${process.env.PUBLIC_URL}/categories/${categoryId}/playlists`
-    );
-  }
-
-  const covers = convertCategories(categories);
-  return <Covers covers={covers} onClick={handleClick} />;
+  return <CategoryCovers categories={categories} />;
 }
 
 const mapState = (state: State) => ({
@@ -37,9 +28,7 @@ const mapDispatch = {
   getCategories: getCategories
 };
 
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(withReloader(Categories))
-);
+export default connect(
+  mapState,
+  mapDispatch
+)(withReloader(Categories));

@@ -10,8 +10,7 @@ import {
   selectCategoryPlaylists
 } from "../../reducers/browse";
 import { getCategory, getCategoryPlaylists } from "../../actions/browse";
-import { convertPlaylists } from "../../helpers/cover";
-import Covers from "../Covers";
+import { PlaylistCovers } from "../covers";
 import withReloader from "../withReloader";
 
 const Title = styled.h1`
@@ -34,7 +33,6 @@ interface Props extends RouteComponentProps<Params> {
 }
 
 function CategoryPlaylists({
-  history,
   match,
   category,
   playlists,
@@ -49,21 +47,15 @@ function CategoryPlaylists({
     getPlaylists(categoryId);
   }, []);
 
-  function handleClick(playlistId: string) {
-    history.push(`${process.env.PUBLIC_URL}/playlists/${playlistId}/tracks`);
-  }
-
-  const covers = convertPlaylists(playlists);
   return (
     <div>
       <Title>{category && category.name}</Title>
-      <Covers covers={covers} onClick={handleClick} />
+      <PlaylistCovers playlists={playlists} />
     </div>
   );
 }
 
-const mapState = (state: State, ownProps: Props) => {
-  const { match } = ownProps;
+const mapState = (state: State, { match }: Props) => {
   const categoryId = match.params.categoryId;
 
   return {

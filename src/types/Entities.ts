@@ -6,4 +6,12 @@ export interface Entities {
   categories: { [id: string]: Category };
   playlists: { [id: string]: Playlist };
   tracks: { [id: string]: Track };
+  results: {
+    [id: string]: {
+      albums: Album[];
+      artists: Artist[];
+      playlists: Playlist[];
+      tracks: Track[];
+    };
+  };
 }

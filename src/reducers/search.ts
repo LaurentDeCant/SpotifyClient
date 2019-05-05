@@ -8,9 +8,9 @@ import {
   endFetching,
   isFetching
 } from "./fetching";
-import { selectAlbums } from "./albums";
-import { selectArtists } from "./artists";
-import { selectPlaylists } from "./playlists";
+import { selectAlbums as selectAlbumsById } from "./albums";
+import { selectArtists as selectArtistsById } from "./artists";
+import { selectPlaylists as selectPlaylistsById } from "./playlists";
 import { selectTracks } from "./tracks";
 
 export interface State extends FetchableState {
@@ -31,13 +31,16 @@ const initialState: State = {
 export default createReducer(initialState, {
   [ActionType.SearchRequest]: startFetching,
   [ActionType.SearchSuccess]: (state: State, action: SearchSuccessAction) => {
-    const { albums, artists, playlists, tracks } = action.payload;
+    const { results } = action.payload;
+    const { albums, artists, playlists, tracks } = results[
+      Object.keys(results)[0]
+    ];
     return endFetching({
       ...state,
-      albumIds: albums ? Object.keys(albums) : [],
-      artistIds: artists ? Object.keys(artists) : [],
-      playlistIds: playlists ? Object.keys(playlists) : [],
-      trackIds: tracks ? Object.keys(tracks) : []
+      albumIds: albums,
+      artistIds: artists,
+      playlistIds: playlists,
+      trackIds: tracks
     });
   },
   [ActionType.SearchFailure]: endFetching
@@ -47,21 +50,16 @@ export function selectIsFetching(state: CombinedState): boolean {
   return isFetching(state.search);
 }
 
-export interface Results {
-  albums: Album[];
-  artists: Artist[];
-  playlists: Playlist[];
-  tracks: Track[];
+export function selectAlbums(state: CombinedState): Album[] {
+  return selectAlbumsById(state, state.search.albumIds);
 }
 
-export function selectResults(state: CombinedState): Results {
-  const { albumIds, artistIds, playlistIds, trackIds } = state.search;
-  const albums = selectAlbums(state, albumIds);
-  const artists = selectArtists(state, artistIds).sort(
+export function selectArtists(state: CombinedState): Artist[] {
+  return selectArtistsById(state, state.search.artistIds).sort(
     (x, y) => y.popularity - x.popularity
   );
-  const playlists = selectPlaylists(state, playlistIds);
-  const tracks = selectTracks(state, trackIds);
-  console.log(artists);
-  return { artists, albums, playlists, tracks };
+}
+
+export function selectPlaylists(state: CombinedState): Playlist[] {
+  return selectPlaylistsById(state, state.search.playlistIds);
 }

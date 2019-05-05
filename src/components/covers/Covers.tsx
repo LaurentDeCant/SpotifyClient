@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "../styles/styled";
-import Button from "./Button";
-import Text from "./Text";
+import styled from "../../styles/styled";
+import Button from "../Button";
+import Text from "../Text";
 
 const StyledList = styled.ul`
   align-content: flex-start;
@@ -50,7 +50,7 @@ export enum CoverType {
 
 export interface Cover {
   id: string;
-  image: string;
+  image?: string;
   title: string;
   subTitle?: string;
 }
@@ -58,7 +58,7 @@ export interface Cover {
 interface Props {
   covers: Cover[];
   type: CoverType;
-  onClick?: (id: string) => void;
+  onClick: (id: string) => void;
 }
 
 function Covers({ covers, type, onClick }: Props) {
@@ -66,10 +66,7 @@ function Covers({ covers, type, onClick }: Props) {
     <StyledList>
       {covers.map(cover => (
         <StyledItem key={cover.id}>
-          <StyledButton
-            onClick={() => onClick && onClick(cover.id)}
-            type={type}
-          >
+          <StyledButton onClick={() => onClick(cover.id)} type={type}>
             <Image src={cover.image} />
           </StyledButton>
           <Title>{cover.title}</Title>

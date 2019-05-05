@@ -14,14 +14,11 @@ const Album = new schema.Entity(
     artistIds: [Artist]
   },
   {
-    processStrategy: value => {
-      const { artists, tracks, ...rest } = value;
-      return {
-        ...rest,
-        artistIds: artists,
-        trackIds: tracks ? tracks.items : []
-      };
-    }
+    processStrategy: ({ artists, tracks, ...rest }) => ({
+      ...rest,
+      artistIds: artists,
+      trackIds: tracks ? tracks.items : []
+    })
   }
 );
 
@@ -36,14 +33,11 @@ const Track = new schema.Entity(
     artistIds: [Artist]
   },
   {
-    processStrategy: (value, parent) => {
-      const { album, artists, ...rest } = value;
-      return {
-        ...rest,
-        albumId: parent["type"] === "album" ? parent : album,
-        artistIds: artists
-      };
-    }
+    processStrategy: ({ album, artists, ...rest }, parent) => ({
+      ...rest,
+      albumId: parent["type"] === "album" ? parent : album,
+      artistIds: artists
+    })
   }
 );
 
@@ -57,15 +51,10 @@ const Playlist = new schema.Entity(
     trackIds: [Track]
   },
   {
-    processStrategy: value => {
-      const { tracks, ...rest } = value;
-      return {
-        ...rest,
-        trackIds: tracks.items
-          ? tracks.items.map((item: any) => item.track)
-          : []
-      };
-    }
+    processStrategy: ({ tracks, ...rest }) => ({
+      ...rest,
+      trackIds: tracks.items ? tracks.items.map((item: any) => item.track) : []
+    })
   }
 );
 
@@ -73,12 +62,23 @@ const Playlists = new schema.Entity("playlistItems", {
   playlists: { items: [Playlist] }
 });
 
-const Results = new schema.Object({
-  albums: { items: [Album] },
-  artists: { items: [Artist] },
-  playlists: { items: [Playlist] },
-  tracks: { items: [Track] }
-});
+const Results = new schema.Entity(
+  "results",
+  {
+    albums: [Album],
+    artists: [Artist],
+    playlists: [Playlist],
+    tracks: [Track]
+  },
+  {
+    processStrategy: ({ albums, artists, playlists, tracks }) => ({
+      albums: albums.items,
+      artists: artists.items,
+      playlists: playlists.items,
+      tracks: tracks.items
+    })
+  }
+);
 
 export const Schemas = {
   Artist,

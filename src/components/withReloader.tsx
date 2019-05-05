@@ -1,17 +1,12 @@
 import React, { FunctionComponent, ComponentType, useState } from "react";
-import styled from "../styles/styled";
 import Loader from "./Loader";
-
-const Fader = styled.div<{ isLoading: boolean }>`
-  opacity: ${props => (props.isLoading ? "0" : "1")};
-  transition: ${props => (props.isLoading ? "all 0" : "all 0.2s")};
-`;
+import Fader from "./Fader";
 
 interface Props {
   isLoading: boolean;
 }
 
-function withOneTimeLoader<P extends Props>(
+function withReloader<P extends Props>(
   WrappedComponent: ComponentType<P>
 ): FunctionComponent<P> {
   return function({ isLoading, ...rest }: any) {
@@ -27,13 +22,13 @@ function withOneTimeLoader<P extends Props>(
 
     return (
       <>
+        <Loader isLoading={!hasLoaded} />
         <Fader isLoading={!hasLoaded}>
           <WrappedComponent {...rest} />
         </Fader>
-        <Loader isLoading={!hasLoaded} />
       </>
     );
   };
 }
 
-export default withOneTimeLoader;
+export default withReloader;
