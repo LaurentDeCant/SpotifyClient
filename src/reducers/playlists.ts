@@ -1,11 +1,11 @@
 import merge from "lodash/merge";
-import createReducer from "../helpers/reducer";
 import { Playlist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType, PlaylistSuccessAction } from "../actions/playlists";
 import { ActionType as BrowseActionType } from "../actions/browse";
 import { ActionType as SearchActionType } from "../actions/search";
 import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
 import {
   FetchableState,
   startFetching,

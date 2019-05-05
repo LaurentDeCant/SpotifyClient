@@ -1,5 +1,4 @@
 import { Album, Category, Playlist } from "../types";
-import createReducer from "../helpers/reducer";
 import {
   ActionType,
   CategorySuccessAction,
@@ -9,6 +8,7 @@ import {
   FeaturedPlaylistsSuccessAction
 } from "../actions/browse";
 import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
 import {
   FetchableState,
   startFetching,

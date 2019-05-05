@@ -1,4 +1,3 @@
-import createReducer from "../helpers/reducer";
 import { Track } from "../types";
 import {
   ActionType,
@@ -10,6 +9,7 @@ import {
   ChangeVolumeAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
 import { selectTrack } from "./tracks";
 
 enum PlayerState {

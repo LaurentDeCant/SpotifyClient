@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Album } from "../../types";
-import { joinArtistNames } from "../../helpers/artist";
+import { joinArtistNames } from "../../utils/artist";
 import Covers, { Cover } from "./Covers";
 
 function getCovers(albums: Album[]): Cover[] {

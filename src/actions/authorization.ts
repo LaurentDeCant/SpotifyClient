@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import { authorize } from "../helpers/authorization";
+import { authorize } from "../utils/authorization";
 
 export enum ActionType {
   RequestAuthorization = "REQUEST_AUTHORIZATION",

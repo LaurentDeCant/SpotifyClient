@@ -1,9 +1,9 @@
-import createReducer from "../helpers/reducer";
 import {
   ActionType,
   ReceiveAuthorizationAction
 } from "../actions/authorization";
 import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
 
 export interface State {
   isAuthorized: boolean;

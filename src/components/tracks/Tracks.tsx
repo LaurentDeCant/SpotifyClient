@@ -4,7 +4,7 @@ import styled from "../../styles/styled";
 import { Track } from "../../types";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
-import { joinArtistNames } from "../../helpers/artist";
+import { joinArtistNames } from "../../utils/artist";
 import { Button, Icon, IconType, Text } from "../core";
 
 const StyledButton = styled(Button)<{ isLoaded: boolean }>`

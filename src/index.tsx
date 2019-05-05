@@ -7,7 +7,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { ThemeProvider } from "./styles/styled";
 import rootReducer from "./reducers";
 import App from "./components/layout/App";
-import { checkRedirection, initAuthorization } from "./helpers/authorization";
+import { checkRedirection, initAuthorization } from "./utils/authorization";
 import fetchMiddleware from "./middlewares/fetchMiddleware";
 import { theme } from "./styles/theme";
 import GlobalStyle from "./styles/global";

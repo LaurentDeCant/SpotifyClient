@@ -1,5 +1,4 @@
 import merge from "lodash/merge";
-import createReducer from "../helpers/reducer";
 import { Album } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType, AlbumSuccessAction } from "../actions/albums";
@@ -7,6 +6,7 @@ import { ActionType as BrowseActionType } from "../actions/browse";
 import { ActionType as PlaylistActionType } from "../actions/playlists";
 import { ActionType as SearchActionType } from "../actions/search";
 import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
 import {
   FetchableState,
   startFetching,

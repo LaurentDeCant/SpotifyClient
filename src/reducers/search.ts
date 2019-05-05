@@ -1,7 +1,7 @@
-import createReducer from "../helpers/reducer";
 import { ActionType, SearchSuccessAction } from "../actions/search";
-import { Album, Artist, Playlist, Track } from "../types";
+import { Album, Artist, Playlist } from "../types";
 import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
 import {
   FetchableState,
   startFetching,
@@ -11,7 +11,6 @@ import {
 import { selectAlbums as selectAlbumsById } from "./albums";
 import { selectArtists as selectArtistsById } from "./artists";
 import { selectPlaylists as selectPlaylistsById } from "./playlists";
-import { selectTracks } from "./tracks";
 
 export interface State extends FetchableState {
   albumIds: string[];
