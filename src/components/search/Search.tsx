@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
@@ -11,6 +11,7 @@ import {
 } from "../../reducers/search";
 import { search } from "../../actions/search";
 import Results from "./Results";
+import debounce from "../../utils/function";
 
 const StyledInput = styled.input`
   background: ${props => props.theme.background.light}
@@ -34,15 +35,23 @@ interface Props {
   search: (query: string) => void;
 }
 
+let debounced: (query: string) => void;
+
 function Search({ isLoading, albums, artists, playlists, search }: Props) {
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    debounced = debounce((query: string) => {
+      if (query) {
+        search(query);
+      }
+    });
+  }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value: query } = event.target;
     setQuery(query);
-    if (query) {
-      search(query);
-    }
+    debounced(query);
   }
 
   return (

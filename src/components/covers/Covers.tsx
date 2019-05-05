@@ -18,14 +18,15 @@ const StyledItem = styled.li`
   margin: 10px;
 `;
 
+const length = 200;
 const StyledButton = styled(Button)<{ type: CoverType }>`
-  background: ${props => props.theme.background.light};
+  background: transparent;
   ${props => props.type === CoverType.Round && "border-radius: 100px"};
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
-  height: 200px;
+  height: ${length}px;
   margin-bottom: 10px;
-  width: 200px;
+  width: ${length}px;
 `;
 
 const StyledImge = styled(Image)`
@@ -34,20 +35,24 @@ const StyledImge = styled(Image)`
 `;
 
 const StyledIcon = styled(Icon)`
-  font-size: 100px;
-  height: 100%;
+  background: ${props => props.theme.background.light}  
+  font-size: ${length / 2}px;
+  height: ${length}px;
+  line-height: ${length}px;
   width: 100%;
 `;
 
 const Title = styled(Text)`
   margin-bottom: 5px;
   text-align: center;
-  width: 200px;
+  width: ${length}px;
 `;
 
 const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.font.weight.light};
+  text-align: center;
+  width: 200px;
 `;
 
 export interface Cover {
