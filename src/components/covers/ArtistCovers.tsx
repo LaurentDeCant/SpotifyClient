@@ -1,6 +1,7 @@
 import React from "react";
 import { Artist } from "../../types";
 import Covers, { Cover, CoverType } from "./Covers";
+import { RouteComponentProps, withRouter } from "react-router";
 
 function getCovers(artists: Artist[]): Cover[] {
   return artists.map(artist => ({
@@ -11,12 +12,14 @@ function getCovers(artists: Artist[]): Cover[] {
   }));
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
   artists: Artist[];
 }
 
-function ArtistCovers({ artists }: Props) {
-  function handleClick(artistId: string) {}
+function ArtistCovers({ history, artists }: Props) {
+  function handleClick(artistId: string) {
+    history.push(`${process.env.PUBLIC_URL}/artists/${artistId}`);
+  }
 
   const covers = getCovers(artists);
   return (
@@ -24,4 +27,4 @@ function ArtistCovers({ artists }: Props) {
   );
 }
 
-export default ArtistCovers;
+export default withRouter(ArtistCovers);

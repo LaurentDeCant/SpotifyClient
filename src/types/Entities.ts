@@ -11,7 +11,6 @@ export interface Entities {
       albums: Album[];
       artists: Artist[];
       playlists: Playlist[];
-      tracks: Track[];
     };
   };
 }

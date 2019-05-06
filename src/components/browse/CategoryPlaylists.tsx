@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import styled from "../../styles/styled";
 import { Category, Playlist } from "../../types";
 import { State } from "../../reducers";
 import {
@@ -10,15 +9,9 @@ import {
   selectCategoryPlaylists
 } from "../../reducers/browse";
 import { getCategory, getCategoryPlaylists } from "../../actions/browse";
+import { Heading } from "../core";
 import { PlaylistCovers } from "../covers";
 import withReloader from "../withReloader";
-
-const Title = styled.h1`
-  text-align: center;
-  font-size: ${props => props.theme.font.size.extraExtraLarge};
-  font-weight: ${props => props.theme.font.weight.bold};
-  margin: 0 0 25px 0;
-`;
 
 interface Params {
   categoryId: string;
@@ -49,7 +42,7 @@ function CategoryPlaylists({
 
   return (
     <div>
-      <Title>{category && category.name}</Title>
+      <Heading>{category && category.name}</Heading>
       <PlaylistCovers playlists={playlists} />
     </div>
   );

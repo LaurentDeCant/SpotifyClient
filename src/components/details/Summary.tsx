@@ -12,13 +12,13 @@ const Wrapper = styled.div`
 const StyledImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 300px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   width: 300px;
 `;
 
 const Title = styled(Text)`
   font-size: ${props => props.theme.font.size.large}
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
 const SubTitle = styled(Text)`
@@ -43,7 +43,7 @@ interface Props {
   onToggle: () => void;
 }
 
-function Cover({ image, title, subTitle, isPlaying, onToggle }: Props) {
+function Summary({ image, title, subTitle, isPlaying, onToggle }: Props) {
   function handleClick() {
     onToggle();
   }
@@ -60,4 +60,4 @@ function Cover({ image, title, subTitle, isPlaying, onToggle }: Props) {
   );
 }
 
-export default Cover;
+export default Summary;

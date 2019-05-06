@@ -21,7 +21,7 @@ const StyledItem = styled.li`
 const length = 200;
 const StyledButton = styled(Button)<{ type: CoverType }>`
   background: ${props => props.theme.background.light};
-  ${props => props.type === CoverType.Round && "border-radius: 100px"};
+  ${props => props.type === CoverType.Round && "border-radius: 100px;"}
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   height: ${length}px;
@@ -81,7 +81,7 @@ function Cover({
   }
 
   return (
-    <StyledItem key={cover.id}>
+    <>
       <StyledButton onClick={handleClick} type={type}>
         {cover.image ? (
           <StyledImge source={cover.image} />
@@ -91,7 +91,7 @@ function Cover({
       </StyledButton>
       <Title>{cover.title}</Title>
       {cover.subTitle && <SubTitle>{cover.subTitle}</SubTitle>}
-    </StyledItem>
+    </>
   );
 }
 
@@ -105,7 +105,9 @@ function Covers({ covers, type, onClick }: Props) {
   return (
     <StyledList>
       {covers.map(cover => (
-        <Cover cover={cover} type={type} onClick={onClick} />
+        <StyledItem key={cover.id}>
+          <Cover cover={cover} type={type} onClick={onClick} />
+        </StyledItem>
       ))}
     </StyledList>
   );

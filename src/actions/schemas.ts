@@ -67,15 +67,13 @@ const Results = new schema.Entity(
   {
     albums: [Album],
     artists: [Artist],
-    playlists: [Playlist],
-    tracks: [Track]
+    playlists: [Playlist]
   },
   {
-    processStrategy: ({ albums, artists, playlists, tracks }) => ({
+    processStrategy: ({ albums, artists, playlists }) => ({
       albums: albums.items,
       artists: artists.items,
-      playlists: playlists.items,
-      tracks: tracks.items
+      playlists: playlists.items
     })
   }
 );

@@ -38,7 +38,7 @@ export const theme: Theme = {
     default: "#202020",
     dark: "#101010",
     hover: "rgba(255, 255, 255, 0.1)",
-    active: "rgba(255, 255, 255, 0.2)"
+    active: "rgba(255, 255, 255, 0.1)"
   },
   font: {
     size: {

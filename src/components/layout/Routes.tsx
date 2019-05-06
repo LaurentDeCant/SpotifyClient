@@ -5,8 +5,9 @@ import DefaultRoute from "../DefaultRoute";
 import Browse from "../browse/Browse";
 import CategoryPlaylists from "../browse/CategoryPlaylists";
 import Search from "../search/Search";
-import PlaylistTracks from "../tracks/PlaylistTracks";
-import AlbumTracks from "../tracks/AlbumTracks";
+import PlaylistDetails from "../details/PlaylistDetails";
+import AlbumDetails from "../details/AlbumDetails";
+import ArtistDetails from "../details/ArtistDetails";
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -31,12 +32,16 @@ const Routes = () => {
         component={CategoryPlaylists}
       />
       <Route
-        path={`${process.env.PUBLIC_URL}/playlists/:playlistId/tracks`}
-        component={PlaylistTracks}
+        path={`${process.env.PUBLIC_URL}/playlists/:playlistId`}
+        component={PlaylistDetails}
       />
       <Route
-        path={`${process.env.PUBLIC_URL}/albums/:albumId/tracks`}
-        component={AlbumTracks}
+        path={`${process.env.PUBLIC_URL}/albums/:albumId`}
+        component={AlbumDetails}
+      />
+      <Route
+        path={`${process.env.PUBLIC_URL}/artists/:artistId`}
+        component={ArtistDetails}
       />
     </Wrapper>
   );

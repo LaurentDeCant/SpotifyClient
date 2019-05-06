@@ -16,30 +16,25 @@ export interface State extends FetchableState {
   albumIds: string[];
   artistIds: string[];
   playlistIds: string[];
-  trackIds: string[];
 }
 
 const initialState: State = {
   isFetching: false,
   albumIds: [],
   artistIds: [],
-  playlistIds: [],
-  trackIds: []
+  playlistIds: []
 };
 
 export default createReducer(initialState, {
   [ActionType.SearchRequest]: startFetching,
   [ActionType.SearchSuccess]: (state: State, action: SearchSuccessAction) => {
     const { results } = action.payload;
-    const { albums, artists, playlists, tracks } = results[
-      Object.keys(results)[0]
-    ];
+    const { albums, artists, playlists } = results[Object.keys(results)[0]];
     return endFetching({
       ...state,
       albumIds: albums,
       artistIds: artists,
-      playlistIds: playlists,
-      trackIds: tracks
+      playlistIds: playlists
     });
   },
   [ActionType.SearchFailure]: endFetching

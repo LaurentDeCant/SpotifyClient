@@ -20,7 +20,6 @@ const StyledList = styled.ul`
   display: flex;
   flex-flow: row;
   font-size: ${props => props.theme.font.size.medium};
-  font-weight: ${props => props.theme.font.weight.light};
   justify-content: center;
   margin-bottom: 25px;
 `;

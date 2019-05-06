@@ -1,56 +1,55 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Album } from "../../types";
+import { Playlist } from "../../types";
 import { State } from "../../reducers";
-import { selectIsFetching, selectAlbum } from "../../reducers/albums";
+import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
-import { getAlbum } from "../../actions/albums";
+import { getPlaylist } from "../../actions/playlists";
 import { toggle } from "../../actions/player";
-import { joinArtistNames } from "../../utils/artist";
-import Cover from "./Cover";
+import Summary from "./Summary";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
 
 interface Params {
-  albumId: string;
+  playlistId: string;
 }
 
 interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
-  album?: Album;
-  isPlaying: (albumId: string) => boolean;
-  getAlbum: (albumId: string) => void;
+  playlist?: Playlist;
+  isPlaying: (playlistId: string) => boolean;
+  getPlaylist: (playlistId: string) => void;
   toggle: (collectionId: string, trackId?: string) => void;
 }
 
-function AlbumTracks({
+function PlaylistDetails({
   match: {
-    params: { albumId }
+    params: { playlistId }
   },
-  album,
+  playlist,
   isPlaying,
-  getAlbum,
+  getPlaylist,
   toggle
 }: Props) {
   useEffect(() => {
-    getAlbum(albumId);
+    getPlaylist(playlistId);
   }, []);
 
   function handleToggle(trackId?: string) {
-    toggle(albumId, trackId);
+    toggle(playlistId, trackId);
   }
 
-  return album ? (
+  return playlist ? (
     <>
-      <Cover
-        image={album.images[0].url}
-        title={album.name}
-        subTitle={joinArtistNames(album.artists)}
-        isPlaying={isPlaying(album.id)}
+      <Summary
+        image={playlist.images[0].url}
+        title={playlist.name}
+        subTitle={playlist.owner.display_name}
+        isPlaying={isPlaying(playlist.id)}
         onToggle={handleToggle}
       />
-      <Tracks tracks={album.tracks} onToggle={handleToggle} />
+      <Tracks tracks={playlist.tracks} onToggle={handleToggle} />
     </>
   ) : (
     <></>
@@ -59,17 +58,17 @@ function AlbumTracks({
 
 const mapState = (state: State, ownProps: Props) => {
   const { match } = ownProps;
-  const { albumId } = match.params;
+  const { playlistId } = match.params;
 
   return {
     isLoading: selectIsFetching(state),
-    album: selectAlbum(state, albumId),
+    playlist: selectPlaylist(state, playlistId),
     isPlaying: selectIsPlaying(state)
   };
 };
 
 const mapDispatch = {
-  getAlbum,
+  getPlaylist,
   toggle
 };
 
@@ -77,5 +76,5 @@ export default withRouter(
   connect(
     mapState,
     mapDispatch
-  )(withReloader(AlbumTracks))
+  )(withReloader(PlaylistDetails))
 );

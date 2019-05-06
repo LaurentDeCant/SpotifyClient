@@ -19,7 +19,7 @@ export function search(query: string) {
         ActionType.SearchSuccess,
         ActionType.SearchFailure
       ],
-      path: `search?q=${encoded}*&type=album,artist,playlist,track`,
+      path: `search?q=${encoded}*&type=album,artist,playlist`,
       schema: Schemas.Results
     });
   };
