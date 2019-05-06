@@ -2,11 +2,15 @@ import { schema } from "normalizr";
 
 const Category = new schema.Entity("categories");
 
-const Categories = new schema.Entity("categoryItems", {
+const PagedCategories = new schema.Object({
   categories: { items: [Category] }
 });
 
 const Artist = new schema.Entity("artists");
+
+const Artists = new schema.Object({
+  artists: [Artist]
+});
 
 const Album = new schema.Entity(
   "albums",
@@ -22,7 +26,8 @@ const Album = new schema.Entity(
   }
 );
 
-const Albums = new schema.Entity("albumItems", {
+const PagedAlbums = new schema.Object({
+  items: [Album],
   albums: { items: [Album] }
 });
 
@@ -45,6 +50,10 @@ Album.define({
   trackIds: [Track]
 });
 
+const Tracks = new schema.Object({
+  tracks: [Track]
+});
+
 const Playlist = new schema.Entity(
   "playlists",
   {
@@ -58,7 +67,7 @@ const Playlist = new schema.Entity(
   }
 );
 
-const Playlists = new schema.Entity("playlistItems", {
+const PagedPlaylists = new schema.Entity("playlistItems", {
   playlists: { items: [Playlist] }
 });
 
@@ -80,12 +89,14 @@ const Results = new schema.Entity(
 
 export const Schemas = {
   Artist,
+  Artists,
   Album,
-  Albums,
   Category,
-  Categories,
   Track,
+  Tracks,
+  PagedAlbums,
+  PagedCategories,
+  PagedPlaylists,
   Playlist,
-  Playlists,
   Results
 };

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "../../styles/styled";
 import { Icon, IconType } from "../core";
 
-const Wrapper = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   font-size: ${props => props.theme.font.size.large};
@@ -16,10 +16,10 @@ const StyledIcon = styled(Icon)`
 
 const Title = () => {
   return (
-    <Wrapper>
+    <StyledLink to="/browse">
       <StyledIcon type={IconType.Wifi} />
-      <Link to="/browse">Spotify</Link>
-    </Wrapper>
+      Spotify
+    </StyledLink>
   );
 };
 

@@ -31,7 +31,7 @@ export function getCategories() {
         ActionType.CategoriesFailure
       ],
       path: "browse/categories",
-      schema: Schemas.Categories
+      schema: Schemas.PagedCategories
     });
   };
 }
@@ -65,7 +65,7 @@ export function getCategoryPlaylists(categoryId: string) {
         ActionType.CategoryPlaylistsFailure
       ],
       path: `browse/categories/${categoryId}/playlists`,
-      schema: Schemas.Playlists
+      schema: Schemas.PagedPlaylists
     });
   };
 }
@@ -82,7 +82,7 @@ export function getFeaturedPlaylists() {
         ActionType.FeaturedPlaylistsFailure
       ],
       path: "browse/featured-playlists",
-      schema: Schemas.Playlists
+      schema: Schemas.PagedPlaylists
     });
   };
 }
@@ -99,7 +99,7 @@ export function getNewReleases() {
         ActionType.NewReleasesFailure
       ],
       path: "browse/new-releases",
-      schema: Schemas.Albums
+      schema: Schemas.PagedAlbums
     });
   };
 }

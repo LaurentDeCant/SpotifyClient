@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
@@ -12,7 +13,6 @@ import {
 } from "../../reducers/search";
 import { search } from "../../actions/search";
 import Results from "./Results";
-import debounce from "../../utils/function";
 import { Heading } from "../core";
 
 const StyledInput = styled.input`
@@ -53,14 +53,14 @@ function Search({
   search
 }: Props) {
   const { query } = match.params;
-  const [value, setValue] = useState(query);
+  const [value, setValue] = useState(query || "");
 
   useEffect(() => {
     search(value);
-    debounced = debounce((query: string) => {
+    debounced = _.debounce((query: string) => {
       history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
       search(query);
-    });
+    }, 500);
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

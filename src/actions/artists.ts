@@ -1,0 +1,85 @@
+import { EntitiesAction, FetchDispatch } from "./types";
+import { Schemas } from "./schemas";
+
+export enum ActionType {
+  ArtistRequest = "ARTIST_REQUEST",
+  ArtistSuccess = "ARTIST_SUCCESS",
+  ArtistFailure = "ARTIST_FAILURE",
+  ArtistAlbumsRequest = "ARTIST_ALBUMS_REQUEST",
+  ArtistAlbumsSuccess = "ARTIST_ALBUMS_SUCCESS",
+  ArtistAlbumsFailure = "ARTIST_ALBUMS_FAILURE",
+  ArtistRelatedArtistsRequest = "ARTIST_RELATED_ARTISTS_REQUEST",
+  ArtistRelatedArtistsSuccess = "ARTIST_RELATED_ARTISTS_SUCCESS",
+  ArtistRelatedArtistsFailure = "ARTIST_RELATED_ARTISTS_FAILURE",
+  ArtistTopTracksRequest = "ARTIST_TOP_TRACKS_REQUEST",
+  ArtistTopTracksSuccess = "ARTIST_TOP_TRACKS_SUCCESS",
+  ArtistTopTracksFailure = "ARTIST_TOP_TRACKS_FAILURE"
+}
+
+export interface ArtistSuccessAction
+  extends EntitiesAction<ActionType.ArtistSuccess> {}
+
+export function getArtist(artistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.ArtistRequest,
+        ActionType.ArtistSuccess,
+        ActionType.ArtistFailure
+      ],
+      path: `artists/${artistId}`,
+      schema: Schemas.Artist
+    });
+  };
+}
+
+export interface ArtistAlbumsSuccessAction
+  extends EntitiesAction<ActionType.ArtistAlbumsSuccess> {}
+
+export function getArtistAlbums(artistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.ArtistAlbumsRequest,
+        ActionType.ArtistAlbumsSuccess,
+        ActionType.ArtistAlbumsFailure
+      ],
+      path: `artists/${artistId}/albums`,
+      schema: Schemas.PagedAlbums
+    });
+  };
+}
+
+export interface ArtistRelatedArtistsAction
+  extends EntitiesAction<ActionType.ArtistRelatedArtistsSuccess> {}
+
+export function getArtistRelatedArtists(artistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.ArtistRelatedArtistsRequest,
+        ActionType.ArtistRelatedArtistsSuccess,
+        ActionType.ArtistRelatedArtistsFailure
+      ],
+      path: `artists/${artistId}/related-artists`,
+      schema: Schemas.Artists
+    });
+  };
+}
+
+export interface ArtistTopTracksSuccessAction
+  extends EntitiesAction<ActionType.ArtistTopTracksSuccess> {}
+
+export function getArtistTopTracks(artistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.ArtistTopTracksRequest,
+        ActionType.ArtistTopTracksSuccess,
+        ActionType.ArtistTopTracksFailure
+      ],
+      path: `artists/${artistId}/top-tracks?country=us`,
+      schema: Schemas.Tracks
+    });
+  };
+}
