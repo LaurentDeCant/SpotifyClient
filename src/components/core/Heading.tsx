@@ -6,6 +6,7 @@ const Heading = styled.h2`
   margin-bottom: 25px;
   text-align: center;
   width: 100%;
+  word-break: break-word;
 `;
 
 export default Heading;

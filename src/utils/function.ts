@@ -1,4 +1,4 @@
-const milliseconds = 400;
+const milliseconds = 500;
 
 function debounce<T>(callback: (arg: T) => void) {
   let handle: number;

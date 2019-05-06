@@ -37,7 +37,8 @@ export default createReducer(initialState, {
       playlistIds: playlists
     });
   },
-  [ActionType.SearchFailure]: endFetching
+  [ActionType.SearchFailure]: endFetching,
+  [ActionType.ClearResults]: () => initialState
 });
 
 export function selectIsFetching(state: CombinedState): boolean {

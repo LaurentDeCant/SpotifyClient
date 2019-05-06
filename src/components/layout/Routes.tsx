@@ -26,7 +26,10 @@ const Routes = () => {
         to={`${process.env.PUBLIC_URL}/browse`}
       />
       <Route path={`${process.env.PUBLIC_URL}/browse`} component={Browse} />
-      <Route path={`${process.env.PUBLIC_URL}/search`} component={Search} />
+      <Route
+        path={`${process.env.PUBLIC_URL}/search/:query?`}
+        component={Search}
+      />
       <Route
         path={`${process.env.PUBLIC_URL}/categories/:categoryId/playlists`}
         component={CategoryPlaylists}

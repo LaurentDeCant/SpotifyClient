@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
 import { State } from "../../reducers";
@@ -12,6 +13,7 @@ import {
 import { search } from "../../actions/search";
 import Results from "./Results";
 import debounce from "../../utils/function";
+import { Heading } from "../core";
 
 const StyledInput = styled.input`
   background: ${props => props.theme.background.light}
@@ -27,7 +29,11 @@ const StyledInput = styled.input`
   width: calc(100% - 50px);
 `;
 
-interface Props {
+interface Params {
+  query: string;
+}
+
+interface Props extends RouteComponentProps<Params> {
   isLoading: boolean;
   albums: Album[];
   artists: Artist[];
@@ -37,37 +43,53 @@ interface Props {
 
 let debounced: (query: string) => void;
 
-function Search({ isLoading, albums, artists, playlists, search }: Props) {
-  const [query, setQuery] = useState("");
+function Search({
+  history,
+  match,
+  isLoading,
+  albums,
+  artists,
+  playlists,
+  search
+}: Props) {
+  const { query } = match.params;
+  const [value, setValue] = useState(query);
 
   useEffect(() => {
+    search(value);
     debounced = debounce((query: string) => {
-      if (query) {
-        search(query);
-      }
+      history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
+      search(query);
     });
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const { value: query } = event.target;
-    setQuery(query);
-    debounced(query);
+    const { value } = event.target;
+    setValue(value);
+    debounced(value);
   }
 
+  const hasResults =
+    isLoading || artists.length || albums.length || playlists.length;
   return (
     <>
       <StyledInput
-        value={query}
+        value={value}
         onChange={handleChange}
         placeholder="Search..."
         autoFocus
       />
-      <Results
-        isLoading={isLoading}
-        artists={artists}
-        albums={albums}
-        playlists={playlists}
-      />
+      {query &&
+        (hasResults ? (
+          <Results
+            isLoading={isLoading}
+            artists={artists}
+            albums={albums}
+            playlists={playlists}
+          />
+        ) : (
+          <Heading>No Results found for '{query}'.</Heading>
+        ))}
     </>
   );
 }
@@ -83,7 +105,9 @@ const mapDispatch = {
   search
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Search);
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Search)
+);

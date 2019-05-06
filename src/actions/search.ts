@@ -1,26 +1,36 @@
+import { Dispatch } from "redux";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
 
 export enum ActionType {
   SearchRequest = "SEARCH_REQUEST",
   SearchSuccess = "SEARCH_SUCCESS",
-  SearchFailure = "SEARCH+FAILURE"
+  SearchFailure = "SEARCH_FAILURE",
+  ClearResults = "CLEAR_RESULTS"
 }
 
 export interface SearchSuccessAction
   extends EntitiesAction<ActionType.SearchSuccess> {}
 
 export function search(query: string) {
-  return (dispatch: FetchDispatch) => {
-    const encoded = encodeURIComponent(query);
-    dispatch({
-      types: [
-        ActionType.SearchRequest,
-        ActionType.SearchSuccess,
-        ActionType.SearchFailure
-      ],
-      path: `search?q=${encoded}*&type=album,artist,playlist`,
-      schema: Schemas.Results
-    });
-  };
+  if (query) {
+    return (dispatch: FetchDispatch) => {
+      const encoded = encodeURIComponent(query);
+      dispatch({
+        types: [
+          ActionType.SearchRequest,
+          ActionType.SearchSuccess,
+          ActionType.SearchFailure
+        ],
+        path: `search?q=${encoded}*&type=album,artist,playlist`,
+        schema: Schemas.Results
+      });
+    };
+  } else {
+    return (dispatch: Dispatch) => {
+      dispatch({
+        type: ActionType.ClearResults
+      });
+    };
+  }
 }
