@@ -2,10 +2,11 @@ import { Action } from "redux";
 import { schema } from "normalizr";
 import { Entities } from "../types";
 
-export interface FetchAction {
+export interface FetchAction<D = {}> {
   types: string[];
   path: string;
   schema?: schema.Entity | schema.Object;
+  data?: D;
 }
 
 export interface FetchDispatch {
@@ -16,4 +17,5 @@ export interface PayloadAction<T, P> extends Action<T> {
   payload: P;
 }
 
-export interface EntitiesAction<T> extends PayloadAction<T, Entities> {}
+export interface EntitiesAction<T, D = {}>
+  extends PayloadAction<T, Entities & D> {}

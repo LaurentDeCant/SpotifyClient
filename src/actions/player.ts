@@ -82,28 +82,26 @@ export function trackLoaded(duration: number) {
   };
 }
 
-function _toggle(dispatch: Dispatch, getState: () => State) {
-  const state = getState();
-  const isPlaying = selectIsPlaying(state);
-  dispatch({
-    type: isPlaying() ? ActionType.Pause : ActionType.Play
-  });
+export function toggle() {
+  return (dispatch: Dispatch, getState: () => State) => {
+    const state = getState();
+    const isPlaying = selectIsPlaying(state);
+    dispatch({
+      type: isPlaying() ? ActionType.Pause : ActionType.Play
+    });
+  };
 }
 
-export function toggle(collectionId?: string, trackId?: string) {
+export function loadToggle(collectionId: string, trackId?: string) {
   return (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
     const isLoaded = selectIsLoaded(state);
-    if (collectionId) {
-      if (!isLoaded(collectionId)) {
-        loadCollection(collectionId, trackId)(dispatch, getState);
-      } else if (trackId && !isLoaded(trackId)) {
-        loadTrack(trackId)(dispatch);
-      } else {
-        _toggle(dispatch, getState);
-      }
+    if (!isLoaded(collectionId)) {
+      loadCollection(collectionId, trackId)(dispatch, getState);
+    } else if (trackId && !isLoaded(trackId)) {
+      loadTrack(trackId)(dispatch);
     } else {
-      _toggle(dispatch, getState);
+      toggle()(dispatch, getState);
     }
   };
 }

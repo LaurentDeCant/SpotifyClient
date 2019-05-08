@@ -8,12 +8,16 @@ import {
   getArtistTopTracks
 } from "../../actions/artists";
 import { State } from "../../reducers";
+import { Heading } from "../core";
+import { Artist } from "../../types";
+import { selectArtist } from "../../reducers/artists";
 
 interface Params {
   artistId: string;
 }
 
 interface Props extends RouteComponentProps<Params> {
+  artist?: Artist;
   getArtist: (artistId: string) => void;
   getArtistAlbums: (artistId: string) => void;
   getArtistRelatedArtists: (artistId: string) => void;
@@ -35,10 +39,21 @@ function ArtistDetails({
     getArtistTopTracks(artistId);
   }, []);
 
-  return <div />;
+  return (
+    <>
+      <Heading>Top Tracks</Heading>
+      <Heading>Albums & Singles</Heading>
+      <Heading>Related Artists</Heading>
+    </>
+  );
 }
 
-const mapState = (state: State) => ({});
+const mapState = (state: State, ownProps: Props) => {
+  const { match } = ownProps;
+  const { artistId } = match.params;
+
+  return { artist: selectArtist(state, artistId) };
+};
 
 const mapDispatch = {
   getArtist,

@@ -2,7 +2,7 @@ import { schema } from "normalizr";
 
 const Category = new schema.Entity("categories");
 
-const PagedCategories = new schema.Object({
+const Categories = new schema.Object({
   categories: { items: [Category] }
 });
 
@@ -26,7 +26,7 @@ const Album = new schema.Entity(
   }
 );
 
-const PagedAlbums = new schema.Object({
+const Albums = new schema.Object({
   items: [Album],
   albums: { items: [Album] }
 });
@@ -67,7 +67,7 @@ const Playlist = new schema.Entity(
   }
 );
 
-const PagedPlaylists = new schema.Entity("playlistItems", {
+const Playlists = new schema.Entity("playlistItems", {
   playlists: { items: [Playlist] }
 });
 
@@ -91,12 +91,12 @@ export const Schemas = {
   Artist,
   Artists,
   Album,
+  Albums,
   Category,
+  Categories,
   Track,
   Tracks,
-  PagedAlbums,
-  PagedCategories,
-  PagedPlaylists,
   Playlist,
+  Playlists,
   Results
 };

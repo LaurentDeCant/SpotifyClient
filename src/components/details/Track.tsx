@@ -13,6 +13,10 @@ const StyledButton = styled(Button)<{ isLoaded: boolean }>`
   padding: 10px 20px;
   width: 100%;
 
+  &:disabled {
+    color: ${props => props.theme.foreground.default};
+  }
+
   &&:hover {
     ${props => props.isLoaded && "color: " + props.theme.primaryLight};
   }

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Playlist } from "../../types";
 import { getPlaylist } from "../../actions/playlists";
-import { toggle } from "../../actions/player";
+import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
@@ -21,7 +21,7 @@ interface Props extends RouteComponentProps<Params> {
   playlist?: Playlist;
   isPlaying: (playlistId: string) => boolean;
   getPlaylist: (playlistId: string) => void;
-  toggle: (collectionId: string, trackId?: string) => void;
+  loadToggle: (collectionId: string, trackId?: string) => void;
 }
 
 function PlaylistDetails({
@@ -29,7 +29,7 @@ function PlaylistDetails({
   playlist,
   isPlaying,
   getPlaylist,
-  toggle
+  loadToggle
 }: Props) {
   const { playlistId } = match.params;
 
@@ -38,7 +38,7 @@ function PlaylistDetails({
   }, []);
 
   function handleToggle(trackId?: string) {
-    toggle(playlistId, trackId);
+    loadToggle(playlistId, trackId);
   }
 
   return playlist ? (
@@ -71,7 +71,7 @@ const mapState = (state: State, ownProps: Props) => {
 
 const mapDispatch = {
   getPlaylist,
-  toggle
+  loadToggle
 };
 
 export default withRouter(

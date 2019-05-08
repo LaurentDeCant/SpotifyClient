@@ -2,8 +2,9 @@ import merge from "lodash/merge";
 import { Album } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType, AlbumSuccessAction } from "../actions/albums";
-import { ActionType as BrowseActionType } from "../actions/browse";
+import { ActionType as ArtistActionType } from "../actions/artists";
 import { ActionType as PlaylistActionType } from "../actions/playlists";
+import { ActionType as BrowseActionType } from "../actions/browse";
 import { ActionType as SearchActionType } from "../actions/search";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -36,9 +37,9 @@ export default createReducer(initialState, {
     action: AlbumSuccessAction
   ): State => endFetching(mergeAlbums(state, action)),
   [ActionType.AlbumFailure]: endFetching,
-
-  [BrowseActionType.NewReleasesSuccess]: mergeAlbums,
   [PlaylistActionType.PlaylistSuccess]: mergeAlbums,
+  [ArtistActionType.ArtistAlbumsSuccess]: mergeAlbums,
+  [BrowseActionType.NewReleasesSuccess]: mergeAlbums,
   [SearchActionType.SearchSuccess]: mergeAlbums
 });
 

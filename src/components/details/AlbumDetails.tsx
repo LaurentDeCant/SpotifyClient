@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Album } from "../../types";
 import { getAlbum } from "../../actions/albums";
-import { toggle } from "../../actions/player";
+import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectIsFetching, selectAlbum } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
@@ -21,10 +21,16 @@ interface Props extends RouteComponentProps<Params> {
   album?: Album;
   isPlaying: (albumId: string) => boolean;
   getAlbum: (albumId: string) => void;
-  toggle: (collectionId: string, trackId?: string) => void;
+  loadToggle: (collectionId: string, trackId?: string) => void;
 }
 
-function AlbumDetails({ match, album, isPlaying, getAlbum, toggle }: Props) {
+function AlbumDetails({
+  match,
+  album,
+  isPlaying,
+  getAlbum,
+  loadToggle
+}: Props) {
   const { albumId } = match.params;
 
   useEffect(() => {
@@ -32,7 +38,7 @@ function AlbumDetails({ match, album, isPlaying, getAlbum, toggle }: Props) {
   }, []);
 
   function handleToggle(trackId?: string) {
-    toggle(albumId, trackId);
+    loadToggle(albumId, trackId);
   }
 
   return album ? (
@@ -65,7 +71,7 @@ const mapState = (state: State, ownProps: Props) => {
 
 const mapDispatch = {
   getAlbum,
-  toggle
+  loadToggle
 };
 
 export default withRouter(

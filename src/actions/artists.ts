@@ -34,7 +34,10 @@ export function getArtist(artistId: string) {
 }
 
 export interface ArtistAlbumsSuccessAction
-  extends EntitiesAction<ActionType.ArtistAlbumsSuccess> {}
+  extends EntitiesAction<
+    ActionType.ArtistAlbumsSuccess,
+    { artistId: string }
+  > {}
 
 export function getArtistAlbums(artistId: string) {
   return (dispatch: FetchDispatch) => {
@@ -45,13 +48,17 @@ export function getArtistAlbums(artistId: string) {
         ActionType.ArtistAlbumsFailure
       ],
       path: `artists/${artistId}/albums`,
-      schema: Schemas.PagedAlbums
+      schema: Schemas.Albums,
+      data: { artistId }
     });
   };
 }
 
-export interface ArtistRelatedArtistsAction
-  extends EntitiesAction<ActionType.ArtistRelatedArtistsSuccess> {}
+export interface ArtistRelatedArtistsSuccessAction
+  extends EntitiesAction<
+    ActionType.ArtistRelatedArtistsSuccess,
+    { artistId: string }
+  > {}
 
 export function getArtistRelatedArtists(artistId: string) {
   return (dispatch: FetchDispatch) => {
@@ -62,13 +69,17 @@ export function getArtistRelatedArtists(artistId: string) {
         ActionType.ArtistRelatedArtistsFailure
       ],
       path: `artists/${artistId}/related-artists`,
-      schema: Schemas.Artists
+      schema: Schemas.Artists,
+      data: { artistId }
     });
   };
 }
 
 export interface ArtistTopTracksSuccessAction
-  extends EntitiesAction<ActionType.ArtistTopTracksSuccess> {}
+  extends EntitiesAction<
+    ActionType.ArtistTopTracksSuccess,
+    { artistId: string }
+  > {}
 
 export function getArtistTopTracks(artistId: string) {
   return (dispatch: FetchDispatch) => {
@@ -79,7 +90,8 @@ export function getArtistTopTracks(artistId: string) {
         ActionType.ArtistTopTracksFailure
       ],
       path: `artists/${artistId}/top-tracks?country=us`,
-      schema: Schemas.Tracks
+      schema: Schemas.Tracks,
+      data: { artistId }
     });
   };
 }

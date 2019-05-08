@@ -34,7 +34,6 @@ export default createReducer(initialState, {
     action: PlaylistSuccessAction
   ): State => endFetching(mergePlaylists(state, action)),
   [ActionType.PlaylistFailure]: endFetching,
-
   [BrowseActionType.CategoryPlaylistsSuccess]: mergePlaylists,
   [BrowseActionType.FeaturedPlaylistsSuccess]: mergePlaylists,
   [SearchActionType.SearchSuccess]: mergePlaylists

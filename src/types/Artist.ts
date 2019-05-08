@@ -1,4 +1,4 @@
-import { ExternalUrl, Followers, Image } from ".";
+import { Album, ExternalUrl, Followers, Image } from ".";
 
 export interface Artist {
   external_url: ExternalUrl;
@@ -11,4 +11,8 @@ export interface Artist {
   popularity: number;
   type: string;
   uri: string;
+  albumIds: string[];
+  albums: Album[];
+  relatedArtistIds: string[];
+  topTrackIds: string[];
 }
