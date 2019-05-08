@@ -7,7 +7,7 @@ import { toggle } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectIsFetching, selectAlbum } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
-import { joinArtistNames } from "../../utils/artist";
+import { joinArtistNames, hasPlayableTrack } from "../../utils";
 import Summary from "./Summary";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
@@ -24,15 +24,9 @@ interface Props extends RouteComponentProps<Params> {
   toggle: (collectionId: string, trackId?: string) => void;
 }
 
-function AlbumDetails({
-  match: {
-    params: { albumId }
-  },
-  album,
-  isPlaying,
-  getAlbum,
-  toggle
-}: Props) {
+function AlbumDetails({ match, album, isPlaying, getAlbum, toggle }: Props) {
+  const { albumId } = match.params;
+
   useEffect(() => {
     getAlbum(albumId);
   }, []);
@@ -47,6 +41,7 @@ function AlbumDetails({
         image={album.images[0].url}
         title={album.name}
         subTitle={joinArtistNames(album.artists)}
+        canPlay={hasPlayableTrack(album.tracks)}
         isPlaying={isPlaying(album.id)}
         onToggle={handleToggle}
       />

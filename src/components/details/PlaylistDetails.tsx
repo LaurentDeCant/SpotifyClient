@@ -7,6 +7,7 @@ import { toggle } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
+import { hasPlayableTrack } from "../../utils";
 import Summary from "./Summary";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
@@ -24,14 +25,14 @@ interface Props extends RouteComponentProps<Params> {
 }
 
 function PlaylistDetails({
-  match: {
-    params: { playlistId }
-  },
+  match,
   playlist,
   isPlaying,
   getPlaylist,
   toggle
 }: Props) {
+  const { playlistId } = match.params;
+
   useEffect(() => {
     getPlaylist(playlistId);
   }, []);
@@ -46,6 +47,7 @@ function PlaylistDetails({
         image={playlist.images[0].url}
         title={playlist.name}
         subTitle={playlist.owner.display_name}
+        canPlay={hasPlayableTrack(playlist.tracks)}
         isPlaying={isPlaying(playlist.id)}
         onToggle={handleToggle}
       />

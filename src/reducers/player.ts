@@ -105,12 +105,12 @@ export default createReducer(initialState, {
   }),
   [ActionType.Seeked]: (state: State): State => ({
     ...state,
-    command: Command.None
+    command: Command.Play
   }),
   [ActionType.Ended]: (state: State): State => {
     const { trackIndex, trackIds } = state;
     if (trackIndex === trackIds.length - 1) {
-      return { ...state };
+      return { ...state, playerState: PlayerState.isPaused };
     }
     return {
       ...state,
@@ -163,7 +163,11 @@ export function selectIsPlaying(state: CombinedState) {
 }
 
 export function selectCanToggle(state: CombinedState) {
-  return state.player.playerState !== PlayerState.None;
+  const { player } = state;
+  return (
+    player.playerState !== PlayerState.None &&
+    player.currentTime !== player.duration
+  );
 }
 
 export function selectCanSeek(state: CombinedState) {

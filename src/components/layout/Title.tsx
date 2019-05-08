@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "../../styles/styled";
 import { Icon, IconType } from "../core";
 
-const StyledLink = styled(Link)`
+const StyledHeader = styled.h1`
   display: flex;
   align-items: center;
   font-size: ${props => props.theme.font.size.large};
@@ -16,10 +16,12 @@ const StyledIcon = styled(Icon)`
 
 const Title = () => {
   return (
-    <StyledLink to="/browse">
-      <StyledIcon type={IconType.Wifi} />
-      Spotify
-    </StyledLink>
+    <Link to={`${process.env.PUBLIC_URL}/browse`}>
+      <StyledHeader>
+        <StyledIcon type={IconType.Wifi} />
+        Spotify
+      </StyledHeader>
+    </Link>
   );
 };
 

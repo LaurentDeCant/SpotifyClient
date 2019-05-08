@@ -39,11 +39,19 @@ interface Props {
   image: string;
   title: string;
   subTitle: string;
+  canPlay: boolean;
   isPlaying: boolean;
   onToggle: () => void;
 }
 
-function Summary({ image, title, subTitle, isPlaying, onToggle }: Props) {
+function Summary({
+  image,
+  title,
+  subTitle,
+  canPlay,
+  isPlaying,
+  onToggle
+}: Props) {
   function handleClick() {
     onToggle();
   }
@@ -53,7 +61,7 @@ function Summary({ image, title, subTitle, isPlaying, onToggle }: Props) {
       <StyledImage source={image} />
       <Title>{title}</Title>
       <SubTitle>{subTitle}</SubTitle>
-      <StyledButton onClick={handleClick}>
+      <StyledButton disabled={!canPlay} onClick={handleClick}>
         {isPlaying ? "Pause" : "Play"}
       </StyledButton>
     </Wrapper>
