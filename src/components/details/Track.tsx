@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Track as TrackObject } from "../../types";
+import { DenormalizedTrack as TrackObject } from "../../types";
 import { joinArtistNames } from "../../utils";
 import { Button, Icon, IconType, Text } from "../core";
 

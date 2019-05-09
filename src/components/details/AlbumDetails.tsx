@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Album } from "../../types";
+import { DenormalizedAlbum as Album } from "../../types";
 import { getAlbum } from "../../actions/albums";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";

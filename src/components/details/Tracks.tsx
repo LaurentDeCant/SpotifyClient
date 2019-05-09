@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Track as TrackObject } from "../../types";
+import { DenormalizedTrack as TrackObject } from "../../types";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import Track from "./Track";

@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Album } from "../../types";
+import { DenormalizedAlbum as Album } from "../../types";
 import { joinArtistNames } from "../../utils";
 import Covers, { Cover } from "./Covers";
 

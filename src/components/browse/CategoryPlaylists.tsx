@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Category, Playlist } from "../../types";
+import { Category, DenormalizedPlaylist as Playlist } from "../../types";
 import { State } from "../../reducers";
 import {
   selectIsFetching,

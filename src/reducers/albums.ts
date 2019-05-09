@@ -1,5 +1,6 @@
 import merge from "lodash/merge";
-import { Album } from "../types";
+import { denormalize } from "normalizr";
+import { NormalizedAlbum, DenormalizedAlbum } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType, AlbumSuccessAction } from "../actions/albums";
 import { ActionType as ArtistActionType } from "../actions/artists";
@@ -14,11 +15,10 @@ import {
   endFetching,
   isFetching
 } from "./fetching";
-import { selectArtists } from "./artists";
-import { selectTracks } from "./tracks";
+import { schemas } from "./schemas";
 
 export interface State extends FetchableState {
-  byId: { [id: string]: Album };
+  byId: { [id: string]: NormalizedAlbum };
 }
 
 const initialState: State = {
@@ -51,24 +51,22 @@ export function selectHasAlbum(state: CombinedState, albumId: string): boolean {
   return !!state.albums.byId[albumId];
 }
 
-export function selectAlbum(state: CombinedState, albumId: string): Album {
-  let album = state.albums.byId[albumId];
-
-  if (album) {
-    album = {
-      ...album,
-      artists: selectArtists(state, album.artistIds),
-      tracks: selectTracks(state, album.trackIds, album)
-    };
-  }
-
-  return album;
+export function selectAlbum(
+  state: CombinedState,
+  albumId: string
+): DenormalizedAlbum {
+  return denormalize(state.albums.byId[albumId], schemas.album, {
+    albums: state.albums.byId,
+    artists: state.artists.byId,
+    playlists: state.playlists.byId,
+    tracks: state.tracks.byId
+  });
 }
 
 export function selectAlbums(
   state: CombinedState,
   albumIds: string[]
-): Album[] {
+): DenormalizedAlbum[] {
   return albumIds ? albumIds.map(id => selectAlbum(state, id)) : [];
 }
 
@@ -76,7 +74,6 @@ export function selectPlayableTrackIds(
   state: CombinedState,
   albumId: string
 ): string[] {
-  const album = state.albums.byId[albumId];
-  const tracks = selectTracks(state, album.trackIds);
-  return tracks.filter(track => track.preview_url).map(track => track.id);
+  const album = selectAlbum(state, albumId);
+  return album.tracks.filter(track => track.preview_url).map(track => track.id);
 }

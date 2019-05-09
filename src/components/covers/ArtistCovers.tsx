@@ -1,5 +1,5 @@
 import React from "react";
-import { Artist } from "../../types";
+import { DenormalizedArtist as Artist } from "../../types";
 import Covers, { Cover, CoverType } from "./Covers";
 import { RouteComponentProps, withRouter } from "react-router";
 

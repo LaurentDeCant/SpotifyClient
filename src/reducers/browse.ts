@@ -1,4 +1,8 @@
-import { Album, Category, Playlist } from "../types";
+import {
+  DenormalizedAlbum as Album,
+  Category,
+  DenormalizedPlaylist as Playlist
+} from "../types";
 import {
   ActionType,
   CategorySuccessAction,

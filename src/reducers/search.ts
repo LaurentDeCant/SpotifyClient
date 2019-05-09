@@ -1,5 +1,9 @@
 import { ActionType, SearchSuccessAction } from "../actions/search";
-import { Album, Artist, Playlist } from "../types";
+import {
+  DenormalizedAlbum as Album,
+  DenormalizedArtist as Artist,
+  DenormalizedPlaylist as Playlist
+} from "../types";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 import {

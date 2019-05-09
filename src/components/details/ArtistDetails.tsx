@@ -9,7 +9,7 @@ import {
 } from "../../actions/artists";
 import { State } from "../../reducers";
 import { Heading } from "../core";
-import { Artist } from "../../types";
+import { DenormalizedArtist as Artist } from "../../types";
 import { selectArtist } from "../../reducers/artists";
 
 interface Params {

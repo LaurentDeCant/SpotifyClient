@@ -1,5 +1,6 @@
 import merge from "lodash/merge";
-import { Playlist } from "../types";
+import { denormalize } from "normalizr";
+import { NormalizedPlaylist, DenormalizedPlaylist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType, PlaylistSuccessAction } from "../actions/playlists";
 import { ActionType as BrowseActionType } from "../actions/browse";
@@ -12,10 +13,10 @@ import {
   endFetching,
   isFetching
 } from "./fetching";
-import { selectTracks } from "./tracks";
+import { schemas } from "./schemas";
 
 export interface State extends FetchableState {
-  byId: { [id: string]: Playlist };
+  byId: { [id: string]: NormalizedPlaylist };
 }
 
 const initialState: State = {
@@ -53,20 +54,19 @@ export function selectHasPlaylist(
 export function selectPlaylist(
   state: CombinedState,
   playlistId: string
-): Playlist {
-  let playlist = state.playlists.byId[playlistId];
-
-  if (playlist) {
-    playlist = { ...playlist, tracks: selectTracks(state, playlist.trackIds) };
-  }
-
-  return playlist;
+): DenormalizedPlaylist {
+  return denormalize(state.playlists.byId[playlistId], schemas.playlist, {
+    albums: state.albums.byId,
+    artists: state.artists.byId,
+    playlists: state.playlists.byId,
+    tracks: state.tracks.byId
+  });
 }
 
 export function selectPlaylists(
   state: CombinedState,
   playlistIds: string[]
-): Playlist[] {
+): DenormalizedPlaylist[] {
   return playlistIds ? playlistIds.map(id => selectPlaylist(state, id)) : [];
 }
 
@@ -74,7 +74,8 @@ export function selectPlayableTrackIds(
   state: CombinedState,
   playlistId: string
 ): string[] {
-  const playlist = state.playlists.byId[playlistId];
-  const tracks = selectTracks(state, playlist.trackIds);
-  return tracks.filter(track => track.preview_url).map(track => track.id);
+  const playlist = selectPlaylist(state, playlistId);
+  return playlist.tracks
+    .filter(track => track.preview_url)
+    .map(track => track.id);
 }

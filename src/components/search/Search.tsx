@@ -3,7 +3,11 @@ import React, { useState, ChangeEvent, useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
-import { Album, Artist, Playlist } from "../../types";
+import {
+  DenormalizedAlbum as Album,
+  DenormalizedArtist as Artist,
+  DenormalizedPlaylist as Playlist
+} from "../../types";
 import { State } from "../../reducers";
 import {
   selectIsFetching,

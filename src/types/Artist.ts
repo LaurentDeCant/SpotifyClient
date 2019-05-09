@@ -1,6 +1,6 @@
-import { Album, ExternalUrl, Followers, Image } from ".";
+import { DenormalizedAlbum, ExternalUrl, Followers, Image } from ".";
 
-export interface Artist {
+interface Artist {
   external_url: ExternalUrl;
   followers: Followers;
   genres: string[];
@@ -11,8 +11,14 @@ export interface Artist {
   popularity: number;
   type: string;
   uri: string;
-  albumIds: string[];
-  albums: Album[];
   relatedArtistIds: string[];
   topTrackIds: string[];
+}
+
+export interface NormalizedArtist extends Artist {
+  albums: string[];
+}
+
+export interface DenormalizedArtist extends Artist {
+  albums: DenormalizedAlbum[];
 }

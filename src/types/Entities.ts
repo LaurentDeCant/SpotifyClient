@@ -1,16 +1,22 @@
-import { Album, Artist, Category, Playlist, Track } from ".";
+import {
+  NormalizedAlbum,
+  NormalizedArtist,
+  Category,
+  NormalizedPlaylist,
+  NormalizedTrack
+} from ".";
 
 export interface Entities {
-  albums: { [id: string]: Album };
-  artists: { [id: string]: Artist };
+  albums: { [id: string]: NormalizedAlbum };
+  artists: { [id: string]: NormalizedArtist };
   categories: { [id: string]: Category };
-  playlists: { [id: string]: Playlist };
-  tracks: { [id: string]: Track };
+  playlists: { [id: string]: NormalizedPlaylist };
+  tracks: { [id: string]: NormalizedTrack };
   results: {
     [id: string]: {
-      albums: Album[];
-      artists: Artist[];
-      playlists: Playlist[];
+      albums: NormalizedAlbum[];
+      artists: NormalizedArtist[];
+      playlists: NormalizedPlaylist[];
     };
   };
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { Track } from "../../types";
+import { DenormalizedTrack as Track } from "../../types";
 import { State } from "../../reducers";
 import {
   selectLoadedTrack,

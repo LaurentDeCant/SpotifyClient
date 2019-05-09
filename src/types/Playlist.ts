@@ -1,6 +1,6 @@
-import { ExternalUrl, Followers, Image, Track, User } from ".";
+import { ExternalUrl, Followers, Image, DenormalizedTrack, User } from ".";
 
-export interface Playlist {
+interface Playlist {
   collaborative: boolean;
   description: string;
   external_urls: ExternalUrl[];
@@ -12,8 +12,14 @@ export interface Playlist {
   owner: User;
   public: boolean | null;
   snapshot_id: string;
-  trackIds: string[];
-  tracks: Track[];
   type: string;
   uri: string;
+}
+
+export interface NormalizedPlaylist extends Playlist {
+  tracks: string[];
+}
+
+export interface DenormalizedPlaylist extends Playlist {
+  tracks: DenormalizedTrack[];
 }

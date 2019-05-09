@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Playlist } from "../../types";
+import { DenormalizedPlaylist as Playlist } from "../../types";
 import Covers, { Cover } from "./Covers";
 
 function getCovers(playlists: Playlist[]): Cover[] {

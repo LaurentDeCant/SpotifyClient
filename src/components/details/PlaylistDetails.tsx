@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Playlist } from "../../types";
+import { DenormalizedPlaylist as Playlist } from "../../types";
 import { getPlaylist } from "../../actions/playlists";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";

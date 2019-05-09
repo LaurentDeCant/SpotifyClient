@@ -15,13 +15,13 @@ const Artists = new schema.Object({
 const Album = new schema.Entity(
   "albums",
   {
-    artistIds: [Artist]
+    artists: [Artist]
   },
   {
     processStrategy: ({ artists, tracks, ...rest }) => ({
       ...rest,
-      artistIds: artists,
-      trackIds: tracks ? tracks.items : []
+      artists: artists,
+      tracks: tracks ? tracks.items : []
     })
   }
 );
@@ -34,14 +34,14 @@ const Albums = new schema.Object({
 const Track = new schema.Entity(
   "tracks",
   {
-    albumId: Album,
-    artistIds: [Artist]
+    album: Album,
+    artists: [Artist]
   },
   {
     processStrategy: ({ album, artists, ...rest }, parent) => ({
       ...rest,
-      albumId: parent["type"] === "album" ? parent : album,
-      artistIds: artists
+      album: parent["type"] === "album" ? parent : album,
+      artists: artists
     })
   }
 );
@@ -57,12 +57,12 @@ const Tracks = new schema.Object({
 const Playlist = new schema.Entity(
   "playlists",
   {
-    trackIds: [Track]
+    tracks: [Track]
   },
   {
     processStrategy: ({ tracks, ...rest }) => ({
       ...rest,
-      trackIds: tracks.items ? tracks.items.map((item: any) => item.track) : []
+      tracks: tracks.items ? tracks.items.map((item: any) => item.track) : []
     })
   }
 );

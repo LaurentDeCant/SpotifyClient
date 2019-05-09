@@ -1,4 +1,4 @@
-import { PublicUser, Track } from ".";
+import { PublicUser, NormalizedTrack as Track } from ".";
 
 export interface PlaylistTrack {
   added_at: Date;

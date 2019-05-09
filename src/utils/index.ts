@@ -1,4 +1,7 @@
-import { Artist, Track } from "../types";
+import {
+  DenormalizedArtist as Artist,
+  DenormalizedTrack as Track
+} from "../types";
 
 export function joinArtistNames(artists: Artist[]): string {
   return artists.map(artist => artist.name).join(", ");

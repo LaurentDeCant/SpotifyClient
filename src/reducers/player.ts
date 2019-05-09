@@ -1,4 +1,4 @@
-import { Track } from "../types";
+import { DenormalizedTrack as Track } from "../types";
 import {
   ActionType,
   LoadCollectionAction,

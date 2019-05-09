@@ -1,5 +1,6 @@
 import merge from "lodash/merge";
-import { Artist } from "../types";
+import { denormalize } from "normalizr";
+import { NormalizedArtist, DenormalizedArtist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -13,10 +14,10 @@ import {
 import { ActionType as PlaylistActionType } from "../actions/playlists";
 import { ActionType as BrowseActionType } from "../actions/browse";
 import { ActionType as SearchActionType } from "../actions/search";
-import { selectAlbums } from "./albums";
+import { schemas } from "./schemas";
 
 export interface State {
-  byId: { [id: string]: Artist };
+  byId: { [id: string]: NormalizedArtist };
 }
 
 const initialState: State = {
@@ -84,13 +85,21 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergeArtists
 });
 
-export function selectArtist(state: CombinedState, artistId: string): Artist {
-  return state.artists.byId[artistId];
+export function selectArtist(
+  state: CombinedState,
+  artistId: string
+): DenormalizedArtist {
+  return denormalize(state.artists.byId[artistId], schemas.artist, {
+    albums: state.albums.byId,
+    artists: state.artists.byId,
+    playlists: state.playlists.byId,
+    tracks: state.tracks.byId
+  });
 }
 
 export function selectArtists(
   state: CombinedState,
   artistIds: string[]
-): Artist[] {
+): DenormalizedArtist[] {
   return artistIds ? artistIds.map(id => selectArtist(state, id)) : [];
 }
