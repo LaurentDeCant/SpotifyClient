@@ -5,7 +5,7 @@ import { DenormalizedPlaylist as Playlist } from "../../types";
 import { getPlaylist } from "../../actions/playlists";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectIsFetching, selectPlaylist } from "../../reducers/playlists";
+import { selectPlaylist } from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
 import { hasPlayableTrack } from "../../utils";
 import Summary from "./Summary";
@@ -17,7 +17,6 @@ interface Params {
 }
 
 interface Props extends RouteComponentProps<Params> {
-  isLoading: boolean;
   playlist?: Playlist;
   isPlaying: (playlistId: string) => boolean;
   getPlaylist: (playlistId: string) => void;
@@ -61,9 +60,7 @@ function PlaylistDetails({
 const mapState = (state: State, ownProps: Props) => {
   const { match } = ownProps;
   const { playlistId } = match.params;
-
   return {
-    isLoading: selectIsFetching(state),
     playlist: selectPlaylist(state, playlistId),
     isPlaying: selectIsPlaying(state)
   };
@@ -74,9 +71,11 @@ const mapDispatch = {
   loadToggle
 };
 
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(withReloader(PlaylistDetails))
+export default withReloader(
+  withRouter(
+    connect(
+      mapState,
+      mapDispatch
+    )(PlaylistDetails)
+  )
 );

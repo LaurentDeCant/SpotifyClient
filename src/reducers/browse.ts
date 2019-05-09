@@ -13,100 +13,70 @@ import {
 } from "../actions/browse";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
-import {
-  FetchableState,
-  startFetching,
-  endFetching,
-  isFetching
-} from "./fetching";
 import { selectPlaylists } from "./playlists";
 import { selectAlbums } from "./albums";
 
-export interface State extends FetchableState {
-  categoriesById: { [id: string]: Category };
+export interface State {
+  categories: { [id: string]: Category };
   categoryPlaylistIds: string[];
   featuredPlaylistIds: string[];
   newReleaseIds: string[];
 }
 
 const initialState: State = {
-  isFetching: false,
-  categoriesById: {},
+  categories: {},
   categoryPlaylistIds: [],
   featuredPlaylistIds: [],
   newReleaseIds: []
 };
 
 export default createReducer(initialState, {
-  [ActionType.CategoriesRequest]: startFetching,
   [ActionType.CategoriesSuccess]: (
     state: State,
     action: CategoriesSuccessAction
-  ): State =>
-    endFetching({
-      ...state,
-      categoriesById: action.payload.categories
-    }),
-  [ActionType.CategoriesFailure]: endFetching,
-
-  [ActionType.CategoryRequest]: startFetching,
+  ): State => ({
+    ...state,
+    categories: action.payload.categories
+  }),
   [ActionType.CategorySuccess]: (
     state: State,
     action: CategorySuccessAction
-  ): State =>
-    endFetching({
-      ...state,
-      categoriesById: action.payload.categories
-    }),
-  [ActionType.CategoryFailure]: endFetching,
-
-  [ActionType.CategoryPlaylistsRequest]: startFetching,
+  ): State => ({
+    ...state,
+    categories: action.payload.categories
+  }),
   [ActionType.CategoryPlaylistsSuccess]: (
     state: State,
     action: CategoryPlaylistsSuccessAction
-  ): State =>
-    endFetching({
-      ...state,
-      categoryPlaylistIds: Object.keys(action.payload.playlists)
-    }),
-  [ActionType.CategoryPlaylistsFailure]: endFetching,
-
-  [ActionType.FeaturedPlaylistsRequest]: startFetching,
+  ): State => ({
+    ...state,
+    categoryPlaylistIds: Object.keys(action.payload.playlists)
+  }),
   [ActionType.FeaturedPlaylistsSuccess]: (
     state: State,
     action: FeaturedPlaylistsSuccessAction
-  ): State =>
-    endFetching({
-      ...state,
-      featuredPlaylistIds: Object.keys(action.payload.playlists)
-    }),
-  [ActionType.FeaturedPlaylistsFailure]: endFetching,
-
-  [ActionType.NewReleasesRequest]: startFetching,
+  ): State => ({
+    ...state,
+    featuredPlaylistIds: Object.keys(action.payload.playlists)
+  }),
   [ActionType.NewReleasesSuccess]: (
     state: State,
     action: NewReleasesSuccessAction
-  ): State =>
-    endFetching({
-      ...state,
-      newReleaseIds: Object.keys(action.payload.albums)
-    }),
-  [ActionType.NewReleasesFailure]: endFetching
+  ): State => ({
+    ...state,
+    newReleaseIds: Object.keys(action.payload.albums)
+  })
 });
 
-export function selectIsFetching(state: CombinedState): boolean {
-  return isFetching(state.browse);
-}
-
 export function selectCategories(state: CombinedState): Category[] {
-  return Object.values(state.browse.categoriesById);
+  return Object.values(state.browse.categories);
 }
 
 export function selectCategory(
   state: CombinedState,
   categoryId: string
 ): Category | undefined {
-  return state.browse.categoriesById[categoryId];
+  return state.browse.categories[categoryId];
 }
 
 export function selectCategoryPlaylists(state: CombinedState): Playlist[] {

@@ -2,13 +2,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Category, DenormalizedPlaylist as Playlist } from "../../types";
-import { State } from "../../reducers";
-import {
-  selectIsFetching,
-  selectCategory,
-  selectCategoryPlaylists
-} from "../../reducers/browse";
 import { getCategory, getCategoryPlaylists } from "../../actions/browse";
+import { State } from "../../reducers";
+import { selectCategory, selectCategoryPlaylists } from "../../reducers/browse";
 import { Heading } from "../core";
 import { PlaylistCovers } from "../covers";
 import withReloader from "../withReloader";
@@ -18,7 +14,6 @@ interface Params {
 }
 
 interface Props extends RouteComponentProps<Params> {
-  isLoading: boolean;
   category?: Category;
   playlists: Playlist[];
   getCategory: (categoryId: string) => void;
@@ -52,7 +47,6 @@ const mapState = (state: State, { match }: Props) => {
   const categoryId = match.params.categoryId;
 
   return {
-    isLoading: selectIsFetching(state),
     category: selectCategory(state, categoryId),
     playlists: selectCategoryPlaylists(state)
   };

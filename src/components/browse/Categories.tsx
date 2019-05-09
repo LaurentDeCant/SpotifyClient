@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Category } from "../../types";
-import { State } from "../../reducers";
-import { selectIsFetching, selectCategories } from "../../reducers/browse";
 import { getCategories } from "../../actions/browse";
-import withReloader from "../withReloader";
+import { State } from "../../reducers";
+import { selectCategories } from "../../reducers/browse";
 import CategoryCovers from "../covers/CategoryCovers";
+import withReloader from "../withReloader";
 
 interface Props {
-  isLoading: boolean;
   categories: Category[];
   getCategories: () => void;
 }
@@ -20,7 +19,6 @@ function Categories({ categories, getCategories }: Props) {
 }
 
 const mapState = (state: State) => ({
-  isLoading: selectIsFetching(state),
   categories: selectCategories(state)
 });
 

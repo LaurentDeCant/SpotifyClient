@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
+import { DenormalizedArtist as Artist } from "../../types";
 import {
   getArtist,
   getArtistAlbums,
@@ -8,9 +9,9 @@ import {
   getArtistTopTracks
 } from "../../actions/artists";
 import { State } from "../../reducers";
-import { Heading } from "../core";
-import { DenormalizedArtist as Artist } from "../../types";
 import { selectArtist } from "../../reducers/artists";
+import { Heading } from "../core";
+import withReloader from "../withReloader";
 
 interface Params {
   artistId: string;
@@ -51,7 +52,6 @@ function ArtistDetails({
 const mapState = (state: State, ownProps: Props) => {
   const { match } = ownProps;
   const { artistId } = match.params;
-
   return { artist: selectArtist(state, artistId) };
 };
 
@@ -62,9 +62,11 @@ const mapDispatch = {
   getArtistTopTracks
 };
 
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(ArtistDetails)
+export default withReloader(
+  withRouter(
+    connect(
+      mapState,
+      mapDispatch
+    )(ArtistDetails)
+  )
 );

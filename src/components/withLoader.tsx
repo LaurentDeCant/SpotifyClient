@@ -1,15 +1,12 @@
-import React, { FunctionComponent, ComponentType } from "react";
-import Loader from "./Loader";
+import React, { ComponentType } from "react";
+import { connect } from "react-redux";
+import { State } from "../reducers";
+import { selectIsLoading } from "../reducers/loading";
 import Fader from "./Fader";
+import Loader from "./Loader";
 
-interface Props {
-  isLoading: boolean;
-}
-
-function withLoader<P extends Props>(
-  WrappedComponent: ComponentType<P>
-): FunctionComponent<P> {
-  return function({ isLoading, ...rest }: any) {
+const withLoader = (WrappedComponent: ComponentType<any>) => {
+  const WithLoader = ({ isLoading, ...rest }: any) => {
     return (
       <>
         <Loader isLoading={isLoading} />
@@ -19,6 +16,15 @@ function withLoader<P extends Props>(
       </>
     );
   };
-}
+
+  const mapState = (state: State) => ({
+    isLoading: selectIsLoading(state)
+  });
+
+  return connect(
+    mapState,
+    null
+  )(WithLoader);
+};
 
 export default withLoader;

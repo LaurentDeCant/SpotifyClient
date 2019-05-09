@@ -4,28 +4,28 @@ import { NormalizedArtist, DenormalizedArtist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
-import { ActionType as AlbumActionType } from "../actions/albums";
 import {
-  ActionType as ArtistActionType,
+  AlbumActionType,
+  ArtistActionType,
+  BrowseActionType,
+  PlaylistActionType,
+  SearchActionType
+} from "../actions";
+import {
   ArtistAlbumsSuccessAction,
   ArtistRelatedArtistsSuccessAction,
   ArtistTopTracksSuccessAction
 } from "../actions/artists";
-import { ActionType as PlaylistActionType } from "../actions/playlists";
-import { ActionType as BrowseActionType } from "../actions/browse";
-import { ActionType as SearchActionType } from "../actions/search";
 import { schemas } from "./schemas";
 
 export interface State {
-  byId: { [id: string]: NormalizedArtist };
+  [id: string]: NormalizedArtist;
 }
 
-const initialState: State = {
-  byId: {}
-};
+const initialState: State = {};
 
 function mergeArtists(state: State, action: EntitiesAction<any>): State {
-  return merge({}, state, { byId: action.payload.artists });
+  return merge({}, state, action.payload.artists);
 }
 
 export default createReducer(initialState, {
@@ -37,12 +37,9 @@ export default createReducer(initialState, {
     const { artistId, albums } = action.payload;
     return {
       ...state,
-      byId: {
-        ...state.byId,
-        [artistId]: {
-          ...state.byId[artistId],
-          albumIds: Object.keys(albums)
-        }
+      [artistId]: {
+        ...state[artistId],
+        albumIds: Object.keys(albums)
       }
     };
   },
@@ -54,12 +51,9 @@ export default createReducer(initialState, {
     const nexState = mergeArtists(state, action);
     return {
       ...nexState,
-      byId: {
-        ...nexState.byId,
-        [artistId]: {
-          ...nexState.byId[artistId],
-          relatedArtistIds: Object.keys(artists)
-        }
+      [artistId]: {
+        ...nexState[artistId],
+        relatedArtistIds: Object.keys(artists)
       }
     };
   },
@@ -70,12 +64,9 @@ export default createReducer(initialState, {
     const { artistId, tracks } = action.payload;
     return {
       ...state,
-      byId: {
-        ...state.byId,
-        [artistId]: {
-          ...state.byId[artistId],
-          tracks: Object.keys(tracks)
-        }
+      [artistId]: {
+        ...state[artistId],
+        tracks: Object.keys(tracks)
       }
     };
   },
@@ -89,12 +80,7 @@ export function selectArtist(
   state: CombinedState,
   artistId: string
 ): DenormalizedArtist {
-  return denormalize(state.artists.byId[artistId], schemas.artist, {
-    albums: state.albums.byId,
-    artists: state.artists.byId,
-    playlists: state.playlists.byId,
-    tracks: state.tracks.byId
-  });
+  return denormalize(state.artists[artistId], schemas.artist, state);
 }
 
 export function selectArtists(

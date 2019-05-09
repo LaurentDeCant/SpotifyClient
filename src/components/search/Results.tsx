@@ -53,7 +53,6 @@ function Playlists({ playlists }: { playlists: Playlist[] }) {
 }
 
 interface Props {
-  isLoading: boolean;
   artists: Artist[];
   albums: Album[];
   playlists: Playlist[];

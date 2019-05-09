@@ -5,7 +5,7 @@ import { DenormalizedAlbum as Album } from "../../types";
 import { getAlbum } from "../../actions/albums";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectIsFetching, selectAlbum } from "../../reducers/albums";
+import { selectAlbum } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
 import { joinArtistNames, hasPlayableTrack } from "../../utils";
 import Summary from "./Summary";
@@ -17,7 +17,6 @@ interface Params {
 }
 
 interface Props extends RouteComponentProps<Params> {
-  isLoading: boolean;
   album?: Album;
   isPlaying: (albumId: string) => boolean;
   getAlbum: (albumId: string) => void;
@@ -61,9 +60,7 @@ function AlbumDetails({
 const mapState = (state: State, ownProps: Props) => {
   const { match } = ownProps;
   const { albumId } = match.params;
-
   return {
-    isLoading: selectIsFetching(state),
     album: selectAlbum(state, albumId),
     isPlaying: selectIsPlaying(state)
   };
@@ -74,9 +71,11 @@ const mapDispatch = {
   loadToggle
 };
 
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(withReloader(AlbumDetails))
+export default withReloader(
+  withRouter(
+    connect(
+      mapState,
+      mapDispatch
+    )(AlbumDetails)
+  )
 );

@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { DenormalizedPlaylist as Playlist } from "../../types";
-import { State } from "../../reducers";
-import {
-  selectIsFetching,
-  selectFeaturedPlaylists
-} from "../../reducers/browse";
 import { getFeaturedPlaylists } from "../../actions/browse";
+import { State } from "../../reducers";
+import { selectFeaturedPlaylists } from "../../reducers/browse";
 import { PlaylistCovers } from "../covers";
 import withReloader from "../withReloader";
 
 interface Props {
-  isLoading: boolean;
   playlists: Playlist[];
   getPlaylists: () => void;
 }
@@ -23,7 +19,6 @@ function FeaturedPlaylists({ playlists, getPlaylists }: Props) {
 }
 
 const mapState = (state: State) => ({
-  isLoading: selectIsFetching(state),
   playlists: selectFeaturedPlaylists(state)
 });
 

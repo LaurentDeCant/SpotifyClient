@@ -8,14 +8,14 @@ import {
   DenormalizedArtist as Artist,
   DenormalizedPlaylist as Playlist
 } from "../../types";
+import { search } from "../../actions/search";
 import { State } from "../../reducers";
+import { selectIsLoading } from "../../reducers/loading";
 import {
-  selectIsFetching,
   selectAlbums,
   selectArtists,
   selectPlaylists
 } from "../../reducers/search";
-import { search } from "../../actions/search";
 import Results from "./Results";
 import { Heading } from "../core";
 
@@ -99,7 +99,7 @@ function Search({
 }
 
 const mapState = (state: State) => ({
-  isLoading: selectIsFetching(state),
+  isLoading: selectIsLoading(state),
   albums: selectAlbums(state),
   artists: selectArtists(state),
   playlists: selectPlaylists(state)

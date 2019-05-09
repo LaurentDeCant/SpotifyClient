@@ -1,15 +1,12 @@
-import React, { FunctionComponent, ComponentType, useState } from "react";
-import Loader from "./Loader";
+import React, { ComponentType, useState } from "react";
+import { connect } from "react-redux";
+import { State } from "../reducers";
+import { selectIsLoading } from "../reducers/loading";
 import Fader from "./Fader";
+import Loader from "./Loader";
 
-interface Props {
-  isLoading: boolean;
-}
-
-function withReloader<P extends Props>(
-  WrappedComponent: ComponentType<P>
-): FunctionComponent<P> {
-  return function({ isLoading, ...rest }: any) {
+function withReloader(WrappedComponent: ComponentType<any>) {
+  const WithReloaded = ({ isLoading, ...rest }: any) => {
     const [prevIsLoading, setPrevIsLoading] = useState(false);
     const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -29,6 +26,15 @@ function withReloader<P extends Props>(
       </>
     );
   };
+
+  const mapState = (state: State) => ({
+    isLoading: selectIsLoading(state)
+  });
+
+  return connect(
+    mapState,
+    null
+  )(WithReloaded);
 }
 
 export default withReloader;
