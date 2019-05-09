@@ -4,7 +4,7 @@ import { DenormalizedAlbum as Album } from "../../types";
 import { getNewReleases } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectNewReleases } from "../../reducers/browse";
-import { AlbumCovers } from "../covers";
+import AlbumCovers from "../covers/AlbumCovers";
 import withReloader from "../withReloader";
 
 interface Props {

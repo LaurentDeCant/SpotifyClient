@@ -9,7 +9,7 @@ interface Props {
   tracks: TrackObject[];
   isLoaded: (trackId: string) => boolean;
   isPlaying: (trackId: string) => boolean;
-  onToggle: (trackId: string) => void;
+  onToggle?: (trackId: string) => void;
 }
 
 function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "../../styles/styled";
 import { Button, Icon, IconType, Image, Text } from "../core";
+import { ImageShape } from "../core/Image";
 
 const StyledList = styled.ul`
   align-content: flex-start;
@@ -19,9 +20,9 @@ const StyledItem = styled.li`
 `;
 
 const length = 200;
-const StyledButton = styled(Button)<{ type: CoverType }>`
+const StyledButton = styled(Button)<{ type: ImageShape }>`
   background: ${props => props.theme.background.light};
-  ${props => props.type === CoverType.Round && "border-radius: 100px;"}
+  ${props => props.type === ImageShape.Round && "border-radius: 50%;"}
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   height: ${length}px;
@@ -35,7 +36,7 @@ const StyledImge = styled(Image)`
 `;
 
 const StyledIcon = styled(Icon)`
-  background: ${props => props.theme.background.light}  
+  background: ${props => props.theme.background.light};
   font-size: ${length / 2}px;
   height: ${length}px;
   line-height: ${length}px;
@@ -43,6 +44,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const Title = styled(Text)`
+  font-size: ${props => props.theme.font.size.medium};
   margin-bottom: 5px;
   text-align: center;
   width: ${length}px;
@@ -50,6 +52,7 @@ const Title = styled(Text)`
 
 const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
+  font-size: ${props => props.theme.font.size.medium};
   font-weight: ${props => props.theme.font.weight.light};
   text-align: center;
   width: 200px;
@@ -62,18 +65,13 @@ export interface Cover {
   subTitle?: string;
 }
 
-export enum CoverType {
-  Square = "SQUARE",
-  Round = "ROUND"
-}
-
 function Cover({
   cover,
-  type,
+  shape: type,
   onClick
 }: {
   cover: Cover;
-  type: CoverType;
+  shape: ImageShape;
   onClick: (coverId: string) => void;
 }) {
   function handleClick() {
@@ -97,16 +95,16 @@ function Cover({
 
 interface Props {
   covers: Cover[];
-  type: CoverType;
+  shape: ImageShape;
   onClick: (id: string) => void;
 }
 
-function Covers({ covers, type, onClick }: Props) {
+function Covers({ covers, shape, onClick }: Props) {
   return (
     <StyledList>
       {covers.map(cover => (
         <StyledItem key={cover.id}>
-          <Cover cover={cover} type={type} onClick={onClick} />
+          <Cover cover={cover} shape={shape} onClick={onClick} />
         </StyledItem>
       ))}
     </StyledList>
@@ -114,7 +112,7 @@ function Covers({ covers, type, onClick }: Props) {
 }
 
 Covers.defaultProps = {
-  type: CoverType.Square
+  shape: ImageShape.Square
 };
 
 export default Covers;

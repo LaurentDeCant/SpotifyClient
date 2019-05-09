@@ -1,7 +1,8 @@
 import React from "react";
-import { DenormalizedArtist as Artist } from "../../types";
-import Covers, { Cover, CoverType } from "./Covers";
 import { RouteComponentProps, withRouter } from "react-router";
+import { DenormalizedArtist as Artist } from "../../types";
+import { ImageShape } from "../core/Image";
+import Covers, { Cover } from "./Covers";
 
 function getCovers(artists: Artist[]): Cover[] {
   return artists.map(artist => ({
@@ -23,7 +24,7 @@ function ArtistCovers({ history, artists }: Props) {
 
   const covers = getCovers(artists);
   return (
-    <Covers covers={covers} type={CoverType.Round} onClick={handleClick} />
+    <Covers covers={covers} shape={ImageShape.Round} onClick={handleClick} />
   );
 }
 

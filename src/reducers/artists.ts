@@ -35,11 +35,12 @@ export default createReducer(initialState, {
     action: ArtistAlbumsSuccessAction
   ) => {
     const { artistId, albums } = action.payload;
+    const nexState = mergeArtists(state, action);
     return {
-      ...state,
+      ...nexState,
       [artistId]: {
-        ...state[artistId],
-        albumIds: Object.keys(albums)
+        ...nexState[artistId],
+        albums: Object.keys(albums)
       }
     };
   },
@@ -53,7 +54,7 @@ export default createReducer(initialState, {
       ...nexState,
       [artistId]: {
         ...nexState[artistId],
-        relatedArtistIds: Object.keys(artists)
+        relatedArtists: Object.keys(artists)
       }
     };
   },
@@ -62,11 +63,12 @@ export default createReducer(initialState, {
     action: ArtistTopTracksSuccessAction
   ) => {
     const { artistId, tracks } = action.payload;
+    const nexState = mergeArtists(state, action);
     return {
-      ...state,
+      ...nexState,
       [artistId]: {
-        ...state[artistId],
-        tracks: Object.keys(tracks)
+        ...nexState[artistId],
+        topTracks: Object.keys(tracks)
       }
     };
   },

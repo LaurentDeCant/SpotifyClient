@@ -18,9 +18,8 @@ const Album = new schema.Entity(
     artists: [Artist]
   },
   {
-    processStrategy: ({ artists, tracks, ...rest }) => ({
+    processStrategy: ({ tracks, ...rest }) => ({
       ...rest,
-      artists: artists,
       tracks: tracks ? tracks.items : []
     })
   }
@@ -47,7 +46,7 @@ const Track = new schema.Entity(
 );
 
 Album.define({
-  trackIds: [Track]
+  tracks: [Track]
 });
 
 const Tracks = new schema.Object({

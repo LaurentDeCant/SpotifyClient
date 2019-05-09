@@ -18,6 +18,11 @@ album.define({
   tracks: [track]
 });
 
+artist.define({
+  relatedArtists: [artist],
+  topTracks: [track]
+});
+
 playlist.define({
   tracks: [track]
 });

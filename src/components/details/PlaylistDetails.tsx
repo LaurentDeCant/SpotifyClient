@@ -8,7 +8,7 @@ import { State } from "../../reducers";
 import { selectPlaylist } from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
 import { hasPlayableTrack } from "../../utils";
-import Summary from "./Summary";
+import Header from "./Header";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
 
@@ -42,8 +42,8 @@ function PlaylistDetails({
 
   return playlist ? (
     <>
-      <Summary
-        image={playlist.images[0].url}
+      <Header
+        imageSource={playlist.images[0].url}
         title={playlist.name}
         subTitle={playlist.owner.display_name}
         canPlay={hasPlayableTrack(playlist.tracks)}

@@ -6,7 +6,9 @@ import {
   DenormalizedPlaylist as Playlist
 } from "../../types";
 import { Heading } from "../core";
-import { AlbumCovers, ArtistCovers, PlaylistCovers } from "../covers";
+import AlbumCovers from "../covers/AlbumCovers";
+import ArtistCovers from "../covers/ArtistCovers";
+import PlaylistCovers from "../covers/PlaylistCovers";
 import withLoader from "../withLoader";
 
 const Section = styled.section`

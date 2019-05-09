@@ -6,7 +6,7 @@ import { getCategory, getCategoryPlaylists } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectCategory, selectCategoryPlaylists } from "../../reducers/browse";
 import { Heading } from "../core";
-import { PlaylistCovers } from "../covers";
+import PlaylistCovers from "../covers/PlaylistCovers";
 import withReloader from "../withReloader";
 
 interface Params {

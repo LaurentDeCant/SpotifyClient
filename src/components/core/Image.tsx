@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const Img = styled.img<{ isLoaded: boolean }>`
+const Img = styled.img<{ shape: ImageShape; isLoaded: boolean }>`
+  ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
   height: 100%;
   object-fit: cover;
   opacity: ${props => (props.isLoaded ? "1" : "0")}
@@ -9,12 +10,18 @@ const Img = styled.img<{ isLoaded: boolean }>`
   transition: opacity .2s;
 `;
 
+export enum ImageShape {
+  Square = "SQUARE",
+  Round = "ROUND"
+}
+
 interface Props {
   className?: string;
   source: string;
+  shape: ImageShape;
 }
 
-function Image({ className, source }: Props) {
+function Image({ className, source, shape }: Props) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   function handleLoad() {
@@ -25,10 +32,15 @@ function Image({ className, source }: Props) {
     <Img
       className={className}
       src={source}
+      shape={shape}
       onLoad={handleLoad}
       isLoaded={isLoaded}
     />
   );
 }
+
+Image.defaultProps = {
+  shape: ImageShape.Square
+};
 
 export default Image;

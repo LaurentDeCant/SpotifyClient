@@ -71,7 +71,7 @@ interface Props {
   isDisabled: boolean;
   isLoaded: boolean;
   isPlaying: boolean;
-  onToggle: (trackId: string) => void;
+  onToggle?: (trackId: string) => void;
 }
 
 function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
@@ -111,7 +111,7 @@ function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
   }
 
   function handleClick() {
-    onToggle(track.id);
+    !!onToggle && onToggle(track.id);
   }
 
   return (

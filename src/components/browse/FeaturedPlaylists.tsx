@@ -4,7 +4,7 @@ import { DenormalizedPlaylist as Playlist } from "../../types";
 import { getFeaturedPlaylists } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectFeaturedPlaylists } from "../../reducers/browse";
-import { PlaylistCovers } from "../covers";
+import PlaylistCovers from "../covers/PlaylistCovers";
 import withReloader from "../withReloader";
 
 interface Props {

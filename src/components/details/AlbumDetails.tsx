@@ -8,7 +8,7 @@ import { State } from "../../reducers";
 import { selectAlbum } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
 import { joinArtistNames, hasPlayableTrack } from "../../utils";
-import Summary from "./Summary";
+import Header from "./Header";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
 
@@ -42,8 +42,8 @@ function AlbumDetails({
 
   return album ? (
     <>
-      <Summary
-        image={album.images[0].url}
+      <Header
+        imageSource={album.images[0].url}
         title={album.name}
         subTitle={joinArtistNames(album.artists)}
         canPlay={hasPlayableTrack(album.tracks)}
