@@ -25,6 +25,7 @@ function mergeTracks(state: State, action: EntitiesAction<any>): State {
 export default createReducer(initialState, {
   [AlbumActionType.AlbumSuccess]: mergeTracks,
   [ArtistActionType.ArtistTopTracksSuccess]: mergeTracks,
+  [ArtistActionType.FullArtistSuccess]: mergeTracks,
   [PlaylistActionType.PlaylistSuccess]: mergeTracks,
   [SearchActionType.SearchSuccess]: mergeTracks
 });

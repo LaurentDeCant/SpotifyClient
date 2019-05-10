@@ -1,4 +1,7 @@
-import { EntitiesAction, FetchDispatch } from "./types";
+import { Dispatch } from "react";
+import { normalize } from "normalizr";
+import { fetchJson } from "../utils/authorization";
+import { EntitiesAction, FetchDispatch, PayloadAction } from "./types";
 import { Schemas } from "./schemas";
 
 export enum ActionType {
@@ -13,7 +16,10 @@ export enum ActionType {
   ArtistRelatedArtistsFailure = "ARTIST_RELATED_ARTISTS_FAILURE",
   ArtistTopTracksRequest = "ARTIST_TOP_TRACKS_REQUEST",
   ArtistTopTracksSuccess = "ARTIST_TOP_TRACKS_SUCCESS",
-  ArtistTopTracksFailure = "ARTIST_TOP_TRACKS_FAILURE"
+  ArtistTopTracksFailure = "ARTIST_TOP_TRACKS_FAILURE",
+  FullArtistRequest = "FULL_ARTIST_REQUEST",
+  FullArtistSuccess = "FULL_ARTIST_SUCCESS",
+  FullArtistFailure = "FULL_ARTIST_FAILURE"
 }
 
 export interface ArtistSuccessAction
@@ -92,6 +98,34 @@ export function getArtistTopTracks(artistId: string) {
       path: `artists/${artistId}/top-tracks?country=us`,
       schema: Schemas.Tracks,
       data: { artistId }
+    });
+  };
+}
+
+export function getFullArtist(artistId: string) {
+  return (dispatch: Dispatch<any>) => {
+    dispatch({
+      type: ActionType.FullArtistRequest
+    });
+    const url = `${process.env.REACT_APP_BASE_URL}/artists/${artistId}`;
+    Promise.all([
+      fetchJson(url),
+      fetchJson(`${url}/albums`),
+      fetchJson(`${url}/related-artists`),
+      fetchJson(`${url}/top-tracks?country=us`)
+    ]).then(([artist, albums, relatedArtists, topTracks]) => {
+      dispatch({
+        type: ActionType.FullArtistSuccess,
+        payload: normalize(
+          {
+            ...artist,
+            albums: albums.items,
+            relatedArtists: relatedArtists.artists,
+            topTracks: topTracks.tracks
+          },
+          Schemas.Artist
+        ).entities
+      });
     });
   };
 }

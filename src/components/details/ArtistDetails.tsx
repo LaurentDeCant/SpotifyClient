@@ -7,12 +7,7 @@ import {
   DenormalizedArtist as Artist,
   DenormalizedTrack as Track
 } from "../../types";
-import {
-  getArtist,
-  getArtistAlbums,
-  getArtistRelatedArtists,
-  getArtistTopTracks
-} from "../../actions/artists";
+import { getFullArtist } from "../../actions/artists";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectArtist, selectIsPlayable } from "../../reducers/artists";
@@ -74,10 +69,7 @@ interface Props extends RouteComponentProps<Params> {
   artist?: Artist;
   isPlayable: boolean;
   isPlaying: (artistId: string) => boolean;
-  getArtist: (artistId: string) => void;
-  getArtistAlbums: (artistId: string) => void;
-  getArtistRelatedArtists: (artistId: string) => void;
-  getArtistTopTracks: (artistId: string) => void;
+  getFullArtist: (artistId: string) => void;
   loadToggle: (artistId: string, trackId?: string) => void;
 }
 
@@ -86,10 +78,7 @@ function ArtistDetails({
   artist,
   isPlayable,
   isPlaying,
-  getArtist,
-  getArtistAlbums,
-  getArtistRelatedArtists,
-  getArtistTopTracks,
+  getFullArtist,
   loadToggle
 }: Props) {
   const { artistId } = match.params;
@@ -97,10 +86,7 @@ function ArtistDetails({
 
   useEffect(() => {
     if (artistId !== prevArtistId) {
-      getArtist(artistId);
-      getArtistAlbums(artistId);
-      getArtistRelatedArtists(artistId);
-      getArtistTopTracks(artistId);
+      getFullArtist(artistId);
       setPrevArtistId(artistId);
     }
   });
@@ -141,10 +127,7 @@ const mapState = (state: State, ownProps: Props) => {
 };
 
 const mapDispatch = {
-  getArtist,
-  getArtistAlbums,
-  getArtistRelatedArtists,
-  getArtistTopTracks,
+  getFullArtist,
   loadToggle
 };
 

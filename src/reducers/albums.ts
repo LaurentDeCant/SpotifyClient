@@ -6,8 +6,8 @@ import {
   DenormalizedTrack
 } from "../types";
 import { EntitiesAction } from "../actions/types";
-import { ActionType } from "../actions/albums";
 import {
+  AlbumActionType,
   ArtistActionType,
   BrowseActionType,
   PlaylistActionType,
@@ -29,7 +29,8 @@ function mergeAlbums(state: State, action: EntitiesAction<any>): State {
 }
 
 export default createReducer(initialState, {
-  [ActionType.AlbumSuccess]: mergeAlbums,
+  [AlbumActionType.AlbumSuccess]: mergeAlbums,
+  [ArtistActionType.FullArtistSuccess]: mergeAlbums,
   [PlaylistActionType.PlaylistSuccess]: mergeAlbums,
   [ArtistActionType.ArtistAlbumsSuccess]: mergeAlbums,
   [BrowseActionType.NewReleasesSuccess]: mergeAlbums,

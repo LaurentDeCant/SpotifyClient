@@ -53,4 +53,15 @@ function authorizedFetch(url: string): Promise<Response> {
   });
 }
 
-export { authorize, checkRedirection, initAuthorization, authorizedFetch };
+async function fetchJson(url: string): Promise<any> {
+  const response = await authorizedFetch(url);
+  return response.json();
+}
+
+export {
+  authorize,
+  checkRedirection,
+  initAuthorization,
+  authorizedFetch,
+  fetchJson
+};

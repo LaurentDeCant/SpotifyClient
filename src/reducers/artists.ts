@@ -76,6 +76,7 @@ export default createReducer(initialState, {
       }
     };
   },
+  [ArtistActionType.FullArtistSuccess]: mergeArtists,
   [AlbumActionType.AlbumSuccess]: mergeArtists,
   [PlaylistActionType.PlaylistSuccess]: mergeArtists,
   [BrowseActionType.NewReleasesSuccess]: mergeArtists,

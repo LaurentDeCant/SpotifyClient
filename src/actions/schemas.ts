@@ -45,10 +45,6 @@ const Track = new schema.Entity(
   }
 );
 
-Album.define({
-  tracks: [Track]
-});
-
 const Tracks = new schema.Object({
   tracks: [Track]
 });
@@ -85,6 +81,16 @@ const Results = new schema.Entity(
     })
   }
 );
+
+Artist.define({
+  albums: [Album],
+  relatedArtists: [Artist],
+  topTracks: [Track]
+});
+
+Album.define({
+  tracks: [Track]
+});
 
 export const Schemas = {
   Artist,
