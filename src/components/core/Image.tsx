@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Img = styled.img<{ shape: ImageShape; isLoaded: boolean }>`
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
-  height: 100%;
+  height: auto;
   object-fit: cover;
   opacity: ${props => (props.isLoaded ? "1" : "0")}
   width: 100%;

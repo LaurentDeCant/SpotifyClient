@@ -10,6 +10,7 @@ import { selectIsPlaying } from "../../reducers/player";
 import { joinArtistNames, hasPlayableTrack } from "../../utils";
 import Header from "./Header";
 import Tracks from "./Tracks";
+import Wrapper from "./Wrapper";
 import withReloader from "../withReloader";
 
 interface Params {
@@ -41,7 +42,7 @@ function AlbumDetails({
   }
 
   return album ? (
-    <>
+    <Wrapper>
       <Header
         imageSource={album.images[0].url}
         title={album.name}
@@ -51,7 +52,7 @@ function AlbumDetails({
         onToggle={handleToggle}
       />
       <Tracks tracks={album.tracks} onToggle={handleToggle} />
-    </>
+    </Wrapper>
   ) : (
     <></>
   );

@@ -11,6 +11,7 @@ import { hasPlayableTrack } from "../../utils";
 import Header from "./Header";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
+import Wrapper from "./Wrapper";
 
 interface Params {
   playlistId: string;
@@ -41,7 +42,7 @@ function PlaylistDetails({
   }
 
   return playlist ? (
-    <>
+    <Wrapper>
       <Header
         imageSource={playlist.images[0].url}
         title={playlist.name}
@@ -51,7 +52,7 @@ function PlaylistDetails({
         onToggle={handleToggle}
       />
       <Tracks tracks={playlist.tracks} onToggle={handleToggle} />
-    </>
+    </Wrapper>
   ) : (
     <></>
   );

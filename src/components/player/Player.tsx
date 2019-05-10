@@ -39,23 +39,26 @@ const Wrapper = styled.div`
 `;
 
 const ThirdWrapper = styled.div`
+  box-sizing: border-box;
   height: 100%;
   width: 33%;
 `;
 
-const LeftWrapper = styled(ThirdWrapper)``;
+const LeftWrapper = styled(ThirdWrapper)`
+  padding-right: 10px;
+`;
 
 const CenterWrapper = styled(ThirdWrapper)`
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   justify-content: space-evenly;
 `;
 
 const RightWrapper = styled(ThirdWrapper)`
   display: flex;
   justify-content: flex-end;
+  padding-left: 10px;
 `;
 
 interface Props {

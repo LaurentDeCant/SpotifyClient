@@ -21,6 +21,7 @@ import ArtistCovers from "../covers/ArtistCovers";
 import { Heading } from "../core";
 import { ImageShape } from "../core/Image";
 import Header from "./Header";
+import Wrapper from "./Wrapper";
 import withReloader from "../withReloader";
 
 interface Params {
@@ -28,19 +29,11 @@ interface Params {
 }
 
 const Section = styled.section`
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 `;
 
 function TopTracks({ tracks }: { tracks: Track[] }) {
-  return (
-    <>
-      {tracks && (
-        <Section>
-          <Tracks tracks={tracks} />
-        </Section>
-      )}
-    </>
-  );
+  return <>{tracks && <Tracks tracks={tracks} />}</>;
 }
 
 function Albums({ albums }: { albums: Album[] }) {
@@ -100,16 +93,17 @@ function ArtistDetails({
 
   return artist ? (
     <>
-      <Header
-        imageSource={artist.images[0].url}
-        imageShape={ImageShape.Round}
-        title={artist.name}
-        subTitle=""
-        canPlay={false}
-        isPlaying={false}
-        onToggle={() => null}
-      />
-      <TopTracks tracks={artist.topTracks} />
+      <Wrapper>
+        <Header
+          imageSource={artist.images[0].url}
+          imageShape={ImageShape.Round}
+          title={artist.name}
+          canPlay={true}
+          isPlaying={false}
+          onToggle={() => null}
+        />
+        <TopTracks tracks={artist.topTracks} />
+      </Wrapper>
       <Albums albums={artist.albums} />
       <RelatedArtists artists={artist.relatedArtists} />
     </>

@@ -55,7 +55,7 @@ const SubTitle = styled(Text)`
   font-size: ${props => props.theme.font.size.medium};
   font-weight: ${props => props.theme.font.weight.light};
   text-align: center;
-  width: 200px;
+  width: ${length}px;
 `;
 
 export interface Cover {

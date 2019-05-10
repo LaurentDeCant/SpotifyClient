@@ -1,9 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
+import styled from "../../styles/styled";
 import { DenormalizedTrack as TrackObject } from "../../types";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import Track from "./Track";
+
+const StyledList = styled.ul`
+  flex-grow: 1;
+  overflow: hidden;
+`;
 
 interface Props {
   tracks: TrackObject[];
@@ -18,7 +24,7 @@ function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
   }
 
   return (
-    <ul>
+    <StyledList>
       {tracks.map(track => (
         <li key={track.id}>
           <Track
@@ -30,7 +36,7 @@ function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
           />
         </li>
       ))}
-    </ul>
+    </StyledList>
   );
 }
 

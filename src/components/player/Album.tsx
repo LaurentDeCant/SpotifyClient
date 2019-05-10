@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from "react";
 import styled from "../../styles/styled";
-import { Image } from "../core";
+import { Image, Text } from "../core";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -18,13 +18,14 @@ const StyedImage = styled(Image)`
 const Infos = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
-const Title = styled.span`
+const Title = styled(Text)`
   margin-bottom: 5px;
 `;
 
-const Artist = styled.span`
+const Artist = styled(Text)`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.font.weight.light};
 `;
