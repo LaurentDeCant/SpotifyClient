@@ -1,6 +1,10 @@
 import merge from "lodash/merge";
 import { denormalize } from "normalizr";
-import { NormalizedAlbum, DenormalizedAlbum } from "../types";
+import {
+  NormalizedAlbum,
+  DenormalizedAlbum,
+  DenormalizedTrack
+} from "../types";
 import { EntitiesAction } from "../actions/types";
 import { ActionType } from "../actions/albums";
 import {
@@ -32,7 +36,7 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergeAlbums
 });
 
-export function selectHasAlbum(state: CombinedState, albumId: string): boolean {
+export function selectIsAlbum(state: CombinedState, albumId: string): boolean {
   return !!state.albums[albumId];
 }
 
@@ -50,10 +54,19 @@ export function selectAlbums(
   return albumIds ? albumIds.map(id => selectAlbum(state, id)) : [];
 }
 
-export function selectPlayableTrackIds(
+export function selectPlayableTracks(
   state: CombinedState,
   albumId: string
-): string[] {
+): DenormalizedTrack[] {
   const album = selectAlbum(state, albumId);
-  return album.tracks.filter(track => track.preview_url).map(track => track.id);
+  return album && album.tracks
+    ? album.tracks.filter(track => track.preview_url)
+    : [];
+}
+
+export function selectIsPlayable(
+  state: CombinedState,
+  albumId: string
+): boolean {
+  return !!selectPlayableTracks(state, albumId).length;
 }

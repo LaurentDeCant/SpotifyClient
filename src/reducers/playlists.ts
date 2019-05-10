@@ -1,6 +1,10 @@
 import merge from "lodash/merge";
 import { denormalize } from "normalizr";
-import { NormalizedPlaylist, DenormalizedPlaylist } from "../types";
+import {
+  NormalizedPlaylist,
+  DenormalizedPlaylist,
+  DenormalizedTrack
+} from "../types";
 import { EntitiesAction } from "../actions/types";
 import {
   BrowseActionType,
@@ -28,7 +32,7 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergePlaylists
 });
 
-export function selectHasPlaylist(
+export function selectIsPlaylist(
   state: CombinedState,
   playlistId: string
 ): boolean {
@@ -49,12 +53,19 @@ export function selectPlaylists(
   return playlistIds ? playlistIds.map(id => selectPlaylist(state, id)) : [];
 }
 
-export function selectPlayableTrackIds(
+export function selectPlayableTracks(
   state: CombinedState,
   playlistId: string
-): string[] {
+): DenormalizedTrack[] {
   const playlist = selectPlaylist(state, playlistId);
-  return playlist.tracks
-    .filter(track => track.preview_url)
-    .map(track => track.id);
+  return playlist && playlist.tracks
+    ? playlist.tracks.filter(track => track.preview_url)
+    : [];
+}
+
+export function selectIsPlayable(
+  state: CombinedState,
+  playlistId: string
+): boolean {
+  return !!selectPlayableTracks(state, playlistId).length;
 }

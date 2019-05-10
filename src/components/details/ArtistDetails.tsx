@@ -13,8 +13,10 @@ import {
   getArtistRelatedArtists,
   getArtistTopTracks
 } from "../../actions/artists";
+import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectArtist } from "../../reducers/artists";
+import { selectArtist, selectIsPlayable } from "../../reducers/artists";
+import { selectIsPlaying } from "../../reducers/player";
 import Tracks from "./Tracks";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";
@@ -24,16 +26,18 @@ import Header from "./Header";
 import Wrapper from "./Wrapper";
 import withReloader from "../withReloader";
 
-interface Params {
-  artistId: string;
-}
-
 const Section = styled.section`
   margin-bottom: 40px;
 `;
 
-function TopTracks({ tracks }: { tracks: Track[] }) {
-  return <>{tracks && <Tracks tracks={tracks} />}</>;
+function TopTracks({
+  tracks,
+  onToggle
+}: {
+  tracks: Track[];
+  onToggle: (trackId: string) => void;
+}) {
+  return <>{tracks && <Tracks tracks={tracks} onToggle={onToggle} />}</>;
 }
 
 function Albums({ albums }: { albums: Album[] }) {
@@ -62,26 +66,36 @@ function RelatedArtists({ artists }: { artists: Artist[] }) {
   );
 }
 
+interface Params {
+  artistId: string;
+}
+
 interface Props extends RouteComponentProps<Params> {
   artist?: Artist;
+  isPlayable: boolean;
+  isPlaying: (artistId: string) => boolean;
   getArtist: (artistId: string) => void;
   getArtistAlbums: (artistId: string) => void;
   getArtistRelatedArtists: (artistId: string) => void;
   getArtistTopTracks: (artistId: string) => void;
+  loadToggle: (artistId: string, trackId?: string) => void;
 }
 
 function ArtistDetails({
   match,
   artist,
+  isPlayable,
+  isPlaying,
   getArtist,
   getArtistAlbums,
   getArtistRelatedArtists,
-  getArtistTopTracks
+  getArtistTopTracks,
+  loadToggle
 }: Props) {
+  const { artistId } = match.params;
   const [prevArtistId, setPrevArtistId] = useState();
 
   useEffect(() => {
-    const { artistId } = match.params;
     if (artistId !== prevArtistId) {
       getArtist(artistId);
       getArtistAlbums(artistId);
@@ -91,6 +105,10 @@ function ArtistDetails({
     }
   });
 
+  function handleToggle(trackId?: string) {
+    loadToggle(artistId, trackId);
+  }
+
   return artist ? (
     <>
       <Wrapper>
@@ -98,11 +116,11 @@ function ArtistDetails({
           imageSource={artist.images[0].url}
           imageShape={ImageShape.Round}
           title={artist.name}
-          canPlay={true}
-          isPlaying={false}
-          onToggle={() => null}
+          canPlay={isPlayable}
+          isPlaying={isPlaying(artist.id)}
+          onToggle={handleToggle}
         />
-        <TopTracks tracks={artist.topTracks} />
+        <TopTracks tracks={artist.topTracks} onToggle={handleToggle} />
       </Wrapper>
       <Albums albums={artist.albums} />
       <RelatedArtists artists={artist.relatedArtists} />
@@ -116,7 +134,9 @@ const mapState = (state: State, ownProps: Props) => {
   const { match } = ownProps;
   const { artistId } = match.params;
   return {
-    artist: selectArtist(state, artistId)
+    artist: selectArtist(state, artistId),
+    isPlayable: selectIsPlayable(state, artistId),
+    isPlaying: selectIsPlaying(state)
   };
 };
 
@@ -124,7 +144,8 @@ const mapDispatch = {
   getArtist,
   getArtistAlbums,
   getArtistRelatedArtists,
-  getArtistTopTracks
+  getArtistTopTracks,
+  loadToggle
 };
 
 export default withReloader(

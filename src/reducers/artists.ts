@@ -1,6 +1,10 @@
 import merge from "lodash/merge";
 import { denormalize } from "normalizr";
-import { NormalizedArtist, DenormalizedArtist } from "../types";
+import {
+  NormalizedArtist,
+  DenormalizedArtist,
+  DenormalizedTrack
+} from "../types";
 import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -78,6 +82,13 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergeArtists
 });
 
+export function selectIsArtist(
+  state: CombinedState,
+  artistId: string
+): boolean {
+  return !!state.artists[artistId];
+}
+
 export function selectArtist(
   state: CombinedState,
   artistId: string
@@ -90,4 +101,21 @@ export function selectArtists(
   artistIds: string[]
 ): DenormalizedArtist[] {
   return artistIds ? artistIds.map(id => selectArtist(state, id)) : [];
+}
+
+export function selectPlayableTracks(
+  state: CombinedState,
+  artistId: string
+): DenormalizedTrack[] {
+  const artist = selectArtist(state, artistId);
+  return artist && artist.topTracks
+    ? artist.topTracks.filter(track => track.preview_url)
+    : [];
+}
+
+export function selectIsPlayable(
+  state: CombinedState,
+  artistId: string
+): boolean {
+  return !!selectPlayableTracks(state, artistId).length;
 }

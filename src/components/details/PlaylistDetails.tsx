@@ -5,9 +5,8 @@ import { DenormalizedPlaylist as Playlist } from "../../types";
 import { getPlaylist } from "../../actions/playlists";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectPlaylist } from "../../reducers/playlists";
+import { selectPlaylist, selectIsPlayable } from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
-import { hasPlayableTrack } from "../../utils";
 import Header from "./Header";
 import Tracks from "./Tracks";
 import withReloader from "../withReloader";
@@ -19,6 +18,7 @@ interface Params {
 
 interface Props extends RouteComponentProps<Params> {
   playlist?: Playlist;
+  isPlayable: boolean;
   isPlaying: (playlistId: string) => boolean;
   getPlaylist: (playlistId: string) => void;
   loadToggle: (collectionId: string, trackId?: string) => void;
@@ -27,6 +27,7 @@ interface Props extends RouteComponentProps<Params> {
 function PlaylistDetails({
   match,
   playlist,
+  isPlayable,
   isPlaying,
   getPlaylist,
   loadToggle
@@ -47,7 +48,7 @@ function PlaylistDetails({
         imageSource={playlist.images[0].url}
         title={playlist.name}
         subTitle={playlist.owner.display_name}
-        canPlay={hasPlayableTrack(playlist.tracks)}
+        canPlay={isPlayable}
         isPlaying={isPlaying(playlist.id)}
         onToggle={handleToggle}
       />
@@ -63,6 +64,7 @@ const mapState = (state: State, ownProps: Props) => {
   const { playlistId } = match.params;
   return {
     playlist: selectPlaylist(state, playlistId),
+    isPlayable: selectIsPlayable(state, playlistId),
     isPlaying: selectIsPlaying(state)
   };
 };

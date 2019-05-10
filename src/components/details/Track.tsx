@@ -9,7 +9,6 @@ const StyledButton = styled(Button)<{ isLoaded: boolean }>`
   border-radius: 40px;
   ${props => props.isLoaded && "color: " + props.theme.primaryLight};
   display: flex;
-  margin-bottom: 5px;
   padding: 10px 20px;
   width: 100%;
 
@@ -71,7 +70,7 @@ interface Props {
   isDisabled: boolean;
   isLoaded: boolean;
   isPlaying: boolean;
-  onToggle?: (trackId: string) => void;
+  onToggle: (trackId: string) => void;
 }
 
 function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
@@ -111,7 +110,7 @@ function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
   }
 
   function handleClick() {
-    !!onToggle && onToggle(track.id);
+    onToggle(track.id);
   }
 
   return (

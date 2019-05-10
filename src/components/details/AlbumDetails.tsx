@@ -5,9 +5,9 @@ import { DenormalizedAlbum as Album } from "../../types";
 import { getAlbum } from "../../actions/albums";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectAlbum } from "../../reducers/albums";
+import { selectAlbum, selectIsPlayable } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
-import { joinArtistNames, hasPlayableTrack } from "../../utils";
+import { joinArtistNames } from "../../utils";
 import Header from "./Header";
 import Tracks from "./Tracks";
 import Wrapper from "./Wrapper";
@@ -19,6 +19,7 @@ interface Params {
 
 interface Props extends RouteComponentProps<Params> {
   album?: Album;
+  isPlayable: boolean;
   isPlaying: (albumId: string) => boolean;
   getAlbum: (albumId: string) => void;
   loadToggle: (collectionId: string, trackId?: string) => void;
@@ -27,6 +28,7 @@ interface Props extends RouteComponentProps<Params> {
 function AlbumDetails({
   match,
   album,
+  isPlayable,
   isPlaying,
   getAlbum,
   loadToggle
@@ -47,7 +49,7 @@ function AlbumDetails({
         imageSource={album.images[0].url}
         title={album.name}
         subTitle={joinArtistNames(album.artists)}
-        canPlay={hasPlayableTrack(album.tracks)}
+        canPlay={isPlayable}
         isPlaying={isPlaying(album.id)}
         onToggle={handleToggle}
       />
@@ -63,6 +65,7 @@ const mapState = (state: State, ownProps: Props) => {
   const { albumId } = match.params;
   return {
     album: selectAlbum(state, albumId),
+    isPlayable: selectIsPlayable(state, albumId),
     isPlaying: selectIsPlaying(state)
   };
 };

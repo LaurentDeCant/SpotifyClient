@@ -11,11 +11,15 @@ const StyledList = styled.ul`
   overflow: hidden;
 `;
 
+const StyledItem = styled.li`
+  margin-bottom: 5px;
+`;
+
 interface Props {
   tracks: TrackObject[];
   isLoaded: (trackId: string) => boolean;
   isPlaying: (trackId: string) => boolean;
-  onToggle?: (trackId: string) => void;
+  onToggle: (trackId: string) => void;
 }
 
 function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
@@ -26,7 +30,7 @@ function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
   return (
     <StyledList>
       {tracks.map(track => (
-        <li key={track.id}>
+        <StyledItem key={track.id}>
           <Track
             track={track}
             isDisabled={isDisabled(track)}
@@ -34,7 +38,7 @@ function Tracks({ tracks, isLoaded, isPlaying, onToggle }: Props) {
             isPlaying={isPlaying(track.id)}
             onToggle={onToggle}
           />
-        </li>
+        </StyledItem>
       ))}
     </StyledList>
   );
