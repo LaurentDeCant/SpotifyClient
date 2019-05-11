@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
-import { State } from "../../reducers";
-import { isAuthorized } from "../../reducers/authorization";
-import { selectUserProfile } from "../../reducers/userProfile";
-import { getAuthorization } from "../../actions/authorization";
+import { logIn } from "../../actions/authorization";
 import { getUserProfile } from "../../actions/userProfile";
+import { State } from "../../reducers";
+import { selectIsLoggedIn } from "../../reducers/authorization";
+import { selectUserProfile } from "../../reducers/userProfile";
 import { Button } from "../core";
 import Title from "./Title";
 import User from "./User";
@@ -31,27 +31,27 @@ const LoginButton = styled(Button)`
 
 interface Props {
   className?: string;
-  isAuthorized: boolean;
+  isLoggedIn: boolean;
   userProfile?: UserProfile;
-  getAuthorization: () => void;
+  logIn: () => void;
   getUserProfile: () => void;
 }
 
 function Header({
   className,
-  isAuthorized,
+  isLoggedIn,
   userProfile,
-  getAuthorization,
+  logIn,
   getUserProfile
 }: Props) {
   useEffect(() => {
-    if (isAuthorized) {
+    if (isLoggedIn) {
       getUserProfile();
     }
   }, []);
 
   function handleClick() {
-    getAuthorization();
+    logIn();
   }
 
   return (
@@ -61,20 +61,24 @@ function Header({
       {userProfile ? (
         <User {...userProfile} />
       ) : (
-        <LoginButton onClick={handleClick}>Log In</LoginButton>
+        <>
+          {!isLoggedIn && (
+            <LoginButton onClick={handleClick}>Log In</LoginButton>
+          )}
+        </>
       )}
     </Wrapper>
   );
 }
 
 const mapState = (state: State) => ({
-  isAuthorized: isAuthorized(state),
+  isLoggedIn: selectIsLoggedIn(state),
   userProfile: selectUserProfile(state)
 });
 
 const mapDispatch = {
-  getAuthorization: getAuthorization,
-  getUserProfile: getUserProfile
+  logIn,
+  getUserProfile
 };
 
 export default connect(

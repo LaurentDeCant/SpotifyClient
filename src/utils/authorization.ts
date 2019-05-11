@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { receiveAuthorization } from "../actions/authorization";
+import { receiveLogIn } from "../actions/authorization";
 
-const URL = `https://accounts.spotify.com/authorize?client_id=${
+const LOG_IN_URL = `https://accounts.spotify.com/authorize?client_id=${
   process.env.REACT_APP_CLIENT_ID
 }&response_type=token&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
 const REGEX = /#access_token=(.*?)&token_type=(.*?)&expires_in=(.*)$/;
@@ -9,7 +9,7 @@ const ACCESS_TOKEN = "token";
 const TOKEN_TYPE = "tokenType";
 const EXPIRES_AT = "expiresAt";
 
-function authorize(): Promise<any> {
+function logInRedirect(): Promise<any> {
   return new Promise((resolve, reject) => {
     const handleStorage = (event: StorageEvent) => {
       if (event.key === ACCESS_TOKEN) {
@@ -18,7 +18,7 @@ function authorize(): Promise<any> {
       }
     };
     addEventListener("storage", handleStorage);
-    location.assign(URL);
+    location.assign(LOG_IN_URL);
   });
 }
 
@@ -38,7 +38,7 @@ function initAuthorization(dispatch: Dispatch): void {
     !!localStorage[ACCESS_TOKEN] &&
     Date.parse(localStorage[EXPIRES_AT]) > Date.now()
   ) {
-    dispatch(receiveAuthorization());
+    dispatch(receiveLogIn());
   }
 }
 
@@ -59,7 +59,7 @@ async function fetchJson(url: string): Promise<any> {
 }
 
 export {
-  authorize,
+  logInRedirect,
   checkRedirection,
   initAuthorization,
   authorizedFetch,

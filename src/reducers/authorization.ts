@@ -1,28 +1,22 @@
-import {
-  ActionType,
-  ReceiveAuthorizationAction
-} from "../actions/authorization";
+import { ActionType } from "../actions/authorization";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 
 export interface State {
-  isAuthorized: boolean;
+  isLoggedIn: boolean;
 }
 
 const initialState: State = {
-  isAuthorized: false
+  isLoggedIn: false
 };
 
 export default createReducer(initialState, {
-  [ActionType.ReceiveAuthorization]: (
-    state: State,
-    action: ReceiveAuthorizationAction
-  ) => ({
+  [ActionType.ReceiveLogIn]: (state: State) => ({
     ...state,
-    isAuthorized: true
+    isLoggedIn: true
   })
 });
 
-export function isAuthorized(state: CombinedState): boolean {
-  return !!state.authorization.isAuthorized;
+export function selectIsLoggedIn(state: CombinedState): boolean {
+  return !!state.authorization.isLoggedIn;
 }

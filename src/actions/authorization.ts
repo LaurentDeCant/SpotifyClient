@@ -1,35 +1,33 @@
 import { Action, Dispatch } from "redux";
-import { authorize } from "../utils/authorization";
+import { logInRedirect } from "../utils/authorization";
 
 export enum ActionType {
-  RequestAuthorization = "REQUEST_AUTHORIZATION",
-  ReceiveAuthorization = "RECEIVE_AUTHORIZATION"
+  RequestLogIn = "REQUEST_LOG_IN",
+  ReceiveLogIn = "RECEIVE_LOG_IN"
 }
 
-export interface RequestAuthorizationAction
-  extends Action<ActionType.RequestAuthorization> {}
+export interface RequestLogInAction extends Action<ActionType.RequestLogIn> {}
 
-function requestAuthorization(): RequestAuthorizationAction {
+function requestLogIn(): RequestLogInAction {
   return {
-    type: ActionType.RequestAuthorization
+    type: ActionType.RequestLogIn
   };
 }
 
-export interface ReceiveAuthorizationAction
-  extends Action<ActionType.ReceiveAuthorization> {}
+export interface ReceiveLogInAction extends Action<ActionType.ReceiveLogIn> {}
 
-export function receiveAuthorization(): ReceiveAuthorizationAction {
+export function receiveLogIn(): ReceiveLogInAction {
   return {
-    type: ActionType.ReceiveAuthorization
+    type: ActionType.ReceiveLogIn
   };
 }
 
-export function getAuthorization() {
+export function logIn() {
   return async (
-    dispatch: Dispatch<RequestAuthorizationAction | ReceiveAuthorizationAction>
+    dispatch: Dispatch<RequestLogInAction | ReceiveLogInAction>
   ) => {
-    dispatch(requestAuthorization());
-    await authorize();
-    dispatch(receiveAuthorization());
+    dispatch(requestLogIn());
+    await logInRedirect();
+    dispatch(receiveLogIn());
   };
 }
