@@ -64,9 +64,6 @@ const SubTitle = styled(Text)`
 `;
 
 const StyledButton = styled(Button)`
-  background: ${props => props.theme.primary};
-  border-radius: 20px;
-  color: ${props => props.theme.foreground.default};
   margin-top: 20px;
   padding: 10px 0;
   width: 100px;

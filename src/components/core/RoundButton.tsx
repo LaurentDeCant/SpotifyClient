@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Icon, IconType } from ".";
+import { Icon, IconType } from ".";
+import ButtonBase from "./ButtonBase";
 
-const StyedButton = styled(Button)`
+const StyedButton = styled(ButtonBase)`
   border-radius: 50%;
   color: ${props => props.theme.foreground.dark};
   display: flex;

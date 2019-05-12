@@ -7,7 +7,7 @@ import { getUserProfile } from "../../actions/userProfile";
 import { State } from "../../reducers";
 import { selectIsLoggedIn } from "../../reducers/authorization";
 import { selectUserProfile } from "../../reducers/userProfile";
-import { Button } from "../core";
+// import { Button } from "../core";
 import Title from "./Title";
 import User from "./User";
 
@@ -23,11 +23,11 @@ const Wrapper = styled.header`
   z-index: 2;
 `;
 
-const LoginButton = styled(Button)`
-  font-size: 15px;
-  height: 100%;
-  padding: 0 20px;
-`;
+// const LoginButton = styled(Button)`
+//   font-size: 15px;
+//   height: 100%;
+//   padding: 0 20px;
+// `;
 
 interface Props {
   className?: string;
@@ -62,9 +62,9 @@ function Header({
         <User {...userProfile} />
       ) : (
         <>
-          {!isLoggedIn && (
+          {/* {!isLoggedIn && (
             <LoginButton onClick={handleClick}>Log In</LoginButton>
-          )}
+          )} */}
         </>
       )}
     </Wrapper>

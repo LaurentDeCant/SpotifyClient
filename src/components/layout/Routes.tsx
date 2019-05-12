@@ -2,6 +2,8 @@ import React from "react";
 import { Route } from "react-router-dom";
 import styled from "../../styles/styled";
 import DefaultRoute from "../DefaultRoute";
+import PrivateRoute from "../PrivateRoute";
+import LogIn from "./Login";
 import Browse from "../browse/Browse";
 import CategoryPlaylists from "../browse/CategoryPlaylists";
 import Search from "../search/Search";
@@ -19,31 +21,27 @@ const Wrapper = styled.div`
 `;
 
 const Routes = () => {
+  const publicUrl = process.env.PUBLIC_URL;
   return (
     <Wrapper>
-      <DefaultRoute
-        from={`${process.env.PUBLIC_URL}/`}
-        to={`${process.env.PUBLIC_URL}/browse`}
-      />
-      <Route path={`${process.env.PUBLIC_URL}/browse`} component={Browse} />
-      <Route
-        path={`${process.env.PUBLIC_URL}/search/:query?`}
-        component={Search}
-      />
-      <Route
-        path={`${process.env.PUBLIC_URL}/categories/:categoryId/playlists`}
+      <DefaultRoute from={`${publicUrl}/`} to={`${publicUrl}/browse`} />
+      <Route path={`${publicUrl}/login`} component={LogIn} />
+      <PrivateRoute path={`${publicUrl}/browse`} component={Browse} />
+      <PrivateRoute path={`${publicUrl}/search/:query?`} component={Search} />
+      <PrivateRoute
+        path={`${publicUrl}/categories/:categoryId/playlists`}
         component={CategoryPlaylists}
       />
-      <Route
-        path={`${process.env.PUBLIC_URL}/playlists/:playlistId`}
+      <PrivateRoute
+        path={`${publicUrl}/playlists/:playlistId`}
         component={PlaylistDetails}
       />
-      <Route
-        path={`${process.env.PUBLIC_URL}/albums/:albumId`}
+      <PrivateRoute
+        path={`${publicUrl}/albums/:albumId`}
         component={AlbumDetails}
       />
-      <Route
-        path={`${process.env.PUBLIC_URL}/artists/:artistId`}
+      <PrivateRoute
+        path={`${publicUrl}/artists/:artistId`}
         component={ArtistDetails}
       />
     </Wrapper>

@@ -2,9 +2,10 @@ import React from "react";
 import styled from "../../styles/styled";
 import { DenormalizedTrack as TrackObject } from "../../types";
 import { joinArtistNames } from "../../utils";
-import { Button, Icon, IconType, Text } from "../core";
+import { Icon, IconType, Text } from "../core";
+import ButtonBase from "../core/ButtonBase";
 
-const StyledButton = styled(Button)<{ isLoaded: boolean }>`
+const StyledButton = styled(ButtonBase)<{ isLoaded: boolean }>`
   align-items: center;
   border-radius: 40px;
   ${props => props.isLoaded && "color: " + props.theme.primaryLight};

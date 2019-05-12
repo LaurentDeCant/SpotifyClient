@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Button, Icon, IconType, Image, Text } from "../core";
+import { Icon, IconType, Image, Text } from "../core";
+import ButtonBase from "../core/ButtonBase";
 import { ImageShape } from "../core/Image";
 
 const StyledList = styled.ul`
@@ -20,7 +21,7 @@ const StyledItem = styled.li`
 `;
 
 const length = 200;
-const StyledButton = styled(Button)<{ type: ImageShape }>`
+const StyledButton = styled(ButtonBase)<{ type: ImageShape }>`
   background: ${props => props.theme.background.light};
   ${props => props.type === ImageShape.Round && "border-radius: 50%;"}
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
