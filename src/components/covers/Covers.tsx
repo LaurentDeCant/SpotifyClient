@@ -9,26 +9,36 @@ const StyledList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: -10px;
+  margin: -12.5px;
 `;
 
+const length = 200;
 const StyledItem = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  margin: 12.5px;
+  width: ${length / 2}px;
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    width: ${length}px;
+  }
 `;
 
-const length = 200;
 const StyledButton = styled(ButtonBase)<{ type: ImageShape }>`
   background: ${props => props.theme.background.light};
   ${props => props.type === ImageShape.Round && "border-radius: 50%;"}
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
-  height: ${length}px;
-  margin-bottom: 10px;
-  width: ${length}px;
+  height: ${length / 2}px;
+  margin-bottom: 12.5px;
+  width: ${length / 2}px;
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    height: ${length}px;
+    width: ${length}px;
+  }
 `;
 
 const StyledImge = styled(Image)`
@@ -46,9 +56,9 @@ const StyledIcon = styled(Icon)`
 
 const Title = styled(Text)`
   font-size: ${props => props.theme.font.size.medium};
-  margin-bottom: 5px;
+  margin-bottom: 6.25px;
   text-align: center;
-  width: ${length}px;
+  width: 100%;
 `;
 
 const SubTitle = styled(Text)`
@@ -56,7 +66,7 @@ const SubTitle = styled(Text)`
   font-size: ${props => props.theme.font.size.medium};
   font-weight: ${props => props.theme.font.weight.light};
   text-align: center;
-  width: ${length}px;
+  width: 100%;
 `;
 
 export interface Cover {

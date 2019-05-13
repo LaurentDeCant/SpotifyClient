@@ -18,10 +18,17 @@ const Wrapper = styled.div`
 const StyledList = styled.ul`
   align-items: center;
   display: flex;
-  flex-flow: row;
+  flex-wrap: wrap;
   font-size: ${props => props.theme.font.size.medium};
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 5px;
+  position: relative;
+  top: -20px;
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    margin-bottom: 25px;
+    top: 0;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -41,7 +48,7 @@ const StyledNavLink = styled(NavLink)`
     color: ${props => props.theme.foreground.default};
   }
 
-  &.active&::after {
+  &.active::after {
     background: ${props => props.theme.primaryLight};
     bottom: 0;
     content: "";
@@ -49,7 +56,7 @@ const StyledNavLink = styled(NavLink)`
     left: 50%;
     position: absolute;
     transform: translate(-50%, 0);
-    width: 25px;
+    width: 50px;
   }
 `;
 

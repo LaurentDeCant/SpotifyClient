@@ -28,7 +28,7 @@ const StyledInput = styled.input`
   font-size: ${props => props.theme.font.size.extraLarge}
   font-weight: ${props => props.theme.font.weight.light}
   height: 50px;
-  margin: 0 0 50px 0;
+  margin: 0 0 25px 0;
   padding: 0 25px;
   width: calc(100% - 50px);
 `;

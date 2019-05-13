@@ -18,8 +18,12 @@ const StyledHeader = styled(Header)`
 
 const Body = styled.div`
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  height: calc(100% - 50px - 100px);
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    flex-direction: row;
+  }
 `;
 
 const StyledPlayer = styled(Player)`

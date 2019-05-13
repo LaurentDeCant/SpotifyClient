@@ -12,7 +12,7 @@ import PlaylistCovers from "../covers/PlaylistCovers";
 import withLoader from "../withLoader";
 
 const Section = styled.section`
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 `;
 
 function Artists({ artists }: { artists: Artist[] }) {

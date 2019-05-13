@@ -35,30 +35,42 @@ const Wrapper = styled.div`
   box-shadow: 0 -2px 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   height: 100px;
-  padding: 15px;
+  padding: 25px;
+  z-index: 2;
 `;
 
 const ThirdWrapper = styled.div`
   box-sizing: border-box;
   height: 100%;
-  width: 33%;
+  width: 100%;
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    width: 33.33%;
+  }
 `;
 
 const LeftWrapper = styled(ThirdWrapper)`
-  padding-right: 10px;
+  display: none;
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    display: block;
+  }
 `;
 
 const CenterWrapper = styled(ThirdWrapper)`
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
 `;
 
 const RightWrapper = styled(ThirdWrapper)`
-  display: flex;
+  display: none;
   justify-content: flex-end;
-  padding-left: 10px;
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    display: flex;
+  }
 `;
 
 interface Props {

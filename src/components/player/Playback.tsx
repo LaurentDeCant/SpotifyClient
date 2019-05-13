@@ -17,7 +17,7 @@ const ProgressTime = styled.div`
 `;
 
 const StyledSlider = styled(Slider)`
-  margin: 0 15px;
+  margin: 0 12.5px;
 `;
 
 interface Props {

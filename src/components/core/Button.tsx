@@ -3,9 +3,9 @@ import ButtonBase from "./ButtonBase";
 
 const Button = styled(ButtonBase)`
   background: ${props => props.theme.primary};
-  border-radius: 20px;
+  border-radius: 25px;
   color: ${props => props.theme.foreground.default};
-  padding: 10px 20px;
+  padding: 12.5px 25px;
 `;
 
 export default Button;

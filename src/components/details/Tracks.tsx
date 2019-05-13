@@ -12,7 +12,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledItem = styled.li`
-  margin-bottom: 5px;
+  margin-bottom: 6.25px;
 `;
 
 interface Props {

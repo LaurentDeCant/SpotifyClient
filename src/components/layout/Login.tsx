@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 150px;
+  width: 100px;
 `;
 
 function LogIn() {

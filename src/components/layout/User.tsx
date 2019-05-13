@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledIcon = styled(Icon)`
-  margin-right: 10px;
+  margin-right: 12.5px;
 `;
 
 const User = (props: UserProfile) => {

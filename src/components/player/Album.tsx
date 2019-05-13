@@ -10,9 +10,9 @@ const Wrapper = styled.div`
 
 const StyedImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
-  height: 100%;
-  margin-right: 10px;
-  width: auto;
+  height: 75px;
+  margin: -12.5px 12.5px -12.5px -12.5px;
+  width: 75px;
 `;
 
 const Infos = styled.div`
@@ -22,7 +22,7 @@ const Infos = styled.div`
 `;
 
 const Title = styled(Text)`
-  margin-bottom: 5px;
+  margin-bottom: 6.25px;
 `;
 
 const Artist = styled(Text)`

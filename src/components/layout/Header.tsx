@@ -2,15 +2,14 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
-import { logIn } from "../../actions/authorization";
 import { getUserProfile } from "../../actions/userProfile";
 import { State } from "../../reducers";
 import { selectIsLoggedIn } from "../../reducers/authorization";
 import { selectUserProfile } from "../../reducers/userProfile";
-// import { Button } from "../core";
 import Title from "./Title";
 import User from "./User";
 
+const padding = 50;
 const Wrapper = styled.header`
   align-items: center;
   display: flex;
@@ -19,54 +18,32 @@ const Wrapper = styled.header`
   flex-shrink: 0;
   height: 50px;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 0 ${padding / 2}px;
   z-index: 2;
-`;
 
-// const LoginButton = styled(Button)`
-//   font-size: 15px;
-//   height: 100%;
-//   padding: 0 20px;
-// `;
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    padding: 0 ${padding}px;
+  }
+`;
 
 interface Props {
   className?: string;
   isLoggedIn: boolean;
   userProfile?: UserProfile;
-  logIn: () => void;
   getUserProfile: () => void;
 }
 
-function Header({
-  className,
-  isLoggedIn,
-  userProfile,
-  logIn,
-  getUserProfile
-}: Props) {
+function Header({ className, isLoggedIn, userProfile, getUserProfile }: Props) {
   useEffect(() => {
     if (isLoggedIn) {
       getUserProfile();
     }
   }, []);
 
-  function handleClick() {
-    logIn();
-  }
-
   return (
     <Wrapper className={className}>
       <Title />
-
-      {userProfile ? (
-        <User {...userProfile} />
-      ) : (
-        <>
-          {/* {!isLoggedIn && (
-            <LoginButton onClick={handleClick}>Log In</LoginButton>
-          )} */}
-        </>
-      )}
+      {userProfile && <User {...userProfile} />}
     </Wrapper>
   );
 }
@@ -77,7 +54,6 @@ const mapState = (state: State) => ({
 });
 
 const mapDispatch = {
-  logIn,
   getUserProfile
 };
 

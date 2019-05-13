@@ -6,6 +6,10 @@ export interface Theme {
     hover: string;
     active: string;
   };
+  breackpoints: {
+    extraSmall: number;
+    small: number;
+  };
   font: {
     size: {
       small: string;
@@ -39,6 +43,10 @@ export const theme: Theme = {
     dark: "#101010",
     hover: "rgba(255, 255, 255, 0.1)",
     active: "rgba(255, 255, 255, 0.1)"
+  },
+  breackpoints: {
+    extraSmall: 480,
+    small: 960
   },
   font: {
     size: {

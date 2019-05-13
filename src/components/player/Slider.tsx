@@ -6,7 +6,7 @@ const Wrapper = styled.div<{ isDisabled: boolean }>`
   border-radius: 2.5px;
   display: flex;
   cursor: ${props => (props.isDisabled ? "default" : "pointer")};
-  height: 20px;
+  height: 25px;
   position: relative;
   width: 100%;
 `;
@@ -23,11 +23,11 @@ const Left = styled.div<{ width: number }>`
 const Thumb = styled.div<{ position: number; isDisabled: boolean }>`
   background: transparent;
   border-radius: 50%;
-  height: 20px;
-  left: calc(${props => props.position * 100}% - 10px);
+  height: 25px;
+  left: calc(${props => props.position * 100}% - 12.5px);
   position: absolute;
   visibility: hidden;
-  width: 20px;
+  width: 25px;
   z-index: 1;
 
   &::before {
