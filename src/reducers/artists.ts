@@ -132,12 +132,10 @@ export const selectArtists = createSelector(
   (state: CombinedState) => state.artists,
   (artists: {
     [artistId: string]: Artist;
-  }): ((artistIds: string[]) => Artist[]) => {
-    console.log("selectArtists");
-    return memoize((artistIds: string[]) =>
+  }): ((artistIds: string[]) => Artist[]) =>
+    memoize((artistIds: string[]) =>
       artistIds ? artistIds.map(artistId => artists[artistId]) : []
-    );
-  }
+    )
 );
 
 export function selectPlayableTracks(state: CombinedState, artistId: string) {

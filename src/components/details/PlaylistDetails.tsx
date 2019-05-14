@@ -25,7 +25,7 @@ interface Props extends RouteComponentProps<Params> {
   playlist?: Playlist;
   tracks: Track[];
   isPlayable: boolean;
-  isPlaying: (playlistId: string) => boolean;
+  isPlaying: boolean;
   getPlaylist: (playlistId: string) => void;
   loadToggle: (collectionId: string, trackId?: string) => void;
 }
@@ -57,7 +57,7 @@ function PlaylistDetails({
         title={playlist.name}
         subTitle={playlist.owner.display_name}
         canPlay={isPlayable}
-        isPlaying={isPlaying(playlist.id)}
+        isPlaying={isPlaying}
         onToggle={handleToggle}
       />
       <TrackList tracks={tracks} onToggle={handleToggle} />
@@ -74,7 +74,7 @@ const mapState = (state: State, ownProps: Props) => {
     playlist: selectPlaylist(state, playlistId),
     tracks: selectPlaylistTracks(state, playlistId),
     isPlayable: selectIsPlayable(state, playlistId),
-    isPlaying: selectIsPlaying(state)
+    isPlaying: selectIsPlaying(state, playlistId)
   };
 };
 

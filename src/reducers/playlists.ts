@@ -1,4 +1,6 @@
 import merge from "lodash/merge";
+import { createSelector } from "reselect";
+import memoize from "lodash/memoize";
 import { Playlist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import {
@@ -50,9 +52,13 @@ export function selectPlaylistTracks(state: CombinedState, albumId: string) {
   return [];
 }
 
-export function selectPlaylists(state: CombinedState, playlistIds: string[]) {
-  return playlistIds ? playlistIds.map(id => selectPlaylist(state, id)) : [];
-}
+export const selectPlaylists = createSelector(
+  ({ playlists }: CombinedState) => playlists,
+  (playlists: { [playlistId: string]: Playlist }) =>
+    memoize((playlistIds: string[]) =>
+      playlistIds ? playlistIds.map(playlistId => playlists[playlistId]) : []
+    )
+);
 
 export function selectPlayableTracks(state: CombinedState, playlistId: string) {
   const tracks = selectPlaylistTracks(state, playlistId);

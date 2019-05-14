@@ -1,3 +1,4 @@
+import { createSelector } from "reselect";
 import { Track, Album } from "../types";
 import {
   ActionType,
@@ -168,10 +169,11 @@ export function selectIsLoaded(state: CombinedState) {
     collectionId === id || (!!trackIds.length && trackIds[trackIndex] === id);
 }
 
-export function selectIsPlaying(state: CombinedState) {
+export function selectIsPlaying(state: CombinedState, id?: string) {
   const { playerState } = state.player;
-  return (id?: string) =>
-    (!id || selectIsLoaded(state)(id)) && playerState === PlayerState.isPlaying;
+  return (
+    (!id || selectIsLoaded(state)(id)) && playerState === PlayerState.isPlaying
+  );
 }
 
 export function selectCanToggle(state: CombinedState) {
@@ -201,30 +203,28 @@ export interface Times {
   currentTime: number;
 }
 
-export function selectTimes(state: CombinedState): Times {
-  const { player } = state;
-
-  return {
-    duration: player.duration,
-    currentTime: player.currentTime
-  };
-}
+export const selectTimes = createSelector(
+  ({ player }: CombinedState) => player.duration,
+  ({ player }: CombinedState) => player.currentTime,
+  (duration: number, currentTime: number) => ({
+    duration,
+    currentTime
+  })
+);
 
 export interface VolumeLevels {
   volume: number;
   isMuted: boolean;
 }
 
-export function selectVolumeLevels(state: CombinedState): VolumeLevels {
-  const {
-    player: { volume, isMuted }
-  } = state;
-
-  return {
+export const selectVolumeLevels = createSelector(
+  ({ player }: CombinedState) => player.volume,
+  ({ player }: CombinedState) => player.isMuted,
+  (volume: number, isMuted: boolean) => ({
     volume,
     isMuted
-  };
-}
+  })
+);
 
 export function selectCommand(state: CombinedState): Command {
   return state.player.command;

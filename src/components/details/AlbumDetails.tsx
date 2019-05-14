@@ -78,7 +78,7 @@ const mapState = (state: State, ownProps: Props) => {
     artists: selectAlbumArtists(state)(albumId),
     tracks: selectAlbumTracks(state, albumId),
     isPlayable: selectIsPlayable(state, albumId),
-    isPlaying: selectIsPlaying(state)(albumId)
+    isPlaying: selectIsPlaying(state, albumId)
   };
 };
 

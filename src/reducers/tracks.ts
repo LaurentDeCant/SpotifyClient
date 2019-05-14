@@ -48,10 +48,8 @@ export function selectTrackArtists(state: CombinedState, trackId: string) {
 
 export const selectTracks = createSelector(
   (state: CombinedState) => state.tracks,
-  (tracks: { [trackId: string]: Track }) => {
-    console.log("selectTracks");
-    return memoize((trackIds: string[]) =>
+  (tracks: { [trackId: string]: Track }) =>
+    memoize((trackIds: string[]) =>
       trackIds ? trackIds.map(trackId => tracks[trackId]) : []
-    );
-  }
+    )
 );

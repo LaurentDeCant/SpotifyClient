@@ -90,8 +90,6 @@ function ArtistDetails({
   getFullArtist,
   loadToggle
 }: Props) {
-  console.log("ArtistDetails");
-
   const { artistId } = match.params;
 
   const effect = () => {
@@ -133,7 +131,7 @@ const mapState = (state: State, ownProps: Props) => {
     relatedArtists: selectArtistRelatedArtists(state, artistId),
     topTracks: selectArtistTopTracks(state, artistId),
     isPlayable: selectIsPlayable(state, artistId),
-    isPlaying: selectIsPlaying(state)(artistId)
+    isPlaying: selectIsPlaying(state, artistId)
   };
 };
 

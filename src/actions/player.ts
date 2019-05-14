@@ -106,7 +106,7 @@ export function toggle() {
     const state = getState();
     const isPlaying = selectIsPlaying(state);
     dispatch({
-      type: isPlaying() ? ActionType.Pause : ActionType.Play
+      type: isPlaying ? ActionType.Pause : ActionType.Play
     });
   };
 }

@@ -18,8 +18,6 @@ interface Props {
 }
 
 function TrackList({ tracks, onToggle }: Props) {
-  console.log("Tracks");
-
   return (
     <StyledList>
       {tracks.map(track => (

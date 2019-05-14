@@ -49,7 +49,6 @@ export const selectAlbumArtists = createSelector(
     artists: { [artistId: string]: Artist }
   ) =>
     memoize((albumId: string) => {
-      console.log("selectAlbumArtists");
       const album = albums[albumId];
       if (album) {
         return album.artists.map(artistId => artists[artistId]);
@@ -58,10 +57,6 @@ export const selectAlbumArtists = createSelector(
       return [];
     })
 );
-
-export function selectAlbumsArtists(state: CombinedState, albumIds: string) {
-  return [];
-}
 
 export function selectAlbumTracks(state: CombinedState, albumId: string) {
   const album = selectAlbum(state, albumId);
@@ -78,10 +73,9 @@ export function selectAlbumTracks(state: CombinedState, albumId: string) {
 export const selectAlbums = createSelector(
   (state: CombinedState) => state.albums,
   (albums: { [albumId: string]: Album }) =>
-    memoize((albumIds: string[]) => {
-      console.log("selectAlbums");
-      return albumIds ? albumIds.map(albumId => albums[albumId]) : [];
-    })
+    memoize((albumIds: string[]) =>
+      albumIds ? albumIds.map(albumId => albums[albumId]) : []
+    )
 );
 
 export function selectPlayableTracks(state: CombinedState, albumId: string) {

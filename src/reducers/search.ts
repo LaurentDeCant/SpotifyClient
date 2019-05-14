@@ -43,5 +43,5 @@ export function selectArtists(state: CombinedState): Artist[] {
 }
 
 export function selectPlaylists(state: CombinedState): Playlist[] {
-  return selectPlaylistsById(state, state.search.playlistIds);
+  return selectPlaylistsById(state)(state.search.playlistIds);
 }

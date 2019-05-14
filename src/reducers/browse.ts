@@ -1,3 +1,4 @@
+import { createSelector } from "reselect";
 import { Album, Category, Playlist } from "../types";
 import {
   ActionType,
@@ -64,9 +65,10 @@ export default createReducer(initialState, {
   })
 });
 
-export function selectCategories(state: CombinedState): Category[] {
-  return Object.values(state.browse.categories);
-}
+export const selectCategories = createSelector(
+  ({ browse }: CombinedState) => browse.categories,
+  (categories: { [categoryId: string]: Category }) => Object.values(categories)
+);
 
 export function selectCategory(
   state: CombinedState,
@@ -76,11 +78,11 @@ export function selectCategory(
 }
 
 export function selectCategoryPlaylists(state: CombinedState): Playlist[] {
-  return selectPlaylists(state, state.browse.categoryPlaylistIds);
+  return selectPlaylists(state)(state.browse.categoryPlaylistIds);
 }
 
 export function selectFeaturedPlaylists(state: CombinedState): Playlist[] {
-  return selectPlaylists(state, state.browse.featuredPlaylistIds);
+  return selectPlaylists(state)(state.browse.featuredPlaylistIds);
 }
 
 export function selectNewReleases(state: CombinedState): Album[] {

@@ -91,8 +91,6 @@ function Header({
   isPlaying,
   onToggle
 }: Props) {
-  console.log("Header");
-
   function handleClick() {
     onToggle();
   }

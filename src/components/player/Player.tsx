@@ -87,7 +87,7 @@ const RightWrapper = styled(ThirdWrapper)`
 
 interface Props {
   album?: Album;
-  isPlaying: () => boolean;
+  isPlaying: boolean;
   times: Times;
   canToggle: boolean;
   canSeek: boolean;
@@ -127,7 +127,7 @@ function Player({
 
       <CenterWrapper>
         <Controls
-          isPlaying={isPlaying()}
+          isPlaying={isPlaying}
           canToggle={canToggle}
           onToggle={handleToggle}
           canNext={canNext}

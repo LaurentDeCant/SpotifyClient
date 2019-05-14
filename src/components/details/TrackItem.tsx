@@ -87,8 +87,6 @@ function TrackItem({
   isPlaying,
   onToggle
 }: Props) {
-  console.log("Track");
-
   function renderIcon() {
     return isDisabled ? (
       <StyledIcon type={IconType.MusicOff} />
@@ -154,7 +152,7 @@ const mapState = (state: State, { track }: OwnProps) => ({
   artists: selectTrackArtists(state, track.id),
   isDisabled: isDisabled(track),
   isLoaded: selectIsLoaded(state)(track.id),
-  isPlaying: selectIsPlaying(state)(track.id)
+  isPlaying: selectIsPlaying(state, track.id)
 });
 
 export default connect(
