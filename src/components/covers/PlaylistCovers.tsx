@@ -1,13 +1,13 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { DenormalizedPlaylist as Playlist } from "../../types";
+import { getImageUrl } from "../../utils";
 import Covers, { Cover } from "./Covers";
 
 function getCovers(playlists: Playlist[]): Cover[] {
   return playlists.map(playlist => ({
     id: playlist.id,
-    image:
-      playlist.images && playlist.images ? playlist.images[0].url : undefined,
+    image: getImageUrl(playlist),
     title: playlist.name,
     subTitle: playlist.owner.display_name
   }));

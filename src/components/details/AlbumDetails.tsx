@@ -7,10 +7,10 @@ import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectAlbum, selectIsPlayable } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
-import { joinArtistNames } from "../../utils";
+import { getArtistNames, getImageUrl } from "../../utils";
+import Collection from "./Wrapper";
 import Header from "./Header";
 import Tracks from "./Tracks";
-import Wrapper from "./Wrapper";
 import withReloader from "../withReloader";
 
 interface Params {
@@ -44,17 +44,17 @@ function AlbumDetails({
   }
 
   return album ? (
-    <Wrapper>
+    <Collection>
       <Header
-        imageSource={album.images[0].url}
+        imageSource={getImageUrl(album)}
         title={album.name}
-        subTitle={joinArtistNames(album.artists)}
+        subTitle={getArtistNames(album.artists)}
         canPlay={isPlayable}
         isPlaying={isPlaying(album.id)}
         onToggle={handleToggle}
       />
       <Tracks tracks={album.tracks} onToggle={handleToggle} />
-    </Wrapper>
+    </Collection>
   ) : (
     <></>
   );

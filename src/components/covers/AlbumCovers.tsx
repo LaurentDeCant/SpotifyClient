@@ -1,16 +1,15 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { DenormalizedAlbum as Album } from "../../types";
-import { joinArtistNames } from "../../utils";
+import { getArtistNames, getImageUrl } from "../../utils";
 import Covers, { Cover } from "./Covers";
 
 function getCovers(albums: Album[]): Cover[] {
   return albums.map(album => ({
     id: album.id,
-    image:
-      album.images && album.images.length ? album.images[0].url : undefined,
+    image: getImageUrl(album),
     title: album.name,
-    subTitle: joinArtistNames(album.artists)
+    subTitle: getArtistNames(album.artists)
   }));
 }
 

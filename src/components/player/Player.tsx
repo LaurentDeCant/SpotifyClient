@@ -55,6 +55,10 @@ const LeftWrapper = styled(ThirdWrapper)`
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
     display: block;
   }
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+    width: 25%;
+  }
 `;
 
 const CenterWrapper = styled(ThirdWrapper)`
@@ -62,6 +66,10 @@ const CenterWrapper = styled(ThirdWrapper)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+    width: 50%;
+  }
 `;
 
 const RightWrapper = styled(ThirdWrapper)`
@@ -70,6 +78,10 @@ const RightWrapper = styled(ThirdWrapper)`
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
     display: flex;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+    width: 25%;
   }
 `;
 

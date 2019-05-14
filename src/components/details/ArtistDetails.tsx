@@ -7,6 +7,7 @@ import {
   DenormalizedArtist as Artist,
   DenormalizedTrack as Track
 } from "../../types";
+import { getImageUrl } from "../../utils";
 import { getFullArtist } from "../../actions/artists";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
@@ -38,7 +39,7 @@ function TopTracks({
 function Albums({ albums }: { albums: Album[] }) {
   return (
     <>
-      {albums && (
+      {albums && !!albums.length && (
         <Section>
           <Heading>Albums & Singles</Heading>
           <AlbumCovers albums={albums} />
@@ -51,7 +52,7 @@ function Albums({ albums }: { albums: Album[] }) {
 function RelatedArtists({ artists }: { artists: Artist[] }) {
   return (
     <>
-      {artists && (
+      {artists && !!artists.length && (
         <Section>
           <Heading>Related Artists</Heading>
           <ArtistCovers artists={artists} />
@@ -99,7 +100,7 @@ function ArtistDetails({
     <>
       <Wrapper>
         <Header
-          imageSource={artist.images[0].url}
+          imageSource={getImageUrl(artist)}
           imageShape={ImageShape.Round}
           title={artist.name}
           canPlay={isPlayable}

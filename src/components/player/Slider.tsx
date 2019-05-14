@@ -29,6 +29,7 @@ const Thumb = styled.div<{ position: number; isDisabled: boolean }>`
   visibility: hidden;
   width: 25px;
   z-index: 1;
+  transition: left 0.2s;
 
   &::before {
     background: ${props => props.theme.foreground.default};
@@ -61,11 +62,6 @@ interface Props {
   value: number;
   canChange: boolean;
   onChange?: (value: number) => void;
-}
-
-interface State {
-  isDown: boolean;
-  value: number;
 }
 
 function Slider(props: Props) {

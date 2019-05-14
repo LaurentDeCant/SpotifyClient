@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { DenormalizedPlaylist as Playlist } from "../../types";
+import { getImageUrl } from "../../utils";
 import { getPlaylist } from "../../actions/playlists";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
@@ -45,7 +46,7 @@ function PlaylistDetails({
   return playlist ? (
     <Wrapper>
       <Header
-        imageSource={playlist.images[0].url}
+        imageSource={getImageUrl(playlist)}
         title={playlist.name}
         subTitle={playlist.owner.display_name}
         canPlay={isPlayable}

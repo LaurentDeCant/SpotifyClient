@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Icon, IconType, Image, Text } from "../core";
+import { Image, Text } from "../core";
 import ButtonBase from "../core/ButtonBase";
 import { ImageShape } from "../core/Image";
 
@@ -42,16 +42,13 @@ const StyledButton = styled(ButtonBase)<{ type: ImageShape }>`
 `;
 
 const StyledImge = styled(Image)`
-  height: 100%;
-  width: 100%;
-`;
+  font-size: ${length / 4}px;
+  line-height: ${length / 2}px;
 
-const StyledIcon = styled(Icon)`
-  background: ${props => props.theme.background.light};
-  font-size: ${length / 2}px;
-  height: ${length}px;
-  line-height: ${length}px;
-  width: 100%;
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    font-size: ${length / 2}px;
+    line-height: ${length}px;
+  }
 `;
 
 const Title = styled(Text)`
@@ -92,11 +89,7 @@ function Cover({
   return (
     <>
       <StyledButton onClick={handleClick} type={type}>
-        {cover.image ? (
-          <StyledImge source={cover.image} />
-        ) : (
-          <StyledIcon type={IconType.Person} />
-        )}
+        <StyledImge source={cover.image} />
       </StyledButton>
       <Title>{cover.title}</Title>
       {cover.subTitle && <SubTitle>{cover.subTitle}</SubTitle>}

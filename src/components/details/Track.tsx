@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "../../styles/styled";
 import { DenormalizedTrack as TrackObject } from "../../types";
-import { joinArtistNames } from "../../utils";
+import { getArtistNames } from "../../utils";
 import { Icon, IconType, Text } from "../core";
 import ButtonBase from "../core/ButtonBase";
 
@@ -95,7 +95,7 @@ function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
   }
 
   function renderArtist(track: TrackObject) {
-    return <SubTitle>{joinArtistNames(track.artists)}</SubTitle>;
+    return <SubTitle>{getArtistNames(track.artists)}</SubTitle>;
   }
 
   function renderDuration(track: TrackObject) {

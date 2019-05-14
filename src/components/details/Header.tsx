@@ -21,12 +21,16 @@ const Wrapper = styled.div`
 const length = 300;
 const StyledImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+  font-size: ${length / 4}px;
   height: ${length / 2}px;
+  line-height: ${length / 2}px;
   margin: 0 25px 0 0;
   width: ${length / 2}px;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+    font-size: ${length / 2}px;
     height: ${length}px;
+    line-height: ${length}px;
     margin: 0 0 25px 0;
     width: ${length}px;
   }
@@ -54,7 +58,7 @@ const SubTitle = styled(Text)`
   display: inline-block;
   font-size: ${props => props.theme.font.size.medium};
   font-weight: ${props => props.theme.font.weight.light};
-  margin-top: 12.5px;
+  margin-top: 6.25px;
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
@@ -64,12 +68,12 @@ const SubTitle = styled(Text)`
 `;
 
 const StyledButton = styled(Button)`
-  margin-top: 20px;
+  margin-top: 25px;
   width: 100px;
 `;
 
 interface Props {
-  imageSource: string;
+  imageSource?: string;
   imageShape: ImageShape;
   title: string;
   subTitle?: string;

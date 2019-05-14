@@ -1,12 +1,11 @@
-import {
-  DenormalizedArtist as Artist,
-  DenormalizedTrack as Track
-} from "../types";
+import { DenormalizedArtist as Artist, Image } from "../types";
 
-export function joinArtistNames(artists: Artist[]): string {
+export function getArtistNames(artists: Artist[]): string {
   return artists.map(artist => artist.name).join(", ");
 }
 
-export function hasPlayableTrack(tracks: Track[]): boolean {
-  return tracks.some(track => !!track.preview_url);
+export function getImageUrl(object: { images: Image[] }): string | undefined {
+  return object && object.images && object.images.length
+    ? object.images[0].url
+    : undefined;
 }

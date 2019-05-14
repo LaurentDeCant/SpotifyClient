@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { Icon, IconType } from ".";
 import ButtonBase from "./ButtonBase";
+import Icon, { IconType } from "./Icon";
 
 const StyedButton = styled(ButtonBase)`
   border-radius: 50%;
   color: ${props => props.theme.foreground.dark};
   display: flex;
-  margin: 5px 10px;
-  padding: 5px;
+  margin: 6.25px 12.5px;
+  padding: 6.25px;
 
   &:disabled {
     color: ${props => props.theme.foreground.darker};
