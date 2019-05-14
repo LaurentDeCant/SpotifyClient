@@ -60,7 +60,7 @@ function AlbumInfos({
 }
 
 const mapState = (state: State, { album }: OwnProps) => ({
-  artists: selectAlbumArtists(state, album.id)
+  artists: selectAlbumArtists(state)(album.id)
 });
 
 export default connect(

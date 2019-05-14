@@ -2,6 +2,11 @@ import React, { useState, HTMLAttributes } from "react";
 import styled from "styled-components";
 import Icon, { IconType } from "./Icon";
 
+export enum ImageShape {
+  Square = "SQUARE",
+  Round = "ROUND"
+}
+
 const StyledImg = styled.img<{ shape: ImageShape; isLoaded: boolean }>`
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
   height: auto;
@@ -17,11 +22,6 @@ const StyledIcon = styled(Icon)<{ shape: ImageShape }>`
   text-align: center;
   width: 100%;
 `;
-
-export enum ImageShape {
-  Square = "SQUARE",
-  Round = "ROUND"
-}
 
 interface Props {
   source?: string;

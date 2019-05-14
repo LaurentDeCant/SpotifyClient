@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { normalize } from "normalizr";
 import { fetchJson } from "../utils/authorization";
-import { EntitiesAction, FetchDispatch, PayloadAction } from "./types";
+import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
 
 export enum ActionType {

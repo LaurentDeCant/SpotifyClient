@@ -55,13 +55,14 @@ function Search({
   const { query } = match.params;
   const [value, setValue] = useState(query || "");
 
-  useEffect(() => {
+  const effect = () => {
     search(value);
     debounced = _.debounce((query: string) => {
       history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
       search(query);
     }, 500);
-  }, []);
+  };
+  useEffect(effect, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
@@ -75,7 +76,7 @@ function Search({
     <>
       <StyledInput
         value={value}
-        onChangeValue={handleChange}
+        onChange={handleChange}
         placeholder="Search..."
         autoFocus
       />

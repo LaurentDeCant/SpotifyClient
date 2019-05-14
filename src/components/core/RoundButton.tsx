@@ -23,7 +23,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconType: IconType;
 }
 
-function RoundButton({ iconType: iconType, ...rest }: Props) {
+function RoundButton({ iconType, ...rest }: Props) {
   return (
     <StyedButton {...rest}>
       <StyledIcon type={iconType} />

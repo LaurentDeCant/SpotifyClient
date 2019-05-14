@@ -26,10 +26,7 @@ const StyledButton = styled(ButtonBase)<{ isLoaded: boolean }>`
   }
 `;
 
-const StyledIcon = styled(Icon)<{
-  isLoaded?: boolean;
-  isHover?: boolean;
-}>`
+const StyledIcon = styled(Icon)<{ isLoaded?: boolean; isHover?: boolean }>`
   color: ${props =>
     props.isLoaded ? props.theme.primaryLight : props.theme.foreground.dark};
   display: ${props => (props.isHover ? "none" : "block")};

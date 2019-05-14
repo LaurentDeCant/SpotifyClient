@@ -1,29 +1,48 @@
 import React from "react";
+import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Album } from "../../types";
+import { Album, Artist } from "../../types";
 import { getArtistNames, getImageSource } from "../../utils";
 import Covers, { Cover } from "./Covers";
+import { State } from "../../reducers";
+import { selectAlbumArtists } from "../../reducers/albums";
 
-function getCovers(albums: Album[]): Cover[] {
-  return albums.map(album => ({
-    id: album.id,
-    image: getImageSource(album),
-    title: album.name,
-    subTitle: getArtistNames([])
-  }));
+function getCovers(
+  albums: Album[],
+  selectAlbumArtists: (albumId: string) => Artist[]
+): Cover[] {
+  return albums.map(album => {
+    const artists = selectAlbumArtists(album.id);
+    return {
+      id: album.id,
+      image: getImageSource(album),
+      title: album.name,
+      subTitle: getArtistNames(artists)
+    };
+  });
 }
 
 interface Props extends RouteComponentProps {
   albums: Album[];
+  selectAbumArtists: (albumId: string) => Artist[];
 }
 
-function AlbumCovers({ history, albums }: Props) {
+function AlbumCovers({ history, albums, selectAbumArtists }: Props) {
   function handleClick(albumId: string) {
     history.push(`${process.env.PUBLIC_URL}/albums/${albumId}`);
   }
 
-  const covers = getCovers(albums);
+  const covers = getCovers(albums, selectAbumArtists);
   return <Covers covers={covers} onClick={handleClick} />;
 }
 
-export default withRouter(AlbumCovers);
+const mapDispatch = (state: State) => ({
+  selectAbumArtists: selectAlbumArtists(state)
+});
+
+export default withRouter(
+  connect(
+    mapDispatch,
+    null
+  )(AlbumCovers)
+);

@@ -44,9 +44,10 @@ function AlbumDetails({
 }: Props) {
   const { albumId } = match.params;
 
-  useEffect(() => {
+  const effect = () => {
     getAlbum(albumId);
-  }, []);
+  };
+  useEffect(effect, []);
 
   function handleToggle(trackId?: string) {
     loadToggle(albumId, trackId);
@@ -74,7 +75,7 @@ const mapState = (state: State, ownProps: Props) => {
   const { albumId } = match.params;
   return {
     album: selectAlbum(state, albumId),
-    artists: selectAlbumArtists(state, albumId),
+    artists: selectAlbumArtists(state)(albumId),
     tracks: selectAlbumTracks(state, albumId),
     isPlayable: selectIsPlayable(state, albumId),
     isPlaying: selectIsPlaying(state)(albumId)

@@ -1,4 +1,4 @@
-import React, { useState, useRef, HTMLAttributes } from "react";
+import React, { useState, useRef } from "react";
 import styled from "../../styles/styled";
 
 const Wrapper = styled.div<{ isDisabled: boolean }>`
@@ -64,7 +64,7 @@ interface Props {
   onChange?: (value: number) => void;
 }
 
-function Slider(props: Props & HTMLAttributes<HTMLElement>) {
+function Slider(props: Props) {
   const [isDown, setIsDown] = useState(false);
   const [value, setValue] = useState(0);
 

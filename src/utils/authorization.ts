@@ -13,17 +13,17 @@ function logInRedirect(): Promise<any> {
   return new Promise((resolve, reject) => {
     const handleStorage = (event: StorageEvent) => {
       if (event.key === ACCESS_TOKEN) {
-        removeEventListener("storage", handleStorage);
+        window.removeEventListener("storage", handleStorage);
         resolve();
       }
     };
-    addEventListener("storage", handleStorage);
-    location.assign(LOG_IN_URL);
+    window.addEventListener("storage", handleStorage);
+    window.location.assign(LOG_IN_URL);
   });
 }
 
 function checkRedirection(): void {
-  const match = location.hash.match(REGEX);
+  const match = window.location.hash.match(REGEX);
   if (match) {
     localStorage[ACCESS_TOKEN] = match[1];
     localStorage[TOKEN_TYPE] = match[2];

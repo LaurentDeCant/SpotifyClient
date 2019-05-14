@@ -38,11 +38,12 @@ function Header({
   userProfile,
   getUserProfile
 }: Props & HTMLAttributes<HTMLElement>) {
-  useEffect(() => {
+  const effect = () => {
     if (isLoggedIn) {
       getUserProfile();
     }
-  }, []);
+  };
+  useEffect(effect, []);
 
   return (
     <Wrapper className={className}>

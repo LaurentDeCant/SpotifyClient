@@ -44,11 +44,11 @@ const Div = styled.div`
 `;
 
 const Title = styled(Text)`
-  font-size: ${props => props.theme.font.size.large};
+  font-size: ${props => props.theme.font.size.extraLarge};
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
-    font-size: ${props => props.theme.font.size.extraLarge};
+    font-size: ${props => props.theme.font.size.extraExtraLarge};
     width: ${length}px;
   }
 `;

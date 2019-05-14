@@ -94,9 +94,10 @@ function ArtistDetails({
 
   const { artistId } = match.params;
 
-  useEffect(() => {
+  const effect = () => {
     getFullArtist(artistId);
-  }, [artistId]);
+  };
+  useEffect(effect, [artistId]);
 
   function handleToggle(trackId?: string) {
     loadToggle(artistId, trackId);

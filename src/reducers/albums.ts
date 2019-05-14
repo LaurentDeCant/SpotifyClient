@@ -1,7 +1,7 @@
 import merge from "lodash/merge";
 import { createSelector } from "reselect";
 import memoize from "lodash/memoize";
-import { Album } from "../types";
+import { Album, Artist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import {
   AlbumActionType,
@@ -12,7 +12,6 @@ import {
 } from "../actions";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
-import { selectArtists } from "./artists";
 import { selectTracks } from "./tracks";
 
 export interface State {
@@ -42,15 +41,25 @@ export function selectAlbum({ albums }: CombinedState, albumId: string) {
   return albums[albumId];
 }
 
-export function selectAlbumArtists(state: CombinedState, albumId: string) {
-  const album = selectAlbum(state, albumId);
-  if (album) {
-    const artists = selectArtists(state)(album.artists);
-    if (artists) {
-      return artists;
-    }
-  }
+export const selectAlbumArtists = createSelector(
+  ({ albums }: CombinedState) => albums,
+  ({ artists }: CombinedState) => artists,
+  (
+    albums: { [albumId: string]: Album },
+    artists: { [artistId: string]: Artist }
+  ) =>
+    memoize((albumId: string) => {
+      console.log("selectAlbumArtists");
+      const album = albums[albumId];
+      if (album) {
+        return album.artists.map(artistId => artists[artistId]);
+      }
 
+      return [];
+    })
+);
+
+export function selectAlbumsArtists(state: CombinedState, albumIds: string) {
   return [];
 }
 

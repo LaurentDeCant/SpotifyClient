@@ -27,13 +27,14 @@ function CategoryPlaylists({
   getCategory,
   getPlaylists
 }: Props) {
-  useEffect(() => {
+  const effect = () => {
     const { categoryId } = match.params;
     if (!category) {
       getCategory(categoryId);
     }
     getPlaylists(categoryId);
-  }, []);
+  };
+  useEffect(effect, []);
 
   return (
     <div>

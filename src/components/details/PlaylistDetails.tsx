@@ -41,9 +41,10 @@ function PlaylistDetails({
 }: Props) {
   const { playlistId } = match.params;
 
-  useEffect(() => {
+  const effect = () => {
     getPlaylist(playlistId);
-  }, []);
+  };
+  useEffect(effect, []);
 
   function handleToggle(trackId?: string) {
     loadToggle(playlistId, trackId);
