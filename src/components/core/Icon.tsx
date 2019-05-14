@@ -1,4 +1,4 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
 export enum IconType {
   MusicNote = "music_note",
@@ -16,8 +16,7 @@ export enum IconType {
   Wifi = "wifi"
 }
 
-interface Props {
-  className?: string;
+interface Props extends HTMLAttributes<HTMLDivElement> {
   type: IconType;
 }
 

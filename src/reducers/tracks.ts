@@ -1,6 +1,12 @@
 import merge from "lodash/merge";
-import { denormalize } from "normalizr";
-import { NormalizedTrack, DenormalizedTrack } from "../types";
+import { createSelector } from "reselect";
+import memoize from "lodash/memoize";
+import {
+  NormalizedTrack,
+  DenormalizedTrack,
+  DenormalizedAlbum,
+  DenormalizedArtist
+} from "../types";
 import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -10,7 +16,8 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
-import { schemas } from "./schemas";
+import { selectAlbum } from "./albums";
+import { selectArtists } from "./artists";
 
 export interface State {
   [id: string]: NormalizedTrack;
@@ -31,15 +38,39 @@ export default createReducer(initialState, {
 });
 
 export function selectTrack(
-  state: CombinedState,
+  { tracks }: CombinedState,
   trackId: string
 ): DenormalizedTrack {
-  return denormalize(state.tracks[trackId], schemas.track, state);
+  //@ts-ignore
+  return tracks[trackId];
 }
 
-export function selectTracks(
+export function selectTrackAlbum(
   state: CombinedState,
-  trackIds: string[]
-): DenormalizedTrack[] {
-  return trackIds ? trackIds.map(id => selectTrack(state, id)) : [];
+  trackId: string
+): DenormalizedAlbum {
+  const track = selectTrack(state, trackId);
+  //@ts-ignore
+  return selectAlbum(state, track.album);
 }
+
+export function selectTrackArtists(
+  state: CombinedState,
+  trackId: string
+): DenormalizedArtist[] {
+  const track = selectTrack(state, trackId);
+  return selectArtists(state)(track.artists);
+}
+
+export const selectTracks = createSelector(
+  //@ts-ignore
+  (state: CombinedState) => state.tracks,
+  (tracks: {
+    [trackId: string]: DenormalizedTrack;
+  }): ((trackIds: string[]) => DenormalizedTrack[]) => {
+    console.log("selectTracks");
+    return memoize((trackIds: string[]) =>
+      trackIds ? trackIds.map(trackId => tracks[trackId]) : []
+    );
+  }
+);

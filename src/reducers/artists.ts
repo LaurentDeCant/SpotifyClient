@@ -1,9 +1,11 @@
 import merge from "lodash/merge";
-import { denormalize } from "normalizr";
+import { createSelector } from "reselect";
+import memoize from "lodash/memoize";
 import {
   NormalizedArtist,
   DenormalizedArtist,
-  DenormalizedTrack
+  DenormalizedTrack,
+  DenormalizedAlbum
 } from "../types";
 import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
@@ -20,7 +22,8 @@ import {
   ArtistRelatedArtistsSuccessAction,
   ArtistTopTracksSuccessAction
 } from "../actions/artists";
-import { schemas } from "./schemas";
+import { selectAlbums } from "./albums";
+import { selectTracks } from "./tracks";
 
 export interface State {
   [id: string]: NormalizedArtist;
@@ -84,34 +87,91 @@ export default createReducer(initialState, {
 });
 
 export function selectIsArtist(
-  state: CombinedState,
+  { artists }: CombinedState,
   artistId: string
 ): boolean {
-  return !!state.artists[artistId];
+  return !!artists[artistId];
 }
 
 export function selectArtist(
-  state: CombinedState,
+  { artists }: CombinedState,
   artistId: string
 ): DenormalizedArtist {
-  return denormalize(state.artists[artistId], schemas.artist, state);
+  //@ts-ignore
+  return artists[artistId];
 }
 
-export function selectArtists(
+export function selectArtistAlbums(
   state: CombinedState,
-  artistIds: string[]
-): DenormalizedArtist[] {
-  return artistIds ? artistIds.map(id => selectArtist(state, id)) : [];
+  artistId: string
+): DenormalizedAlbum[] {
+  const artist = selectArtist(state, artistId);
+  if (artist) {
+    //@ts-ignore
+    const albums = selectAlbums(state)(artist.albums);
+    if (albums) {
+      return albums;
+    }
+  }
+
+  return [];
 }
+
+export function selectArtistRelatedArtists(
+  state: CombinedState,
+  artistId: string
+): DenormalizedArtist[] {
+  const artist = selectArtist(state, artistId);
+  if (artist) {
+    //@ts-ignore
+    const artists = selectArtists(state)(artist.relatedArtists);
+    if (artists) {
+      return artists;
+    }
+  }
+
+  return [];
+}
+
+export function selectArtistTopTracks(
+  state: CombinedState,
+  artistId: string
+): DenormalizedTrack[] {
+  const artist = selectArtist(state, artistId);
+  if (artist) {
+    //@ts-ignore
+    const tracks = selectTracks(state)(artist.topTracks);
+    if (tracks) {
+      return tracks;
+    }
+  }
+
+  return [];
+}
+
+export const selectArtists = createSelector(
+  //@ts-ignore
+  (state: CombinedState) => state.artists,
+  (artists: {
+    [artistId: string]: DenormalizedArtist;
+  }): ((artistIds: string[]) => DenormalizedArtist[]) => {
+    console.log("selectArtists");
+    return memoize((artistIds: string[]) =>
+      artistIds ? artistIds.map(artistId => artists[artistId]) : []
+    );
+  }
+);
 
 export function selectPlayableTracks(
   state: CombinedState,
   artistId: string
 ): DenormalizedTrack[] {
-  const artist = selectArtist(state, artistId);
-  return artist && artist.topTracks
-    ? artist.topTracks.filter(track => track.preview_url)
-    : [];
+  const tracks = selectArtistTopTracks(state, artistId);
+  if (tracks) {
+    return tracks.filter(track => track.preview_url);
+  }
+
+  return [];
 }
 
 export function selectIsPlayable(

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { DenormalizedTrack as Track } from "../../types";
+import { DenormalizedAlbum as Album } from "../../types";
 import { State } from "../../reducers";
 import {
-  selectLoadedTrack,
+  selectTrackAlbum,
   selectIsPlaying,
   selectCanToggle,
   Times,
@@ -22,7 +22,7 @@ import {
   previous,
   changeVolume
 } from "../../actions/player";
-import Album from "./Album";
+import AlbumInfos from "./AlbumInfos";
 import Audio from "./Audio";
 import Controls from "./Controls";
 import Playback from "./Playback";
@@ -85,9 +85,8 @@ const RightWrapper = styled(ThirdWrapper)`
   }
 `;
 
-interface Props {
-  className?: string;
-  loadedTrack?: Track;
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  album?: Album;
   isPlaying: () => boolean;
   times: Times;
   canToggle: boolean;
@@ -104,7 +103,7 @@ interface Props {
 
 function Player({
   className,
-  loadedTrack,
+  album,
   isPlaying,
   times,
   canToggle,
@@ -122,19 +121,9 @@ function Player({
     toggle();
   }
 
-  const album = loadedTrack && loadedTrack.album;
-
   return (
     <Wrapper className={className}>
-      <LeftWrapper>
-        {album && (
-          <Album
-            image={album.images[0].url}
-            name={album.name}
-            artist={album.artists[0].name}
-          />
-        )}
-      </LeftWrapper>
+      <LeftWrapper>{album && <AlbumInfos album={album} />}</LeftWrapper>
 
       <CenterWrapper>
         <Controls
@@ -168,7 +157,7 @@ function Player({
 }
 
 const mapState = (state: State) => ({
-  loadedTrack: selectLoadedTrack(state),
+  album: selectTrackAlbum(state),
   isPlaying: selectIsPlaying(state),
   times: selectTimes(state),
   canToggle: selectCanToggle(state),

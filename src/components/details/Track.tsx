@@ -1,9 +1,16 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { DenormalizedTrack as TrackObject } from "../../types";
+import {
+  DenormalizedArtist as Artist,
+  DenormalizedTrack as TrackObject
+} from "../../types";
 import { getArtistNames } from "../../utils";
+import { State } from "../../reducers";
+import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import { Icon, IconType, Text } from "../core";
 import ButtonBase from "../core/ButtonBase";
+import { selectTrackArtists } from "../../reducers/tracks";
 
 const StyledButton = styled(ButtonBase)<{ isLoaded: boolean }>`
   align-items: center;
@@ -66,15 +73,28 @@ const Duration = styled.span`
   flex-shrink: 0;
 `;
 
-interface Props {
+interface OwnProps {
   track: TrackObject;
-  isDisabled: boolean;
-  isLoaded: boolean;
-  isPlaying: boolean;
   onToggle: (trackId: string) => void;
 }
 
-function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
+interface Props extends OwnProps {
+  artists: Artist[];
+  isDisabled: boolean;
+  isLoaded: boolean;
+  isPlaying: boolean;
+}
+
+function Track({
+  track,
+  artists,
+  isDisabled,
+  isLoaded,
+  isPlaying,
+  onToggle
+}: Props) {
+  console.log("Track");
+
   function renderIcon() {
     return isDisabled ? (
       <StyledIcon type={IconType.MusicOff} />
@@ -94,11 +114,11 @@ function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
     );
   }
 
-  function renderArtist(track: TrackObject) {
-    return <SubTitle>{getArtistNames(track.artists)}</SubTitle>;
+  function renderArtist() {
+    return <SubTitle>{getArtistNames(artists)}</SubTitle>;
   }
 
-  function renderDuration(track: TrackObject) {
+  function renderDuration() {
     let seconds = track.duration_ms / 1000;
     const minutes = Math.floor(seconds / 60);
     seconds = Math.floor(seconds % 60);
@@ -124,12 +144,26 @@ function Track({ track, isDisabled, isLoaded, isPlaying, onToggle }: Props) {
 
       <Infos>
         <Title>{track.name}</Title>
-        {renderArtist(track)}
+        {renderArtist()}
       </Infos>
 
-      {renderDuration(track)}
+      {renderDuration()}
     </StyledButton>
   );
 }
 
-export default Track;
+function isDisabled(track: TrackObject) {
+  return !track.preview_url;
+}
+
+const mapState = (state: State, { track }: OwnProps) => ({
+  artists: selectTrackArtists(state, track.id),
+  isDisabled: isDisabled(track),
+  isLoaded: selectIsLoaded(state)(track.id),
+  isPlaying: selectIsPlaying(state)(track.id)
+});
+
+export default connect(
+  mapState,
+  null
+)(Track);

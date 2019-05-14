@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
@@ -26,8 +26,7 @@ const Wrapper = styled.header`
   }
 `;
 
-interface Props {
-  className?: string;
+interface Props extends HTMLAttributes<HTMLDivElement> {
   isLoggedIn: boolean;
   userProfile?: UserProfile;
   getUserProfile: () => void;

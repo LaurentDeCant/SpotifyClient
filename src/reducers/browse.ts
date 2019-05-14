@@ -88,5 +88,5 @@ export function selectFeaturedPlaylists(state: CombinedState): Playlist[] {
 }
 
 export function selectNewReleases(state: CombinedState): Album[] {
-  return selectAlbums(state, state.browse.newReleaseIds);
+  return selectAlbums(state)(state.browse.newReleaseIds);
 }

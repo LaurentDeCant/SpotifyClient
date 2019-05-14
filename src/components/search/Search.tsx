@@ -79,7 +79,7 @@ function Search({
     <>
       <StyledInput
         value={value}
-        onChange={handleChange}
+        onChangeValue={handleChange}
         placeholder="Search..."
         autoFocus
       />

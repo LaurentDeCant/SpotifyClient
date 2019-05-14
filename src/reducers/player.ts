@@ -1,4 +1,4 @@
-import { DenormalizedTrack as Track } from "../types";
+import { DenormalizedTrack, DenormalizedAlbum } from "../types";
 import {
   ActionType,
   LoadCollectionAction,
@@ -11,6 +11,7 @@ import {
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 import { selectTrack } from "./tracks";
+import { selectAlbum } from "./albums";
 
 enum PlayerState {
   None = "NONE",
@@ -142,12 +143,28 @@ export default createReducer(initialState, {
   })
 });
 
-export function selectLoadedTrack(state: CombinedState): Track | undefined {
+export function selectLoadedTrack(
+  state: CombinedState
+): DenormalizedTrack | undefined {
   const { trackIds, trackIndex } = state.player;
 
   if (trackIds) {
     return selectTrack(state, trackIds[trackIndex]);
   }
+}
+
+export function selectTrackAlbum(
+  state: CombinedState
+): DenormalizedAlbum | undefined {
+  const { trackIds, trackIndex } = state.player;
+  const trackId = trackIds[trackIndex];
+  const track = selectTrack(state, trackId);
+  if (track) {
+    //@ts-ignore
+    return selectAlbum(state, track.album);
+  }
+
+  return undefined;
 }
 
 export function selectIsLoaded(state: CombinedState) {

@@ -1,14 +1,14 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { DenormalizedArtist as Artist } from "../../types";
-import { getImageUrl } from "../../utils";
+import { getImageSource } from "../../utils";
 import { ImageShape } from "../core/Image";
 import Covers, { Cover } from "./Covers";
 
 function getCovers(artists: Artist[]): Cover[] {
   return artists.map(artist => ({
     id: artist.id,
-    image: getImageUrl(artist),
+    image: getImageSource(artist),
     title: artist.name
   }));
 }

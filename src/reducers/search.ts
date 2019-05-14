@@ -37,11 +37,12 @@ export default createReducer(initialState, {
 });
 
 export function selectAlbums(state: CombinedState): Album[] {
-  return selectAlbumsById(state, state.search.albumIds);
+  return selectAlbumsById(state)(state.search.albumIds);
 }
 
 export function selectArtists(state: CombinedState): Artist[] {
-  return selectArtistsById(state, state.search.artistIds).sort(
+  return selectArtistsById(state)(state.search.artistIds).sort(
+    //@ts-ignore
     (x, y) => y.popularity - x.popularity
   );
 }

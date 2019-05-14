@@ -7,7 +7,7 @@ import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectAlbum, selectIsPlayable } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
-import { getArtistNames, getImageUrl } from "../../utils";
+import { getArtistNames, getImageSource } from "../../utils";
 import Collection from "./Wrapper";
 import Header from "./Header";
 import Tracks from "./Tracks";
@@ -20,7 +20,7 @@ interface Params {
 interface Props extends RouteComponentProps<Params> {
   album?: Album;
   isPlayable: boolean;
-  isPlaying: (albumId: string) => boolean;
+  isPlaying: boolean;
   getAlbum: (albumId: string) => void;
   loadToggle: (collectionId: string, trackId?: string) => void;
 }
@@ -46,11 +46,11 @@ function AlbumDetails({
   return album ? (
     <Collection>
       <Header
-        imageSource={getImageUrl(album)}
+        imageSource={getImageSource(album)}
         title={album.name}
         subTitle={getArtistNames(album.artists)}
         canPlay={isPlayable}
-        isPlaying={isPlaying(album.id)}
+        isPlaying={isPlaying}
         onToggle={handleToggle}
       />
       <Tracks tracks={album.tracks} onToggle={handleToggle} />
@@ -66,7 +66,7 @@ const mapState = (state: State, ownProps: Props) => {
   return {
     album: selectAlbum(state, albumId),
     isPlayable: selectIsPlayable(state, albumId),
-    isPlaying: selectIsPlaying(state)
+    isPlaying: selectIsPlaying(state)(albumId)
   };
 };
 

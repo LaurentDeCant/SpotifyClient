@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, HTMLAttributes } from "react";
 import styled from "styled-components";
 import Icon, { IconType } from "./Icon";
 
@@ -23,8 +23,7 @@ export enum ImageShape {
   Round = "ROUND"
 }
 
-interface Props {
-  className?: string;
+interface Props extends HTMLAttributes<HTMLDivElement> {
   source?: string;
   shape: ImageShape;
 }
