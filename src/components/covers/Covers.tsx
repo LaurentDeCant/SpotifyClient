@@ -12,17 +12,24 @@ const StyledList = styled.ul`
   margin: -12.5px;
 `;
 
-const length = 200;
+function splitWidth(times: number) {
+  return `calc((100% - ${times * 25}px) / ${times})`;
+}
+
 const StyledItem = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 12.5px;
-  width: ${length / 2}px;
+  width: ${splitWidth(2)};
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
-    width: ${length}px;
+    width: ${splitWidth(3)};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+    width: ${splitWidth(6)};
   }
 `;
 
@@ -31,28 +38,21 @@ const StyledButton = styled(ButtonBase)<{ type: ImageShape }>`
   ${props => props.type === ImageShape.Round && "border-radius: 50%;"}
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
-  height: ${length / 2}px;
   margin-bottom: 12.5px;
-  width: ${length / 2}px;
-
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
-    height: ${length}px;
-    width: ${length}px;
-  }
+  padding-top: 100%;
+  position: relative;
+  width: 100%;
 `;
 
 const StyledImge = styled(Image)`
-  font-size: ${length / 4}px;
-  line-height: ${length / 2}px;
-
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
-    font-size: ${length / 2}px;
-    line-height: ${length}px;
-  }
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
 `;
 
 const Title = styled(Text)`
-  font-size: ${props => props.theme.font.size.medium};
+  font-size: ${props => props.theme.fontSize.medium};
   margin-bottom: 6.25px;
   text-align: center;
   width: 100%;
@@ -60,8 +60,8 @@ const Title = styled(Text)`
 
 const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
-  font-size: ${props => props.theme.font.size.medium};
-  font-weight: ${props => props.theme.font.weight.light};
+  font-size: ${props => props.theme.fontSize.medium};
+  font-weight: ${props => props.theme.fontWeight.light};
   text-align: center;
   width: 100%;
 `;

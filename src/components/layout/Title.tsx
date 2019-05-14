@@ -6,8 +6,8 @@ import { Icon, IconType } from "../core";
 const StyledHeader = styled.h1`
   display: flex;
   align-items: center;
-  font-size: ${props => props.theme.font.size.large};
-  font-weight: ${props => props.theme.font.weight.bold};
+  font-size: ${props => props.theme.fontSize.large};
+  font-weight: ${props => props.theme.fontWeight.bold};
 `;
 
 const StyledIcon = styled(Icon)`

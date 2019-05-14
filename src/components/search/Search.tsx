@@ -21,8 +21,8 @@ const StyledInput = styled.input`
   border-radius: 25px;
   caret-color: ${props => props.theme.primaryLight}
   color: ${props => props.theme.foreground.default}
-  font-size: ${props => props.theme.font.size.extraLarge}
-  font-weight: ${props => props.theme.font.weight.light}
+  font-size: ${props => props.theme.fontSize.extraLarge}
+  font-weight: ${props => props.theme.fontWeight.light}
   height: 50px;
   margin: 0 0 25px 0;
   padding: 0 25px;

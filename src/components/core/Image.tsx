@@ -1,6 +1,5 @@
 import React, { useState, HTMLAttributes } from "react";
 import styled from "styled-components";
-import Icon, { IconType } from "./Icon";
 
 export enum ImageShape {
   Square = "SQUARE",
@@ -16,11 +15,22 @@ const StyledImg = styled.img<{ shape: ImageShape; isLoaded: boolean }>`
   transition: opacity .2s;
 `;
 
-const StyledIcon = styled(Icon)<{ shape: ImageShape }>`
+const Container = styled.div<{ shape: ImageShape }>`
   background: ${props => props.theme.background.light};
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
-  text-align: center;
+  height: 100%;
+  position: relative;
   width: 100%;
+`;
+
+const StyledText = styled.span`
+  font-size: 100px;
+  font-weight: ${props => props.theme.fontWeight.light}
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 interface Props {
@@ -48,7 +58,9 @@ function Image({
       isLoaded={isLoaded}
     />
   ) : (
-    <StyledIcon className={className} type={IconType.Person} shape={shape} />
+    <Container className={className} shape={shape}>
+      <StyledText>?</StyledText>
+    </Container>
   );
 }
 

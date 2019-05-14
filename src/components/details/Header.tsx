@@ -21,16 +21,13 @@ const Wrapper = styled.div`
 const length = 300;
 const StyledImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
-  font-size: ${length / 4}px;
+  flex-shrink: 0;
   height: ${length / 2}px;
-  line-height: ${length / 2}px;
   margin: 0 25px 0 0;
   width: ${length / 2}px;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
-    font-size: ${length / 2}px;
     height: ${length}px;
-    line-height: ${length}px;
     margin: 0 0 25px 0;
     width: ${length}px;
   }
@@ -44,11 +41,11 @@ const Div = styled.div`
 `;
 
 const Title = styled(Text)`
-  font-size: ${props => props.theme.font.size.extraLarge};
+  font-size: ${props => props.theme.fontSize.extraLarge};
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
-    font-size: ${props => props.theme.font.size.extraExtraLarge};
+    font-size: ${props => props.theme.fontSize.extraExtraLarge};
     width: ${length}px;
   }
 `;
@@ -56,13 +53,13 @@ const Title = styled(Text)`
 const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
   display: inline-block;
-  font-size: ${props => props.theme.font.size.medium};
-  font-weight: ${props => props.theme.font.weight.light};
+  font-size: ${props => props.theme.fontSize.medium};
+  font-weight: ${props => props.theme.fontWeight.light};
   margin-top: 6.25px;
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
-    font-size: ${props => props.theme.font.size.large};
+    font-size: ${props => props.theme.fontSize.large};
     width: ${length}px;
   }
 `;

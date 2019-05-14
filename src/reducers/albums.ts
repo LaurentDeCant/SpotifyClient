@@ -1,7 +1,6 @@
 import merge from "lodash/merge";
 import { createSelector } from "reselect";
 import memoize from "lodash/memoize";
-import { Album, Artist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import {
   AlbumActionType,
@@ -10,13 +9,12 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
+import { AlbumDictionary, ArtistDictionary } from "./types";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 import { selectTracks } from "./tracks";
 
-export interface State {
-  [id: string]: Album;
-}
+export interface State extends AlbumDictionary {}
 
 const initialState: State = {};
 
@@ -44,10 +42,7 @@ export function selectAlbum({ albums }: CombinedState, albumId: string) {
 export const selectAlbumArtists = createSelector(
   ({ albums }: CombinedState) => albums,
   ({ artists }: CombinedState) => artists,
-  (
-    albums: { [albumId: string]: Album },
-    artists: { [artistId: string]: Artist }
-  ) =>
+  (albums: AlbumDictionary, artists: ArtistDictionary) =>
     memoize((albumId: string) => {
       const album = albums[albumId];
       if (album) {
@@ -72,7 +67,7 @@ export function selectAlbumTracks(state: CombinedState, albumId: string) {
 
 export const selectAlbums = createSelector(
   (state: CombinedState) => state.albums,
-  (albums: { [albumId: string]: Album }) =>
+  (albums: AlbumDictionary) =>
     memoize((albumIds: string[]) =>
       albumIds ? albumIds.map(albumId => albums[albumId]) : []
     )

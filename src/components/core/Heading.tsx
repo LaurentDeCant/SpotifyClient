@@ -1,8 +1,8 @@
 import styled from "../../styles/styled";
 
 const Heading = styled.h2`
-  font-size: ${props => props.theme.font.size.extraLarge};
-  font-weight: ${props => props.theme.font.weight.bold};
+  font-size: ${props => props.theme.fontSize.extraLarge};
+  font-weight: ${props => props.theme.fontWeight.bold};
   margin-bottom: 25px;
   text-align: center;
   width: 100%;

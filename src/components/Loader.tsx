@@ -33,7 +33,7 @@ const Loader = styled.div<{ isLoading: boolean }>`
       }
       50% {
         left: 0;
-        width: 100%;d
+        width: 100%;
       }
       100% {
         left: 100%;

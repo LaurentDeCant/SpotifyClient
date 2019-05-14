@@ -19,7 +19,7 @@ const StyledList = styled.ul`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  font-size: ${props => props.theme.font.size.medium};
+  font-size: ${props => props.theme.fontSize.medium};
   justify-content: center;
   margin-bottom: 5px;
   position: relative;

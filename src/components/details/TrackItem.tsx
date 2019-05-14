@@ -45,14 +45,14 @@ const Infos = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  font-weight: ${props => props.theme.font.weight.light};
+  font-weight: ${props => props.theme.fontWeight.light};
   height: 100%;
   margin-right: 12.5px;
   overflow: hidden;
 `;
 
 const Title = styled(Text)`
-  font-weight: ${props => props.theme.font.weight.normal}
+  font-weight: ${props => props.theme.fontWeight.normal}
   margin-bottom: 6.25px;
   text-align: left;
 `;

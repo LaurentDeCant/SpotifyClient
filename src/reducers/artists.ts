@@ -3,8 +3,6 @@ import { createSelector } from "reselect";
 import memoize from "lodash/memoize";
 import { Artist } from "../types";
 import { EntitiesAction } from "../actions/types";
-import { State as CombinedState } from ".";
-import createReducer from "./createReducer";
 import {
   AlbumActionType,
   ArtistActionType,
@@ -17,12 +15,13 @@ import {
   ArtistRelatedArtistsSuccessAction,
   ArtistTopTracksSuccessAction
 } from "../actions/artists";
+import { ArtistDictionary } from "./types";
+import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
 import { selectAlbums } from "./albums";
 import { selectTracks } from "./tracks";
 
-export interface State {
-  [id: string]: Artist;
-}
+export interface State extends ArtistDictionary {}
 
 const initialState: State = {};
 
@@ -130,9 +129,7 @@ export function selectArtistTopTracks(state: CombinedState, artistId: string) {
 
 export const selectArtists = createSelector(
   (state: CombinedState) => state.artists,
-  (artists: {
-    [artistId: string]: Artist;
-  }): ((artistIds: string[]) => Artist[]) =>
+  (artists: ArtistDictionary): ((artistIds: string[]) => Artist[]) =>
     memoize((artistIds: string[]) =>
       artistIds ? artistIds.map(artistId => artists[artistId]) : []
     )

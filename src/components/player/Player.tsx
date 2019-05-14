@@ -42,11 +42,6 @@ const Wrapper = styled.div`
 const ThirdWrapper = styled.div`
   box-sizing: border-box;
   height: 100%;
-  width: 100%;
-
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
-    width: 33.33%;
-  }
 `;
 
 const LeftWrapper = styled(ThirdWrapper)`
@@ -54,9 +49,6 @@ const LeftWrapper = styled(ThirdWrapper)`
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
     display: block;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
     width: 25%;
   }
 `;
@@ -65,9 +57,12 @@ const CenterWrapper = styled(ThirdWrapper)`
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  flex-shrink: 0;
+  justify-content: space-evenly;
+  padding: 0 12.5px;
+  width: 100%;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
     width: 50%;
   }
 `;
@@ -78,9 +73,6 @@ const RightWrapper = styled(ThirdWrapper)`
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
     display: flex;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
     width: 25%;
   }
 `;

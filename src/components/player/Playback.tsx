@@ -12,8 +12,8 @@ const Wrapper = styled.div`
 
 const ProgressTime = styled.div`
   color: ${props => props.theme.foreground.dark};
-  font-size: ${props => props.theme.font.size.small};
-  font-weight: ${props => props.theme.font.weight.light};
+  font-size: ${props => props.theme.fontSize.small};
+  font-weight: ${props => props.theme.fontWeight.light};
 `;
 
 const StyledSlider = styled(Slider)`

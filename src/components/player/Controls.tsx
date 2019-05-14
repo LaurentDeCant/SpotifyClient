@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 `;
 
 const MainButton = styled(RoundButton)`
-  transform: scale(1.25);
+  transform: scale(1.5);
 `;
 
 interface Props {

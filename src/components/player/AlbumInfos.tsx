@@ -32,7 +32,7 @@ const Title = styled(Text)`
 
 const ArtistNames = styled(Text)`
   color: ${props => props.theme.foreground.dark};
-  font-weight: ${props => props.theme.font.weight.light};
+  font-weight: ${props => props.theme.fontWeight.light};
 `;
 
 interface OwnProps {
