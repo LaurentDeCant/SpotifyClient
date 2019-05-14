@@ -1,16 +1,21 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { DenormalizedAlbum as Album } from "../../types";
+import { Album, Artist, Track } from "../../types";
 import { getAlbum } from "../../actions/albums";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectAlbum, selectIsPlayable } from "../../reducers/albums";
+import {
+  selectAlbum,
+  selectAlbumArtists,
+  selectAlbumTracks,
+  selectIsPlayable
+} from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
 import { getArtistNames, getImageSource } from "../../utils";
 import Collection from "./Wrapper";
 import Header from "./Header";
-import Tracks from "./Tracks";
+import TrackList from "./TrackList";
 import withReloader from "../withReloader";
 
 interface Params {
@@ -19,6 +24,8 @@ interface Params {
 
 interface Props extends RouteComponentProps<Params> {
   album?: Album;
+  artists: Artist[];
+  tracks: Track[];
   isPlayable: boolean;
   isPlaying: boolean;
   getAlbum: (albumId: string) => void;
@@ -28,6 +35,8 @@ interface Props extends RouteComponentProps<Params> {
 function AlbumDetails({
   match,
   album,
+  artists,
+  tracks,
   isPlayable,
   isPlaying,
   getAlbum,
@@ -48,12 +57,12 @@ function AlbumDetails({
       <Header
         imageSource={getImageSource(album)}
         title={album.name}
-        subTitle={getArtistNames(album.artists)}
+        subTitle={getArtistNames(artists)}
         canPlay={isPlayable}
         isPlaying={isPlaying}
         onToggle={handleToggle}
       />
-      <Tracks tracks={album.tracks} onToggle={handleToggle} />
+      <TrackList tracks={tracks} onToggle={handleToggle} />
     </Collection>
   ) : (
     <></>
@@ -65,6 +74,8 @@ const mapState = (state: State, ownProps: Props) => {
   const { albumId } = match.params;
   return {
     album: selectAlbum(state, albumId),
+    artists: selectAlbumArtists(state, albumId),
+    tracks: selectAlbumTracks(state, albumId),
     isPlayable: selectIsPlayable(state, albumId),
     isPlaying: selectIsPlaying(state)(albumId)
   };

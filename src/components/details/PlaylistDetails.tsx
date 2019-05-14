@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { DenormalizedPlaylist as Playlist } from "../../types";
+import { Playlist, Track } from "../../types";
 import { getImageSource } from "../../utils";
 import { getPlaylist } from "../../actions/playlists";
 import { loadToggle } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectPlaylist, selectIsPlayable } from "../../reducers/playlists";
+import {
+  selectPlaylist,
+  selectPlaylistTracks,
+  selectIsPlayable
+} from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
 import Header from "./Header";
-import Tracks from "./Tracks";
+import TrackList from "./TrackList";
 import withReloader from "../withReloader";
 import Wrapper from "./Wrapper";
 
@@ -19,6 +23,7 @@ interface Params {
 
 interface Props extends RouteComponentProps<Params> {
   playlist?: Playlist;
+  tracks: Track[];
   isPlayable: boolean;
   isPlaying: (playlistId: string) => boolean;
   getPlaylist: (playlistId: string) => void;
@@ -28,6 +33,7 @@ interface Props extends RouteComponentProps<Params> {
 function PlaylistDetails({
   match,
   playlist,
+  tracks,
   isPlayable,
   isPlaying,
   getPlaylist,
@@ -53,7 +59,7 @@ function PlaylistDetails({
         isPlaying={isPlaying(playlist.id)}
         onToggle={handleToggle}
       />
-      <Tracks tracks={playlist.tracks} onToggle={handleToggle} />
+      <TrackList tracks={tracks} onToggle={handleToggle} />
     </Wrapper>
   ) : (
     <></>
@@ -65,6 +71,7 @@ const mapState = (state: State, ownProps: Props) => {
   const { playlistId } = match.params;
   return {
     playlist: selectPlaylist(state, playlistId),
+    tracks: selectPlaylistTracks(state, playlistId),
     isPlayable: selectIsPlayable(state, playlistId),
     isPlaying: selectIsPlaying(state)
   };

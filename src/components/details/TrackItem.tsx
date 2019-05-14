@@ -1,10 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import {
-  DenormalizedArtist as Artist,
-  DenormalizedTrack as TrackObject
-} from "../../types";
+import { Artist, Track } from "../../types";
 import { getArtistNames } from "../../utils";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
@@ -74,7 +71,7 @@ const Duration = styled.span`
 `;
 
 interface OwnProps {
-  track: TrackObject;
+  track: Track;
   onToggle: (trackId: string) => void;
 }
 
@@ -85,7 +82,7 @@ interface Props extends OwnProps {
   isPlaying: boolean;
 }
 
-function Track({
+function TrackItem({
   track,
   artists,
   isDisabled,
@@ -152,7 +149,7 @@ function Track({
   );
 }
 
-function isDisabled(track: TrackObject) {
+function isDisabled(track: Track) {
   return !track.preview_url;
 }
 
@@ -166,4 +163,4 @@ const mapState = (state: State, { track }: OwnProps) => ({
 export default connect(
   mapState,
   null
-)(Track);
+)(TrackItem);

@@ -1,10 +1,5 @@
 import merge from "lodash/merge";
-import { denormalize } from "normalizr";
-import {
-  NormalizedPlaylist,
-  DenormalizedPlaylist,
-  DenormalizedTrack
-} from "../types";
+import { Playlist } from "../types";
 import { EntitiesAction } from "../actions/types";
 import {
   BrowseActionType,
@@ -13,10 +8,10 @@ import {
 } from "../actions";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
-import { schemas } from "./schemas";
+import { selectTracks } from "./tracks";
 
 export interface State {
-  [id: string]: NormalizedPlaylist;
+  [id: string]: Playlist;
 }
 
 const initialState: State = {};
@@ -32,40 +27,38 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergePlaylists
 });
 
-export function selectIsPlaylist(
-  state: CombinedState,
-  playlistId: string
-): boolean {
+export function selectIsPlaylist(state: CombinedState, playlistId: string) {
   return !!state.playlists[playlistId];
 }
 
 export function selectPlaylist(
-  state: CombinedState,
+  { playlists }: CombinedState,
   playlistId: string
-): DenormalizedPlaylist {
-  return denormalize(state.playlists[playlistId], schemas.playlist, state);
+) {
+  return playlists[playlistId];
 }
 
-export function selectPlaylists(
-  state: CombinedState,
-  playlistIds: string[]
-): DenormalizedPlaylist[] {
+export function selectPlaylistTracks(state: CombinedState, albumId: string) {
+  const playlist = selectPlaylist(state, albumId);
+  if (playlist) {
+    const tracks = selectTracks(state)(playlist.tracks);
+    if (tracks) {
+      return tracks;
+    }
+  }
+
+  return [];
+}
+
+export function selectPlaylists(state: CombinedState, playlistIds: string[]) {
   return playlistIds ? playlistIds.map(id => selectPlaylist(state, id)) : [];
 }
 
-export function selectPlayableTracks(
-  state: CombinedState,
-  playlistId: string
-): DenormalizedTrack[] {
-  const playlist = selectPlaylist(state, playlistId);
-  return playlist && playlist.tracks
-    ? playlist.tracks.filter(track => track.preview_url)
-    : [];
+export function selectPlayableTracks(state: CombinedState, playlistId: string) {
+  const tracks = selectPlaylistTracks(state, playlistId);
+  return tracks.filter(track => track.preview_url);
 }
 
-export function selectIsPlayable(
-  state: CombinedState,
-  playlistId: string
-): boolean {
+export function selectIsPlayable(state: CombinedState, playlistId: string) {
   return !!selectPlayableTracks(state, playlistId).length;
 }

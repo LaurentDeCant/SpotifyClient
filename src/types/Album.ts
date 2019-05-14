@@ -1,15 +1,8 @@
-import {
-  DenormalizedArtist,
-  Copyright,
-  ExternalId,
-  ExternalUrl,
-  Image,
-  Restriction,
-  DenormalizedTrack
-} from ".";
+import { Copyright, ExternalId, ExternalUrl, Image, Restriction } from ".";
 
-interface Album {
+export interface Album {
   album_type: string;
+  artists: string[];
   available_markets: string[];
   coyrights: Copyright[];
   external_ids: ExternalId[];
@@ -24,16 +17,7 @@ interface Album {
   release_date: string;
   release_date_precision: string;
   restrictions: Restriction[];
+  tracks: string[];
   type: string;
   uri: string;
-}
-
-export interface NormalizedAlbum extends Album {
-  artists: string[];
-  tracks: string[];
-}
-
-export interface DenormalizedAlbum extends Album {
-  artists: DenormalizedArtist[];
-  tracks: DenormalizedTrack[];
 }

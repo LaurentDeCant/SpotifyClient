@@ -16,11 +16,11 @@ export enum IconType {
   Wifi = "wifi"
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props {
   type: IconType;
 }
 
-function Icon({ className, type }: Props) {
+function Icon({ className, type }: Props & HTMLAttributes<HTMLElement>) {
   return <i className={`material-icons ${className}`}>{type}</i>;
 }
 

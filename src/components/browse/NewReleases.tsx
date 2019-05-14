@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { DenormalizedAlbum as Album } from "../../types";
+import { Album } from "../../types";
 import { getNewReleases } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectNewReleases } from "../../reducers/browse";

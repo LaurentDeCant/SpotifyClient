@@ -1,8 +1,4 @@
-import {
-  DenormalizedAlbum as Album,
-  DenormalizedArtist as Artist,
-  DenormalizedPlaylist as Playlist
-} from "../types";
+import { Album, Artist, Playlist } from "../types";
 import { ActionType, SearchSuccessAction } from "../actions/search";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -42,7 +38,6 @@ export function selectAlbums(state: CombinedState): Album[] {
 
 export function selectArtists(state: CombinedState): Artist[] {
   return selectArtistsById(state)(state.search.artistIds).sort(
-    //@ts-ignore
     (x, y) => y.popularity - x.popularity
   );
 }

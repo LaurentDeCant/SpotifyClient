@@ -26,13 +26,18 @@ const Wrapper = styled.header`
   }
 `;
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props {
   isLoggedIn: boolean;
   userProfile?: UserProfile;
   getUserProfile: () => void;
 }
 
-function Header({ className, isLoggedIn, userProfile, getUserProfile }: Props) {
+function Header({
+  className,
+  isLoggedIn,
+  userProfile,
+  getUserProfile
+}: Props & HTMLAttributes<HTMLElement>) {
   useEffect(() => {
     if (isLoggedIn) {
       getUserProfile();

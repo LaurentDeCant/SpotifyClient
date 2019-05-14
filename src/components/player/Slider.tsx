@@ -64,7 +64,7 @@ interface Props {
   onChange?: (value: number) => void;
 }
 
-function Slider(props: Props & HTMLAttributes<HTMLDivElement>) {
+function Slider(props: Props & HTMLAttributes<HTMLElement>) {
   const [isDown, setIsDown] = useState(false);
   const [value, setValue] = useState(0);
 

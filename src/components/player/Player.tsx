@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { DenormalizedAlbum as Album } from "../../types";
+import { Album } from "../../types";
 import { State } from "../../reducers";
 import {
   selectTrackAlbum,
@@ -85,7 +85,7 @@ const RightWrapper = styled(ThirdWrapper)`
   }
 `;
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props {
   album?: Album;
   isPlaying: () => boolean;
   times: Times;
@@ -116,7 +116,7 @@ function Player({
   next,
   previous,
   changeVolume
-}: Props) {
+}: Props & HTMLAttributes<HTMLElement>) {
   function handleToggle() {
     toggle();
   }

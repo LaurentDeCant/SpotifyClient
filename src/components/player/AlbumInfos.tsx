@@ -1,10 +1,7 @@
 import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import {
-  DenormalizedArtist as Artist,
-  DenormalizedAlbum as Album
-} from "../../types";
+import { Artist, Album } from "../../types";
 import { State } from "../../reducers";
 import { selectAlbumArtists } from "../../reducers/albums";
 import { Image, Text } from "../core";
@@ -50,7 +47,7 @@ function AlbumInfos({
   className,
   album,
   artists
-}: Props & HTMLAttributes<HTMLDivElement>) {
+}: Props & HTMLAttributes<HTMLElement>) {
   return (
     <Wrapper className={className}>
       <StyedImage source={getImageSource(album)} />

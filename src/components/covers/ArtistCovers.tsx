@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import { DenormalizedArtist as Artist } from "../../types";
+import { Artist } from "../../types";
 import { getImageSource } from "../../utils";
 import { ImageShape } from "../core/Image";
 import Covers, { Cover } from "./Covers";

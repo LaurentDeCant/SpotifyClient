@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import { DenormalizedPlaylist as Playlist } from "../../types";
+import { Playlist } from "../../types";
 import { getImageSource } from "../../utils";
 import Covers, { Cover } from "./Covers";
 

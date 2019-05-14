@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import {
-  DenormalizedAlbum as Album,
-  DenormalizedArtist as Artist,
-  DenormalizedPlaylist as Playlist
-} from "../../types";
+import { Album, Artist, Playlist } from "../../types";
 import { Heading } from "../core";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { DenormalizedTrack } from "../types";
+import { Track } from "../types";
 import { PayloadAction } from "./types";
 import { State } from "../reducers";
 import { selectIsPlaying, selectIsLoaded } from "../reducers/player";
@@ -42,7 +42,7 @@ export interface LoadCollectionAction
 
 const providers: [
   (state: State, id: string) => boolean,
-  (state: State, id: string) => DenormalizedTrack[]
+  (state: State, id: string) => Track[]
 ][] = [
   [selectIsAlbum, selectAlbumTracks],
   [selectIsArtist, selectArtistTracks],

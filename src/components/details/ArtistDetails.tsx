@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
-import {
-  DenormalizedAlbum as Album,
-  DenormalizedArtist as Artist,
-  DenormalizedTrack as Track
-} from "../../types";
+import { Album, Artist, Track } from "../../types";
 import { getImageSource } from "../../utils";
 import { getFullArtist } from "../../actions/artists";
 import { loadToggle } from "../../actions/player";
@@ -19,7 +15,7 @@ import {
   selectArtistRelatedArtists
 } from "../../reducers/artists";
 import { selectIsPlaying } from "../../reducers/player";
-import Tracks from "./Tracks";
+import TrackList from "./TrackList";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";
 import { Heading } from "../core";
@@ -39,7 +35,7 @@ function TopTracks({
   tracks: Track[];
   onToggle: (trackId: string) => void;
 }) {
-  return <>{tracks && <Tracks tracks={tracks} onToggle={onToggle} />}</>;
+  return <>{tracks && <TrackList tracks={tracks} onToggle={onToggle} />}</>;
 }
 
 function Albums({ albums }: { albums: Album[] }) {

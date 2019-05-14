@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-import { DenormalizedAlbum as Album } from "../../types";
+import { Album } from "../../types";
 import { getArtistNames, getImageSource } from "../../utils";
 import Covers, { Cover } from "./Covers";
 
@@ -9,7 +9,7 @@ function getCovers(albums: Album[]): Cover[] {
     id: album.id,
     image: getImageSource(album),
     title: album.name,
-    subTitle: getArtistNames(album.artists)
+    subTitle: getArtistNames([])
   }));
 }
 

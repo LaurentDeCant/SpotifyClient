@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
 import ButtonBase from "./ButtonBase";
 import Icon, { IconType } from "./Icon";
@@ -19,7 +19,7 @@ const StyledIcon = styled(Icon)`
   font-size: 25px;
 `;
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconType: IconType;
 }
 

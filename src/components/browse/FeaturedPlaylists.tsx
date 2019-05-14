@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { DenormalizedPlaylist as Playlist } from "../../types";
+import { Playlist } from "../../types";
 import { getFeaturedPlaylists } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectFeaturedPlaylists } from "../../reducers/browse";

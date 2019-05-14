@@ -1,13 +1,8 @@
-import {
-  DenormalizedAlbum,
-  DenormalizedArtist,
-  ExternalId,
-  ExternalUrl,
-  Restriction,
-  TrackLink
-} from ".";
+import { ExternalId, ExternalUrl, Restriction, TrackLink } from ".";
 
-interface Track {
+export interface Track {
+  album: string;
+  artists: string[];
   available_markets: string[];
   disc_number: number;
   duration_ms: number;
@@ -26,14 +21,4 @@ interface Track {
   type: string;
   uri: string;
   is_local: boolean;
-}
-
-export interface NormalizedTrack extends Track {
-  album: string;
-  artists: string[];
-}
-
-export interface DenormalizedTrack extends Track {
-  album: DenormalizedAlbum;
-  artists: DenormalizedArtist[];
 }

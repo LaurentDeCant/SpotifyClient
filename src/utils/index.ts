@@ -1,4 +1,4 @@
-import { DenormalizedArtist as Artist, Image } from "../types";
+import { Artist, Image } from "../types";
 
 export function getArtistNames(artists: Artist[]): string {
   return artists.map(artist => artist.name).join(", ");

@@ -1,4 +1,4 @@
-import { DenormalizedTrack, DenormalizedAlbum } from "../types";
+import { Track, Album } from "../types";
 import {
   ActionType,
   LoadCollectionAction,
@@ -143,9 +143,7 @@ export default createReducer(initialState, {
   })
 });
 
-export function selectLoadedTrack(
-  state: CombinedState
-): DenormalizedTrack | undefined {
+export function selectLoadedTrack(state: CombinedState): Track | undefined {
   const { trackIds, trackIndex } = state.player;
 
   if (trackIds) {
@@ -153,14 +151,11 @@ export function selectLoadedTrack(
   }
 }
 
-export function selectTrackAlbum(
-  state: CombinedState
-): DenormalizedAlbum | undefined {
+export function selectTrackAlbum(state: CombinedState): Album | undefined {
   const { trackIds, trackIndex } = state.player;
   const trackId = trackIds[trackIndex];
   const track = selectTrack(state, trackId);
   if (track) {
-    //@ts-ignore
     return selectAlbum(state, track.album);
   }
 

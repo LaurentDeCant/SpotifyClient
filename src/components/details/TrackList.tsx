@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { DenormalizedTrack as TrackObject } from "../../types";
-import Track from "./Track";
+import { Track } from "../../types";
+import TrackItem from "./TrackItem";
 
 const StyledList = styled.ul`
   flex-grow: 1;
@@ -13,22 +13,22 @@ const StyledItem = styled.li`
 `;
 
 interface Props {
-  tracks: TrackObject[];
+  tracks: Track[];
   onToggle: (trackId: string) => void;
 }
 
-function Tracks({ tracks, onToggle }: Props) {
+function TrackList({ tracks, onToggle }: Props) {
   console.log("Tracks");
 
   return (
     <StyledList>
       {tracks.map(track => (
         <StyledItem key={track.id}>
-          <Track track={track} onToggle={onToggle} />
+          <TrackItem track={track} onToggle={onToggle} />
         </StyledItem>
       ))}
     </StyledList>
   );
 }
 
-export default Tracks;
+export default TrackList;

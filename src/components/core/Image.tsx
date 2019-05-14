@@ -23,12 +23,16 @@ export enum ImageShape {
   Round = "ROUND"
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props {
   source?: string;
   shape: ImageShape;
 }
 
-function Image({ className, source, shape }: Props) {
+function Image({
+  className,
+  source,
+  shape
+}: Props & HTMLAttributes<HTMLElement>) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   function handleLoad() {

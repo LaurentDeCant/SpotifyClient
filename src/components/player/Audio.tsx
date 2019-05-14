@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, SyntheticEvent } from "react";
 import { connect } from "react-redux";
-import { DenormalizedTrack as Track } from "../../types";
+import { Track } from "../../types";
 import { State } from "../../reducers";
 import {
   selectLoadedTrack,
