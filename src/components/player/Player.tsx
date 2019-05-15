@@ -59,10 +59,10 @@ const CenterWrapper = styled(ThirdWrapper)`
   flex-direction: column;
   flex-shrink: 0;
   justify-content: space-evenly;
-  padding: 0 12.5px;
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+    padding: 0 12.5px;
     width: 50%;
   }
 `;
@@ -138,7 +138,7 @@ function Player({
       <RightWrapper>
         <Volume
           volume={volumeLevels.volume}
-          isMuted={volumeLevels.isMuted}
+          isMuted={volumeLevels.muted}
           onChange={changeVolume}
         />
       </RightWrapper>

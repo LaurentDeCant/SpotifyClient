@@ -19,11 +19,14 @@ const StyledIcon = styled(Icon)`
   font-size: 25px;
 `;
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface Props {
   iconType: IconType;
 }
 
-function RoundButton({ iconType, ...rest }: Props) {
+function RoundButton({
+  iconType,
+  ...rest
+}: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <StyedButton {...rest}>
       <StyledIcon type={iconType} />

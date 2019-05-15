@@ -21,9 +21,9 @@ const StyledList = styled.ul`
   flex-wrap: wrap;
   font-size: ${props => props.theme.fontSize.medium};
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 0;
   position: relative;
-  top: -20px;
+  top: -25px;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
     margin-bottom: 25px;

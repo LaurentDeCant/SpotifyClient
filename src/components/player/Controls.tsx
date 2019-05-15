@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { IconType, RoundButton } from "../core";
+import { IconType, RoundButton, ToggleButton } from "../core";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -32,6 +32,8 @@ function Controls({
 }: Props) {
   return (
     <Wrapper>
+      <ToggleButton iconType={IconType.Shuffle} />
+
       <RoundButton
         disabled={!canPrevious}
         onClick={onPrevious}
@@ -49,6 +51,8 @@ function Controls({
         onClick={onNext}
         iconType={IconType.SkipNext}
       />
+
+      <ToggleButton iconType={IconType.Loop} />
     </Wrapper>
   );
 }

@@ -193,16 +193,16 @@ export function previous() {
 export interface ChangeVolumeAction
   extends PayloadAction<
     ActionType.ChangeVolume,
-    { volume: number; isMuted: boolean }
+    { volume: number; muted: boolean }
   > {}
 
-export function changeVolume(volume: number, isMuted: boolean) {
+export function changeVolume(volume: number, muted: boolean) {
   return (dispatch: Dispatch<ChangeVolumeAction>) => {
     dispatch({
       type: ActionType.ChangeVolume,
       payload: {
         volume,
-        isMuted
+        muted
       }
     });
   };

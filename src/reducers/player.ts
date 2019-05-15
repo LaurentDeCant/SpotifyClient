@@ -16,8 +16,8 @@ import { selectAlbum } from "./albums";
 
 enum PlayerState {
   None = "NONE",
-  isPlaying = "IS_PLAYING",
-  isPaused = "IS_PAUSED"
+  Playing = "IS_PLAYING",
+  Paused = "IS_PAUSED"
 }
 
 export enum Command {
@@ -36,7 +36,7 @@ export interface State {
   duration: number;
   currentTime: number;
   volume: number;
-  isMuted: boolean;
+  muted: boolean;
   command: Command;
 }
 
@@ -47,7 +47,7 @@ const initialState: State = {
   duration: 0,
   currentTime: 0,
   volume: 1,
-  isMuted: false,
+  muted: false,
   command: Command.None
 };
 
@@ -79,7 +79,7 @@ export default createReducer(initialState, {
   }),
   [ActionType.Playing]: (state: State): State => ({
     ...state,
-    playerState: PlayerState.isPlaying,
+    playerState: PlayerState.Playing,
     command: Command.None
   }),
   [ActionType.Update]: (state: State, action: UpdateAction): State => ({
@@ -97,7 +97,7 @@ export default createReducer(initialState, {
   }),
   [ActionType.Paused]: (state: State): State => ({
     ...state,
-    playerState: PlayerState.isPaused,
+    playerState: PlayerState.Paused,
     command: Command.None
   }),
   [ActionType.Seek]: (state: State, action: SeekAction): State => ({
@@ -106,19 +106,17 @@ export default createReducer(initialState, {
     command: Command.Seek
   }),
   [ActionType.Seeked]: (state: State): State => ({
-    ...state,
-    command: Command.Play
+    ...state
   }),
   [ActionType.Ended]: (state: State): State => {
     const { trackIndex, trackIds } = state;
-    if (trackIndex === trackIds.length - 1) {
-      return { ...state, playerState: PlayerState.isPaused };
-    }
-    return {
-      ...state,
-      trackIndex: trackIndex + 1,
-      command: Command.Play
-    };
+    return trackIndex === trackIds.length - 1
+      ? { ...state, playerState: PlayerState.Paused }
+      : {
+          ...state,
+          trackIndex: trackIndex + 1,
+          command: Command.Play
+        };
   },
   [ActionType.Next]: (state: State): State => ({
     ...state,
@@ -172,7 +170,7 @@ export function selectIsLoaded(state: CombinedState) {
 export function selectIsPlaying(state: CombinedState, id?: string) {
   const { playerState } = state.player;
   return (
-    (!id || selectIsLoaded(state)(id)) && playerState === PlayerState.isPlaying
+    (!id || selectIsLoaded(state)(id)) && playerState === PlayerState.Playing
   );
 }
 
@@ -214,15 +212,15 @@ export const selectTimes = createSelector(
 
 export interface VolumeLevels {
   volume: number;
-  isMuted: boolean;
+  muted: boolean;
 }
 
 export const selectVolumeLevels = createSelector(
   ({ player }: CombinedState) => player.volume,
-  ({ player }: CombinedState) => player.isMuted,
-  (volume: number, isMuted: boolean) => ({
+  ({ player }: CombinedState) => player.muted,
+  (volume: number, muted: boolean) => ({
     volume,
-    isMuted
+    muted: muted
   })
 );
 

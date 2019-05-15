@@ -8,6 +8,7 @@ const Loader = styled.div<{ isLoading: boolean }>`
   top: 0;
   transition: ${props => (props.isLoading ? "all 0" : "all 0.2s")};
   width: 100%;
+  z-index: 2;
 
   &::before {
     background: ${props => props.theme.foreground.dark};
