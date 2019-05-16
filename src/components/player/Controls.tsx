@@ -1,6 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "../../styles/styled";
+import { State } from "../../reducers";
 import { IconType, RoundButton, ToggleButton } from "../core";
+import {
+  selectCanNext,
+  selectCanPrevious,
+  selectCanTogglePlay,
+  selectIsLooped,
+  selectIsPlaying,
+  selectIsShuffled
+} from "../../reducers/player";
+import {
+  next,
+  previous,
+  toggleLoop,
+  togglePlay,
+  toggleShuffle
+} from "../../actions/player";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -8,53 +25,89 @@ const Wrapper = styled.div`
 `;
 
 const MainButton = styled(RoundButton)`
-  transform: scale(1.5);
+  transform: scale(1.25);
 `;
 
 interface Props {
   isPlaying: boolean;
-  canToggle: boolean;
-  canNext: boolean;
+  isShuffled: boolean;
   canPrevious: boolean;
-  onToggle: () => void;
-  onNext: () => void;
-  onPrevious: () => void;
+  canTogglePlay: boolean;
+  canNext: boolean;
+  isLooped: boolean;
+  toggleShuffle: () => void;
+  previous: () => void;
+  togglePlay: () => void;
+  next: () => void;
+  toggleLoop: () => void;
 }
 
 function Controls({
-  canPrevious,
-  onPrevious,
   isPlaying,
-  canToggle,
-  onToggle,
+  isShuffled,
+  canPrevious,
+  canTogglePlay,
   canNext,
-  onNext
+  isLooped,
+  toggleShuffle,
+  previous,
+  togglePlay,
+  next,
+  toggleLoop
 }: Props) {
   return (
     <Wrapper>
-      <ToggleButton iconType={IconType.Shuffle} />
+      <ToggleButton
+        iconType={IconType.Shuffle}
+        onClick={toggleShuffle}
+        isToggled={isShuffled}
+      />
 
       <RoundButton
         disabled={!canPrevious}
-        onClick={onPrevious}
+        onClick={previous}
         iconType={IconType.SkipPrevious}
       />
 
       <MainButton
-        disabled={!canToggle}
-        onClick={onToggle}
+        disabled={!canTogglePlay}
+        onClick={togglePlay}
         iconType={isPlaying ? IconType.Pause : IconType.PlayArrow}
       />
 
       <RoundButton
         disabled={!canNext}
-        onClick={onNext}
+        onClick={next}
         iconType={IconType.SkipNext}
       />
 
-      <ToggleButton iconType={IconType.Loop} />
+      <ToggleButton
+        iconType={IconType.Loop}
+        onClick={toggleLoop}
+        isToggled={isLooped}
+      />
     </Wrapper>
   );
 }
 
-export default Controls;
+const mapState = (state: State) => ({
+  isPlaying: selectIsPlaying(state),
+  isShuffled: selectIsShuffled(state),
+  canPrevious: selectCanPrevious(state),
+  canTogglePlay: selectCanTogglePlay(state),
+  canNext: selectCanNext(state),
+  isLooped: selectIsLooped(state)
+});
+
+const mapDispatch = {
+  toggleShuffle,
+  previous,
+  togglePlay,
+  next,
+  toggleLoop
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Controls);

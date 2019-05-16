@@ -1,30 +1,26 @@
-import React, { useState } from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import styled from "../../styles/styled";
 import RoundButton, { Props as RoundButtonProps } from "./RoundButton";
 
-const StyledRoundButton = styled(RoundButton)<{ toggled: boolean }>`
-  ${props => props.toggled && `color: ${props.theme.primary};`}
+const StyledRoundButton = styled(RoundButton)<{ isToggled: boolean }>`
+  ${props => props.isToggled && `color: ${props.theme.primary};`}
 
   &:not(:disabled):hover {
-    ${props => props.toggled && `color: ${props.theme.primary};`}
+    ${props => props.isToggled && `color: ${props.theme.primary};`}
   }
 `;
 
-interface Props extends RoundButtonProps {}
+interface Props extends RoundButtonProps {
+  isToggled: boolean;
+}
 
-function ToggleButton({ iconType }: Props) {
-  const [toggled, setToggled] = useState(false);
-
-  function handleClick() {
-    setToggled(!toggled);
-  }
-
+function ToggleButton({
+  iconType,
+  isToggled,
+  ...rest
+}: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <StyledRoundButton
-      iconType={iconType}
-      onClick={handleClick}
-      toggled={toggled}
-    />
+    <StyledRoundButton {...rest} iconType={iconType} isToggled={isToggled} />
   );
 }
 

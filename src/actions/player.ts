@@ -31,7 +31,9 @@ export enum ActionType {
   VolumeChanged = "VOLUME_CHANGED",
   Ended = "ENDED",
   Next = "NEXT",
-  Previous = "PREVIOUS"
+  Previous = "PREVIOUS",
+  ToggleShuffle = "TOGGLE_SHUFFLE",
+  ToggleLoop = "TOGGLE_LOOP"
 }
 
 export interface LoadCollectionAction
@@ -101,7 +103,7 @@ export function trackLoaded(duration: number) {
   };
 }
 
-export function toggle() {
+export function togglePlay() {
   return (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
     const isPlaying = selectIsPlaying(state);
@@ -120,7 +122,7 @@ export function loadToggle(collectionId: string, trackId?: string) {
     } else if (trackId && !isLoaded(trackId)) {
       loadTrack(trackId)(dispatch);
     } else {
-      toggle()(dispatch, getState);
+      togglePlay()(dispatch, getState);
     }
   };
 }
@@ -193,16 +195,16 @@ export function previous() {
 export interface ChangeVolumeAction
   extends PayloadAction<
     ActionType.ChangeVolume,
-    { volume: number; muted: boolean }
+    { volume: number; isMuted: boolean }
   > {}
 
-export function changeVolume(volume: number, muted: boolean) {
+export function changeVolume(volume: number, isMuted: boolean) {
   return (dispatch: Dispatch<ChangeVolumeAction>) => {
     dispatch({
       type: ActionType.ChangeVolume,
       payload: {
         volume,
-        muted
+        isMuted
       }
     });
   };
@@ -212,6 +214,22 @@ export function volumeChanged() {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ActionType.VolumeChanged
+    });
+  };
+}
+
+export function toggleShuffle() {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.ToggleShuffle
+    });
+  };
+}
+
+export function toggleLoop() {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionType.ToggleLoop
     });
   };
 }

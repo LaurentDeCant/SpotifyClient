@@ -55,7 +55,7 @@ function Audio({
 
     if (currentAudio) {
       const { currentTime } = times;
-      const { volume, muted: isMuted } = volumeLevels;
+      const { volume, isMuted } = volumeLevels;
 
       switch (command) {
         case Command.Play:

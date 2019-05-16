@@ -35,8 +35,10 @@ export interface State {
   playerState: PlayerState;
   duration: number;
   currentTime: number;
+  isShuffled: boolean;
+  isLooped: boolean;
   volume: number;
-  muted: boolean;
+  isMuted: boolean;
   command: Command;
 }
 
@@ -46,8 +48,10 @@ const initialState: State = {
   playerState: PlayerState.None,
   duration: 0,
   currentTime: 0,
+  isShuffled: false,
+  isLooped: false,
   volume: 1,
-  muted: false,
+  isMuted: false,
   command: Command.None
 };
 
@@ -128,6 +132,14 @@ export default createReducer(initialState, {
     trackIndex: state.trackIndex - 1,
     command: Command.Play
   }),
+  [ActionType.ToggleShuffle]: (state: State): State => ({
+    ...state,
+    isShuffled: !state.isShuffled
+  }),
+  [ActionType.ToggleLoop]: (state: State): State => ({
+    ...state,
+    isLooped: !state.isLooped
+  }),
   [ActionType.ChangeVolume]: (
     state: State,
     action: ChangeVolumeAction
@@ -174,7 +186,7 @@ export function selectIsPlaying(state: CombinedState, id?: string) {
   );
 }
 
-export function selectCanToggle(state: CombinedState) {
+export function selectCanTogglePlay(state: CombinedState) {
   const { player } = state;
   return (
     player.playerState !== PlayerState.None &&
@@ -196,6 +208,14 @@ export function selectCanPrevious(state: CombinedState) {
   return trackIds.length > 1 && trackIndex > 0;
 }
 
+export function selectIsShuffled({ player }: CombinedState) {
+  return player.isShuffled;
+}
+
+export function selectIsLooped({ player }: CombinedState) {
+  return player.isLooped;
+}
+
 export interface Times {
   duration: number;
   currentTime: number;
@@ -212,15 +232,15 @@ export const selectTimes = createSelector(
 
 export interface VolumeLevels {
   volume: number;
-  muted: boolean;
+  isMuted: boolean;
 }
 
 export const selectVolumeLevels = createSelector(
   ({ player }: CombinedState) => player.volume,
-  ({ player }: CombinedState) => player.muted,
-  (volume: number, muted: boolean) => ({
+  ({ player }: CombinedState) => player.isMuted,
+  (volume: number, isMuted: boolean) => ({
     volume,
-    muted: muted
+    isMuted
   })
 );
 
