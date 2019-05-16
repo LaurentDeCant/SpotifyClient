@@ -7,7 +7,7 @@ import { State } from "../../reducers";
 import { selectCategory, selectCategoryPlaylists } from "../../reducers/browse";
 import { Heading } from "../core";
 import PlaylistCovers from "../covers/PlaylistCovers";
-import withReloader from "../withReloader";
+import withLoader from "../withLoader";
 
 interface Params {
   categoryId: string;
@@ -58,9 +58,11 @@ const mapDispatch = {
   getPlaylists: (categoryId: string) => getCategoryPlaylists(categoryId)
 };
 
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(withReloader(CategoryPlaylists))
+export default withLoader(
+  withRouter(
+    connect(
+      mapState,
+      mapDispatch
+    )(CategoryPlaylists)
+  )
 );

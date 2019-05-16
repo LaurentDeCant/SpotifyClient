@@ -14,7 +14,7 @@ import {
 import { selectIsPlaying } from "../../reducers/player";
 import Header from "./Header";
 import TrackList from "./TrackList";
-import withReloader from "../withReloader";
+import withLoader from "../withLoader";
 import Wrapper from "./Wrapper";
 
 interface Params {
@@ -83,7 +83,7 @@ const mapDispatch = {
   loadToggle
 };
 
-export default withReloader(
+export default withLoader(
   withRouter(
     connect(
       mapState,

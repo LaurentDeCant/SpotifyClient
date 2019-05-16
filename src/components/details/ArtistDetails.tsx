@@ -22,7 +22,7 @@ import { Heading } from "../core";
 import { ImageShape } from "../core/Image";
 import Header from "./Header";
 import Wrapper from "./Wrapper";
-import withReloader from "../withReloader";
+import withLoader from "../withLoader";
 
 const Section = styled.section`
   margin-bottom: 40px;
@@ -140,7 +140,7 @@ const mapDispatch = {
   loadToggle
 };
 
-export default withReloader(
+export default withLoader(
   withRouter(
     connect(
       mapState,

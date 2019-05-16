@@ -4,10 +4,13 @@ import styled from "../../styles/styled";
 import { Artist } from "../../types";
 
 const List = styled.ul`
-  display: flex;
+  color: ${props => props.theme.foreground.dark};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
-const Item = styled.li`
+const Item = styled.span`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.fontWeight.light};
   margin-right: 6.25px;
@@ -29,7 +32,7 @@ function ArtistList({ artists }: { artists: Artist[] }) {
   return (
     <List>
       {artists.map(artist => (
-        <Item>
+        <Item key={artist.id}>
           <StyledLink to={`/artist/${artist.id}`}>{artist.name}</StyledLink>
         </Item>
       ))}

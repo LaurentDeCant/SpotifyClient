@@ -5,7 +5,7 @@ import { getFeaturedPlaylists } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectFeaturedPlaylists } from "../../reducers/browse";
 import PlaylistCovers from "../covers/PlaylistCovers";
-import withReloader from "../withReloader";
+import withLoader from "../withLoader";
 
 interface Props {
   playlists: Playlist[];
@@ -26,7 +26,9 @@ const mapDispatch = {
   getPlaylists: getFeaturedPlaylists
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(withReloader(FeaturedPlaylists));
+export default withLoader(
+  connect(
+    mapState,
+    mapDispatch
+  )(FeaturedPlaylists)
+);

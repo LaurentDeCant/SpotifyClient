@@ -5,7 +5,7 @@ import { getCategories } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectCategories } from "../../reducers/browse";
 import CategoryCovers from "../covers/CategoryCovers";
-import withReloader from "../withReloader";
+import withLoader from "../withLoader";
 
 interface Props {
   categories: Category[];
@@ -26,7 +26,9 @@ const mapDispatch = {
   getCategories: getCategories
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(withReloader(Categories));
+export default withLoader(
+  connect(
+    mapState,
+    mapDispatch
+  )(Categories)
+);

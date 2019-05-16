@@ -82,12 +82,7 @@ function Search({
       />
       {query &&
         (hasResults ? (
-          <Results
-            isLoading={isLoading}
-            artists={artists}
-            albums={albums}
-            playlists={playlists}
-          />
+          <Results artists={artists} albums={albums} playlists={playlists} />
         ) : (
           <Heading>No Results found for '{query}'.</Heading>
         ))}

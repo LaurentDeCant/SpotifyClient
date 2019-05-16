@@ -16,7 +16,7 @@ import { getArtistNames, getImageSource } from "../../utils";
 import Collection from "./Wrapper";
 import Header from "./Header";
 import TrackList from "./TrackList";
-import withReloader from "../withReloader";
+import withLoader from "../withLoader";
 
 interface Params {
   albumId: string;
@@ -87,7 +87,7 @@ const mapDispatch = {
   loadToggle
 };
 
-export default withReloader(
+export default withLoader(
   withRouter(
     connect(
       mapState,

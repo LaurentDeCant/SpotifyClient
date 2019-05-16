@@ -5,7 +5,7 @@ import { getNewReleases } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectNewReleases } from "../../reducers/browse";
 import AlbumCovers from "../covers/AlbumCovers";
-import withReloader from "../withReloader";
+import withLoader from "../withLoader";
 
 interface Props {
   albums: Album[];
@@ -26,7 +26,9 @@ const mapDispatch = {
   getAlbums: getNewReleases
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(withReloader(NewReleases));
+export default withLoader(
+  connect(
+    mapState,
+    mapDispatch
+  )(NewReleases)
+);
