@@ -16,10 +16,6 @@ const ProgressTime = styled.div`
   font-weight: ${props => props.theme.fontWeight.light};
 `;
 
-const StyledSlider = styled(Slider)`
-  margin: 0 12.5px;
-`;
-
 interface Props {
   duration: number;
   currentTime: number;
@@ -48,11 +44,7 @@ function Playback({ duration, currentTime, canSeek, onSeek }: Props) {
   return (
     <Wrapper>
       {renderTime(currentTime)}
-      <StyledSlider
-        value={progress}
-        onChange={handleChange}
-        canChange={canSeek}
-      />
+      <Slider value={progress} onChange={handleChange} canChange={canSeek} />
       {renderTime(duration)}
     </Wrapper>
   );

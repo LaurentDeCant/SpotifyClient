@@ -9,6 +9,10 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
+const StyledButton = styled(RoundButton)`
+  margin: 0;
+`;
+
 const StyledSlider = styled(Slider)`
   width: 100px;
 `;
@@ -30,7 +34,7 @@ function Volume({ volume, isMuted, onChange }: Props) {
 
   return (
     <Wrapper>
-      <RoundButton
+      <StyledButton
         onClick={handleClick}
         iconType={isMuted ? IconType.VolumeOff : IconType.VolumeUp}
       />

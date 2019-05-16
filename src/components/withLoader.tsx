@@ -1,4 +1,4 @@
-import React, { ComponentType, useState } from "react";
+import React, { ComponentType, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import styled from "../styles/styled";
@@ -57,15 +57,11 @@ const Loader = styled.div<{ isLoading: boolean }>`
 const withLoader = (WrappedComponent: ComponentType<any>) => {
   const WithLoader = ({ match, isLoading, ...rest }: any) => {
     const [prevUrl, setPrevUrl] = useState(match.url);
-    const [prevIsLoading, setPrevIsLoading] = useState(false);
     const [hasLoaded, setHasLoaded] = useState(false);
 
-    if (prevIsLoading !== isLoading) {
-      if (!isLoading) {
-        setHasLoaded(true);
-      }
-      setPrevIsLoading(isLoading);
-    }
+    useEffect(() => {
+      setHasLoaded(!isLoading);
+    }, [isLoading]);
 
     if (prevUrl !== match.url) {
       setHasLoaded(false);

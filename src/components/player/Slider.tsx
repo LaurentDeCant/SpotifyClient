@@ -2,29 +2,39 @@ import React, { useState, useRef } from "react";
 import styled from "../../styles/styled";
 
 const Wrapper = styled.div<{ isDisabled: boolean }>`
-  align-items: center;
   border-radius: 2.5px;
-  display: flex;
   cursor: ${props => (props.isDisabled ? "default" : "pointer")};
+  padding: 0 12.5px
+  width: 100%;
+`;
+
+const Container = styled.div`
+  align-items: center;
+  display: flex;
   height: 25px;
   position: relative;
   width: 100%;
 `;
 
-const Left = styled.div<{ width: number }>`
+const Left = styled.div.attrs<{ width: number }>(
+  (props: { width: number }) => ({
+    style: { width: `${props.width * 100}%` }
+  })
+)<{ width: number }>`
   background: ${props => props.theme.primaryLight};
   border-radius: 2.5px 0 0 2.5px;
   height: 2.5px;
-  left: 0;
-  position: absolute;
-  width: calc(${props => props.width * 100}%);
 `;
 
-const Thumb = styled.div<{ position: number; isDisabled: boolean }>`
+const Thumb = styled.div.attrs<{ position: number }>(
+  ({ position }: { position: number }) => ({
+    style: { left: `${position * 100}%` }
+  })
+)<{ position: number; isDisabled: boolean }>`
   background: transparent;
   border-radius: 50%;
   height: 25px;
-  left: calc(${props => props.position * 100}% - 12.5px);
+  margin-left: -12.5px;
   position: absolute;
   visibility: hidden;
   width: 25px;
@@ -48,25 +58,26 @@ const Thumb = styled.div<{ position: number; isDisabled: boolean }>`
   }
 `;
 
-const Right = styled.div<{ width: number }>`
+const Right = styled.div.attrs<{ width: number }>(
+  (props: { width: number }) => ({
+    style: { width: `${100 - props.width * 100}%` }
+  })
+)<{ width: number }>`
   background: ${props => props.theme.foreground.dark};
   border-radius: 0 2.5px 2.5px 0;
   height: 2.5px;
-  position: absolute;
-  right: 0;
-  width: calc(100% - ${props => props.width * 100}%);
 `;
 
 interface Props {
   className?: string;
   value: number;
   canChange: boolean;
-  onChange?: (value: number) => void;
+  onChange: (value: number) => void;
 }
 
-function Slider(props: Props) {
+function Slider({ className, value, canChange, onChange }: Props) {
   const [isDown, setIsDown] = useState(false);
-  const [value, setValue] = useState(0);
+  const [localValue, setLocalValue] = useState(0);
 
   const wrapper = useRef<HTMLDivElement>(null);
   const thumb = useRef<HTMLDivElement>(null);
@@ -90,37 +101,32 @@ function Slider(props: Props) {
   }
 
   function handleMouseDown(event: React.MouseEvent<HTMLElement>) {
-    const { canChange } = props;
     if (!canChange) {
       return;
     }
 
     setIsDown(true);
-    setValue(getValue(event.pageX));
+    setLocalValue(getValue(event.pageX));
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   }
 
   function handleMouseMove(event: MouseEvent) {
-    setValue(getValue(event.pageX));
+    setLocalValue(getValue(event.pageX));
   }
 
   function handleMouseUp(event: MouseEvent) {
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
     setIsDown(false);
-    const { onChange } = props;
-    if (onChange) {
-      const value = getValue(event.pageX);
-      onChange(value);
-    }
+    const value = getValue(event.pageX);
+    onChange(value);
   }
 
   function getCurrentValue() {
-    return isDown ? value : props.value;
+    return isDown ? localValue : value;
   }
 
-  const { className, canChange } = props;
   const currentValue = getCurrentValue();
 
   return (
@@ -130,18 +136,21 @@ function Slider(props: Props) {
       isDisabled={!canChange}
       className={className}
     >
-      <Left width={currentValue} />
-      {canChange && (
-        <Thumb ref={thumb} position={currentValue} isDisabled={!canChange} />
-      )}
-      <Right width={currentValue} />
+      <Container>
+        <Left width={currentValue} />
+        {canChange && (
+          <Thumb ref={thumb} position={currentValue} isDisabled={!canChange} />
+        )}
+        <Right width={currentValue} />
+      </Container>
     </Wrapper>
   );
 }
 
 Slider.defaultProps = {
   value: 0,
-  canChange: true
+  canChange: true,
+  onChange: () => {}
 };
 
 export default Slider;

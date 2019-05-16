@@ -137,11 +137,7 @@ export const selectArtists = createSelector(
 
 export function selectPlayableTracks(state: CombinedState, artistId: string) {
   const tracks = selectArtistTopTracks(state, artistId);
-  if (tracks) {
-    return tracks.filter(track => track.preview_url);
-  }
-
-  return [];
+  return tracks.filter(track => track.preview_url);
 }
 
 export function selectIsPlayable(state: CombinedState, artistId: string) {

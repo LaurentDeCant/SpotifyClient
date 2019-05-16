@@ -48,9 +48,7 @@ function TrackInfos({
   album,
   artists
 }: Props & HTMLAttributes<HTMLElement>) {
-  function handleImageClick() {
-    console.log("Inage");
-  }
+  function handleImageClick() {}
 
   return (
     <Wrapper className={className}>
