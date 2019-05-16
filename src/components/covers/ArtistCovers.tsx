@@ -19,7 +19,7 @@ interface Props extends RouteComponentProps {
 
 function ArtistCovers({ history, artists }: Props) {
   function handleClick(artistId: string) {
-    history.push(`${process.env.PUBLIC_URL}/artists/${artistId}`);
+    history.push(`${process.env.PUBLIC_URL}/artist/${artistId}`);
   }
 
   const covers = getCovers(artists);

@@ -1,10 +1,8 @@
 import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { Album } from "../../types";
 import { State } from "../../reducers";
 import {
-  selectTrackAlbum,
   Times,
   selectTimes,
   selectCanSeek,
@@ -12,7 +10,7 @@ import {
   selectVolumeLevels
 } from "../../reducers/player";
 import { seek, changeVolume } from "../../actions/player";
-import AlbumInfos from "./AlbumInfos";
+import TrackInfos from "./TrackInfos";
 import Audio from "./Audio";
 import Controls from "./Controls";
 import Playback from "./Playback";
@@ -25,7 +23,7 @@ const Wrapper = styled.div`
   box-shadow: 0 -2px 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   height: 100px;
-  padding: 25px;
+  padding: 12.5px;
   z-index: 2;
 `;
 
@@ -68,7 +66,6 @@ const RightWrapper = styled(ThirdWrapper)`
 `;
 
 interface Props {
-  album?: Album;
   times: Times;
   canSeek: boolean;
   volumeLevels: VolumeLevels;
@@ -78,7 +75,6 @@ interface Props {
 
 function Player({
   className,
-  album,
   times,
   canSeek,
   volumeLevels,
@@ -87,7 +83,9 @@ function Player({
 }: Props & HTMLAttributes<HTMLElement>) {
   return (
     <Wrapper className={className}>
-      <LeftWrapper>{album && <AlbumInfos album={album} />}</LeftWrapper>
+      <LeftWrapper>
+        <TrackInfos />
+      </LeftWrapper>
 
       <CenterWrapper>
         <Controls />
@@ -114,7 +112,6 @@ function Player({
 }
 
 const mapState = (state: State) => ({
-  album: selectTrackAlbum(state),
   times: selectTimes(state),
   canSeek: selectCanSeek(state),
   volumeLevels: selectVolumeLevels(state)

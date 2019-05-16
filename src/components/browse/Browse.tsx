@@ -70,7 +70,7 @@ const links = [
     label: "New Releases"
   },
   {
-    url: "featured-playist",
+    url: "featured-playists",
     label: "Featured Playlists"
   }
 ];
@@ -92,7 +92,7 @@ function Browse({ match }: RouteComponentProps) {
       <Route exact path={`${match.path}/categories`} component={Categories} />
       <Route path={`${match.path}/new-releases`} component={NewReleases} />
       <Route
-        path={`${match.path}/featured-playist`}
+        path={`${match.path}/featured-playists`}
         component={FeaturedPlaylists}
       />
     </Wrapper>

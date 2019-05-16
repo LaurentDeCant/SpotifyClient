@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route } from "react-router";
 import styled from "../../styles/styled";
 import DefaultRoute from "../DefaultRoute";
 import PrivateRoute from "../PrivateRoute";
@@ -28,19 +28,19 @@ const Routes = () => {
       <PrivateRoute path={`${publicUrl}/browse`} component={Browse} />
       <PrivateRoute path={`${publicUrl}/search/:query?`} component={Search} />
       <PrivateRoute
-        path={`${publicUrl}/categories/:categoryId/playlists`}
+        path={`${publicUrl}/category/:categoryId`}
         component={CategoryPlaylists}
       />
       <PrivateRoute
-        path={`${publicUrl}/playlists/:playlistId`}
+        path={`${publicUrl}/playlist/:playlistId`}
         component={PlaylistDetails}
       />
       <PrivateRoute
-        path={`${publicUrl}/albums/:albumId`}
+        path={`${publicUrl}/album/:albumId`}
         component={AlbumDetails}
       />
       <PrivateRoute
-        path={`${publicUrl}/artists/:artistId`}
+        path={`${publicUrl}/artist/:artistId`}
         component={ArtistDetails}
       />
     </Wrapper>

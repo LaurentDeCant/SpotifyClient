@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router";
 import { Category, Playlist } from "../../types";
 import { getCategory, getCategoryPlaylists } from "../../actions/browse";
 import { State } from "../../reducers";

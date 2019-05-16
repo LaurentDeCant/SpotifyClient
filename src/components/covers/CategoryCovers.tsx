@@ -20,9 +20,7 @@ interface Props extends RouteComponentProps {
 
 function CategoryCovers({ history, categories }: Props) {
   function handleClick(categoryId: string) {
-    history.push(
-      `${process.env.PUBLIC_URL}/categories/${categoryId}/playlists`
-    );
+    history.push(`${process.env.PUBLIC_URL}/category/${categoryId}`);
   }
 
   const covers = getCovers(categories);

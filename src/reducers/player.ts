@@ -1,5 +1,4 @@
 import { createSelector } from "reselect";
-import { Track, Album } from "../types";
 import {
   ActionType,
   LoadCollectionAction,
@@ -13,6 +12,7 @@ import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 import { selectTrack } from "./tracks";
 import { selectAlbum } from "./albums";
+import { selectArtists } from "./artists";
 
 enum PlayerState {
   None = "NONE",
@@ -154,23 +154,27 @@ export default createReducer(initialState, {
   })
 });
 
-export function selectLoadedTrack(state: CombinedState): Track | undefined {
+export function selectLoadedTrack(state: CombinedState) {
   const { trackIds, trackIndex } = state.player;
-
   if (trackIds) {
     return selectTrack(state, trackIds[trackIndex]);
   }
 }
 
-export function selectTrackAlbum(state: CombinedState): Album | undefined {
-  const { trackIds, trackIndex } = state.player;
-  const trackId = trackIds[trackIndex];
-  const track = selectTrack(state, trackId);
+export function selectLoadedAlbum(state: CombinedState) {
+  const track = selectLoadedTrack(state);
   if (track) {
     return selectAlbum(state, track.album);
   }
+}
 
-  return undefined;
+export function selectLoadedArtists(state: CombinedState) {
+  const track = selectLoadedTrack(state);
+  if (track) {
+    return selectArtists(state)(track.artists);
+  }
+
+  return [];
 }
 
 export function selectIsLoaded(state: CombinedState) {
