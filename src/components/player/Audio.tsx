@@ -6,10 +6,10 @@ import {
   selectLoadedTrack,
   Times,
   selectTimes,
+  selectVolume,
+  selectIsMuted,
   Command,
-  selectCommand,
-  VolumeLevels,
-  selectVolumeLevels
+  selectCommand
 } from "../../reducers/player";
 import {
   trackLoaded,
@@ -24,8 +24,9 @@ import {
 interface Props {
   loadedTrack?: Track;
   times: Times;
+  volume: number;
+  isMuted: boolean;
   command: Command;
-  volumeLevels: VolumeLevels;
   trackLoaded: (duration: number) => void;
   playing: () => void;
   update: (elaped: number) => void;
@@ -38,7 +39,8 @@ interface Props {
 function Audio({
   loadedTrack,
   times,
-  volumeLevels,
+  volume,
+  isMuted,
   command,
   trackLoaded,
   playing,
@@ -55,7 +57,6 @@ function Audio({
 
     if (currentAudio) {
       const { currentTime } = times;
-      const { volume, isMuted } = volumeLevels;
 
       switch (command) {
         case Command.Play:
@@ -108,8 +109,9 @@ function Audio({
 const mapState = (state: State) => ({
   loadedTrack: selectLoadedTrack(state),
   times: selectTimes(state),
-  command: selectCommand(state),
-  volumeLevels: selectVolumeLevels(state)
+  volume: selectVolume(state),
+  isMuted: selectIsMuted(state),
+  command: selectCommand(state)
 });
 
 const mapDispatch = {

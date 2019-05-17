@@ -234,19 +234,13 @@ export const selectTimes = createSelector(
   })
 );
 
-export interface VolumeLevels {
-  volume: number;
-  isMuted: boolean;
+export function selectVolume({ player }: CombinedState) {
+  return player.volume;
 }
 
-export const selectVolumeLevels = createSelector(
-  ({ player }: CombinedState) => player.volume,
-  ({ player }: CombinedState) => player.isMuted,
-  (volume: number, isMuted: boolean) => ({
-    volume,
-    isMuted
-  })
-);
+export function selectIsMuted({ player }: CombinedState) {
+  return player.isMuted;
+}
 
 export function selectCommand(state: CombinedState): Command {
   return state.player.command;

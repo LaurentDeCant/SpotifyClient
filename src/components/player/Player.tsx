@@ -2,14 +2,8 @@ import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { State } from "../../reducers";
-import {
-  Times,
-  selectTimes,
-  selectCanSeek,
-  VolumeLevels,
-  selectVolumeLevels
-} from "../../reducers/player";
-import { seek, changeVolume } from "../../actions/player";
+import { Times, selectTimes, selectCanSeek } from "../../reducers/player";
+import { seek } from "../../actions/player";
 import TrackInfos from "./TrackInfos";
 import Audio from "./Audio";
 import Controls from "./Controls";
@@ -68,18 +62,14 @@ const RightWrapper = styled(ThirdWrapper)`
 interface Props {
   times: Times;
   canSeek: boolean;
-  volumeLevels: VolumeLevels;
   seek: (time: number) => void;
-  changeVolume: (volume: number, isMuted: boolean) => void;
 }
 
 function Player({
   className,
   times,
   canSeek,
-  volumeLevels,
-  seek,
-  changeVolume
+  seek
 }: Props & HTMLAttributes<HTMLElement>) {
   return (
     <Wrapper className={className}>
@@ -99,11 +89,7 @@ function Player({
       </CenterWrapper>
 
       <RightWrapper>
-        <Volume
-          volume={volumeLevels.volume}
-          isMuted={volumeLevels.isMuted}
-          onChange={changeVolume}
-        />
+        <Volume />
       </RightWrapper>
 
       <Audio />
@@ -113,13 +99,11 @@ function Player({
 
 const mapState = (state: State) => ({
   times: selectTimes(state),
-  canSeek: selectCanSeek(state),
-  volumeLevels: selectVolumeLevels(state)
+  canSeek: selectCanSeek(state)
 });
 
 const mapDispatch = {
-  seek,
-  changeVolume
+  seek
 };
 
 export default connect(

@@ -1,5 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "../../styles/styled";
+import { changeVolume } from "../../actions/player";
+import { State } from "../../reducers";
+import { selectVolume, selectIsMuted } from "../../reducers/player";
 import { IconType, RoundButton } from "../core";
 import Slider from "./Slider";
 
@@ -20,16 +24,16 @@ const StyledSlider = styled(Slider)`
 interface Props {
   volume: number;
   isMuted: boolean;
-  onChange: (volume: number, isMuted: boolean) => void;
+  changeVolume: (volume: number, isMuted: boolean) => void;
 }
 
-function Volume({ volume, isMuted, onChange }: Props) {
+function Volume({ volume, isMuted, changeVolume }: Props) {
   function handleClick() {
-    onChange(volume, !isMuted);
+    changeVolume(volume, !isMuted);
   }
 
   function handleChange(value: number) {
-    onChange(value, false);
+    changeVolume(value, false);
   }
 
   return (
@@ -43,4 +47,16 @@ function Volume({ volume, isMuted, onChange }: Props) {
   );
 }
 
-export default Volume;
+const mapState = (state: State) => ({
+  volume: selectVolume(state),
+  isMuted: selectIsMuted(state)
+});
+
+const mapDispatch = {
+  changeVolume
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Volume);
