@@ -7,6 +7,7 @@ export enum IconType {
   Pause = "pause",
   Person = "person",
   PlayArrow = "play_arrow",
+  PlaylistPlay = "playlist_play",
   Refresh = "refresh",
   Search = "search",
   Shuffle = "shuffle",

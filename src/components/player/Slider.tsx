@@ -16,21 +16,17 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const Left = styled.div.attrs<{ width: number }>(
-  (props: { width: number }) => ({
-    style: { width: `${props.width * 100}%` }
-  })
-)<{ width: number }>`
+const Left = styled.div.attrs<{ width: number }>(props => ({
+  style: { width: `${props.width * 100}%` }
+}))<{ width: number }>`
   background: ${props => props.theme.primaryLight};
   border-radius: 2.5px 0 0 2.5px;
   height: 2.5px;
 `;
 
-const Thumb = styled.div.attrs<{ position: number }>(
-  ({ position }: { position: number }) => ({
-    style: { left: `${position * 100}%` }
-  })
-)<{ position: number; isDisabled: boolean }>`
+const Thumb = styled.div.attrs<{ position: number }>(({ position }) => ({
+  style: { left: `${position * 100}%` }
+}))<{ position: number }>`
   background: transparent;
   border-radius: 50%;
   height: 25px;
@@ -58,11 +54,9 @@ const Thumb = styled.div.attrs<{ position: number }>(
   }
 `;
 
-const Right = styled.div.attrs<{ width: number }>(
-  (props: { width: number }) => ({
-    style: { width: `${100 - props.width * 100}%` }
-  })
-)<{ width: number }>`
+const Right = styled.div.attrs<{ width: number }>(props => ({
+  style: { width: `${100 - props.width * 100}%` }
+}))<{ width: number }>`
   background: ${props => props.theme.foreground.dark};
   border-radius: 0 2.5px 2.5px 0;
   height: 2.5px;
@@ -138,9 +132,7 @@ function Slider({ className, value, canChange, onChange }: Props) {
     >
       <Container>
         <Left width={currentValue} />
-        {canChange && (
-          <Thumb ref={thumb} position={currentValue} isDisabled={!canChange} />
-        )}
+        {canChange && <Thumb ref={thumb} position={currentValue} />}
         <Right width={currentValue} />
       </Container>
     </Wrapper>

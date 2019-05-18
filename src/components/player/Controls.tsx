@@ -24,9 +24,34 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const MainButton = styled(RoundButton)`
+const ShuffleButton = styled(ToggleButton).attrs(() => ({
+  iconType: IconType.Shuffle
+}))``;
+
+const PreviousButton = styled(RoundButton).attrs(() => ({
+  iconType: IconType.SkipPrevious
+}))``;
+
+interface PlayButtonProps {
+  isPlaying: boolean;
+}
+
+const PlayButton = styled(RoundButton).attrs<
+  PlayButtonProps,
+  { iconType: IconType }
+>(({ isPlaying }) => ({
+  iconType: isPlaying ? IconType.Pause : IconType.PlayArrow
+}))<PlayButtonProps>`
   transform: scale(1.25);
 `;
+
+const NextButton = styled(RoundButton).attrs(() => ({
+  iconType: IconType.SkipNext
+}))``;
+
+const LoopButton = styled(ToggleButton).attrs(() => ({
+  iconType: IconType.Loop
+}))``;
 
 interface Props {
   isPlaying: boolean;
@@ -57,35 +82,17 @@ function Controls({
 }: Props) {
   return (
     <Wrapper>
-      <ToggleButton
-        iconType={IconType.Shuffle}
-        onClick={toggleShuffle}
-        isToggled={isShuffled}
-      />
+      <ShuffleButton onClick={toggleShuffle} isToggled={isShuffled} />
+      <PreviousButton disabled={!canPrevious} onClick={previous} />
 
-      <RoundButton
-        disabled={!canPrevious}
-        onClick={previous}
-        iconType={IconType.SkipPrevious}
-      />
-
-      <MainButton
+      <PlayButton
         disabled={!canTogglePlay}
         onClick={togglePlay}
-        iconType={isPlaying ? IconType.Pause : IconType.PlayArrow}
+        isPlaying={isPlaying}
       />
 
-      <RoundButton
-        disabled={!canNext}
-        onClick={next}
-        iconType={IconType.SkipNext}
-      />
-
-      <ToggleButton
-        iconType={IconType.Loop}
-        onClick={toggleLoop}
-        isToggled={isLooped}
-      />
+      <NextButton disabled={!canNext} onClick={next} />
+      <LoopButton onClick={toggleLoop} isToggled={isLooped} />
     </Wrapper>
   );
 }

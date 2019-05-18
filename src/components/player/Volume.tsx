@@ -13,7 +13,22 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const StyledButton = styled(RoundButton)`
+const QueueButton = styled(RoundButton).attrs(() => ({
+  iconType: IconType.PlaylistPlay
+}))`
+  margin: 6.25px;
+`;
+
+interface VolumeButtonProps {
+  isMuted: boolean;
+}
+
+const VolumeButton = styled(RoundButton).attrs<
+  VolumeButtonProps,
+  { iconType: IconType }
+>(({ isMuted }) => ({
+  iconType: isMuted ? IconType.VolumeOff : IconType.VolumeUp
+}))<VolumeButtonProps>`
   margin: 0;
 `;
 
@@ -38,10 +53,8 @@ function Volume({ volume, isMuted, changeVolume }: Props) {
 
   return (
     <Wrapper>
-      <StyledButton
-        onClick={handleClick}
-        iconType={isMuted ? IconType.VolumeOff : IconType.VolumeUp}
-      />
+      <QueueButton />
+      <VolumeButton isMuted={isMuted || !volume} onClick={handleClick} />
       <StyledSlider value={isMuted ? 0 : volume} onChange={handleChange} />
     </Wrapper>
   );
