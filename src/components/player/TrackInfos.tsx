@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 const StyedImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   height: 75px;
-  margin-right: 12.5px;
+  margin-right: ${props => props.theme.thickness.small}px;
   width: 75px;
 `;
 
@@ -33,7 +33,7 @@ const Container = styled.div`
 `;
 
 const Title = styled(Text)`
-  margin-bottom: 6.25px;
+  margin-bottom: ${props => props.theme.thickness.extraSmall}px;
 `;
 
 interface Props {

@@ -2,16 +2,16 @@ import React, { useState, useRef } from "react";
 import styled from "../../styles/styled";
 
 const Wrapper = styled.div<{ isDisabled: boolean }>`
-  border-radius: 2.5px;
+  border-radius: ${props => props.theme.thickness.extraExtraSmall}px;
   cursor: ${props => (props.isDisabled ? "default" : "pointer")};
-  padding: 0 12.5px
+  padding: 0 ${props => props.theme.thickness.small}px
   width: 100%;
 `;
 
 const Container = styled.div`
   align-items: center;
   display: flex;
-  height: 25px;
+  height: ${props => props.theme.thickness.medium}px;
   position: relative;
   width: 100%;
 `;
@@ -20,8 +20,9 @@ const Left = styled.div.attrs<{ width: number }>(props => ({
   style: { width: `${props.width * 100}%` }
 }))<{ width: number }>`
   background: ${props => props.theme.primaryLight};
-  border-radius: 2.5px 0 0 2.5px;
-  height: 2.5px;
+  border-radius: ${props => props.theme.thickness.extraExtraSmall}px 0 0
+    ${props => props.theme.thickness.extraExtraSmall}px;
+  height: ${props => props.theme.thickness.extraExtraSmall}px;
 `;
 
 const Thumb = styled.div.attrs<{ position: number }>(({ position }) => ({
@@ -29,11 +30,11 @@ const Thumb = styled.div.attrs<{ position: number }>(({ position }) => ({
 }))<{ position: number }>`
   background: transparent;
   border-radius: 50%;
-  height: 25px;
+  height: ${props => props.theme.thickness.medium}px;
   margin-left: -12.5px;
   position: absolute;
   visibility: hidden;
-  width: 25px;
+  width: ${props => props.theme.thickness.medium}px;
   z-index: 1;
   transition: left 0.2s;
 
@@ -58,8 +59,9 @@ const Right = styled.div.attrs<{ width: number }>(props => ({
   style: { width: `${100 - props.width * 100}%` }
 }))<{ width: number }>`
   background: ${props => props.theme.foreground.dark};
-  border-radius: 0 2.5px 2.5px 0;
-  height: 2.5px;
+  border-radius: 0 ${props => props.theme.thickness.extraExtraSmall}px
+    ${props => props.theme.thickness.extraExtraSmall}px 0;
+  height: ${props => props.theme.thickness.extraExtraSmall}px;
 `;
 
 interface Props {

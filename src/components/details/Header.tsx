@@ -9,12 +9,12 @@ const Wrapper = styled.div`
   flex-direction: row;
   flex-shrink: 1;
   justify-content: center;
-  margin: 0 0 25px 0;
+  margin: 0 0 ${props => props.theme.thickness.medium}px 0;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
     flex-direction: column;
     justify-content: flex-start;
-    margin: 0 25px 0 0;
+    margin: 0 ${props => props.theme.thickness.medium}px 0 0;
   }
 `;
 
@@ -23,12 +23,12 @@ const StyledImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
   height: ${length / 2}px;
-  margin: 0 25px 0 0;
+  margin: 0 ${props => props.theme.thickness.medium}px 0 0;
   width: ${length / 2}px;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
     height: ${length}px;
-    margin: 0 0 25px 0;
+    margin: 0 0 ${props => props.theme.thickness.medium}px 0;
     width: ${length}px;
   }
 `;
@@ -55,7 +55,7 @@ const SubTitle = styled(Text)`
   display: inline-block;
   font-size: ${props => props.theme.fontSize.medium};
   font-weight: ${props => props.theme.fontWeight.light};
-  margin-top: 6.25px;
+  margin-top: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
@@ -65,8 +65,8 @@ const SubTitle = styled(Text)`
 `;
 
 const StyledButton = styled(Button)`
-  margin-top: 25px;
-  width: 100px;
+  margin-top: ${props => props.theme.thickness.medium}px;
+  width: ${props => props.theme.thickness.extraLarge}px;
 `;
 
 interface Props {

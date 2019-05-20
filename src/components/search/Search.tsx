@@ -18,15 +18,15 @@ import { Heading } from "../core";
 const StyledInput = styled.input`
   background: ${props => props.theme.background.light}
   border: none;
-  border-radius: 25px;
+  border-radius: ${props => props.theme.thickness.medium}px;
   caret-color: ${props => props.theme.primaryLight}
   color: ${props => props.theme.foreground.default}
   font-size: ${props => props.theme.fontSize.extraLarge}
   font-weight: ${props => props.theme.fontWeight.light}
-  height: 50px;
-  margin: 0 0 25px 0;
-  padding: 0 25px;
-  width: calc(100% - 50px);
+  height: ${props => props.theme.thickness.large}px;
+  margin: 0 0 ${props => props.theme.thickness.medium}px 0;
+  padding: 0 ${props => props.theme.thickness.medium}px;
+  width: calc(100% - ${props => props.theme.thickness.large}px);
 `;
 
 interface Params {

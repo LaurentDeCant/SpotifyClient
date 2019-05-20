@@ -11,7 +11,7 @@ const StyledHeader = styled.h1`
 `;
 
 const StyledIcon = styled(Icon)`
-  margin-right: 12.5px;
+  margin-right: ${props => props.theme.thickness.small}px;
 `;
 
 const Title = () => {

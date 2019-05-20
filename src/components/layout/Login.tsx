@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 100px;
+  width: ${props => props.theme.thickness.extraLarge}px;
 `;
 
 function LogIn() {

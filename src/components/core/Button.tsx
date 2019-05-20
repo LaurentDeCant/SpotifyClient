@@ -3,10 +3,11 @@ import ButtonBase from "./ButtonBase";
 
 const Button = styled(ButtonBase)`
   background: ${props => props.theme.primary};
-  border-radius: 25px;
+  border-radius: ${props => props.theme.thickness.medium}px;
   color: ${props => props.theme.foreground.default};
-  height: 50px;
-  padding: 12.5px 25px;
+  height: ${props => props.theme.thickness.large}px;
+  padding: ${props => props.theme.thickness.small}px
+    ${props => props.theme.thickness.medium}px;
 `;
 
 export default Button;

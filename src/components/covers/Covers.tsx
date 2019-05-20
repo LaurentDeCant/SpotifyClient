@@ -21,7 +21,7 @@ const StyledItem = styled.li`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 12.5px;
+  margin: ${props => props.theme.thickness.small}px;
   width: ${splitWidth(2)};
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
@@ -38,7 +38,7 @@ const StyledButton = styled(ButtonBase)<{ type: ImageShape }>`
   ${props => props.type === ImageShape.Round && "border-radius: 50%;"}
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
-  margin-bottom: 12.5px;
+  margin-bottom: ${props => props.theme.thickness.small}px;
   padding-top: 100%;
   position: relative;
   width: 100%;
@@ -53,7 +53,7 @@ const StyledImge = styled(Image)`
 
 const Title = styled(Text)`
   font-size: ${props => props.theme.fontSize.medium};
-  margin-bottom: 6.25px;
+  margin-bottom: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;
   width: 100%;
 `;

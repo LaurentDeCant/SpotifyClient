@@ -9,7 +9,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledItem = styled.li`
-  margin-bottom: 6.25px;
+  margin-bottom: ${props => props.theme.thickness.extraSmall}px;
 `;
 
 interface Props {

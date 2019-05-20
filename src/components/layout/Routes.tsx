@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   flex-grow: 1;
   height: 100%;
   overflow-y: auto;
-  padding: 25px;
+  padding: ${props => props.theme.thickness.medium}px;
 `;
 
 const Routes = () => {

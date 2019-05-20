@@ -7,8 +7,9 @@ const StyedButton = styled(ButtonBase)`
   border-radius: 50%;
   color: ${props => props.theme.foreground.dark};
   display: flex;
-  margin: 6.25px 12.5px;
-  padding: 6.25px;
+  margin: ${props => props.theme.thickness.extraSmall}px
+    ${props => props.theme.thickness.small}px;
+  padding: ${props => props.theme.thickness.extraSmall}px;
 
   &:disabled {
     color: ${props => props.theme.foreground.darker};
@@ -16,7 +17,7 @@ const StyedButton = styled(ButtonBase)`
 `;
 
 const StyledIcon = styled(Icon)`
-  font-size: 25px;
+  font-size: ${props => props.theme.thickness.medium}px;
 `;
 
 export interface Props {

@@ -26,7 +26,7 @@ const StyledList = styled.ul`
   top: -25px;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
-    margin-bottom: 25px;
+    margin-bottom: ${props => props.theme.thickness.medium}px;
     top: 0;
   }
 `;
@@ -35,9 +35,9 @@ const StyledNavLink = styled(NavLink)`
   align-items: center;
   color: ${props => props.theme.foreground.dark};
   display: flex;
-  height: 50px;
+  height: ${props => props.theme.thickness.large}px;
   justify-content: center;
-  padding: 0 25px;
+  padding: 0 ${props => props.theme.thickness.medium}px;
   position: relative;
 
   &:hover {
@@ -52,11 +52,11 @@ const StyledNavLink = styled(NavLink)`
     background: ${props => props.theme.primaryLight};
     bottom: 0;
     content: "";
-    height: 2.5px;
+    height: ${props => props.theme.thickness.extraExtraSmall}px;
     left: 50%;
     position: absolute;
     transform: translate(-50%, 0);
-    width: 50px;
+    width: ${props => props.theme.thickness.large}px;
   }
 `;
 

@@ -13,7 +13,7 @@ const List = styled.ul`
 const Item = styled.span`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.fontWeight.light};
-  margin-right: 6.25px;
+  margin-right: ${props => props.theme.thickness.extraSmall}px;
 
   :not(:last-child)::after {
     content: ",";

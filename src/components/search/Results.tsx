@@ -8,7 +8,7 @@ import PlaylistCovers from "../covers/PlaylistCovers";
 import withLoader from "../withLoader";
 
 const Section = styled.section`
-  margin-bottom: 50px;
+  margin-bottom: ${props => props.theme.thickness.large}px;
 `;
 
 function Artists({ artists }: { artists: Artist[] }) {

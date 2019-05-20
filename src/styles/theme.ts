@@ -29,8 +29,14 @@ export interface Theme {
   };
   primaryLight: string;
   primary: string;
-  filter: {
-    darken: string;
+  thickness: {
+    extraExtraSmall: number;
+    extraSmall: number;
+    small: number;
+    medium: number;
+    large: number;
+    extraLarge: number;
+    extraExtraLarge: number;
   };
 }
 
@@ -65,7 +71,13 @@ export const theme: Theme = {
   },
   primary: "#1db954",
   primaryLight: "#1ed760",
-  filter: {
-    darken: "brightness(0.5)"
+  thickness: {
+    extraExtraSmall: 3.125,
+    extraSmall: 6.25,
+    small: 12.5,
+    medium: 25,
+    large: 50,
+    extraLarge: 100,
+    extraExtraLarge: 200
   }
 };

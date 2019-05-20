@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 const QueueButton = styled(RoundButton).attrs(() => ({
   iconType: IconType.PlaylistPlay
 }))`
-  margin: 6.25px;
+  margin: ${props => props.theme.thickness.extraSmall}px;
 `;
 
 interface VolumeButtonProps {
@@ -33,7 +33,7 @@ const VolumeButton = styled(RoundButton).attrs<
 `;
 
 const StyledSlider = styled(Slider)`
-  width: 100px;
+  width: ${props => props.theme.thickness.extraLarge}px;
 `;
 
 interface Props {

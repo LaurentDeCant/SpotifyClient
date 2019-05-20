@@ -24,7 +24,7 @@ const Container = styled.div<{ shape: ImageShape }>`
 `;
 
 const StyledText = styled.span`
-  font-size: 100px;
+  font-size: ${props => props.theme.thickness.extraLarge}px;
   font-weight: ${props => props.theme.fontWeight.light}
   left: 50%;
   position: absolute;

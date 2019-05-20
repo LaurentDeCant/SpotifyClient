@@ -14,7 +14,8 @@ const StyledButton = styled(ButtonBase)<{ isLoaded: boolean }>`
   border-radius: 40px;
   ${props => props.isLoaded && "color: " + props.theme.primaryLight};
   display: flex;
-  padding: 12.5px 25px;
+  padding: ${props => props.theme.thickness.small}px
+    ${props => props.theme.thickness.medium}px;
   width: 100%;
 
   &:disabled {
@@ -30,7 +31,7 @@ const StyledIcon = styled(Icon)<{ isLoaded?: boolean; isHover?: boolean }>`
   color: ${props =>
     props.isLoaded ? props.theme.primaryLight : props.theme.foreground.dark};
   display: ${props => (props.isHover ? "none" : "block")};
-  margin-right: 12.5px;
+  margin-right: ${props => props.theme.thickness.small}px;
 
   ${StyledButton}:not(:disabled):hover & {
     color: ${props =>
@@ -47,13 +48,13 @@ const Infos = styled.div`
   flex-grow: 1;
   font-weight: ${props => props.theme.fontWeight.light};
   height: 100%;
-  margin-right: 12.5px;
+  margin-right: ${props => props.theme.thickness.small}px;
   overflow: hidden;
 `;
 
 const Title = styled(Text)`
   font-weight: ${props => props.theme.fontWeight.normal}
-  margin-bottom: 6.25px;
+  margin-bottom: ${props => props.theme.thickness.extraSmall}px;
   text-align: left;
 `;
 

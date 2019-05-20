@@ -16,8 +16,8 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   box-shadow: 0 -2px 4px 2px rgba(0, 0, 0, 0.2);
   display: flex;
-  height: 100px;
-  padding: 12.5px;
+  height: ${props => props.theme.thickness.extraLarge}px;
+  padding: ${props => props.theme.thickness.small}px;
   z-index: 2;
 `;
 
@@ -44,7 +44,7 @@ const CenterWrapper = styled(ThirdWrapper)`
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
-    padding: 0 12.5px;
+    padding: 0 ${props => props.theme.thickness.small}px;
     width: 50%;
   }
 `;
