@@ -6,7 +6,7 @@ export interface Theme {
     hover: string;
     active: string;
   };
-  breackpoints: {
+  breakpoints: {
     extraSmall: number;
     small: number;
   };
@@ -48,7 +48,7 @@ export const theme: Theme = {
     hover: "rgba(255, 255, 255, 0.1)",
     active: "rgba(255, 255, 255, 0.1)"
   },
-  breackpoints: {
+  breakpoints: {
     extraSmall: 480,
     small: 960
   },
