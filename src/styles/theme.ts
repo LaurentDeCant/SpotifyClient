@@ -57,7 +57,7 @@ export const theme: Theme = {
     medium: "16px",
     large: "20px",
     extraLarge: "24px",
-    extraExtraLarge: "34px"
+    extraExtraLarge: "32px"
   },
   fontWeight: {
     light: 300,

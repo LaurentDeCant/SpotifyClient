@@ -20,7 +20,7 @@ const Wrapper = styled.header`
   padding: 0 ${props => props.theme.thickness.medium}px;
   z-index: 2;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.large}px;
   }
 `;

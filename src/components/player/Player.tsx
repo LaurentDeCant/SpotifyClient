@@ -1,9 +1,11 @@
 import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
+import { withRouter, RouteComponentProps } from "react-router";
 import styled from "../../styles/styled";
 import { State } from "../../reducers";
 import { Times, selectTimes, selectCanSeek } from "../../reducers/player";
 import { seek } from "../../actions/player";
+import { IconType, RoundButton } from "../core";
 import TrackInfos from "./TrackInfos";
 import Audio from "./Audio";
 import Controls from "./Controls";
@@ -29,9 +31,9 @@ const ThirdWrapper = styled.div`
 const LeftWrapper = styled(ThirdWrapper)`
   display: none;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     display: block;
-    width: 25%;
+    min-width: 25%;
   }
 `;
 
@@ -39,27 +41,33 @@ const CenterWrapper = styled(ThirdWrapper)`
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   justify-content: space-evenly;
   width: 100%;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.small}px;
-    width: 50%;
+    max-width: 50%;
   }
 `;
 
 const RightWrapper = styled(ThirdWrapper)`
+  align-items: center;
   display: none;
   justify-content: flex-end;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     display: flex;
-    width: 25%;
+    min-idth: 25%;
   }
 `;
 
-interface Props {
+const QueueButton = styled(RoundButton).attrs(() => ({
+  iconType: IconType.PlaylistPlay
+}))`
+  margin: ${props => props.theme.thickness.extraSmall}px;
+`;
+
+interface Props extends RouteComponentProps {
   times: Times;
   canSeek: boolean;
   seek: (time: number) => void;
@@ -71,6 +79,8 @@ function Player({
   canSeek,
   seek
 }: Props & HTMLAttributes<HTMLElement>) {
+  function handleQueueClick() {}
+
   return (
     <Wrapper className={className}>
       <LeftWrapper>
@@ -89,6 +99,7 @@ function Player({
       </CenterWrapper>
 
       <RightWrapper>
+        <QueueButton onClick={handleQueueClick} />
         <Volume />
       </RightWrapper>
 
@@ -106,7 +117,9 @@ const mapDispatch = {
   seek
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Player);
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Player)
+);

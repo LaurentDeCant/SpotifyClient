@@ -24,11 +24,11 @@ const StyledItem = styled.li`
   margin: ${props => props.theme.thickness.small}px;
   width: ${splitWidth(2)};
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     width: ${splitWidth(3)};
   }
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}px) {
     width: ${splitWidth(6)};
   }
 `;

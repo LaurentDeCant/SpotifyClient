@@ -48,16 +48,11 @@ function TrackInfos({
   album,
   artists
 }: Props & HTMLAttributes<HTMLElement>) {
-  function handleImageClick() {}
-
   return (
     <Wrapper className={className}>
       {album && (
-        <Link to={`/album/${album.id}`}>
-          <StyedImage
-            source={getImageSource(album)}
-            onClick={handleImageClick}
-          />
+        <Link to={`${process.env.PUBLIC_URL}/album/${album.id}`}>
+          <StyedImage source={getImageSource(album)} />
         </Link>
       )}
       <Container>

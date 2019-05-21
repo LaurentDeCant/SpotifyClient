@@ -33,7 +33,9 @@ function ArtistList({ artists }: { artists: Artist[] }) {
     <List>
       {artists.map(artist => (
         <Item key={artist.id}>
-          <StyledLink to={`/artist/${artist.id}`}>{artist.name}</StyledLink>
+          <StyledLink to={`${process.env.PUBLIC_URL}/artist/${artist.id}`}>
+            {artist.name}
+          </StyledLink>
         </Item>
       ))}
     </List>

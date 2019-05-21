@@ -13,12 +13,6 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const QueueButton = styled(RoundButton).attrs(() => ({
-  iconType: IconType.PlaylistPlay
-}))`
-  margin: ${props => props.theme.thickness.extraSmall}px;
-`;
-
 interface VolumeButtonProps {
   isMuted: boolean;
 }
@@ -53,7 +47,6 @@ function Volume({ volume, isMuted, changeVolume }: Props) {
 
   return (
     <Wrapper>
-      <QueueButton />
       <VolumeButton isMuted={isMuted || !volume} onClick={handleClick} />
       <StyledSlider value={isMuted ? 0 : volume} onChange={handleChange} />
     </Wrapper>

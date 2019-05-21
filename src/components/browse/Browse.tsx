@@ -25,7 +25,7 @@ const StyledList = styled.ul`
   position: relative;
   top: -25px;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     margin-bottom: ${props => props.theme.thickness.medium}px;
     top: 0;
   }

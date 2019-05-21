@@ -21,7 +21,7 @@ const Body = styled.div`
   flex-direction: column;
   flex-grow: 1;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     flex-direction: row;
   }
 `;

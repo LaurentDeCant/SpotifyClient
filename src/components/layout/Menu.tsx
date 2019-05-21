@@ -16,7 +16,7 @@ const Wrapper = styled.ul`
   width: 100%;
   z-index: 1;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     box-shadow: 2px 0 4px 2px rgba(0, 0, 0, 0.2);
     flex-direction: column;
     justify-content: flex-start;
@@ -43,7 +43,7 @@ const StyledNavLink = styled(NavLink)`
     color: ${props => props.theme.foreground.default};
   }
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.large}px;
 
     &.active {

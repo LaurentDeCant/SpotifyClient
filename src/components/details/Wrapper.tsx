@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: ${({ theme }) => theme.breackpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}px) {
     flex-direction: row;
   }
 `;
