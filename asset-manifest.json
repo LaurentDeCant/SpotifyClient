@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/spotify-client/static/js/main.a8d11670.chunk.js",
-    "main.js.map": "/spotify-client/static/js/main.a8d11670.chunk.js.map",
+    "main.js": "/spotify-client/static/js/main.6762d044.chunk.js",
+    "main.js.map": "/spotify-client/static/js/main.6762d044.chunk.js.map",
     "runtime~main.js": "/spotify-client/static/js/runtime~main.9f025a71.js",
     "runtime~main.js.map": "/spotify-client/static/js/runtime~main.9f025a71.js.map",
-    "static/js/2.8e46edc1.chunk.js": "/spotify-client/static/js/2.8e46edc1.chunk.js",
-    "static/js/2.8e46edc1.chunk.js.map": "/spotify-client/static/js/2.8e46edc1.chunk.js.map",
+    "static/js/2.12703db6.chunk.js": "/spotify-client/static/js/2.12703db6.chunk.js",
+    "static/js/2.12703db6.chunk.js.map": "/spotify-client/static/js/2.12703db6.chunk.js.map",
     "index.html": "/spotify-client/index.html",
-    "precache-manifest.d5c8a6cd6f999f8f81942a9c861b424c.js": "/spotify-client/precache-manifest.d5c8a6cd6f999f8f81942a9c861b424c.js",
+    "precache-manifest.10b7de3ed079e08f72aa1b0b1cf2c236.js": "/spotify-client/precache-manifest.10b7de3ed079e08f72aa1b0b1cf2c236.js",
     "service-worker.js": "/spotify-client/service-worker.js"
   }
 }
