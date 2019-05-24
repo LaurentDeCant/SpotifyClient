@@ -57,7 +57,7 @@ const RightWrapper = styled(ThirdWrapper)`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     display: flex;
-    min-idth: 25%;
+    min-width: 25%;
   }
 `;
 
