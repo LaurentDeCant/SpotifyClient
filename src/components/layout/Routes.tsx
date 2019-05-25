@@ -10,6 +10,7 @@ import Search from "../search/Search";
 import PlaylistDetails from "../details/PlaylistDetails";
 import AlbumDetails from "../details/AlbumDetails";
 import ArtistDetails from "../details/ArtistDetails";
+import Queue from "../player/Queue";
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -43,6 +44,7 @@ const Routes = () => {
         path={`${publicUrl}/artist/:artistId`}
         component={ArtistDetails}
       />
+      <PrivateRoute path={`${publicUrl}/queue`} component={Queue} />
     </Wrapper>
   );
 };

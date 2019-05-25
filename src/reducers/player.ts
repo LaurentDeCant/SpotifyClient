@@ -10,7 +10,7 @@ import {
 } from "../actions/player";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
-import { selectTrack } from "./tracks";
+import { selectTrack, selectTracks } from "./tracks";
 import { selectAlbum } from "./albums";
 import { selectArtists } from "./artists";
 
@@ -159,6 +159,11 @@ export function selectLoadedTrack(state: CombinedState) {
   if (trackIds) {
     return selectTrack(state, trackIds[trackIndex]);
   }
+}
+
+export function selectLoadedTracks(state: CombinedState) {
+  const { trackIds } = state.player;
+  return trackIds ? selectTracks(state)(trackIds) : [];
 }
 
 export function selectLoadedAlbum(state: CombinedState) {

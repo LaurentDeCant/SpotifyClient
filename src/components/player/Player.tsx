@@ -64,6 +64,7 @@ const RightWrapper = styled(ThirdWrapper)`
 const QueueButton = styled(RoundButton).attrs(() => ({
   iconType: IconType.PlaylistPlay
 }))`
+  flex-shrink: 0;
   margin: ${props => props.theme.thickness.extraSmall}px;
 `;
 
@@ -75,11 +76,14 @@ interface Props extends RouteComponentProps {
 
 function Player({
   className,
+  history,
   times,
   canSeek,
   seek
 }: Props & HTMLAttributes<HTMLElement>) {
-  function handleQueueClick() {}
+  function handleQueueClick() {
+    history.push(`${process.env.PUBLIC_URL}/queue`);
+  }
 
   return (
     <Wrapper className={className}>
