@@ -6,7 +6,7 @@ import { IconType, RoundButton, ToggleButton } from "../core";
 import {
   selectCanNext,
   selectCanPrevious,
-  selectCanTogglePlay,
+  selectCanPlayPause,
   selectIsLooped,
   selectIsPlaying,
   selectIsShuffled
@@ -15,7 +15,7 @@ import {
   next,
   previous,
   toggleLoop,
-  togglePlay,
+  playPause,
   toggleShuffle
 } from "../../actions/player";
 
@@ -57,12 +57,12 @@ interface Props {
   isPlaying: boolean;
   isShuffled: boolean;
   canPrevious: boolean;
-  canTogglePlay: boolean;
+  canPlayPause: boolean;
   canNext: boolean;
   isLooped: boolean;
   toggleShuffle: () => void;
   previous: () => void;
-  togglePlay: () => void;
+  playPause: () => void;
   next: () => void;
   toggleLoop: () => void;
 }
@@ -71,12 +71,12 @@ function Controls({
   isPlaying,
   isShuffled,
   canPrevious,
-  canTogglePlay,
+  canPlayPause,
   canNext,
   isLooped,
   toggleShuffle,
   previous,
-  togglePlay,
+  playPause,
   next,
   toggleLoop
 }: Props) {
@@ -86,8 +86,8 @@ function Controls({
       <PreviousButton disabled={!canPrevious} onClick={previous} />
 
       <PlayButton
-        disabled={!canTogglePlay}
-        onClick={togglePlay}
+        disabled={!canPlayPause}
+        onClick={playPause}
         isPlaying={isPlaying}
       />
 
@@ -101,7 +101,7 @@ const mapState = (state: State) => ({
   isPlaying: selectIsPlaying(state),
   isShuffled: selectIsShuffled(state),
   canPrevious: selectCanPrevious(state),
-  canTogglePlay: selectCanTogglePlay(state),
+  canPlayPause: selectCanPlayPause(state),
   canNext: selectCanNext(state),
   isLooped: selectIsLooped(state)
 });
@@ -109,7 +109,7 @@ const mapState = (state: State) => ({
 const mapDispatch = {
   toggleShuffle,
   previous,
-  togglePlay,
+  playPause,
   next,
   toggleLoop
 };

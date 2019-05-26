@@ -2,8 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Track } from "../../types";
+import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectLoadedTracks } from "../../reducers/player";
+import {
+  Collection,
+  selectCollection,
+  selectLoadedTracks
+} from "../../reducers/player";
 import { Heading } from "../core";
 import TrackList from "../details/TrackList";
 
@@ -14,11 +19,16 @@ const Wrapper = styled.div`
 `;
 
 interface Props {
+  collection: Collection;
   tracks: Track[];
+  loadPlayPause: (collectionId: string, trackId: string) => void;
 }
 
-function Queue({ tracks }: Props) {
-  function handleToggle() {}
+function Queue({ collection, tracks, loadPlayPause }: Props) {
+  const { id: collectionId } = collection;
+  function handleToggle(trackId: string) {
+    loadPlayPause(collectionId, trackId);
+  }
 
   return (
     <>
@@ -37,10 +47,15 @@ function Queue({ tracks }: Props) {
 }
 
 const mapState = (state: State) => ({
+  collection: selectCollection(state),
   tracks: selectLoadedTracks(state)
 });
 
+const mapDispatch = {
+  loadPlayPause
+};
+
 export default connect(
   mapState,
-  null
+  mapDispatch
 )(Queue);

@@ -103,7 +103,7 @@ export function trackLoaded(duration: number) {
   };
 }
 
-export function togglePlay() {
+export function playPause() {
   return (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
     const isPlaying = selectIsPlaying(state);
@@ -113,7 +113,7 @@ export function togglePlay() {
   };
 }
 
-export function loadToggle(collectionId: string, trackId?: string) {
+export function loadPlayPause(collectionId: string, trackId?: string) {
   return (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
     const isLoaded = selectIsLoaded(state);
@@ -122,7 +122,7 @@ export function loadToggle(collectionId: string, trackId?: string) {
     } else if (trackId && !isLoaded(trackId)) {
       loadTrack(trackId)(dispatch);
     } else {
-      togglePlay()(dispatch, getState);
+      playPause()(dispatch, getState);
     }
   };
 }

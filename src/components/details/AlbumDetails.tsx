@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Album, Artist, Track } from "../../types";
 import { getAlbum } from "../../actions/albums";
-import { loadToggle } from "../../actions/player";
+import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
 import {
   selectAlbum,
@@ -29,7 +29,7 @@ interface Props extends RouteComponentProps<Params> {
   isPlayable: boolean;
   isPlaying: boolean;
   getAlbum: (albumId: string) => void;
-  loadToggle: (collectionId: string, trackId?: string) => void;
+  loadPlayPause: (collectionId: string, trackId?: string) => void;
 }
 
 function AlbumDetails({
@@ -40,7 +40,7 @@ function AlbumDetails({
   isPlayable,
   isPlaying,
   getAlbum,
-  loadToggle
+  loadPlayPause
 }: Props) {
   const { albumId } = match.params;
 
@@ -50,7 +50,7 @@ function AlbumDetails({
   useEffect(effect, []);
 
   function handleToggle(trackId?: string) {
-    loadToggle(albumId, trackId);
+    loadPlayPause(albumId, trackId);
   }
 
   return album ? (
@@ -84,7 +84,7 @@ const mapState = (state: State, ownProps: Props) => {
 
 const mapDispatch = {
   getAlbum,
-  loadToggle
+  loadPlayPause
 };
 
 export default withLoader(

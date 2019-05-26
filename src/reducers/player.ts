@@ -29,7 +29,7 @@ export enum Command {
 }
 
 export interface State {
-  collectionId?: string;
+  collectionId: string;
   trackIds: string[];
   trackIndex: number;
   playerState: PlayerState;
@@ -43,6 +43,7 @@ export interface State {
 }
 
 const initialState: State = {
+  collectionId: "",
   trackIds: [],
   trackIndex: 0,
   playerState: PlayerState.None,
@@ -154,6 +155,24 @@ export default createReducer(initialState, {
   })
 });
 
+export enum CollectionType {
+  Album = "ALBUM",
+  Artist = "ARTIST",
+  Playlist = "PLAYLIST"
+}
+
+export interface Collection {
+  id: string;
+  type?: CollectionType;
+}
+
+export const selectCollection = createSelector(
+  ({ player }: CombinedState) => player,
+  (state: State): Collection => ({
+    id: state.collectionId
+  })
+);
+
 export function selectLoadedTrack(state: CombinedState) {
   const { trackIds, trackIndex } = state.player;
   if (trackIds) {
@@ -175,11 +194,7 @@ export function selectLoadedAlbum(state: CombinedState) {
 
 export function selectLoadedArtists(state: CombinedState) {
   const track = selectLoadedTrack(state);
-  if (track) {
-    return selectArtists(state)(track.artists);
-  }
-
-  return [];
+  return track ? selectArtists(state)(track.artists) : [];
 }
 
 export function selectIsLoaded(state: CombinedState) {
@@ -195,7 +210,7 @@ export function selectIsPlaying(state: CombinedState, id?: string) {
   );
 }
 
-export function selectCanTogglePlay(state: CombinedState) {
+export function selectCanPlayPause(state: CombinedState) {
   const { player } = state;
   return (
     player.playerState !== PlayerState.None &&

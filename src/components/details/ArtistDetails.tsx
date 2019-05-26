@@ -5,7 +5,7 @@ import styled from "../../styles/styled";
 import { Album, Artist, Track } from "../../types";
 import { getImageSource } from "../../utils";
 import { getFullArtist } from "../../actions/artists";
-import { loadToggle } from "../../actions/player";
+import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
 import {
   selectArtist,
@@ -76,7 +76,7 @@ interface Props extends RouteComponentProps<Params> {
   isPlayable: boolean;
   isPlaying: boolean;
   getFullArtist: (artistId: string) => void;
-  loadToggle: (artistId: string, trackId?: string) => void;
+  loadPlayPause: (artistId: string, trackId?: string) => void;
 }
 
 function ArtistDetails({
@@ -88,7 +88,7 @@ function ArtistDetails({
   isPlayable,
   isPlaying,
   getFullArtist,
-  loadToggle
+  loadPlayPause
 }: Props) {
   const { artistId } = match.params;
 
@@ -98,7 +98,7 @@ function ArtistDetails({
   useEffect(effect, [artistId]);
 
   function handleToggle(trackId?: string) {
-    loadToggle(artistId, trackId);
+    loadPlayPause(artistId, trackId);
   }
 
   return artist ? (
@@ -137,7 +137,7 @@ const mapState = (state: State, ownProps: Props) => {
 
 const mapDispatch = {
   getFullArtist,
-  loadToggle
+  loadPlayPause
 };
 
 export default withLoader(

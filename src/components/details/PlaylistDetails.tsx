@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Playlist, Track } from "../../types";
 import { getImageSource } from "../../utils";
 import { getPlaylist } from "../../actions/playlists";
-import { loadToggle } from "../../actions/player";
+import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
 import {
   selectPlaylist,
@@ -27,7 +27,7 @@ interface Props extends RouteComponentProps<Params> {
   isPlayable: boolean;
   isPlaying: boolean;
   getPlaylist: (playlistId: string) => void;
-  loadToggle: (collectionId: string, trackId?: string) => void;
+  loadPlayPause: (collectionId: string, trackId?: string) => void;
 }
 
 function PlaylistDetails({
@@ -37,7 +37,7 @@ function PlaylistDetails({
   isPlayable,
   isPlaying,
   getPlaylist,
-  loadToggle
+  loadPlayPause
 }: Props) {
   const { playlistId } = match.params;
 
@@ -47,7 +47,7 @@ function PlaylistDetails({
   useEffect(effect, []);
 
   function handleToggle(trackId?: string) {
-    loadToggle(playlistId, trackId);
+    loadPlayPause(playlistId, trackId);
   }
 
   return playlist ? (
@@ -80,7 +80,7 @@ const mapState = (state: State, ownProps: Props) => {
 
 const mapDispatch = {
   getPlaylist,
-  loadToggle
+  loadPlayPause
 };
 
 export default withLoader(
