@@ -15,11 +15,13 @@ function getCovers(artists: Artist[]): Cover[] {
 
 interface Props extends RouteComponentProps {
   artists: Artist[];
+  onSelect?: (artistId: string) => void;
 }
 
-function ArtistCovers({ history, artists }: Props) {
+function ArtistCovers({ history, artists, onSelect }: Props) {
   function handleClick(artistId: string) {
     history.push(`${process.env.PUBLIC_URL}/artist/${artistId}`);
+    onSelect && onSelect(artistId);
   }
 
   const covers = getCovers(artists);

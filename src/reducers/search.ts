@@ -1,5 +1,11 @@
 import { Album, Artist, Playlist } from "../types";
-import { ActionType, SearchSuccessAction } from "../actions/search";
+import {
+  ActionType,
+  SearchSuccessAction,
+  SelectAlbumAction,
+  SelectArtistAction,
+  SelectPlaylistAction
+} from "../actions/search";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 import { selectAlbums as selectAlbumsById } from "./albums";
@@ -29,7 +35,13 @@ export default createReducer(initialState, {
       playlistIds: playlists
     };
   },
-  [ActionType.ClearResults]: () => initialState
+  [ActionType.ClearResults]: () => initialState,
+  [ActionType.SelectAlbum]: (state: State, action: SelectAlbumAction) => {},
+  [ActionType.SelectArtist]: (state: State, action: SelectArtistAction) => {},
+  [ActionType.selectPlaylist]: (
+    state: State,
+    action: SelectPlaylistAction
+  ) => {}
 });
 
 export function selectAlbums(state: CombinedState): Album[] {

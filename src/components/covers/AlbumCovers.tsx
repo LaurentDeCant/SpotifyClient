@@ -25,11 +25,13 @@ function getCovers(
 interface Props extends RouteComponentProps {
   albums: Album[];
   selectAbumArtists: (albumId: string) => Artist[];
+  onSelect?: (albumId: string) => void;
 }
 
-function AlbumCovers({ history, albums, selectAbumArtists }: Props) {
+function AlbumCovers({ history, albums, selectAbumArtists, onSelect }: Props) {
   function handleClick(albumId: string) {
     history.push(`${process.env.PUBLIC_URL}/album/${albumId}`);
+    onSelect && onSelect(albumId);
   }
 
   const covers = getCovers(albums, selectAbumArtists);

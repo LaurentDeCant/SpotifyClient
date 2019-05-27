@@ -15,11 +15,13 @@ function getCovers(playlists: Playlist[]): Cover[] {
 
 interface Props extends RouteComponentProps {
   playlists: Playlist[];
+  onSelect?: (playlistId: string) => void;
 }
 
-function PlayistCovers({ history, playlists }: Props) {
+function PlayistCovers({ history, playlists, onSelect }: Props) {
   function handleClick(playlistId: string) {
     history.push(`${process.env.PUBLIC_URL}/playlist/${playlistId}`);
+    onSelect && onSelect(playlistId);
   }
 
   const covers = getCovers(playlists);
