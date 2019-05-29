@@ -53,7 +53,7 @@ const Infos = styled.div`
 `;
 
 const Title = styled(Text)`
-  font-weight: ${props => props.theme.fontWeight.normal}
+  font-weight: ${props => props.theme.fontWeight.normal};
   margin-bottom: ${props => props.theme.thickness.extraSmall}px;
   text-align: left;
 `;

@@ -7,8 +7,8 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
-import { PlaylistDictionary } from "./types";
 import { State as CombinedState } from ".";
+import { PlaylistDictionary } from "./types";
 import createReducer from "./createReducer";
 import { selectTracks } from "./tracks";
 

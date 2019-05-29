@@ -9,8 +9,8 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
-import { AlbumDictionary, ArtistDictionary } from "./types";
 import { State as CombinedState } from ".";
+import { AlbumDictionary, ArtistDictionary } from "./types";
 import createReducer from "./createReducer";
 import { selectTracks } from "./tracks";
 

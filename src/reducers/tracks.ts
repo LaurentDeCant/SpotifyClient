@@ -8,8 +8,8 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
-import { TrackDictionary } from "./types";
 import { State as CombinedState } from ".";
+import { TrackDictionary } from "./types";
 import createReducer from "./createReducer";
 import { selectAlbum } from "./albums";
 import { selectArtists } from "./artists";

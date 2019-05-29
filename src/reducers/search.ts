@@ -1,6 +1,6 @@
 import { Album, Artist, Playlist } from "../types";
+import { SearchActionType as ActionType } from "../actions";
 import {
-  ActionType,
   SearchSuccessAction,
   SelectAlbumAction,
   SelectArtistAction,
@@ -12,16 +12,30 @@ import { selectAlbums as selectAlbumsById } from "./albums";
 import { selectArtists as selectArtistsById } from "./artists";
 import { selectPlaylists as selectPlaylistsById } from "./playlists";
 
+export enum RecentType {
+  Album = "ALBUM",
+  Artist = "ARTIST",
+  Playlist = "PLAYLIST"
+}
+
+export interface Recent {
+  id: string;
+  name: string;
+  type: RecentType;
+}
+
 export interface State {
   albumIds: string[];
   artistIds: string[];
   playlistIds: string[];
+  recents: Recent[];
 }
 
 const initialState: State = {
   albumIds: [],
   artistIds: [],
-  playlistIds: []
+  playlistIds: [],
+  recents: []
 };
 
 export default createReducer(initialState, {
@@ -35,13 +49,45 @@ export default createReducer(initialState, {
       playlistIds: playlists
     };
   },
-  [ActionType.ClearResults]: () => initialState,
-  [ActionType.SelectAlbum]: (state: State, action: SelectAlbumAction) => {},
-  [ActionType.SelectArtist]: (state: State, action: SelectArtistAction) => {},
-  [ActionType.selectPlaylist]: (
+  [ActionType.ClearResults]: (state: State) => ({
+    ...state,
+    albumIds: [],
+    artistIds: [],
+    playlistIds: []
+  }),
+  [ActionType.SelectAlbum]: (state: State, { payload }: SelectAlbumAction) => {
+    return {
+      ...state,
+      recents: [
+        ...state.recents,
+        { id: payload.id, name: payload.name, type: RecentType.Album }
+      ]
+    };
+  },
+  [ActionType.SelectArtist]: (
     state: State,
-    action: SelectPlaylistAction
-  ) => {}
+    { payload }: SelectArtistAction
+  ) => ({
+    ...state,
+    recents: [
+      ...state.recents,
+      { id: payload.id, name: payload.name, type: RecentType.Artist }
+    ]
+  }),
+  [ActionType.SelectPlaylist]: (
+    state: State,
+    { payload }: SelectPlaylistAction
+  ) => ({
+    ...state,
+    recents: [
+      ...state.recents,
+      { id: payload.id, name: payload.name, type: RecentType.Playlist }
+    ]
+  }),
+  [ActionType.ClearRecents]: (state: State) => ({
+    ...state,
+    recents: []
+  })
 });
 
 export function selectAlbums(state: CombinedState): Album[] {
@@ -56,4 +102,8 @@ export function selectArtists(state: CombinedState): Artist[] {
 
 export function selectPlaylists(state: CombinedState): Playlist[] {
   return selectPlaylistsById(state)(state.search.playlistIds);
+}
+
+export function selectRecents({ search }: CombinedState): Recent[] {
+  return search.recents;
 }

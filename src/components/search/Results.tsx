@@ -7,6 +7,12 @@ import {
   selectArtist,
   selectPlaylist
 } from "../../actions/search";
+import { State } from "../../reducers";
+import {
+  selectAlbums,
+  selectArtists,
+  selectPlaylists
+} from "../../reducers/search";
 import { Heading } from "../core";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";
@@ -88,14 +94,22 @@ function Results({
   selectArtist,
   selectPlaylist
 }: Props) {
-  return (
+  return artists.length || albums.length || playlists.length ? (
     <>
       <Artists artists={artists} selectArtist={selectArtist} />
       <Albums albums={albums} selectAlbum={selectAlbum} />
       <Playlists playlists={playlists} selectPlaylist={selectPlaylist} />
     </>
+  ) : (
+    <Heading>No Results found.</Heading>
   );
 }
+
+const mapState = (state: State) => ({
+  albums: selectAlbums(state),
+  artists: selectArtists(state),
+  playlists: selectPlaylists(state)
+});
 
 const mapDispatch = {
   selectAlbum,
@@ -105,7 +119,7 @@ const mapDispatch = {
 
 export default withLoader(
   connect(
-    null,
+    mapState,
     mapDispatch
   )(Results)
 );

@@ -5,15 +5,8 @@ import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
 import { search } from "../../actions/search";
-import { State } from "../../reducers";
-import { selectIsLoading } from "../../reducers/loading";
-import {
-  selectAlbums,
-  selectArtists,
-  selectPlaylists
-} from "../../reducers/search";
+import RecentList from "./RecentList";
 import Results from "./Results";
-import { Heading } from "../core";
 
 const StyledInput = styled.input`
   background: ${props => props.theme.background.light}
@@ -43,24 +36,18 @@ interface Props extends RouteComponentProps<Params> {
 
 let debounced: (query: string) => void;
 
-function Search({
-  history,
-  match,
-  isLoading,
-  albums,
-  artists,
-  playlists,
-  search
-}: Props) {
+function Search({ history, match, search }: Props) {
   const { query } = match.params;
   const [value, setValue] = useState(query || "");
 
   const effect = () => {
-    search(value);
     debounced = _.debounce((query: string) => {
       history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
       search(query);
     }, 500);
+    if (value) {
+      search(value);
+    }
   };
   useEffect(effect, []);
 
@@ -70,8 +57,6 @@ function Search({
     debounced(value);
   }
 
-  const hasResults =
-    isLoading || artists.length || albums.length || playlists.length;
   return (
     <>
       <StyledInput
@@ -80,22 +65,10 @@ function Search({
         placeholder="Search..."
         autoFocus
       />
-      {query &&
-        (hasResults ? (
-          <Results artists={artists} albums={albums} playlists={playlists} />
-        ) : (
-          <Heading>No Results found for '{query}'.</Heading>
-        ))}
+      {query ? <Results /> : <RecentList />}
     </>
   );
 }
-
-const mapState = (state: State) => ({
-  isLoading: selectIsLoading(state),
-  albums: selectAlbums(state),
-  artists: selectArtists(state),
-  playlists: selectPlaylists(state)
-});
 
 const mapDispatch = {
   search
@@ -103,7 +76,7 @@ const mapDispatch = {
 
 export default withRouter(
   connect(
-    mapState,
+    null,
     mapDispatch
   )(Search)
 );

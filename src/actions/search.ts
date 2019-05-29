@@ -1,16 +1,12 @@
 import { Dispatch } from "redux";
+import { Album, Artist, Playlist } from "../types";
 import { EntitiesAction, FetchDispatch, PayloadAction } from "./types";
+import { SearchActionType as ActionType } from ".";
 import { Schemas } from "./schemas";
-
-export enum ActionType {
-  SearchRequest = "SEARCH_REQUEST",
-  SearchSuccess = "SEARCH_SUCCESS",
-  SearchFailure = "SEARCH_FAILURE",
-  ClearResults = "CLEAR_RESULTS",
-  SelectAlbum = "SELECT_ALBUM",
-  SelectArtist = "SELECT_ARTIST",
-  selectPlaylist = "SELECT_PLAYLIST"
-}
+import { State } from "../reducers";
+import { selectAlbum as selectAlbumById } from "../reducers/albums";
+import { selectArtist as selectArtistById } from "../reducers/artists";
+import { selectPlaylist as selectPlaylistById } from "../reducers/playlists";
 
 export interface SearchSuccessAction
   extends EntitiesAction<ActionType.SearchSuccess> {}
@@ -39,28 +35,40 @@ export function search(query: string) {
 }
 
 export interface SelectAlbumAction
-  extends PayloadAction<ActionType.SelectAlbum, { albumId: string }> {}
+  extends PayloadAction<ActionType.SelectAlbum, Album> {}
 
 export function selectAlbum(albumId: string) {
-  return (dispatch: Dispatch<SelectAlbumAction>) => {
-    dispatch({ type: ActionType.SelectAlbum, payload: { albumId } });
+  return (dispatch: Dispatch<SelectAlbumAction>, getState: () => State) => {
+    const state = getState();
+    const album = selectAlbumById(state, albumId);
+    dispatch({ type: ActionType.SelectAlbum, payload: album });
   };
 }
 
 export interface SelectArtistAction
-  extends PayloadAction<ActionType.SelectArtist, { artistId: string }> {}
+  extends PayloadAction<ActionType.SelectArtist, Artist> {}
 
 export function selectArtist(artistId: string) {
-  return (dispatch: Dispatch<SelectArtistAction>) => {
-    dispatch({ type: ActionType.SelectArtist, payload: { artistId } });
+  return (dispatch: Dispatch<SelectArtistAction>, getState: () => State) => {
+    const state = getState();
+    const artist = selectArtistById(state, artistId);
+    dispatch({ type: ActionType.SelectArtist, payload: artist });
   };
 }
 
 export interface SelectPlaylistAction
-  extends PayloadAction<ActionType.selectPlaylist, { playlistId: string }> {}
+  extends PayloadAction<ActionType.SelectPlaylist, Playlist> {}
 
 export function selectPlaylist(playlistId: string) {
-  return (dispatch: Dispatch<SelectPlaylistAction>) => {
-    dispatch({ type: ActionType.selectPlaylist, payload: { playlistId } });
+  return (dispatch: Dispatch<SelectPlaylistAction>, getState: () => State) => {
+    const state = getState();
+    const playlist = selectPlaylistById(state, playlistId);
+    dispatch({ type: ActionType.SelectPlaylist, payload: playlist });
+  };
+}
+
+export function clearRecents() {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: ActionType.ClearRecents });
   };
 }

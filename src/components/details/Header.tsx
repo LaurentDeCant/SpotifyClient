@@ -64,7 +64,7 @@ const SubTitle = styled(Text)`
   }
 `;
 
-const StyledButton = styled(Button)`
+const PlayButton = styled(Button)`
   margin-top: ${props => props.theme.thickness.medium}px;
   width: ${props => props.theme.thickness.extraLarge}px;
 `;
@@ -98,9 +98,9 @@ function Header({
       <Div>
         <Title>{title}</Title>
         {subTitle && <SubTitle>{subTitle}</SubTitle>}
-        <StyledButton disabled={!canPlay} onClick={handleClick}>
+        <PlayButton disabled={!canPlay} onClick={handleClick}>
           {isPlaying ? "Pause" : "Play"}
-        </StyledButton>
+        </PlayButton>
       </Div>
     </Wrapper>
   );

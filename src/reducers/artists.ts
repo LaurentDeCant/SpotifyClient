@@ -15,8 +15,8 @@ import {
   ArtistRelatedArtistsSuccessAction,
   ArtistTopTracksSuccessAction
 } from "../actions/artists";
-import { ArtistDictionary } from "./types";
 import { State as CombinedState } from ".";
+import { ArtistDictionary } from "./types";
 import createReducer from "./createReducer";
 import { selectAlbums } from "./albums";
 import { selectTracks } from "./tracks";
