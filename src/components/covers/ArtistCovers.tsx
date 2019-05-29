@@ -3,15 +3,8 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Artist } from "../../types";
 import { getImageSource } from "../../utils";
 import { ImageShape } from "../core/Image";
-import Covers, { Cover } from "./Covers";
-
-function getCovers(artists: Artist[]): Cover[] {
-  return artists.map(artist => ({
-    id: artist.id,
-    image: getImageSource(artist),
-    title: artist.name
-  }));
-}
+import { Cover } from "./types";
+import CoverList from "./CoverList";
 
 interface Props extends RouteComponentProps {
   artists: Artist[];
@@ -26,8 +19,17 @@ function ArtistCovers({ history, artists, onSelect }: Props) {
 
   const covers = getCovers(artists);
   return (
-    <Covers covers={covers} shape={ImageShape.Round} onClick={handleClick} />
+    <CoverList covers={covers} shape={ImageShape.Round} onClick={handleClick} />
   );
+}
+
+function getCovers(artists: Artist[]): Cover[] {
+  return artists.map(artist => ({
+    id: artist.id,
+    imageSource: getImageSource(artist),
+    imageShape: ImageShape.Round,
+    title: artist.name
+  }));
 }
 
 export default withRouter(ArtistCovers);

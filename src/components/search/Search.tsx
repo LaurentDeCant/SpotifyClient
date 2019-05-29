@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
 import { search } from "../../actions/search";
-import RecentList from "./RecentList";
+import Recents from "./Recents";
 import Results from "./Results";
 
 const StyledInput = styled.input`
@@ -65,7 +65,7 @@ function Search({ history, match, search }: Props) {
         placeholder="Search..."
         autoFocus
       />
-      {query ? <Results /> : <RecentList />}
+      {query ? <Results /> : <Recents />}
     </>
   );
 }
