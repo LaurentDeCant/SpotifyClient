@@ -15,5 +15,6 @@ export * from "./PublicUser";
 export * from "./Restriction";
 export * from "./Track";
 export * from "./TrackLink";
+export * from "./Type";
 export * from "./User";
 export * from "./UserProfile";

@@ -1,20 +1,11 @@
 import { Dispatch } from "redux";
-import { Track } from "../types";
+import { Type } from "../types";
 import { PayloadAction } from "./types";
 import { State } from "../reducers";
 import { selectIsPlaying, selectIsLoaded } from "../reducers/player";
-import {
-  selectIsAlbum,
-  selectPlayableTracks as selectAlbumTracks
-} from "../reducers/albums";
-import {
-  selectIsArtist,
-  selectPlayableTracks as selectArtistTracks
-} from "../reducers/artists";
-import {
-  selectIsPlaylist,
-  selectPlayableTracks as selectPlaylistTracks
-} from "../reducers/playlists";
+import { selectPlayableTracks as selectAlbumTracks } from "../reducers/albums";
+import { selectPlayableTracks as selectArtistTracks } from "../reducers/artists";
+import { selectPlayableTracks as selectPlaylistTracks } from "../reducers/playlists";
 
 export enum ActionType {
   LoadCollection = "LOAD_COLLECTION",
@@ -39,36 +30,42 @@ export enum ActionType {
 export interface LoadCollectionAction
   extends PayloadAction<
     ActionType.LoadCollection,
-    { collectionId: string; trackIds: string[]; trackId?: string }
+    {
+      collectionId: string;
+      collectionType: Type;
+      trackIds: string[];
+      trackId?: string;
+    }
   > {}
 
-const providers: [
-  (state: State, id: string) => boolean,
-  (state: State, id: string) => Track[]
-][] = [
-  [selectIsAlbum, selectAlbumTracks],
-  [selectIsArtist, selectArtistTracks],
-  [selectIsPlaylist, selectPlaylistTracks]
-];
+const providers = {
+  [Type.Album]: selectAlbumTracks,
+  [Type.Artist]: selectArtistTracks,
+  [Type.Playlist]: selectPlaylistTracks
+};
 
-function getTrackIds(state: State, collectionId: string): string[] {
-  for (const [isCollection, getTrackIds] of providers) {
-    if (isCollection(state, collectionId)) {
-      return getTrackIds(state, collectionId).map(track => track.id);
-    }
-  }
-  return [];
+function getTrackIds(
+  state: State,
+  collectionId: string,
+  collectionType: Type
+): string[] {
+  return providers[collectionType](state, collectionId).map(track => track.id);
 }
 
-export function loadCollection(collectionId: string, trackId?: string) {
+export function loadCollection(
+  collectionId: string,
+  collectionType: Type,
+  trackId?: string
+) {
   return (dispatch: Dispatch<LoadCollectionAction>, getState: () => State) => {
     const state = getState();
-    const trackIds = getTrackIds(state, collectionId);
+    const trackIds = getTrackIds(state, collectionId, collectionType);
     if (trackIds.length) {
       dispatch({
         type: ActionType.LoadCollection,
         payload: {
           collectionId: collectionId,
+          collectionType: collectionType,
           trackIds,
           trackId
         }
@@ -113,12 +110,16 @@ export function playPause() {
   };
 }
 
-export function loadPlayPause(collectionId: string, trackId?: string) {
+export function loadPlayPause(
+  collectionId: string,
+  collectionType: Type,
+  trackId?: string
+) {
   return (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
     const isLoaded = selectIsLoaded(state);
     if (!isLoaded(collectionId)) {
-      loadCollection(collectionId, trackId)(dispatch, getState);
+      loadCollection(collectionId, collectionType, trackId)(dispatch, getState);
     } else if (trackId && !isLoaded(trackId)) {
       loadTrack(trackId)(dispatch);
     } else {

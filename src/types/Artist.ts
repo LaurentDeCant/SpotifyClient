@@ -1,4 +1,4 @@
-import { ExternalUrl, Followers, Image } from ".";
+import { ExternalUrl, Followers, Image, Type } from ".";
 
 export interface Artist {
   external_url: ExternalUrl;
@@ -9,7 +9,7 @@ export interface Artist {
   images: Image[];
   name: string;
   popularity: number;
-  type: string;
+  type: Type;
   uri: string;
   albums: string[];
   relatedArtists: string[];

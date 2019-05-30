@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Album, Artist, Track } from "../../types";
+import { Album, Artist, Track, Type } from "../../types";
 import { getAlbum } from "../../actions/albums";
 import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
@@ -29,7 +29,11 @@ interface Props extends RouteComponentProps<Params> {
   isPlayable: boolean;
   isPlaying: boolean;
   getAlbum: (albumId: string) => void;
-  loadPlayPause: (collectionId: string, trackId?: string) => void;
+  loadPlayPause: (
+    collectionId: string,
+    collectionType: Type,
+    trackId?: string
+  ) => void;
 }
 
 function AlbumDetails({
@@ -50,7 +54,7 @@ function AlbumDetails({
   useEffect(effect, []);
 
   function handleToggle(trackId?: string) {
-    loadPlayPause(albumId, trackId);
+    loadPlayPause(albumId, Type.Album, trackId);
   }
 
   return album ? (

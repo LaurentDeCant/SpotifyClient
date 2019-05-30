@@ -1,14 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { Track } from "../../types";
+import { Track, Type } from "../../types";
 import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
-import {
-  Collection,
-  selectCollection,
-  selectLoadedTracks
-} from "../../reducers/player";
+import { Collection } from "../../reducers/types";
+import { selectCollection, selectLoadedTracks } from "../../reducers/player";
 import { Heading } from "../core";
 import TrackList from "../details/TrackList";
 
@@ -19,15 +16,18 @@ const Wrapper = styled.div`
 `;
 
 interface Props {
-  collection: Collection;
+  collection?: Collection;
   tracks: Track[];
-  loadPlayPause: (collectionId: string, trackId: string) => void;
+  loadPlayPause: (
+    collectionId: string,
+    collectionType: Type,
+    trackId: string
+  ) => void;
 }
 
 function Queue({ collection, tracks, loadPlayPause }: Props) {
-  const { id: collectionId } = collection;
   function handleToggle(trackId: string) {
-    loadPlayPause(collectionId, trackId);
+    collection && loadPlayPause(collection.id, collection.type, trackId);
   }
 
   return (

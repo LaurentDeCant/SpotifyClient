@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
-import { Album, Artist, Track } from "../../types";
+import { Album, Artist, Track, Type } from "../../types";
 import { getImageSource } from "../../utils";
 import { getFullArtist } from "../../actions/artists";
 import { loadPlayPause } from "../../actions/player";
@@ -76,7 +76,11 @@ interface Props extends RouteComponentProps<Params> {
   isPlayable: boolean;
   isPlaying: boolean;
   getFullArtist: (artistId: string) => void;
-  loadPlayPause: (artistId: string, trackId?: string) => void;
+  loadPlayPause: (
+    artistId: string,
+    collectionType: Type,
+    trackId?: string
+  ) => void;
 }
 
 function ArtistDetails({
@@ -98,7 +102,7 @@ function ArtistDetails({
   useEffect(effect, [artistId]);
 
   function handleToggle(trackId?: string) {
-    loadPlayPause(artistId, trackId);
+    loadPlayPause(artistId, Type.Artist, trackId);
   }
 
   return artist ? (

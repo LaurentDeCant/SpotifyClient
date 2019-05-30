@@ -80,10 +80,6 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergeArtists
 });
 
-export function selectIsArtist({ artists }: CombinedState, artistId: string) {
-  return !!artists[artistId];
-}
-
 export function selectArtist({ artists }: CombinedState, artistId: string) {
   return artists[artistId];
 }

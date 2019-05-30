@@ -27,10 +27,6 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergePlaylists
 });
 
-export function selectIsPlaylist(state: CombinedState, playlistId: string) {
-  return !!state.playlists[playlistId];
-}
-
 export function selectPlaylist(
   { playlists }: CombinedState,
   playlistId: string

@@ -1,4 +1,4 @@
-import { ExternalUrl, Followers, Image, User } from ".";
+import { ExternalUrl, Followers, Image, Type, User } from ".";
 
 export interface Playlist {
   collaborative: boolean;
@@ -13,6 +13,6 @@ export interface Playlist {
   public: boolean | null;
   snapshot_id: string;
   tracks: string[];
-  type: string;
+  type: Type;
   uri: string;
 }

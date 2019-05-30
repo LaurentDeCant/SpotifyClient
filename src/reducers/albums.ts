@@ -31,10 +31,6 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergeAlbums
 });
 
-export function selectIsAlbum({ albums }: CombinedState, albumId: string) {
-  return !!albums[albumId];
-}
-
 export function selectAlbum({ albums }: CombinedState, albumId: string) {
   return albums[albumId];
 }

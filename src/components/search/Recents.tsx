@@ -1,9 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter, RouteComponentProps } from "react-router";
+import { capitalize } from "lodash";
 import styled from "../../styles/styled";
+import { Album, Artist, Playlist, Type } from "../../types";
 import { clearRecents } from "../../actions/search";
 import { State } from "../../reducers";
-import { selectRecents, Recent, RecentType } from "../../reducers/search";
+import { selectRecents } from "../../reducers/search";
+import { getImageSource } from "../../utils";
 import { Button, Heading } from "../core";
 import { ImageShape } from "../core/Image";
 import CoverList from "../covers/CoverList";
@@ -23,30 +27,39 @@ const ClearButton = styled(Button).attrs(() => ({
   align-self: center;
 `;
 
-interface Props {
-  recents: Recent[];
+interface Props extends RouteComponentProps {
+  recents: (Album | Artist | Playlist)[];
   clearRecents: () => void;
 }
 
-function Recents({ recents, clearRecents }: Props) {
+function Recents({ history, recents, clearRecents }: Props) {
+  function handleClick(id: string) {
+    const recent = recents.find(recent => recent.id === id);
+    if (recent) {
+      history.push(
+        `${process.env.PUBLIC_URL}/${recent.type.toLowerCase()}/${recent.id}`
+      );
+    }
+  }
+
   const covers = getCovers(recents);
   return (
     <Wrapper>
       {!!recents.length && <Heading>Recent searches</Heading>}
-      <StyledCoverList covers={covers} onClick={() => {}} />
+      <StyledCoverList covers={covers} onClick={handleClick} />
       {!!recents.length && <ClearButton onClick={clearRecents} />}
     </Wrapper>
   );
 }
 
-function getCovers(recents: Recent[]) {
+function getCovers(recents: (Album | Artist | Playlist)[]) {
   return recents.map(recent => ({
     id: recent.id,
-    imageSource: recent.imageSource,
+    imageSource: getImageSource(recent),
     imageShape:
-      recent.type === RecentType.Artist ? ImageShape.Round : ImageShape.Square,
+      recent.type === Type.Artist ? ImageShape.Round : ImageShape.Square,
     title: recent.name,
-    subTitle: recent.type
+    subTitle: capitalize(recent.type)
   }));
 }
 
@@ -58,7 +71,9 @@ const mapDispatch = {
   clearRecents
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Recents);
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Recents)
+);

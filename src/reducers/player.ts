@@ -9,6 +9,7 @@ import {
   ChangeVolumeAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
+import { Collection } from "./types";
 import createReducer from "./createReducer";
 import { selectTrack, selectTracks } from "./tracks";
 import { selectAlbum } from "./albums";
@@ -29,7 +30,7 @@ export enum Command {
 }
 
 export interface State {
-  collectionId: string;
+  collections: Collection[];
   trackIds: string[];
   trackIndex: number;
   playerState: PlayerState;
@@ -43,7 +44,7 @@ export interface State {
 }
 
 const initialState: State = {
-  collectionId: "",
+  collections: [],
   trackIds: [],
   trackIndex: 0,
   playerState: PlayerState.None,
@@ -59,37 +60,40 @@ const initialState: State = {
 export default createReducer(initialState, {
   [ActionType.LoadCollection]: (
     state: State,
-    action: LoadCollectionAction
+    { payload }: LoadCollectionAction
   ): State => {
-    const { collectionId, trackIds, trackId } = action.payload;
+    const { collectionId, collectionType, trackIds, trackId } = payload;
     return {
       ...state,
-      collectionId: collectionId,
+      collections: [
+        { id: collectionId, type: collectionType },
+        ...state.collections.filter(recent => recent.id !== collectionId)
+      ],
       trackIds: trackIds,
       trackIndex: trackId ? trackIds.indexOf(trackId) : 0,
       command: Command.Play
     };
   },
-  [ActionType.LoadTrack]: (state: State, action: LoadTrackAction) => ({
+  [ActionType.LoadTrack]: (state: State, { payload }: LoadTrackAction) => ({
     ...state,
-    trackIndex: state.trackIds.indexOf(action.payload.trackId),
+    trackIndex: state.trackIds.indexOf(payload.trackId),
     command: Command.Play
   }),
   [ActionType.TrackLoaded]: (
     state: State,
-    action: TrackLoadedAction
+    { payload }: TrackLoadedAction
   ): State => ({
     ...state,
-    duration: action.payload
+    duration: payload
   }),
   [ActionType.Playing]: (state: State): State => ({
     ...state,
     playerState: PlayerState.Playing,
     command: Command.None
   }),
-  [ActionType.Update]: (state: State, action: UpdateAction): State => ({
+  [ActionType.Update]: (state: State, { payload }: UpdateAction): State => ({
     ...state,
-    currentTime: action.payload,
+    currentTime: payload,
     command: Command.None
   }),
   [ActionType.Play]: (state: State): State => ({
@@ -105,9 +109,9 @@ export default createReducer(initialState, {
     playerState: PlayerState.Paused,
     command: Command.None
   }),
-  [ActionType.Seek]: (state: State, action: SeekAction): State => ({
+  [ActionType.Seek]: (state: State, { payload }: SeekAction): State => ({
     ...state,
-    currentTime: action.payload,
+    currentTime: payload,
     command: Command.Seek
   }),
   [ActionType.Seeked]: (state: State): State => ({
@@ -143,10 +147,10 @@ export default createReducer(initialState, {
   }),
   [ActionType.ChangeVolume]: (
     state: State,
-    action: ChangeVolumeAction
+    { payload }: ChangeVolumeAction
   ): State => ({
     ...state,
-    ...action.payload,
+    ...payload,
     command: Command.ChangeVolume
   }),
   [ActionType.VolumeChanged]: (state: State): State => ({
@@ -155,23 +159,12 @@ export default createReducer(initialState, {
   })
 });
 
-export enum CollectionType {
-  Album = "ALBUM",
-  Artist = "ARTIST",
-  Playlist = "PLAYLIST"
+export function selectCollection({ player }: CombinedState) {
+  const { collections: recents } = player;
+  if (recents.length) {
+    return recents[0];
+  }
 }
-
-export interface Collection {
-  id: string;
-  type?: CollectionType;
-}
-
-export const selectCollection = createSelector(
-  ({ player }: CombinedState) => player,
-  (state: State): Collection => ({
-    id: state.collectionId
-  })
-);
 
 export function selectLoadedTrack(state: CombinedState) {
   const { trackIds, trackIndex } = state.player;
@@ -198,9 +191,10 @@ export function selectLoadedArtists(state: CombinedState) {
 }
 
 export function selectIsLoaded(state: CombinedState) {
-  const { collectionId, trackIds, trackIndex } = state.player;
+  const { collections: recents, trackIds, trackIndex } = state.player;
   return (id: string) =>
-    collectionId === id || (!!trackIds.length && trackIds[trackIndex] === id);
+    (recents.length && recents[0].id === id) ||
+    (!!trackIds.length && trackIds[trackIndex] === id);
 }
 
 export function selectIsPlaying(state: CombinedState, id?: string) {

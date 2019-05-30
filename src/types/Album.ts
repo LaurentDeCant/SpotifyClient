@@ -1,4 +1,11 @@
-import { Copyright, ExternalId, ExternalUrl, Image, Restriction } from ".";
+import {
+  Copyright,
+  ExternalId,
+  ExternalUrl,
+  Image,
+  Restriction,
+  Type
+} from ".";
 
 export interface Album {
   album_type: string;
@@ -18,6 +25,6 @@ export interface Album {
   release_date_precision: string;
   restrictions: Restriction[];
   tracks: string[];
-  type: string;
+  type: Type;
   uri: string;
 }
