@@ -1,3 +1,4 @@
+import { createSelector } from "reselect";
 import { Album, Artist, Playlist, Image, Type } from "../types";
 import { SearchActionType as ActionType } from "../actions";
 import {
@@ -8,14 +9,16 @@ import {
 } from "../actions/search";
 import { getImageSource } from "../utils";
 import { State as CombinedState } from ".";
-import { Collection } from "./types";
-import createReducer from "./createReducer";
-import { selectAlbums as selectAlbumsById, selectAlbum } from "./albums";
-import { selectArtists as selectArtistsById, selectArtist } from "./artists";
 import {
-  selectPlaylists as selectPlaylistsById,
-  selectPlaylist
-} from "./playlists";
+  Collection,
+  AlbumDictionary,
+  ArtistDictionary,
+  PlaylistDictionary
+} from "./types";
+import createReducer from "./createReducer";
+import { selectAlbums as selectAlbumsById } from "./albums";
+import { selectArtists as selectArtistsById } from "./artists";
+import { selectPlaylists as selectPlaylistsById } from "./playlists";
 
 export interface State {
   albumIds: string[];
@@ -90,17 +93,26 @@ export function selectPlaylists(state: CombinedState): Playlist[] {
   return selectPlaylistsById(state)(state.search.playlistIds);
 }
 
-export function selectRecents(
-  state: CombinedState
-): (Album | Artist | Playlist)[] {
-  return state.search.recents.map(recent => {
-    switch (recent.type) {
-      case Type.Album:
-        return selectAlbum(state, recent.id);
-      case Type.Artist:
-        return selectArtist(state, recent.id);
-      default:
-        return selectPlaylist(state, recent.id);
-    }
-  });
-}
+export const selectRecents = createSelector(
+  ({ search }: CombinedState) => search,
+  ({ albums }: CombinedState) => albums,
+  ({ artists }: CombinedState) => artists,
+  ({ playlists }: CombinedState) => playlists,
+  (
+    search: State,
+    albums: AlbumDictionary,
+    artists: ArtistDictionary,
+    playlists: PlaylistDictionary
+  ) => {
+    return search.recents.map(recent => {
+      switch (recent.type) {
+        case Type.Album:
+          return albums[recent.id];
+        case Type.Artist:
+          return artists[recent.id];
+        default:
+          return playlists[recent.id];
+      }
+    });
+  }
+);
