@@ -1,8 +1,7 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Artist } from "../../types";
-import { getImageSource } from "../../utils";
-import { ImageShape } from "../core/Image";
+import { getImageSource, getImageShape } from "../../utils";
 import { Cover } from "./types";
 import CoverList from "./CoverList";
 
@@ -18,16 +17,14 @@ function ArtistCovers({ history, artists, onSelect }: Props) {
   }
 
   const covers = getCovers(artists);
-  return (
-    <CoverList covers={covers} shape={ImageShape.Round} onClick={handleClick} />
-  );
+  return <CoverList covers={covers} onClick={handleClick} />;
 }
 
 function getCovers(artists: Artist[]): Cover[] {
   return artists.map(artist => ({
     id: artist.id,
     imageSource: getImageSource(artist),
-    imageShape: ImageShape.Round,
+    imageShape: getImageShape(artist),
     title: artist.name
   }));
 }

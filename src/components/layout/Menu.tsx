@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "../../styles/styled";
 import { click } from "../../styles/effects";
 import { Icon, IconType } from "../core";
-import Recents from "./Recents";
+import RecentList from "./RecentList";
 
 const Wrapper = styled.div`
   background: ${props => props.theme.background.dark};
@@ -32,6 +32,7 @@ const List = styled.ul`
   @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     flex-direction: column;
     justify-content: flex-start;
+    height: calc(50% - ${props => props.theme.thickness.medium}px);
     margin-bottom: ${props => props.theme.thickness.medium}px;
   }
 `;
@@ -69,7 +70,8 @@ const StyledIcon = styled(Icon)`
   margin-right: ${props => props.theme.thickness.small}px;
 `;
 
-const StyledRecents = styled(Recents)`
+const StyledRecents = styled(RecentList)`
+  height: 50%;
   overflow: hidden;
 `;
 

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { ImageShape } from "../core/Image";
 import { Cover } from "./types";
 import CoverItem from "./CoverItem";
 
@@ -36,7 +35,6 @@ const StyledItem = styled.li`
 interface Props {
   className?: string;
   covers: Cover[];
-  shape: ImageShape;
   onClick: (id: string) => void;
 }
 
@@ -51,9 +49,5 @@ function CoverList({ className, covers, onClick }: Props) {
     </StyledList>
   );
 }
-
-CoverList.defaultProps = {
-  shape: ImageShape.Square
-};
 
 export default CoverList;

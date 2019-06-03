@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
 import { Album, Artist, Track, Type } from "../../types";
-import { getImageSource } from "../../utils";
+import { getImageSource, getImageShape } from "../../utils";
 import { getFullArtist } from "../../actions/artists";
 import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
@@ -19,7 +19,6 @@ import TrackList from "./TrackList";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";
 import { Heading } from "../core";
-import { ImageShape } from "../core/Image";
 import Header from "./Header";
 import Wrapper from "./Wrapper";
 import withLoader from "../withLoader";
@@ -110,7 +109,7 @@ function ArtistDetails({
       <Wrapper>
         <Header
           imageSource={getImageSource(artist)}
-          imageShape={ImageShape.Round}
+          imageShape={getImageShape(artist)}
           title={artist.name}
           canPlay={isPlayable}
           isPlaying={isPlaying}

@@ -62,4 +62,8 @@ function CoverItem({ cover, onClick }: Props) {
   );
 }
 
+CoverItem.defaultProps = {
+  onClick: () => {}
+};
+
 export default CoverItem;

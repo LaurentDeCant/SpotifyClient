@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
 import { capitalize } from "lodash";
 import styled from "../../styles/styled";
-import { Album, Artist, Playlist, Type } from "../../types";
+import { Album, Artist, Playlist } from "../../types";
 import { clearRecents } from "../../actions/search";
 import { State } from "../../reducers";
 import { selectRecents } from "../../reducers/search";
-import { getImageSource } from "../../utils";
+import { getImageSource, getImageShape } from "../../utils";
 import { Button, Heading } from "../core";
-import { ImageShape } from "../core/Image";
 import CoverList from "../covers/CoverList";
 
 const Wrapper = styled.div`
@@ -36,9 +35,7 @@ function Recents({ history, recents, clearRecents }: Props) {
   function handleClick(id: string) {
     const recent = recents.find(recent => recent.id === id);
     if (recent) {
-      history.push(
-        `${process.env.PUBLIC_URL}/${recent.type.toLowerCase()}/${recent.id}`
-      );
+      history.push(`${process.env.PUBLIC_URL}/${recent.type}/${recent.id}`);
     }
   }
 
@@ -56,8 +53,7 @@ function getCovers(recents: (Album | Artist | Playlist)[]) {
   return recents.map(recent => ({
     id: recent.id,
     imageSource: getImageSource(recent),
-    imageShape:
-      recent.type === Type.Artist ? ImageShape.Round : ImageShape.Square,
+    imageShape: getImageShape(recent),
     title: recent.name,
     subTitle: capitalize(recent.type)
   }));
