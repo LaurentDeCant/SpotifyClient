@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { Type } from "../types";
 import {
   ActionType,
   LoadCollectionAction,
@@ -9,7 +10,12 @@ import {
   ChangeVolumeAction
 } from "../actions/player";
 import { State as CombinedState } from ".";
-import { Collection } from "./types";
+import {
+  AlbumDictionary,
+  ArtistDictionary,
+  PlaylistDictionary,
+  Collection
+} from "./types";
 import createReducer from "./createReducer";
 import { selectTrack, selectTracks } from "./tracks";
 import { selectAlbum } from "./albums";
@@ -259,3 +265,27 @@ export function selectIsMuted({ player }: CombinedState) {
 export function selectCommand(state: CombinedState): Command {
   return state.player.command;
 }
+
+export const selectRecents = createSelector(
+  ({ player }: CombinedState) => player,
+  ({ albums }: CombinedState) => albums,
+  ({ artists }: CombinedState) => artists,
+  ({ playlists }: CombinedState) => playlists,
+  (
+    player: State,
+    albums: AlbumDictionary,
+    artists: ArtistDictionary,
+    playlists: PlaylistDictionary
+  ) => {
+    return player.collections.map(collection => {
+      switch (collection.type) {
+        case Type.Album:
+          return albums[collection.id];
+        case Type.Artist:
+          return artists[collection.id];
+        default:
+          return playlists[collection.id];
+      }
+    });
+  }
+);

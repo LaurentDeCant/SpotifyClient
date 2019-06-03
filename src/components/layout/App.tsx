@@ -18,12 +18,16 @@ const StyledHeader = styled(Header)`
 
 const Body = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     flex-direction: row;
   }
+`;
+
+const StyledMenu = styled(Menu)`
+  flex-shrink: 0;
 `;
 
 const StyledPlayer = styled(Player)`
@@ -37,7 +41,7 @@ function App() {
         <StyledHeader />
 
         <Body>
-          <Menu />
+          <StyledMenu />
           <Routes />
         </Body>
 
