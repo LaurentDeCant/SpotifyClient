@@ -18,7 +18,7 @@ const StyledHeader = styled(Header)`
 
 const Body = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-grow: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {

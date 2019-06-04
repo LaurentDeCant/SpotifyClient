@@ -24,32 +24,29 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const ShuffleButton = styled(ToggleButton).attrs(() => ({
+const StyledRoundButton = styled(RoundButton)`
+  margin: 0 ${props => props.theme.thickness.extraSmall}px;
+`;
+
+const StyledToggleButton = styled(ToggleButton)`
+  margin: 0 ${props => props.theme.thickness.extraSmall}px;
+`;
+
+const ShuffleButton = styled(StyledToggleButton).attrs(() => ({
   iconType: IconType.Shuffle
 }))``;
 
-const PreviousButton = styled(RoundButton).attrs(() => ({
+const PreviousButton = styled(StyledRoundButton).attrs(() => ({
   iconType: IconType.SkipPrevious
 }))``;
 
-interface PlayButtonProps {
-  isPlaying: boolean;
-}
+const PlayButton = styled(StyledRoundButton)``;
 
-const PlayButton = styled(RoundButton).attrs<
-  PlayButtonProps,
-  { iconType: IconType }
->(({ isPlaying }) => ({
-  iconType: isPlaying ? IconType.Pause : IconType.PlayArrow
-}))<PlayButtonProps>`
-  transform: scale(1.25);
-`;
-
-const NextButton = styled(RoundButton).attrs(() => ({
+const NextButton = styled(StyledRoundButton).attrs(() => ({
   iconType: IconType.SkipNext
 }))``;
 
-const LoopButton = styled(ToggleButton).attrs(() => ({
+const LoopButton = styled(StyledToggleButton).attrs(() => ({
   iconType: IconType.Loop
 }))``;
 
@@ -88,7 +85,7 @@ function Controls({
       <PlayButton
         disabled={!canPlayPause}
         onClick={playPause}
-        isPlaying={isPlaying}
+        iconType={isPlaying ? IconType.Pause : IconType.PlayArrow}
       />
 
       <NextButton disabled={!canNext} onClick={next} />

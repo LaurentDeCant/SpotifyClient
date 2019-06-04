@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Button, Image, Text } from "../core";
+import { Button, IconType, Image, RoundButton, Text } from "../core";
 import { ImageShape } from "../core/Image";
 
 const Wrapper = styled.div`
@@ -33,7 +33,7 @@ const StyledImage = styled(Image)`
   }
 `;
 
-const Div = styled.div`
+const Vertical = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -64,8 +64,19 @@ const SubTitle = styled(Text)`
   }
 `;
 
-const PlayButton = styled(Button)`
+const Horizontal = styled.div`
+  display: flex;
+  flex-orientation: row;
   margin-top: ${props => props.theme.thickness.medium}px;
+`;
+
+const FavoriteButton = styled(RoundButton).attrs(() => ({
+  iconType: IconType.Favorite
+}))`
+  margin-right: ${props => props.theme.thickness.small}px;
+`;
+
+const PlayButton = styled(Button)`
   width: ${props => props.theme.thickness.extraLarge}px;
 `;
 
@@ -95,13 +106,16 @@ function Header({
   return (
     <Wrapper>
       <StyledImage source={imageSource} shape={imageShape} />
-      <Div>
+      <Vertical>
         <Title>{title}</Title>
         {subTitle && <SubTitle>{subTitle}</SubTitle>}
-        <PlayButton disabled={!canPlay} onClick={handleClick}>
-          {isPlaying ? "Pause" : "Play"}
-        </PlayButton>
-      </Div>
+        <Horizontal>
+          <FavoriteButton />
+          <PlayButton disabled={!canPlay} onClick={handleClick}>
+            {isPlaying ? "Pause" : "Play"}
+          </PlayButton>
+        </Horizontal>
+      </Vertical>
     </Wrapper>
   );
 }

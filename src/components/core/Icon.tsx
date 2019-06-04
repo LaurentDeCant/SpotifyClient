@@ -1,6 +1,9 @@
 import React, { HTMLAttributes } from "react";
 
 export enum IconType {
+  Favorite = "favorite",
+  Home = "home",
+  LibraryMusic = "library_music",
   Loop = "loop",
   MusicNote = "music_note",
   MusicOff = "music_off",
@@ -8,6 +11,7 @@ export enum IconType {
   Person = "person",
   PlayArrow = "play_arrow",
   PlaylistPlay = "playlist_play",
+  QueueMusic = "queue_music",
   Refresh = "refresh",
   Search = "search",
   Shuffle = "shuffle",

@@ -26,13 +26,11 @@ const Wrapper = styled.div`
 const List = styled.ul`
   display: flex;
   flex-direction: row;
-  flex-shrink: 0;
   justify-content: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
     flex-direction: column;
     justify-content: flex-start;
-    height: calc(50% - ${props => props.theme.thickness.medium}px);
     margin-bottom: ${props => props.theme.thickness.medium}px;
   }
 `;
@@ -71,20 +69,29 @@ const StyledIcon = styled(Icon)`
 `;
 
 const StyledRecents = styled(RecentList)`
-  height: 50%;
   overflow: hidden;
+  display: none;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+    display: block;
+  }
 `;
 
 const items = [
   {
-    link: `${process.env.PUBLIC_URL}/browse`,
-    icon: IconType.ViewModule,
+    url: `${process.env.PUBLIC_URL}/browse`,
+    icon: IconType.Home,
     text: "Browse"
   },
   {
-    link: `${process.env.PUBLIC_URL}/search`,
+    url: `${process.env.PUBLIC_URL}/search`,
     icon: IconType.Search,
     text: "Search"
+  },
+  {
+    url: `${process.env.PUBLIC_URL}/library`,
+    icon: IconType.LibraryMusic,
+    text: "Library"
   }
 ];
 
@@ -93,8 +100,8 @@ const Menu = ({ className }: HTMLAttributes<HTMLElement>) => {
     <Wrapper className={className}>
       <List>
         {items.map(item => (
-          <li key={item.link}>
-            <StyledNavLink to={item.link}>
+          <li key={item.url}>
+            <StyledNavLink to={item.url}>
               <StyledIcon type={item.icon} />
               {item.text}
             </StyledNavLink>

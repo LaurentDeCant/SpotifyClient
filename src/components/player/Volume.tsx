@@ -1,4 +1,4 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { changeVolume } from "../../actions/player";
@@ -13,21 +13,12 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-interface VolumeButtonProps {
-  isMuted: boolean;
-}
-
-const VolumeButton = styled(RoundButton).attrs<
-  VolumeButtonProps,
-  { iconType: IconType }
->(({ isMuted }) => ({
-  iconType: isMuted ? IconType.VolumeOff : IconType.VolumeUp
-}))<VolumeButtonProps>`
-  margin: 0;
+const VolumeButton = styled(RoundButton)`
+  flex-shrink: 0;
 `;
 
 const StyledSlider = styled(Slider)`
-  width: ${props => props.theme.thickness.extraLarge}px;
+  flex-grow: 1;
 `;
 
 interface Props {
@@ -36,7 +27,12 @@ interface Props {
   changeVolume: (volume: number, isMuted: boolean) => void;
 }
 
-function Volume({ volume, isMuted, changeVolume }: Props) {
+function Volume({
+  className,
+  volume,
+  isMuted,
+  changeVolume
+}: Props & HTMLAttributes<HTMLElement>) {
   function handleClick() {
     changeVolume(volume, !isMuted);
   }
@@ -46,8 +42,11 @@ function Volume({ volume, isMuted, changeVolume }: Props) {
   }
 
   return (
-    <Wrapper>
-      <VolumeButton isMuted={isMuted || !volume} onClick={handleClick} />
+    <Wrapper className={className}>
+      <VolumeButton
+        iconType={isMuted ? IconType.VolumeOff : IconType.VolumeUp}
+        onClick={handleClick}
+      />
       <StyledSlider value={isMuted ? 0 : volume} onChange={handleChange} />
     </Wrapper>
   );

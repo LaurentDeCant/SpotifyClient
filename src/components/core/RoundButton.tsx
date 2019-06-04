@@ -7,9 +7,9 @@ const StyedButton = styled(ButtonBase)`
   border-radius: 50%;
   color: ${props => props.theme.foreground.dark};
   display: flex;
-  margin: ${props => props.theme.thickness.extraSmall}px
-    ${props => props.theme.thickness.small}px;
-  padding: ${props => props.theme.thickness.extraSmall}px;
+  height: ${props => props.theme.thickness.large}px;
+  justify-content: center;
+  width: ${props => props.theme.thickness.large}px;
 
   &:disabled {
     color: ${props => props.theme.foreground.darker};

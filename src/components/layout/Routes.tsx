@@ -7,6 +7,7 @@ import LogIn from "./Login";
 import Browse from "../browse/Browse";
 import CategoryPlaylists from "../browse/CategoryPlaylists";
 import Search from "../search/Search";
+import Library from "../library/Library";
 import PlaylistDetails from "../details/PlaylistDetails";
 import AlbumDetails from "../details/AlbumDetails";
 import ArtistDetails from "../details/ArtistDetails";
@@ -20,14 +21,15 @@ const Wrapper = styled.div`
   padding: ${props => props.theme.thickness.medium}px;
 `;
 
+const publicUrl = process.env.PUBLIC_URL;
 const Routes = () => {
-  const publicUrl = process.env.PUBLIC_URL;
   return (
     <Wrapper>
       <DefaultRoute from={`${publicUrl}/`} to={`${publicUrl}/browse`} />
       <Route path={`${publicUrl}/login`} component={LogIn} />
       <PrivateRoute path={`${publicUrl}/browse`} component={Browse} />
       <PrivateRoute path={`${publicUrl}/search/:query?`} component={Search} />
+      <PrivateRoute path={`${publicUrl}/library`} component={Library} />
       <PrivateRoute
         path={`${publicUrl}/category/:categoryId`}
         component={CategoryPlaylists}

@@ -45,7 +45,7 @@ const CenterWrapper = styled(ThirdWrapper)`
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
-    padding: 0 ${props => props.theme.thickness.small}px;
+    margin: 0 ${props => props.theme.thickness.medium}px;
     max-width: 50%;
   }
 `;
@@ -61,11 +61,14 @@ const RightWrapper = styled(ThirdWrapper)`
   }
 `;
 
+const StyledVolume = styled(Volume)`
+  flex-grow: 1;
+`;
+
 const QueueButton = styled(RoundButton).attrs(() => ({
-  iconType: IconType.PlaylistPlay
+  iconType: IconType.QueueMusic
 }))`
-  flex-shrink: 0;
-  margin: ${props => props.theme.thickness.extraSmall}px;
+  margin-right: ${props => props.theme.thickness.extraSmall}px;
 `;
 
 interface Props extends RouteComponentProps {
@@ -104,7 +107,7 @@ function Player({
 
       <RightWrapper>
         <QueueButton onClick={handleQueueClick} />
-        <Volume />
+        <StyledVolume />
       </RightWrapper>
 
       <Audio />

@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  RouteComponentProps,
-  NavLink,
-  Route,
-  withRouter
-} from "react-router-dom";
 import styled from "../../styles/styled";
-import DefaultRoute from "../DefaultRoute";
+import SubMenu from "../layout/SubMenu";
+import SubRoutes from "../layout/SubRoutes";
 import Categories from "./Categories";
 import NewReleases from "./NewReleases";
 import FeaturedPlaylists from "./FeaturedPlaylists";
@@ -15,88 +10,32 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
-const StyledList = styled.ul`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: ${props => props.theme.fontSize.medium};
-  justify-content: center;
-  margin-bottom: 0;
-  position: relative;
-  top: -25px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
-    margin-bottom: ${props => props.theme.thickness.medium}px;
-    top: 0;
-  }
-`;
-
-const StyledNavLink = styled(NavLink)`
-  align-items: center;
-  color: ${props => props.theme.foreground.dark};
-  display: flex;
-  height: ${props => props.theme.thickness.large}px;
-  justify-content: center;
-  padding: 0 ${props => props.theme.thickness.medium}px;
-  position: relative;
-
-  &:hover {
-    color: ${props => props.theme.foreground.default};
-  }
-
-  &.active {
-    color: ${props => props.theme.foreground.default};
-  }
-
-  &.active::after {
-    background: ${props => props.theme.primaryLight};
-    bottom: 0;
-    content: "";
-    height: ${props => props.theme.thickness.extraExtraSmall}px;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, 0);
-    width: ${props => props.theme.thickness.large}px;
-  }
-`;
-
-const links = [
+const items = [
   {
-    url: "categories",
-    label: "Categories"
+    path: "categories",
+    text: "Categories",
+    default: true,
+    component: Categories
   },
   {
-    url: "new-releases",
-    label: "New Releases"
+    path: "new-releases",
+    text: "New Releases",
+    component: NewReleases
   },
   {
-    url: "featured-playists",
-    label: "Featured Playlists"
+    path: "featured-playists",
+    text: "Featured Playlists",
+    component: FeaturedPlaylists
   }
 ];
 
-function Browse({ match }: RouteComponentProps) {
+function Browse() {
   return (
     <Wrapper>
-      <StyledList>
-        {links.map(link => (
-          <li key={link.url}>
-            <StyledNavLink to={`${match.url}/${link.url}`}>
-              {link.label}
-            </StyledNavLink>
-          </li>
-        ))}
-      </StyledList>
-
-      <DefaultRoute from={`${match.path}`} to={`${match.path}/categories`} />
-      <Route exact path={`${match.path}/categories`} component={Categories} />
-      <Route path={`${match.path}/new-releases`} component={NewReleases} />
-      <Route
-        path={`${match.path}/featured-playists`}
-        component={FeaturedPlaylists}
-      />
+      <SubMenu items={items} />
+      <SubRoutes items={items} />
     </Wrapper>
   );
 }
 
-export default withRouter(Browse);
+export default Browse;

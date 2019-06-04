@@ -5,7 +5,7 @@ import { Artist, Track } from "../../types";
 import { getArtistNames } from "../../utils";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
-import { Icon, IconType, Text } from "../core";
+import { Icon, IconType, RoundButton, Text } from "../core";
 import ButtonBase from "../core/ButtonBase";
 import { selectTrackArtists } from "../../reducers/tracks";
 
@@ -66,7 +66,12 @@ const SubTitle = styled(Text)`
 const Duration = styled.span`
   color: ${props => props.theme.foreground.dark};
   flex-shrink: 0;
+  margin-right: ${props => props.theme.thickness.small}px;
 `;
+
+const FavoriteButton = styled(RoundButton).attrs(() => ({
+  iconType: IconType.Favorite
+}))``;
 
 interface OwnProps {
   track: Track;
@@ -141,6 +146,8 @@ function TrackItem({
       </Infos>
 
       {renderDuration()}
+
+      <FavoriteButton />
     </StyledButton>
   );
 }
