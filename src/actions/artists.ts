@@ -107,12 +107,12 @@ export function getFullArtist(artistId: string) {
     dispatch({
       type: ActionType.FullArtistRequest
     });
-    const url = `${process.env.REACT_APP_BASE_URL}/artists/${artistId}`;
+    const artistUrl = `${process.env.REACT_APP_BASE_URL}/artists/${artistId}`;
     Promise.all([
-      fetchJson(url),
-      fetchJson(`${url}/albums`),
-      fetchJson(`${url}/related-artists`),
-      fetchJson(`${url}/top-tracks?country=us`)
+      fetchJson(artistUrl),
+      fetchJson(`${artistUrl}/albums`),
+      fetchJson(`${artistUrl}/related-artists`),
+      fetchJson(`${artistUrl}/top-tracks?country=us`)
     ]).then(([artist, albums, relatedArtists, topTracks]) => {
       dispatch({
         type: ActionType.FullArtistSuccess,

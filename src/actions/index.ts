@@ -1,6 +1,7 @@
 export { ActionType as AlbumActionType } from "./albums";
 export { ActionType as ArtistActionType } from "./artists";
 export { ActionType as BrowseActionType } from "./browse";
+export { ActionType as LibraryActionType } from "./library";
 export { ActionType as PlaylistActionType } from "./playlists";
 
 export enum SearchActionType {

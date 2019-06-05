@@ -4,6 +4,7 @@ import SubRoutes from "../layout/SubRoutes";
 import Artists from "./Artists";
 import Albums from "./Albums";
 import Playlists from "./Playlists";
+import Tracks from "./Tracks";
 
 const items = [
   {
@@ -21,6 +22,11 @@ const items = [
     path: "playlists",
     text: "Playlists",
     component: Playlists
+  },
+  {
+    path: "tracks",
+    text: "Tracks",
+    component: Tracks
   }
 ];
 

@@ -1,9 +1,12 @@
 import { Dispatch } from "redux";
 import { receiveLogIn } from "../actions/authorization";
 
+const SCOPES = "user-follow-read user-library-read";
 const LOG_IN_URL = `https://accounts.spotify.com/authorize?client_id=${
   process.env.REACT_APP_CLIENT_ID
-}&response_type=token&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+}&scope=${encodeURIComponent(SCOPES)}&response_type=token&redirect_uri=${
+  process.env.REACT_APP_REDIRECT_URI
+}`;
 const REGEX = /#access_token=(.*?)&token_type=(.*?)&expires_in=(.*)$/;
 const ACCESS_TOKEN = "token";
 const TOKEN_TYPE = "tokenType";
