@@ -6,40 +6,51 @@ import { getArtistNames } from "../../utils";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
 import { Icon, IconType, RoundButton, Text } from "../core";
-import ButtonBase from "../core/ButtonBase";
 import { selectTrackArtists } from "../../reducers/tracks";
 
-const StyledButton = styled(ButtonBase)<{ isLoaded: boolean }>`
+const Wrapper = styled.li<{ isLoaded: boolean }>`
   align-items: center;
   border-radius: 40px;
-  ${props => props.isLoaded && "color: " + props.theme.primaryLight};
+  box-sizing: border-box;
+  ${props => props.isLoaded && "color: " + props.theme.color.primaryLight};
   display: flex;
-  padding: ${props => props.theme.thickness.small}px
-    ${props => props.theme.thickness.medium}px;
+  margin-bottom: ${props => props.theme.thickness.extraSmall}px;
+  padding: ${props => props.theme.thickness.small}px 0;
   width: 100%;
 
-  &:disabled {
-    color: ${props => props.theme.foreground.default};
-  }
-
-  &&:hover {
-    ${props => props.isLoaded && "color: " + props.theme.primaryLight};
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 
-const StyledIcon = styled(Icon)<{ isLoaded?: boolean; isHover?: boolean }>`
-  color: ${props =>
-    props.isLoaded ? props.theme.primaryLight : props.theme.foreground.dark};
-  display: ${props => (props.isHover ? "none" : "block")};
+interface PlayButtonProps {
+  isLoaded: boolean;
+  isPlaying: Boolean;
+}
+
+const PlayButton = styled(RoundButton).attrs<
+  PlayButtonProps,
+  { iconType: IconType }
+>(({ isPlaying }) => ({
+  iconType: isPlaying ? IconType.Pause : IconType.PlayArrow
+}))<PlayButtonProps>`
+  ${props => props.isLoaded && `color: ${props.theme.color.primaryLight}`}
+  flex-shrink: 0;
   margin-right: ${props => props.theme.thickness.small}px;
 
-  ${StyledButton}:not(:disabled):hover & {
-    color: ${props =>
-      props.isLoaded
-        ? props.theme.primaryLight
-        : props.theme.foreground.default};
-    display: ${props => (props.isHover ? "block" : "none")};
+  &&:hover {
+    ${props => props.isLoaded && `color: ${props.theme.color.primaryLight}`}
   }
+`;
+
+const NoMusicIcon = styled(Icon).attrs(() => ({
+  type: IconType.MusicOff
+}))`
+  color: ${props => props.theme.color.errorLight};
+  flex-shrink: 0;
+  margin-right: ${props => props.theme.thickness.small}px;
+  text-align: center;
+  width: ${props => props.theme.thickness.large}px;
 `;
 
 const Infos = styled.div`
@@ -71,7 +82,9 @@ const Duration = styled.span`
 
 const FavoriteButton = styled(RoundButton).attrs(() => ({
   iconType: IconType.Favorite
-}))``;
+}))`
+  flex-shrink: 0;
+`;
 
 interface OwnProps {
   track: Track;
@@ -93,25 +106,6 @@ function TrackItem({
   isPlaying,
   onToggle
 }: Props) {
-  function renderIcon() {
-    return isDisabled ? (
-      <StyledIcon type={IconType.MusicOff} />
-    ) : (
-      <>
-        <StyledIcon
-          type={isPlaying ? IconType.VolumeUp : IconType.MusicNote}
-          isLoaded={isLoaded}
-          isHover={false}
-        />
-        <StyledIcon
-          type={isPlaying ? IconType.Pause : IconType.PlayArrow}
-          isLoaded={isLoaded}
-          isHover={true}
-        />
-      </>
-    );
-  }
-
   function renderArtist() {
     return <SubTitle>{getArtistNames(artists)}</SubTitle>;
   }
@@ -133,12 +127,16 @@ function TrackItem({
   }
 
   return (
-    <StyledButton
-      onClick={handleClick}
-      disabled={isDisabled}
-      isLoaded={isLoaded}
-    >
-      {renderIcon()}
+    <Wrapper isLoaded={isLoaded}>
+      {isDisabled ? (
+        <NoMusicIcon />
+      ) : (
+        <PlayButton
+          isLoaded={isLoaded}
+          isPlaying={isPlaying}
+          onClick={handleClick}
+        />
+      )}
 
       <Infos>
         <Title>{track.name}</Title>
@@ -148,7 +146,7 @@ function TrackItem({
       {renderDuration()}
 
       <FavoriteButton />
-    </StyledButton>
+    </Wrapper>
   );
 }
 

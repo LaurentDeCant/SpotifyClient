@@ -12,7 +12,7 @@ const StyledList = styled.ul`
 `;
 
 function splitWidth(times: number) {
-  return `calc((100% - ${times * 25}px) / ${times})`;
+  return `calc((100% - ${times * 25}px) / ${times} - 1px)`;
 }
 
 const StyledItem = styled.li`
@@ -23,11 +23,11 @@ const StyledItem = styled.li`
   margin: ${props => props.theme.thickness.small}px;
   width: ${splitWidth(2)};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     width: ${splitWidth(3)};
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     width: ${splitWidth(6)};
   }
 `;

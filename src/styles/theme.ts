@@ -6,9 +6,16 @@ export interface Theme {
     hover: string;
     active: string;
   };
-  breakpoints: {
+  breakpoint: {
     extraSmall: number;
     small: number;
+  };
+  color: {
+    primaryLight: string;
+    primary: string;
+    errorLight: string;
+    error: string;
+    errorDark: string;
   };
   fontSize: {
     small: string;
@@ -27,8 +34,6 @@ export interface Theme {
     dark: string;
     darker: string;
   };
-  primaryLight: string;
-  primary: string;
   thickness: {
     extraExtraSmall: number;
     extraSmall: number;
@@ -48,9 +53,16 @@ export const theme: Theme = {
     hover: "rgba(255, 255, 255, 0.1)",
     active: "rgba(255, 255, 255, 0.1)"
   },
-  breakpoints: {
+  breakpoint: {
     extraSmall: 480,
     small: 960
+  },
+  color: {
+    primaryLight: "#1ed760",
+    primary: "#1db954",
+    errorLight: "#e57373",
+    error: "#f44336",
+    errorDark: "#d32f2f"
   },
   fontSize: {
     small: "12px",
@@ -69,8 +81,6 @@ export const theme: Theme = {
     dark: "rgba(255, 255, 255, 0.6)",
     darker: "rgba(255, 255, 255, 0.3)"
   },
-  primary: "#1db954",
-  primaryLight: "#1ed760",
   thickness: {
     extraExtraSmall: 3.125,
     extraSmall: 6.25,

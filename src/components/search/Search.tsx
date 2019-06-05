@@ -12,7 +12,7 @@ const StyledInput = styled.input`
   background: ${props => props.theme.background.light}
   border: none;
   border-radius: ${props => props.theme.thickness.medium}px;
-  caret-color: ${props => props.theme.primaryLight}
+  caret-color: ${props => props.theme.color.primaryLight}
   color: ${props => props.theme.foreground.default}
   font-size: ${props => props.theme.fontSize.extraLarge}
   font-weight: ${props => props.theme.fontWeight.light}

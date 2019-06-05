@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   justify-content: center;
   margin: 0 0 ${props => props.theme.thickness.medium}px 0;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     flex-direction: column;
     justify-content: flex-start;
     margin: 0 ${props => props.theme.thickness.medium}px 0 0;
@@ -26,7 +26,7 @@ const StyledImage = styled(Image)`
   margin: 0 ${props => props.theme.thickness.medium}px 0 0;
   width: ${length / 2}px;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     height: ${length}px;
     margin: 0 0 ${props => props.theme.thickness.medium}px 0;
     width: ${length}px;
@@ -44,7 +44,7 @@ const Title = styled(Text)`
   font-size: ${props => props.theme.fontSize.large};
   text-align: center;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     font-size: ${props => props.theme.fontSize.extraLarge};
     width: ${length}px;
   }
@@ -58,7 +58,7 @@ const SubTitle = styled(Text)`
   margin-top: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     font-size: ${props => props.theme.fontSize.large};
     width: ${length}px;
   }

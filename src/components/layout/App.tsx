@@ -18,10 +18,10 @@ const StyledHeader = styled(Header)`
 
 const Body = styled.div`
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  flex-direction: row;
+  height: calc(100% - 150px);
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     flex-direction: row;
   }
 `;
@@ -30,8 +30,8 @@ const StyledMenu = styled(Menu)`
   flex-shrink: 0;
 `;
 
-const StyledPlayer = styled(Player)`
-  flex-shrink: 0;
+const StyledRoutes = styled(Routes)`
+  flex-shrink: 1;
 `;
 
 function App() {
@@ -42,10 +42,10 @@ function App() {
 
         <Body>
           <StyledMenu />
-          <Routes />
+          <StyledRoutes />
         </Body>
 
-        <StyledPlayer />
+        <Player />
       </Wrapper>
     </Router>
   );

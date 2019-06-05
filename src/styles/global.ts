@@ -38,9 +38,11 @@ export default createGlobalStyle`
     }
   }
 
-  button, input {
+  a, button, input {
+    outline: none;
+
     &:focus {
-      outline: none;
+      border: 0;
     }
   }
 

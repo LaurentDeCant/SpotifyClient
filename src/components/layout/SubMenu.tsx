@@ -12,13 +12,11 @@ const List = styled.ul`
   position: relative;
   top: -25px;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     margin-bottom: ${props => props.theme.thickness.medium}px;
     top: 0;
   }
 `;
-
-const Item = styled.li``;
 
 const StyledNavLink = styled(NavLink)`
   align-items: center;
@@ -38,7 +36,7 @@ const StyledNavLink = styled(NavLink)`
   }
 
   &.active::after {
-    background: ${props => props.theme.primaryLight};
+    background: ${props => props.theme.color.primaryLight};
     bottom: 0;
     content: "";
     height: ${props => props.theme.thickness.extraExtraSmall}px;
@@ -57,11 +55,11 @@ function SubMenu({ match, items }: Props) {
   return (
     <List>
       {items.map(item => (
-        <Item key={item.path}>
+        <li key={item.path}>
           <StyledNavLink to={`${match.url}/${item.path}`}>
             {item.text}
           </StyledNavLink>
-        </Item>
+        </li>
       ))}
     </List>
   );

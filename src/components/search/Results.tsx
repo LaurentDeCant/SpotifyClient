@@ -19,8 +19,17 @@ import ArtistCovers from "../covers/ArtistCovers";
 import PlaylistCovers from "../covers/PlaylistCovers";
 import withLoader from "../withLoader";
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Section = styled.section`
   margin-bottom: ${props => props.theme.thickness.large}px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 interface ArtistsProps {
@@ -95,11 +104,11 @@ function Results({
   selectPlaylist
 }: Props) {
   return artists.length || albums.length || playlists.length ? (
-    <>
+    <Wrapper>
       <Artists artists={artists} selectArtist={selectArtist} />
       <Albums albums={albums} selectAlbum={selectAlbum} />
       <Playlists playlists={playlists} selectPlaylist={selectPlaylist} />
-    </>
+    </Wrapper>
   ) : (
     <Heading>No Results found.</Heading>
   );

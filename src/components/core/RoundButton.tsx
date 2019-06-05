@@ -6,9 +6,8 @@ import Icon, { IconType } from "./Icon";
 const StyedButton = styled(ButtonBase)`
   border-radius: 50%;
   color: ${props => props.theme.foreground.dark};
-  display: flex;
   height: ${props => props.theme.thickness.large}px;
-  justify-content: center;
+  padding: ${props => props.theme.thickness.small}px;
   width: ${props => props.theme.thickness.large}px;
 
   &:disabled {

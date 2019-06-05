@@ -25,7 +25,6 @@ const StyledImge = styled(Image)`
 
 const Title = styled(Text)`
   font-size: ${props => props.theme.fontSize.medium};
-  margin-bottom: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;
   width: 100%;
 `;
@@ -34,6 +33,7 @@ const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
   font-size: ${props => props.theme.fontSize.medium};
   font-weight: ${props => props.theme.fontWeight.light};
+  margin-top: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;
   width: 100%;
 `;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import { Route } from "react-router";
 import styled from "../../styles/styled";
 import DefaultRoute from "../DefaultRoute";
@@ -22,9 +22,9 @@ const Wrapper = styled.div`
 `;
 
 const publicUrl = process.env.PUBLIC_URL;
-const Routes = () => {
+const Routes = ({ className }: HTMLAttributes<HTMLElement>) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <DefaultRoute from={`${publicUrl}/`} to={`${publicUrl}/browse`} />
       <Route path={`${publicUrl}/login`} component={LogIn} />
       <PrivateRoute path={`${publicUrl}/browse`} component={Browse} />

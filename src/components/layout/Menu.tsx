@@ -13,10 +13,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   overflow: hidden;
   padding: 0 ${props => props.theme.thickness.medium}px;
-  width: 100%;
+  width: ${props => props.theme.thickness.extraExtraLarge}px;
   z-index: 1;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     box-shadow: 2px 0 4px 2px rgba(0, 0, 0, 0.2);
     padding: ${props => props.theme.thickness.medium}px 0;
     width: ${props => props.theme.thickness.extraExtraLarge}px;
@@ -28,7 +28,7 @@ const List = styled.ul`
   flex-direction: row;
   justify-content: center;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     flex-direction: column;
     justify-content: flex-start;
     margin-bottom: ${props => props.theme.thickness.medium}px;
@@ -49,17 +49,17 @@ const StyledNavLink = styled(NavLink)`
 
   &.active {
     border-bottom: ${props => props.theme.thickness.extraExtraSmall}px solid
-      ${props => props.theme.primaryLight};
+      ${props => props.theme.color.primaryLight};
     color: ${props => props.theme.foreground.default};
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.large}px;
 
     &.active {
       border: none;
       border-right: ${props => props.theme.thickness.extraExtraSmall}px solid
-        ${props => props.theme.primaryLight};
+        ${props => props.theme.color.primaryLight};
     }
   }
 `;
@@ -72,7 +72,7 @@ const StyledRecents = styled(RecentList)`
   overflow: hidden;
   display: none;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     display: block;
   }
 `;

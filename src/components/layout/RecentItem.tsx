@@ -7,8 +7,6 @@ import { getImageSource, getImageShape } from "../../utils";
 import { Text, Image } from "../core";
 import ButtonBase from "../core/ButtonBase";
 
-const Item = styled.li``;
-
 const StyledButton = styled(ButtonBase)`
   align-items: center;
   display: flex;
@@ -50,7 +48,7 @@ function RecentItem({ history, recent }: Props) {
   }
 
   return (
-    <Item key={recent.id}>
+    <li>
       <StyledButton onClick={handleClick}>
         <StyledImage
           source={getImageSource(recent)}
@@ -61,7 +59,7 @@ function RecentItem({ history, recent }: Props) {
           <Type>{capitalize(recent.type)}</Type>
         </Container>
       </StyledButton>
-    </Item>
+    </li>
   );
 }
 

@@ -7,22 +7,22 @@ interface Props extends RouteComponentProps {
 }
 
 function SubRoutes({ match, items }: Props) {
+  const defaultItem = items.find(item => !!item.default);
   return (
     <>
+      {!!defaultItem && (
+        <DefaultRoute
+          from={`${match.path}`}
+          to={`${match.path}/${defaultItem.path}`}
+        />
+      )}
+
       {items.map(item => (
-        <>
-          {!!item.default && (
-            <DefaultRoute
-              from={`${match.path}`}
-              to={`${match.path}/${item.path}`}
-            />
-          )}
-          <Route
-            key={item.path}
-            path={`${match.path}/${item.path}`}
-            component={item.component}
-          />
-        </>
+        <Route
+          key={item.path}
+          path={`${match.path}/${item.path}`}
+          component={item.component}
+        />
       ))}
     </>
   );

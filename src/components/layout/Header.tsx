@@ -12,7 +12,7 @@ import User from "./User";
 const Wrapper = styled.header`
   align-items: center;
   display: flex;
-  background: ${props => props.theme.primary};
+  background: ${props => props.theme.color.primary};
   box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
   height: ${props => props.theme.thickness.large}px;
@@ -20,7 +20,7 @@ const Wrapper = styled.header`
   padding: 0 ${props => props.theme.thickness.medium}px;
   z-index: 2;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.large}px;
   }
 `;
