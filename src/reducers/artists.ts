@@ -7,6 +7,7 @@ import {
   AlbumActionType,
   ArtistActionType,
   BrowseActionType,
+  FollowingActionType,
   PlaylistActionType,
   SearchActionType
 } from "../actions";
@@ -25,8 +26,8 @@ export interface State extends ArtistDictionary {}
 
 const initialState: State = {};
 
-function mergeArtists(state: State, action: EntitiesAction<any>): State {
-  return merge({}, state, action.payload.artists);
+function mergeArtists(state: State, { payload }: EntitiesAction<any>): State {
+  return merge({}, state, payload.artists);
 }
 
 export default createReducer(initialState, {
@@ -77,7 +78,8 @@ export default createReducer(initialState, {
   [AlbumActionType.AlbumSuccess]: mergeArtists,
   [PlaylistActionType.PlaylistSuccess]: mergeArtists,
   [BrowseActionType.NewReleasesSuccess]: mergeArtists,
-  [SearchActionType.SearchSuccess]: mergeArtists
+  [SearchActionType.SearchSuccess]: mergeArtists,
+  [FollowingActionType.UserArtistsSuccess]: mergeArtists
 });
 
 export function selectArtist({ artists }: CombinedState, artistId: string) {

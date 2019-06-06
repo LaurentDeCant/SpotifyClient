@@ -1,22 +1,8 @@
 import { schema } from "normalizr";
 
-const Category = new schema.Entity("categories");
-
-const Categories = new schema.Object({
-  categories: { items: [Category] }
-});
-
-const Artist = new schema.Entity("artists");
-
-const Artists = new schema.Object({
-  artists: [Artist]
-});
-
 const Album = new schema.Entity(
   "albums",
-  {
-    artists: [Artist]
-  },
+  {},
   {
     processStrategy: ({ tracks, ...rest }) => ({
       ...rest,
@@ -25,10 +11,58 @@ const Album = new schema.Entity(
   }
 );
 
-const Albums = new schema.Object({
-  items: [Album],
+const Artist = new schema.Entity("artists");
+
+const Artists = new schema.Object({
+  artists: [Artist]
+});
+
+const Category = new schema.Entity("categories");
+
+const PagedAlbums = new schema.Object({
+  //@ts-ignore
+  items: [{ album: Album }],
   albums: { items: [Album] }
 });
+
+const PagedArtists = new schema.Object({
+  artists: { items: [Artist] }
+});
+
+const PagedCategories = new schema.Object({
+  categories: { items: [Category] }
+});
+
+const PagedPlaylists = new schema.Object({});
+
+const PagedTracks = new schema.Object({});
+
+const Playlist = new schema.Entity(
+  "playlists",
+  {},
+  {
+    processStrategy: ({ tracks, ...rest }) => ({
+      ...rest,
+      tracks: tracks.items ? tracks.items.map((item: any) => item.track) : []
+    })
+  }
+);
+
+const Results = new schema.Entity(
+  "results",
+  {
+    albums: [Album],
+    artists: [Artist],
+    playlists: [Playlist]
+  },
+  {
+    processStrategy: ({ albums, artists, playlists }) => ({
+      albums: albums.items,
+      artists: artists.items,
+      playlists: playlists.items
+    })
+  }
+);
 
 const Track = new schema.Entity(
   "tracks",
@@ -49,38 +83,10 @@ const Tracks = new schema.Object({
   tracks: [Track]
 });
 
-const Playlist = new schema.Entity(
-  "playlists",
-  {
-    tracks: [Track]
-  },
-  {
-    processStrategy: ({ tracks, ...rest }) => ({
-      ...rest,
-      tracks: tracks.items ? tracks.items.map((item: any) => item.track) : []
-    })
-  }
-);
-
-const Playlists = new schema.Entity("playlistItems", {
-  playlists: { items: [Playlist] }
+Album.define({
+  artists: [Artist],
+  tracks: [Track]
 });
-
-const Results = new schema.Entity(
-  "results",
-  {
-    albums: [Album],
-    artists: [Artist],
-    playlists: [Playlist]
-  },
-  {
-    processStrategy: ({ albums, artists, playlists }) => ({
-      albums: albums.items,
-      artists: artists.items,
-      playlists: playlists.items
-    })
-  }
-);
 
 Artist.define({
   albums: [Album],
@@ -88,20 +94,32 @@ Artist.define({
   topTracks: [Track]
 });
 
-Album.define({
+PagedPlaylists.define({
+  items: [Playlist],
+  playlists: { items: [Playlist] }
+});
+
+PagedTracks.define({
+  //@ts-ignore
+  items: [{ track: Track }]
+});
+
+Playlist.define({
   tracks: [Track]
 });
 
 export const Schemas = {
+  Album,
   Artist,
   Artists,
-  Album,
-  Albums,
   Category,
-  Categories,
   Track,
   Tracks,
+  PagedAlbums,
+  PagedArtists,
+  PagedCategories,
+  PagedPlaylists,
+  PagedTracks,
   Playlist,
-  Playlists,
   Results
 };

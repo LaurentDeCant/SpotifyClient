@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getTracks } from "../../actions/library";
+import { getUserTracks } from "../../actions/library";
 
 interface Props {
-  getTracks: () => void;
+  getUserTracks: () => void;
 }
 
-function Tracks({ getTracks }: Props) {
-  useEffect(getTracks, []);
+function Tracks({ getUserTracks }: Props) {
+  useEffect(getUserTracks, []);
 
   return <></>;
 }
 
 const mapDispatch = {
-  getTracks
+  getUserTracks
 };
 
 export default connect(

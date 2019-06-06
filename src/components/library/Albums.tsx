@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getAlbums } from "../../actions/library";
+import { getUserAlbums } from "../../actions/library";
 
 interface Props {
-  getAlbums: () => void;
+  getUserAlbums: () => void;
 }
 
-function Albums({ getAlbums }: Props) {
-  useEffect(getAlbums, []);
+function Albums({ getUserAlbums }: Props) {
+  useEffect(getUserAlbums, []);
 
   return <></>;
 }
 
 const mapDispatch = {
-  getAlbums
+  getUserAlbums
 };
 
 export default connect(

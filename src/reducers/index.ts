@@ -3,6 +3,7 @@ import albums, { State as AlbumsState } from "./albums";
 import artists, { State as ArtistsState } from "./artists";
 import authorization, { State as AuthorizationState } from "./authorization";
 import browse, { State as BrowseState } from "./browse";
+import following, { State as FollowingState } from "./following";
 import library, { State as LibraryState } from "./library";
 import loading, { State as LoadingState } from "./loading";
 import player, { State as PlayerState } from "./player";
@@ -16,6 +17,7 @@ export interface State {
   artists: ArtistsState;
   authorization: AuthorizationState;
   browse: BrowseState;
+  following: FollowingState;
   library: LibraryState;
   loading: LoadingState;
   player: PlayerState;
@@ -30,6 +32,7 @@ export default combineReducers<State>({
   artists,
   authorization,
   browse,
+  following,
   library,
   loading,
   player,

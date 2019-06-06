@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { getUserPlaylists } from "../../actions/following";
 
-function Playlists() {
+interface Props {
+  getUserPlaylists: () => void;
+}
+
+function Playlists({ getUserPlaylists }: Props) {
+  useEffect(getUserPlaylists, []);
+
   return <></>;
 }
 
-export default Playlists;
+const mapDispatch = {
+  getUserPlaylists
+};
+
+export default connect(
+  null,
+  mapDispatch
+)(Playlists);

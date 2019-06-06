@@ -54,7 +54,7 @@ export function getArtistAlbums(artistId: string) {
         ActionType.ArtistAlbumsFailure
       ],
       path: `artists/${artistId}/albums`,
-      schema: Schemas.Albums,
+      schema: Schemas.PagedAlbums,
       data: { artistId }
     });
   };

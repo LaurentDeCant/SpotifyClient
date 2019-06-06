@@ -1,11 +1,27 @@
 import createReducer from "./createReducer";
-import { ActionType } from "../actions/library";
+import {
+  ActionType,
+  UserAlbumsSuccessAction,
+  UserTracksSuccessAction
+} from "../actions/library";
 
-export interface State {}
+export interface State {
+  userAlbumIds: string[];
+  userTrackIds: string[];
+}
 
-const initialState: State = {};
+const initialState: State = {
+  userAlbumIds: [],
+  userTrackIds: []
+};
 
 export default createReducer(initialState, {
-  [ActionType.AlbumsSuccess]: (state: State) => ({ ...state }),
-  [ActionType.TracksSuccess]: (state: State) => ({ ...state })
+  [ActionType.UserAlbumsSuccess]: (
+    state: State,
+    { payload }: UserAlbumsSuccessAction
+  ) => ({ ...state, userAlbumIds: Object.keys(payload.albums || {}) }),
+  [ActionType.UserTracksSuccess]: (
+    state: State,
+    { payload }: UserTracksSuccessAction
+  ) => ({ ...state, userTrackIds: Object.keys(payload.tracks || {}) })
 });

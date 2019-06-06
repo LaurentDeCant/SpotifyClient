@@ -1,7 +1,8 @@
 import { Dispatch } from "redux";
 import { receiveLogIn } from "../actions/authorization";
 
-const SCOPES = "user-follow-read user-library-read";
+const SCOPES =
+  "user-library-read user-follow-read playlist-read-private playlist-read-collaborative";
 const LOG_IN_URL = `https://accounts.spotify.com/authorize?client_id=${
   process.env.REACT_APP_CLIENT_ID
 }&scope=${encodeURIComponent(SCOPES)}&response_type=token&redirect_uri=${

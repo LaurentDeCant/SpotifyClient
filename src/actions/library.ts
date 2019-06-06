@@ -1,39 +1,45 @@
-import { FetchDispatch } from "./types";
+import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
 
 export enum ActionType {
-  AlbumsRequest = "ALBUM_REQUEST",
-  AlbumsSuccess = "ALBUM_SUCCESS",
-  AlbumsFailure = "ALBUM_FAILURE",
-  TracksRequest = "TRACKS_REQUEST",
-  TracksSuccess = "TRACKS_SUCCESS",
-  TracksFailure = "TRACKS_FAILURE"
+  UserAlbumsRequest = "USER_ALBUMS_REQUEST",
+  UserAlbumsSuccess = "USER_ALBUMS_SUCCESS",
+  UserAlbumsFailure = "USER_ALBUMS_FAILURE",
+  UserTracksRequest = "USER_TRACKS_REQUEST",
+  UserTracksSuccess = "USER_TRACKS_SUCCESS",
+  UserTracksFailure = "USER_TRACKS_FAILURE"
 }
 
-export function getAlbums() {
+export interface UserAlbumsSuccessAction
+  extends EntitiesAction<ActionType.UserAlbumsSuccess> {}
+
+export function getUserAlbums() {
   return (dispatch: FetchDispatch) => {
     dispatch({
       types: [
-        ActionType.AlbumsRequest,
-        ActionType.AlbumsSuccess,
-        ActionType.AlbumsFailure
+        ActionType.UserAlbumsRequest,
+        ActionType.UserAlbumsSuccess,
+        ActionType.UserAlbumsFailure
       ],
       path: "me/albums",
-      schema: Schemas.Albums
+      schema: Schemas.PagedAlbums
     });
   };
 }
 
-export function getTracks() {
+export interface UserTracksSuccessAction
+  extends EntitiesAction<ActionType.UserTracksSuccess> {}
+
+export function getUserTracks() {
   return (dispatch: FetchDispatch) => {
     dispatch({
       types: [
-        ActionType.TracksRequest,
-        ActionType.TracksSuccess,
-        ActionType.TracksFailure
+        ActionType.UserTracksRequest,
+        ActionType.UserTracksSuccess,
+        ActionType.UserTracksFailure
       ],
       path: "me/tracks",
-      schema: Schemas.Tracks
+      schema: Schemas.PagedTracks
     });
   };
 }

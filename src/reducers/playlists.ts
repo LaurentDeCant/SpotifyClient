@@ -4,6 +4,7 @@ import memoize from "lodash/memoize";
 import { EntitiesAction } from "../actions/types";
 import {
   BrowseActionType,
+  FollowingActionType,
   PlaylistActionType,
   SearchActionType
 } from "../actions";
@@ -16,15 +17,16 @@ export interface State extends PlaylistDictionary {}
 
 const initialState: State = {};
 
-function mergePlaylists(state: State, action: EntitiesAction<any>): State {
-  return merge({}, state, action.payload.playlists);
+function mergePlaylists(state: State, { payload }: EntitiesAction<any>): State {
+  return merge({}, state, payload.playlists);
 }
 
 export default createReducer(initialState, {
   [PlaylistActionType.PlaylistSuccess]: mergePlaylists,
   [BrowseActionType.CategoryPlaylistsSuccess]: mergePlaylists,
   [BrowseActionType.FeaturedPlaylistsSuccess]: mergePlaylists,
-  [SearchActionType.SearchSuccess]: mergePlaylists
+  [SearchActionType.SearchSuccess]: mergePlaylists,
+  [FollowingActionType.UserPlaylistsSuccess]: mergePlaylists
 });
 
 export function selectPlaylist(

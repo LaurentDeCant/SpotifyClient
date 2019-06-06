@@ -5,6 +5,7 @@ import { EntitiesAction } from "../actions/types";
 import {
   AlbumActionType,
   ArtistActionType,
+  LibraryActionType,
   PlaylistActionType,
   SearchActionType
 } from "../actions";
@@ -18,8 +19,8 @@ export interface State extends TrackDictionary {}
 
 const initialState: State = {};
 
-function mergeTracks(state: State, action: EntitiesAction<any>): State {
-  return merge({}, state, action.payload.tracks);
+function mergeTracks(state: State, { payload }: EntitiesAction<any>): State {
+  return merge({}, state, payload.tracks);
 }
 
 export default createReducer(initialState, {
@@ -27,7 +28,8 @@ export default createReducer(initialState, {
   [ArtistActionType.ArtistTopTracksSuccess]: mergeTracks,
   [ArtistActionType.FullArtistSuccess]: mergeTracks,
   [PlaylistActionType.PlaylistSuccess]: mergeTracks,
-  [SearchActionType.SearchSuccess]: mergeTracks
+  [SearchActionType.SearchSuccess]: mergeTracks,
+  [LibraryActionType.UserTracksSuccess]: mergeTracks
 });
 
 export function selectTrack({ tracks }: CombinedState, trackId: string) {

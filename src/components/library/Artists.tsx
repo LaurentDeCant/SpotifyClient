@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { getUserArtists } from "../../actions/following";
 
-function Artists() {
+interface Props {
+  getUserArtists: () => void;
+}
+
+function Artists({ getUserArtists }: Props) {
+  useEffect(getUserArtists, []);
+
   return <></>;
 }
 
-export default Artists;
+const mapDispatch = {
+  getUserArtists
+};
+
+export default connect(
+  null,
+  mapDispatch
+)(Artists);
