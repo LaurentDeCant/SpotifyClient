@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Button, IconType, Image, RoundButton, Text } from "../core";
+import { Button, IconType, Image, Text, ToggleButton } from "../core";
 import { ImageShape } from "../core/Image";
 
 const Wrapper = styled.div`
@@ -28,7 +28,7 @@ const StyledImage = styled(Image)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     height: ${length}px;
-    margin: 0 0 ${props => props.theme.thickness.medium}px 0;
+    margin: 0 0 ${props => props.theme.thickness.small}px 0;
     width: ${length}px;
   }
 `;
@@ -41,7 +41,7 @@ const Vertical = styled.div`
 `;
 
 const Title = styled(Text)`
-  font-size: ${props => props.theme.fontSize.large};
+  font-size: ${props => props.theme.fontSize.extraLarge};
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
@@ -70,13 +70,12 @@ const Horizontal = styled.div`
   margin-top: ${props => props.theme.thickness.medium}px;
 `;
 
-const FavoriteButton = styled(RoundButton).attrs(() => ({
+const FavoriteButton = styled(ToggleButton).attrs(() => ({
   iconType: IconType.Favorite
-}))`
-  margin-right: ${props => props.theme.thickness.small}px;
-`;
+}))``;
 
 const PlayButton = styled(Button)`
+  margin-right: ${props => props.theme.thickness.small}px;
   width: ${props => props.theme.thickness.extraLarge}px;
 `;
 
@@ -87,7 +86,9 @@ interface Props {
   subTitle?: string;
   canPlay: boolean;
   isPlaying: boolean;
-  onToggle: () => void;
+  isFavorite: boolean;
+  onTogglePlay: () => void;
+  onToggleFavorite: () => void;
 }
 
 function Header({
@@ -97,12 +98,10 @@ function Header({
   subTitle,
   canPlay,
   isPlaying,
-  onToggle
+  isFavorite,
+  onTogglePlay,
+  onToggleFavorite
 }: Props) {
-  function handleClick() {
-    onToggle();
-  }
-
   return (
     <Wrapper>
       <StyledImage source={imageSource} shape={imageShape} />
@@ -110,10 +109,10 @@ function Header({
         <Title>{title}</Title>
         {subTitle && <SubTitle>{subTitle}</SubTitle>}
         <Horizontal>
-          <FavoriteButton />
-          <PlayButton disabled={!canPlay} onClick={handleClick}>
+          <PlayButton disabled={!canPlay} onClick={onTogglePlay}>
             {isPlaying ? "Pause" : "Play"}
           </PlayButton>
+          <FavoriteButton isToggled={isFavorite} onClick={onToggleFavorite} />
         </Horizontal>
       </Vertical>
     </Wrapper>
@@ -121,7 +120,9 @@ function Header({
 }
 
 Header.defaultProps = {
-  imageShape: ImageShape.Square
+  imageShape: ImageShape.Square,
+  onTogglePlay: () => {},
+  onToggleFavorite: () => {}
 };
 
 export default Header;

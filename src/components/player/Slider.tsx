@@ -19,7 +19,7 @@ const Container = styled.div`
 const Left = styled.div.attrs<{ width: number }>(props => ({
   style: { width: `${props.width * 100}%` }
 }))<{ width: number }>`
-  background: ${props => props.theme.color.primaryLight};
+  background: ${props => props.theme.color.primary};
   border-radius: ${props => props.theme.thickness.extraExtraSmall}px 0 0
     ${props => props.theme.thickness.extraExtraSmall}px;
   height: ${props => props.theme.thickness.extraExtraSmall}px;

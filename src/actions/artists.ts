@@ -1,26 +1,10 @@
 import { Dispatch } from "react";
 import { normalize } from "normalizr";
 import { fetchJson } from "../utils/authorization";
+import { ArtistActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
-
-export enum ActionType {
-  ArtistRequest = "ARTIST_REQUEST",
-  ArtistSuccess = "ARTIST_SUCCESS",
-  ArtistFailure = "ARTIST_FAILURE",
-  ArtistAlbumsRequest = "ARTIST_ALBUMS_REQUEST",
-  ArtistAlbumsSuccess = "ARTIST_ALBUMS_SUCCESS",
-  ArtistAlbumsFailure = "ARTIST_ALBUMS_FAILURE",
-  ArtistRelatedArtistsRequest = "ARTIST_RELATED_ARTISTS_REQUEST",
-  ArtistRelatedArtistsSuccess = "ARTIST_RELATED_ARTISTS_SUCCESS",
-  ArtistRelatedArtistsFailure = "ARTIST_RELATED_ARTISTS_FAILURE",
-  ArtistTopTracksRequest = "ARTIST_TOP_TRACKS_REQUEST",
-  ArtistTopTracksSuccess = "ARTIST_TOP_TRACKS_SUCCESS",
-  ArtistTopTracksFailure = "ARTIST_TOP_TRACKS_FAILURE",
-  FullArtistRequest = "FULL_ARTIST_REQUEST",
-  FullArtistSuccess = "FULL_ARTIST_SUCCESS",
-  FullArtistFailure = "FULL_ARTIST_FAILURE"
-}
+import { checkFollowedArtist } from "./following";
 
 export interface ArtistSuccessAction
   extends EntitiesAction<ActionType.ArtistSuccess> {}
@@ -109,7 +93,10 @@ export function getFullArtist(artistId: string) {
     });
     const artistUrl = `${process.env.REACT_APP_BASE_URL}/artists/${artistId}`;
     Promise.all([
-      fetchJson(artistUrl),
+      fetchJson(artistUrl).then(async artist => ({
+        ...artist,
+        isFollowed: await checkFollowedArtist(artist.id)
+      })),
       fetchJson(`${artistUrl}/albums`),
       fetchJson(`${artistUrl}/related-artists`),
       fetchJson(`${artistUrl}/top-tracks?country=us`)

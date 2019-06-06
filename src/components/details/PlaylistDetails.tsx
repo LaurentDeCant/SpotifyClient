@@ -5,6 +5,7 @@ import { Playlist, Track, Type } from "../../types";
 import { getImageSource } from "../../utils";
 import { getPlaylist } from "../../actions/playlists";
 import { loadPlayPause } from "../../actions/player";
+import { toggleFollowPlaylist } from "../../actions/following";
 import { State } from "../../reducers";
 import {
   selectPlaylist,
@@ -32,6 +33,7 @@ interface Props extends RouteComponentProps<Params> {
     collectionType: Type,
     trackId?: string
   ) => void;
+  toggleFollowPlaylist: (playlistId: string) => void;
 }
 
 function PlaylistDetails({
@@ -41,7 +43,8 @@ function PlaylistDetails({
   isPlayable,
   isPlaying,
   getPlaylist,
-  loadPlayPause
+  loadPlayPause,
+  toggleFollowPlaylist
 }: Props) {
   const { playlistId } = match.params;
 
@@ -50,8 +53,12 @@ function PlaylistDetails({
   };
   useEffect(effect, []);
 
-  function handleToggle(trackId?: string) {
+  function handleTogglePlay(trackId?: string) {
     loadPlayPause(playlistId, Type.Playlist, trackId);
+  }
+
+  function handleToggleFavorite() {
+    toggleFollowPlaylist(playlistId);
   }
 
   return playlist ? (
@@ -62,9 +69,11 @@ function PlaylistDetails({
         subTitle={playlist.owner.display_name}
         canPlay={isPlayable}
         isPlaying={isPlaying}
-        onToggle={handleToggle}
+        isFavorite={playlist.isFollowed}
+        onTogglePlay={handleTogglePlay}
+        onToggleFavorite={handleToggleFavorite}
       />
-      <TrackList tracks={tracks} onToggle={handleToggle} />
+      <TrackList tracks={tracks} onToggle={handleTogglePlay} />
     </Wrapper>
   ) : (
     <></>
@@ -84,7 +93,8 @@ const mapState = (state: State, ownProps: Props) => {
 
 const mapDispatch = {
   getPlaylist,
-  loadPlayPause
+  loadPlayPause,
+  toggleFollowPlaylist
 };
 
 export default withLoader(

@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { Album, Category, Playlist } from "../types";
+import { BrowseActionType as ActionType } from "../actions";
 import {
-  ActionType,
   CategorySuccessAction,
   CategoriesSuccessAction,
   NewReleasesSuccessAction,

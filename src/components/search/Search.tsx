@@ -9,13 +9,13 @@ import Recents from "./Recents";
 import Results from "./Results";
 
 const StyledInput = styled.input`
-  background: ${props => props.theme.background.light}
+  background: ${props => props.theme.background.light};
   border: none;
   border-radius: ${props => props.theme.thickness.medium}px;
-  caret-color: ${props => props.theme.color.primaryLight}
-  color: ${props => props.theme.foreground.default}
-  font-size: ${props => props.theme.fontSize.extraLarge}
-  font-weight: ${props => props.theme.fontWeight.light}
+  caret-color: ${props => props.theme.color.primary};
+  color: ${props => props.theme.foreground.default};
+  font-size: ${props => props.theme.fontSize.extraLarge};
+  font-weight: ${props => props.theme.fontWeight.light};
   height: ${props => props.theme.thickness.large}px;
   margin: 0 0 ${props => props.theme.thickness.medium}px 0;
   padding: 0 ${props => props.theme.thickness.medium}px;

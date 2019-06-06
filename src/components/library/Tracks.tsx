@@ -1,31 +1,34 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getUserTracks } from "../../actions/library";
+import { getSavedTracks } from "../../actions/library";
 import { State } from "../../reducers";
-import { selectUserTracks } from "../../reducers/library";
+import { selectSavedTracks } from "../../reducers/library";
 import { Track } from "../../types";
 import TrackList from "../details/TrackList";
+import withLoader from "../withLoader";
 
 interface Props {
   tracks: Track[];
-  getUserTracks: () => void;
+  getSavedTracks: () => void;
 }
 
-function Tracks({ tracks, getUserTracks }: Props) {
-  useEffect(getUserTracks, []);
+function Tracks({ tracks, getSavedTracks }: Props) {
+  useEffect(getSavedTracks, []);
 
   return <TrackList tracks={tracks} />;
 }
 
 const mapState = (state: State) => ({
-  tracks: selectUserTracks(state)
+  tracks: selectSavedTracks(state)
 });
 
 const mapDispatch = {
-  getUserTracks
+  getSavedTracks
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Tracks);
+export default withLoader(
+  connect(
+    mapState,
+    mapDispatch
+  )(Tracks)
+);

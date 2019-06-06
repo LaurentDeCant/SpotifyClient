@@ -3,6 +3,7 @@ import React, { HTMLAttributes } from "react";
 export enum IconType {
   Favorite = "favorite",
   Home = "home",
+  LibraryBooks = "library_books",
   LibraryMusic = "library_music",
   Loop = "loop",
   MusicNote = "music_note",

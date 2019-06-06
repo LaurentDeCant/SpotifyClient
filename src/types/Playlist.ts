@@ -15,4 +15,5 @@ export interface Playlist {
   tracks: string[];
   type: Type;
   uri: string;
+  isFollowed: boolean;
 }

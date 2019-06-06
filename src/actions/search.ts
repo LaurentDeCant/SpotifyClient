@@ -1,12 +1,12 @@
 import { Dispatch } from "redux";
 import { Album, Artist, Playlist } from "../types";
-import { EntitiesAction, FetchDispatch, PayloadAction } from "./types";
-import { SearchActionType as ActionType } from ".";
-import { Schemas } from "./schemas";
 import { State } from "../reducers";
 import { selectAlbum as selectAlbumById } from "../reducers/albums";
 import { selectArtist as selectArtistById } from "../reducers/artists";
 import { selectPlaylist as selectPlaylistById } from "../reducers/playlists";
+import { SearchActionType as ActionType } from ".";
+import { EntitiesAction, FetchDispatch, PayloadAction } from "./types";
+import { Schemas } from "./schemas";
 
 export interface SearchSuccessAction
   extends EntitiesAction<ActionType.SearchSuccess> {}

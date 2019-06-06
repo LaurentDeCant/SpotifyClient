@@ -22,6 +22,10 @@ import { ArtistDictionary } from "./types";
 import createReducer from "./createReducer";
 import { selectAlbums } from "./albums";
 import { selectTracks } from "./tracks";
+import {
+  FollowArtistSuccessAction,
+  UnfollowArtistSuccessAction
+} from "../actions/following";
 
 export interface State extends ArtistDictionary {}
 
@@ -80,9 +84,29 @@ export default createReducer(initialState, {
   [PlaylistActionType.PlaylistSuccess]: mergeArtists,
   [BrowseActionType.NewReleasesSuccess]: mergeArtists,
   [SearchActionType.SearchSuccess]: mergeArtists,
-  [LibraryActionType.UserAlbumsSuccess]: mergeArtists,
-  [LibraryActionType.UserTracksSuccess]: mergeArtists,
-  [FollowingActionType.UserArtistsSuccess]: mergeArtists
+  [LibraryActionType.SavedAlbumsSuccess]: mergeArtists,
+  [LibraryActionType.SavedTracksSuccess]: mergeArtists,
+  [FollowingActionType.FollowedArtistsSuccess]: mergeArtists,
+  [FollowingActionType.FollowArtistSuccess]: (
+    state: State,
+    { payload }: FollowArtistSuccessAction
+  ) => ({
+    ...state,
+    [payload.artistId]: {
+      ...state[payload.artistId],
+      isFollowed: true
+    }
+  }),
+  [FollowingActionType.UnfollowArtistSuccess]: (
+    state: State,
+    { payload }: UnfollowArtistSuccessAction
+  ) => ({
+    ...state,
+    [payload.artistId]: {
+      ...state[payload.artistId],
+      isFollowed: false
+    }
+  })
 });
 
 export function selectArtist({ artists }: CombinedState, artistId: string) {

@@ -1,7 +1,7 @@
+import { FollowingActionType as ActionType } from "../actions";
 import {
-  ActionType,
-  UserArtistsSuccessAction,
-  UserPlaylistsSuccessAction
+  FollowedArtistsSuccessAction,
+  FollowedPlaylistsSuccessAction
 } from "../actions/following";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -19,23 +19,23 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.UserArtistsSuccess]: (
+  [ActionType.FollowedArtistsSuccess]: (
     state: State,
-    { payload }: UserArtistsSuccessAction
+    { payload }: FollowedArtistsSuccessAction
   ) => ({
     ...state,
     userArtistIds: Object.keys(payload.artists || {})
   }),
-  [ActionType.UserPlaylistsSuccess]: (
+  [ActionType.FollowedPlaylistsSuccess]: (
     state: State,
-    { payload }: UserPlaylistsSuccessAction
+    { payload }: FollowedPlaylistsSuccessAction
   ) => ({ ...state, userPlaylistIds: Object.keys(payload.playlists || []) })
 });
 
-export function selectUserArtists(state: CombinedState) {
+export function selectFollowedArtists(state: CombinedState) {
   return selectArtists(state)(state.following.userArtistIds);
 }
 
-export function selectUserPlaylists(state: CombinedState) {
+export function selectFollowedPlaylists(state: CombinedState) {
   return selectPlaylists(state)(state.following.userPlaylistIds);
 }

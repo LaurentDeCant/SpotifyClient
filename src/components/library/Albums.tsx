@@ -1,31 +1,34 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Album } from "../../types";
-import { getUserAlbums } from "../../actions/library";
+import { getSavedAlbums } from "../../actions/library";
 import { State } from "../../reducers";
-import { selectUserAlbums } from "../../reducers/library";
+import { selectSavedAlbums } from "../../reducers/library";
 import AlbumCovers from "../covers/AlbumCovers";
+import withLoader from "../withLoader";
 
 interface Props {
   albums: Album[];
-  getUserAlbums: () => void;
+  getSavedAlbums: () => void;
 }
 
-function Albums({ albums, getUserAlbums }: Props) {
-  useEffect(getUserAlbums, []);
+function Albums({ albums, getSavedAlbums }: Props) {
+  useEffect(getSavedAlbums, []);
 
   return <AlbumCovers albums={albums} />;
 }
 
 const mapState = (state: State) => ({
-  albums: selectUserAlbums(state)
+  albums: selectSavedAlbums(state)
 });
 
 const mapDispatch = {
-  getUserAlbums
+  getSavedAlbums
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Albums);
+export default withLoader(
+  connect(
+    mapState,
+    mapDispatch
+  )(Albums)
+);

@@ -11,11 +11,8 @@ export interface Theme {
     small: number;
   };
   color: {
-    primaryLight: string;
     primary: string;
-    errorLight: string;
     error: string;
-    errorDark: string;
   };
   fontSize: {
     small: string;
@@ -58,11 +55,8 @@ export const theme: Theme = {
     small: 960
   },
   color: {
-    primaryLight: "#1ed760",
     primary: "#1db954",
-    errorLight: "#e57373",
-    error: "#f44336",
-    errorDark: "#d32f2f"
+    error: "#e57373"
   },
   fontSize: {
     small: "12px",

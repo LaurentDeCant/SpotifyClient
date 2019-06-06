@@ -1,9 +1,80 @@
-export { ActionType as AlbumActionType } from "./albums";
-export { ActionType as ArtistActionType } from "./artists";
-export { ActionType as BrowseActionType } from "./browse";
-export { ActionType as FollowingActionType } from "./following";
-export { ActionType as LibraryActionType } from "./library";
-export { ActionType as PlaylistActionType } from "./playlists";
+export enum AlbumActionType {
+  AlbumRequest = "ALBUM_REQUEST",
+  AlbumSuccess = "ALBUM_SUCCESS",
+  AlbumFailure = "ALBUM_FAILURE"
+}
+
+export enum ArtistActionType {
+  ArtistRequest = "ARTIST_REQUEST",
+  ArtistSuccess = "ARTIST_SUCCESS",
+  ArtistFailure = "ARTIST_FAILURE",
+  ArtistAlbumsRequest = "ARTIST_ALBUMS_REQUEST",
+  ArtistAlbumsSuccess = "ARTIST_ALBUMS_SUCCESS",
+  ArtistAlbumsFailure = "ARTIST_ALBUMS_FAILURE",
+  ArtistRelatedArtistsRequest = "ARTIST_RELATED_ARTISTS_REQUEST",
+  ArtistRelatedArtistsSuccess = "ARTIST_RELATED_ARTISTS_SUCCESS",
+  ArtistRelatedArtistsFailure = "ARTIST_RELATED_ARTISTS_FAILURE",
+  ArtistTopTracksRequest = "ARTIST_TOP_TRACKS_REQUEST",
+  ArtistTopTracksSuccess = "ARTIST_TOP_TRACKS_SUCCESS",
+  ArtistTopTracksFailure = "ARTIST_TOP_TRACKS_FAILURE",
+  FullArtistRequest = "FULL_ARTIST_REQUEST",
+  FullArtistSuccess = "FULL_ARTIST_SUCCESS",
+  FullArtistFailure = "FULL_ARTIST_FAILURE"
+}
+
+export enum BrowseActionType {
+  CategoriesRequest = "CATEGORIES_REQUEST",
+  CategoriesSuccess = "CATEGORIES_SUCCESS",
+  CategoriesFailure = "CATEGORIES_FAILURE",
+  CategoryRequest = "CATEGORY_REQUEST",
+  CategorySuccess = "CATEGORY_SUCCESS",
+  CategoryFailure = "CATEGORY_FAILURE",
+  CategoryPlaylistsRequest = "CATEGORY_PLAYLISTS_REQUEST",
+  CategoryPlaylistsSuccess = "CATEGORY_PLAYLISTS_SUCCESS",
+  CategoryPlaylistsFailure = "CATEGORY_PLAYLISTS_FAILURE",
+  FeaturedPlaylistsRequest = "FEATURED_PLAYLISTS_REQUEST",
+  FeaturedPlaylistsSuccess = "FEATURED_PLAYLISTS_SUCCESS",
+  FeaturedPlaylistsFailure = "FEATURED_PLAYLISTS_FAILURE",
+  NewReleasesRequest = "NEW_RELEASES_REQUEST",
+  NewReleasesSuccess = "NEW_RELEASES_SUCCESS",
+  NewReleasesFailure = "NEW_RELEASES_FAILURE"
+}
+
+export enum FollowingActionType {
+  FollowedArtistsRequest = "FOLLOWED_ARTISTS_REQUEST",
+  FollowedArtistsSuccess = "FOLLOWED_ARTISTS_SUCCESS",
+  FollowedArtistsFailure = "FOLLOWED_ARTISTS_FAILURE",
+  FollowArtistRequest = "FOLLOW_ARTIST_REQUEST",
+  FollowArtistSuccess = "FOLLOW_ARTIST_SUCCESS",
+  FollowArtistFailure = "FOLLOW_ARTIST_FAILURE",
+  UnfollowArtistRequest = "UNFOLLOW_ARTIST_REQUEST",
+  UnfollowArtistSuccess = "UNFOLLOW_ARTIST_SUCCESS",
+  UnfollowArtistFailure = "UNFOLLOW_ARTIST_FAILURE",
+  FollowedPlaylistsRequest = "FOLLOWED_PLAYLISTS_REQUEST",
+  FollowedPlaylistsSuccess = "FOLLOWED_PLAYLISTS_SUCCESS",
+  FollowedPlaylistsFailure = "FOLLOWED_PLAYLISTS_FAILURE",
+  FollowPlaylistRequest = "FOLLOW_PLAYLIST_REQUEST",
+  FollowPlaylistSuccess = "FOLLOW_PLAYLIST_SUCCESS",
+  FollowPlaylistFailure = "FOLLOW_PLAYLIST_FAILURE",
+  UnfollowPlaylistRequest = "UNFOLLOW_PLAYLIST_REQUEST",
+  UnfollowPlaylistSuccess = "UNFOLLOW_PLAYLIST_SUCCESS",
+  UnfollowPlaylistFailure = "UNFOLLOW_PLAYLIST_FAILURE"
+}
+
+export enum LibraryActionType {
+  SavedAlbumsRequest = "SAVED_ALBUMS_REQUEST",
+  SavedAlbumsSuccess = "SAVED_ALBUMS_SUCCESS",
+  SavedAlbumsFailure = "SAVED_ALBUMS_FAILURE",
+  SavedTracksRequest = "SAVED_TRACKS_REQUEST",
+  SavedTracksSuccess = "SAVED_TRACKS_SUCCESS",
+  SavedTracksFailure = "SAVED_TRACKS_FAILURE"
+}
+
+export enum PlaylistActionType {
+  PlaylistRequest = "PLAYLIST_REQUEST",
+  PlaylistSuccess = "PLAYLIST_SUCCESS",
+  PlaylistFailure = "PLAYLIST_FAILURE"
+}
 
 export enum SearchActionType {
   SearchRequest = "SEARCH_REQUEST",

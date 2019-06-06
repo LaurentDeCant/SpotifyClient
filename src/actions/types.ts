@@ -2,9 +2,17 @@ import { Action } from "redux";
 import { schema } from "normalizr";
 import { Entities } from "../types";
 
+export enum FetchMethod {
+  Get = "GET",
+  Post = "POST",
+  Put = "PUT",
+  Delete = "DELETE"
+}
+
 export interface FetchAction<D = {}> {
   types: string[];
   path: string;
+  method?: FetchMethod;
   schema?: schema.Entity | schema.Object;
   data?: D;
 }

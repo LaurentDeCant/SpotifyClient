@@ -1,23 +1,6 @@
+import { BrowseActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
-
-export enum ActionType {
-  CategoriesRequest = "CATEGORIES_REQUEST",
-  CategoriesSuccess = "CATEGORIES_SUCCESS",
-  CategoriesFailure = "CATEGORIES_FAILURE",
-  CategoryRequest = "CATEGORY_REQUEST",
-  CategorySuccess = "CATEGORY_SUCCESS",
-  CategoryFailure = "CATEGORY_FAILURE",
-  CategoryPlaylistsRequest = "CATEGORY_PLAYLISTS_REQUEST",
-  CategoryPlaylistsSuccess = "CATEGORY_PLAYLISTS_SUCCESS",
-  CategoryPlaylistsFailure = "CATEGORY_PLAYLISTS_FAILURE",
-  FeaturedPlaylistsRequest = "FEATURED_PLAYLISTS_REQUEST",
-  FeaturedPlaylistsSuccess = "FEATURED_PLAYLISTS_SUCCESS",
-  FeaturedPlaylistsFailure = "FEATURED_PLAYLISTS_FAILURE",
-  NewReleasesRequest = "NEW_RELEASES_REQUEST",
-  NewReleasesSuccess = "NEW_RELEASES_SUCCESS",
-  NewReleasesFailure = "NEW_RELEASES_FAILURE"
-}
 
 export interface CategoriesSuccessAction
   extends EntitiesAction<ActionType.CategoriesSuccess> {}

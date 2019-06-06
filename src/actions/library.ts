@@ -1,25 +1,17 @@
+import { LibraryActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
 
-export enum ActionType {
-  UserAlbumsRequest = "USER_ALBUMS_REQUEST",
-  UserAlbumsSuccess = "USER_ALBUMS_SUCCESS",
-  UserAlbumsFailure = "USER_ALBUMS_FAILURE",
-  UserTracksRequest = "USER_TRACKS_REQUEST",
-  UserTracksSuccess = "USER_TRACKS_SUCCESS",
-  UserTracksFailure = "USER_TRACKS_FAILURE"
-}
+export interface SavedAlbumsSuccessAction
+  extends EntitiesAction<ActionType.SavedAlbumsSuccess> {}
 
-export interface UserAlbumsSuccessAction
-  extends EntitiesAction<ActionType.UserAlbumsSuccess> {}
-
-export function getUserAlbums() {
+export function getSavedAlbums() {
   return (dispatch: FetchDispatch) => {
     dispatch({
       types: [
-        ActionType.UserAlbumsRequest,
-        ActionType.UserAlbumsSuccess,
-        ActionType.UserAlbumsFailure
+        ActionType.SavedAlbumsRequest,
+        ActionType.SavedAlbumsSuccess,
+        ActionType.SavedAlbumsFailure
       ],
       path: "me/albums",
       schema: Schemas.PagedAlbums
@@ -27,16 +19,16 @@ export function getUserAlbums() {
   };
 }
 
-export interface UserTracksSuccessAction
-  extends EntitiesAction<ActionType.UserTracksSuccess> {}
+export interface SavedTracksSuccessAction
+  extends EntitiesAction<ActionType.SavedTracksSuccess> {}
 
-export function getUserTracks() {
+export function getSavedTracks() {
   return (dispatch: FetchDispatch) => {
     dispatch({
       types: [
-        ActionType.UserTracksRequest,
-        ActionType.UserTracksSuccess,
-        ActionType.UserTracksFailure
+        ActionType.SavedTracksRequest,
+        ActionType.SavedTracksSuccess,
+        ActionType.SavedTracksFailure
       ],
       path: "me/tracks",
       schema: Schemas.PagedTracks

@@ -1,31 +1,34 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Playlist } from "../../types";
-import { getUserPlaylists } from "../../actions/following";
+import { getFollowedPlaylists } from "../../actions/following";
 import { State } from "../../reducers";
-import { selectUserPlaylists } from "../../reducers/following";
+import { selectFollowedPlaylists } from "../../reducers/following";
 import PlaylistCovers from "../covers/PlaylistCovers";
+import withLoader from "../withLoader";
 
 interface Props {
   playlists: Playlist[];
-  getUserPlaylists: () => void;
+  getFollowedPlaylists: () => void;
 }
 
-function Playlists({ playlists, getUserPlaylists }: Props) {
-  useEffect(getUserPlaylists, []);
+function Playlists({ playlists, getFollowedPlaylists }: Props) {
+  useEffect(getFollowedPlaylists, []);
 
   return <PlaylistCovers playlists={playlists} />;
 }
 
 const mapState = (state: State) => ({
-  playlists: selectUserPlaylists(state)
+  playlists: selectFollowedPlaylists(state)
 });
 
 const mapDispatch = {
-  getUserPlaylists
+  getFollowedPlaylists
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Playlists);
+export default withLoader(
+  connect(
+    mapState,
+    mapDispatch
+  )(Playlists)
+);

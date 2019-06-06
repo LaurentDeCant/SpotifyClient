@@ -1,7 +1,7 @@
+import { LibraryActionType as ActionType } from "../actions";
 import {
-  ActionType,
-  UserAlbumsSuccessAction,
-  UserTracksSuccessAction
+  SavedAlbumsSuccessAction,
+  SavedTracksSuccessAction
 } from "../actions/library";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -19,20 +19,20 @@ const initialState: State = {
 };
 
 export default createReducer(initialState, {
-  [ActionType.UserAlbumsSuccess]: (
+  [ActionType.SavedAlbumsSuccess]: (
     state: State,
-    { payload }: UserAlbumsSuccessAction
+    { payload }: SavedAlbumsSuccessAction
   ) => ({ ...state, userAlbumIds: Object.keys(payload.albums || {}) }),
-  [ActionType.UserTracksSuccess]: (
+  [ActionType.SavedTracksSuccess]: (
     state: State,
-    { payload }: UserTracksSuccessAction
+    { payload }: SavedTracksSuccessAction
   ) => ({ ...state, userTrackIds: Object.keys(payload.tracks || {}) })
 });
 
-export function selectUserAlbums(state: CombinedState) {
+export function selectSavedAlbums(state: CombinedState) {
   return selectAlbums(state)(state.library.userAlbumIds);
 }
 
-export function selectUserTracks(state: CombinedState) {
+export function selectSavedTracks(state: CombinedState) {
   return selectTracks(state)(state.library.userTrackIds);
 }

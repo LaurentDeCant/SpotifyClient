@@ -12,7 +12,7 @@ const Wrapper = styled.li<{ isLoaded: boolean }>`
   align-items: center;
   border-radius: 40px;
   box-sizing: border-box;
-  ${props => props.isLoaded && "color: " + props.theme.color.primaryLight};
+  ${props => props.isLoaded && "color: " + props.theme.color.primary};
   display: flex;
   margin-bottom: ${props => props.theme.thickness.extraSmall}px;
   padding: ${props => props.theme.thickness.small}px 0;
@@ -34,19 +34,19 @@ const PlayButton = styled(RoundButton).attrs<
 >(({ isPlaying }) => ({
   iconType: isPlaying ? IconType.Pause : IconType.PlayArrow
 }))<PlayButtonProps>`
-  ${props => props.isLoaded && `color: ${props.theme.color.primaryLight}`}
+  ${props => props.isLoaded && `color: ${props.theme.color.primary}`}
   flex-shrink: 0;
   margin-right: ${props => props.theme.thickness.small}px;
 
   &&:hover {
-    ${props => props.isLoaded && `color: ${props.theme.color.primaryLight}`}
+    ${props => props.isLoaded && `color: ${props.theme.color.primary}`}
   }
 `;
 
 const NoMusicIcon = styled(Icon).attrs(() => ({
   type: IconType.MusicOff
 }))`
-  color: ${props => props.theme.color.errorLight};
+  color: ${props => props.theme.color.error};
   flex-shrink: 0;
   margin-right: ${props => props.theme.thickness.small}px;
   text-align: center;

@@ -30,8 +30,8 @@ export default createReducer(initialState, {
   [ArtistActionType.ArtistAlbumsSuccess]: mergeAlbums,
   [BrowseActionType.NewReleasesSuccess]: mergeAlbums,
   [SearchActionType.SearchSuccess]: mergeAlbums,
-  [LibraryActionType.UserAlbumsSuccess]: mergeAlbums,
-  [LibraryActionType.UserTracksSuccess]: mergeAlbums
+  [LibraryActionType.SavedAlbumsSuccess]: mergeAlbums,
+  [LibraryActionType.SavedTracksSuccess]: mergeAlbums
 });
 
 export function selectAlbum({ albums }: CombinedState, albumId: string) {

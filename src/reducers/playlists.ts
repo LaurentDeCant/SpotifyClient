@@ -12,6 +12,10 @@ import { State as CombinedState } from ".";
 import { PlaylistDictionary } from "./types";
 import createReducer from "./createReducer";
 import { selectTracks } from "./tracks";
+import {
+  FollowPlaylistSuccessAction,
+  UnfollowPlaylistSuccessAction
+} from "../actions/following";
 
 export interface State extends PlaylistDictionary {}
 
@@ -26,7 +30,27 @@ export default createReducer(initialState, {
   [BrowseActionType.CategoryPlaylistsSuccess]: mergePlaylists,
   [BrowseActionType.FeaturedPlaylistsSuccess]: mergePlaylists,
   [SearchActionType.SearchSuccess]: mergePlaylists,
-  [FollowingActionType.UserPlaylistsSuccess]: mergePlaylists
+  [FollowingActionType.FollowedPlaylistsSuccess]: mergePlaylists,
+  [FollowingActionType.FollowPlaylistSuccess]: (
+    state: State,
+    { payload }: FollowPlaylistSuccessAction
+  ) => ({
+    ...state,
+    [payload.playlistId]: {
+      ...state[payload.playlistId],
+      isFollowed: true
+    }
+  }),
+  [FollowingActionType.UnfollowPlaylistSuccess]: (
+    state: State,
+    { payload }: UnfollowPlaylistSuccessAction
+  ) => ({
+    ...state,
+    [payload.playlistId]: {
+      ...state[payload.playlistId],
+      isFollowed: false
+    }
+  })
 });
 
 export function selectPlaylist(

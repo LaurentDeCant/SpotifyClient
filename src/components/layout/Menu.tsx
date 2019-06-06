@@ -13,7 +13,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   overflow: hidden;
   padding: 0 ${props => props.theme.thickness.medium}px;
-  width: ${props => props.theme.thickness.extraExtraLarge}px;
   z-index: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
@@ -49,7 +48,7 @@ const StyledNavLink = styled(NavLink)`
 
   &.active {
     border-bottom: ${props => props.theme.thickness.extraExtraSmall}px solid
-      ${props => props.theme.color.primaryLight};
+      ${props => props.theme.color.primary};
     color: ${props => props.theme.foreground.default};
   }
 
@@ -59,7 +58,7 @@ const StyledNavLink = styled(NavLink)`
     &.active {
       border: none;
       border-right: ${props => props.theme.thickness.extraExtraSmall}px solid
-        ${props => props.theme.color.primaryLight};
+        ${props => props.theme.color.primary};
     }
   }
 `;
@@ -90,7 +89,7 @@ const items = [
   },
   {
     url: `${process.env.PUBLIC_URL}/library`,
-    icon: IconType.LibraryMusic,
+    icon: IconType.LibraryBooks,
     text: "Library"
   }
 ];

@@ -1,11 +1,6 @@
+import { AlbumActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
-
-export enum ActionType {
-  AlbumRequest = "ALBUM_REQUEST",
-  AlbumSuccess = "ALBUM_SUCCESS",
-  AlbumFailure = "ALBUM_FAILURE"
-}
 
 export interface AlbumSuccessAction
   extends EntitiesAction<ActionType.AlbumSuccess> {}

@@ -14,4 +14,5 @@ export interface Artist {
   albums: string[];
   relatedArtists: string[];
   topTracks: string[];
+  isFollowed: boolean;
 }

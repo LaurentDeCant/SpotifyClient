@@ -18,7 +18,7 @@ const StyledHeader = styled(Header)`
 
 const Body = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: calc(100% - 150px);
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {

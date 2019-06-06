@@ -65,7 +65,8 @@ function AlbumDetails({
         subTitle={getArtistNames(artists)}
         canPlay={isPlayable}
         isPlaying={isPlaying}
-        onToggle={handleToggle}
+        isFavorite={false}
+        onTogglePlay={handleToggle}
       />
       <TrackList tracks={tracks} onToggle={handleToggle} />
     </Collection>
