@@ -30,7 +30,8 @@ export default createReducer(initialState, {
   [ArtistActionType.ArtistAlbumsSuccess]: mergeAlbums,
   [BrowseActionType.NewReleasesSuccess]: mergeAlbums,
   [SearchActionType.SearchSuccess]: mergeAlbums,
-  [LibraryActionType.UserAlbumsSuccess]: mergeAlbums
+  [LibraryActionType.UserAlbumsSuccess]: mergeAlbums,
+  [LibraryActionType.UserTracksSuccess]: mergeAlbums
 });
 
 export function selectAlbum({ albums }: CombinedState, albumId: string) {
@@ -73,7 +74,7 @@ export const selectAlbums = createSelector(
 
 export function selectPlayableTracks(state: CombinedState, albumId: string) {
   const tracks = selectAlbumTracks(state, albumId);
-  return tracks.filter(track => track.preview_url);
+  return tracks ? tracks.filter(track => track.preview_url) : [];
 }
 
 export function selectIsPlayable(state: CombinedState, albumId: string) {

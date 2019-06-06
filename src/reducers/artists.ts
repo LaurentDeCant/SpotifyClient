@@ -8,6 +8,7 @@ import {
   ArtistActionType,
   BrowseActionType,
   FollowingActionType,
+  LibraryActionType,
   PlaylistActionType,
   SearchActionType
 } from "../actions";
@@ -79,6 +80,8 @@ export default createReducer(initialState, {
   [PlaylistActionType.PlaylistSuccess]: mergeArtists,
   [BrowseActionType.NewReleasesSuccess]: mergeArtists,
   [SearchActionType.SearchSuccess]: mergeArtists,
+  [LibraryActionType.UserAlbumsSuccess]: mergeArtists,
+  [LibraryActionType.UserTracksSuccess]: mergeArtists,
   [FollowingActionType.UserArtistsSuccess]: mergeArtists
 });
 
@@ -135,7 +138,7 @@ export const selectArtists = createSelector(
 
 export function selectPlayableTracks(state: CombinedState, artistId: string) {
   const tracks = selectArtistTopTracks(state, artistId);
-  return tracks.filter(track => track.preview_url);
+  return tracks ? tracks.filter(track => track.preview_url) : [];
 }
 
 export function selectIsPlayable(state: CombinedState, artistId: string) {

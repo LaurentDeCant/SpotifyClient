@@ -23,4 +23,8 @@ function TrackList({ tracks, onToggle }: Props) {
   );
 }
 
+TrackList.defaultProps = {
+  onToggle: () => {}
+};
+
 export default TrackList;

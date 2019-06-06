@@ -1,9 +1,12 @@
-import createReducer from "./createReducer";
 import {
   ActionType,
   UserArtistsSuccessAction,
   UserPlaylistsSuccessAction
 } from "../actions/following";
+import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
+import { selectArtists } from "./artists";
+import { selectPlaylists } from "./playlists";
 
 export interface State {
   userArtistIds: string[];
@@ -28,3 +31,11 @@ export default createReducer(initialState, {
     { payload }: UserPlaylistsSuccessAction
   ) => ({ ...state, userPlaylistIds: Object.keys(payload.playlists || []) })
 });
+
+export function selectUserArtists(state: CombinedState) {
+  return selectArtists(state)(state.following.userArtistIds);
+}
+
+export function selectUserPlaylists(state: CombinedState) {
+  return selectPlaylists(state)(state.following.userPlaylistIds);
+}

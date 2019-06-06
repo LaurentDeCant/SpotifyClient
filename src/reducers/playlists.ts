@@ -58,7 +58,7 @@ export const selectPlaylists = createSelector(
 
 export function selectPlayableTracks(state: CombinedState, playlistId: string) {
   const tracks = selectPlaylistTracks(state, playlistId);
-  return tracks.filter(track => track.preview_url);
+  return tracks ? tracks.filter(track => track.preview_url) : [];
 }
 
 export function selectIsPlayable(state: CombinedState, playlistId: string) {

@@ -29,6 +29,7 @@ export default createReducer(initialState, {
   [ArtistActionType.FullArtistSuccess]: mergeTracks,
   [PlaylistActionType.PlaylistSuccess]: mergeTracks,
   [SearchActionType.SearchSuccess]: mergeTracks,
+  [LibraryActionType.UserAlbumsSuccess]: mergeTracks,
   [LibraryActionType.UserTracksSuccess]: mergeTracks
 });
 

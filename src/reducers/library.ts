@@ -1,9 +1,12 @@
-import createReducer from "./createReducer";
 import {
   ActionType,
   UserAlbumsSuccessAction,
   UserTracksSuccessAction
 } from "../actions/library";
+import { State as CombinedState } from ".";
+import createReducer from "./createReducer";
+import { selectAlbums } from "./albums";
+import { selectTracks } from "./tracks";
 
 export interface State {
   userAlbumIds: string[];
@@ -25,3 +28,11 @@ export default createReducer(initialState, {
     { payload }: UserTracksSuccessAction
   ) => ({ ...state, userTrackIds: Object.keys(payload.tracks || {}) })
 });
+
+export function selectUserAlbums(state: CombinedState) {
+  return selectAlbums(state)(state.library.userAlbumIds);
+}
+
+export function selectUserTracks(state: CombinedState) {
+  return selectTracks(state)(state.library.userTrackIds);
+}
