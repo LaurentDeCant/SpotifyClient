@@ -86,3 +86,9 @@ export enum SearchActionType {
   SelectPlaylist = "SELECT_PLAYLIST",
   ClearRecents = "CLEAR_RECENTS"
 }
+
+export enum UserProfileActionType {
+  UserProfileRequest = "USER_PROFILE_REQUEST",
+  UserProfileSuccess = "USER_PROFILE_SUCCESS",
+  UserProfileFailure = "USER_PROFILE_FAILURE"
+}

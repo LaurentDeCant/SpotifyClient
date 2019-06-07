@@ -15,7 +15,8 @@ import Queue from "../player/Queue";
 
 const Wrapper = styled.div`
   box-sizing: border-box;
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   overflow-y: auto;
   padding: ${props => props.theme.thickness.medium}px;

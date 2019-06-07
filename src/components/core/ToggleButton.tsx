@@ -3,10 +3,10 @@ import styled from "../../styles/styled";
 import RoundButton, { Props as RoundButtonProps } from "./RoundButton";
 
 const StyledRoundButton = styled(RoundButton)<{ isToggled: boolean }>`
-  ${props => props.isToggled && `color: ${props.theme.foreground.default};`}
+  ${props => props.isToggled && `color: ${props.theme.color.primary};`}
 
   &:not(:disabled):hover {
-    ${props => props.isToggled && `color: ${props.theme.foreground.default};`}
+    ${props => props.isToggled && `color: ${props.theme.color.primary};`}
   }
 `;
 
@@ -23,5 +23,9 @@ function ToggleButton({
     <StyledRoundButton {...rest} iconType={iconType} isToggled={isToggled} />
   );
 }
+
+ToggleButton.defaultProps = {
+  isToggled: false
+};
 
 export default ToggleButton;

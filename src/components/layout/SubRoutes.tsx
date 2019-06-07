@@ -1,6 +1,7 @@
 import React from "react";
-import { RouteComponentProps, Route, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import DefaultRoute from "../DefaultRoute";
+import PrivateRoute from "../PrivateRoute";
 
 interface Props extends RouteComponentProps {
   items: { default?: boolean; path: string; component: any }[];
@@ -18,7 +19,7 @@ function SubRoutes({ match, items }: Props) {
       )}
 
       {items.map(item => (
-        <Route
+        <PrivateRoute
           key={item.path}
           path={`${match.path}/${item.path}`}
           component={item.component}

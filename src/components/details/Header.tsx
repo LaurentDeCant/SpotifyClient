@@ -102,6 +102,10 @@ function Header({
   onTogglePlay,
   onToggleFavorite
 }: Props) {
+  function handleTogglePlay() {
+    onTogglePlay();
+  }
+
   return (
     <Wrapper>
       <StyledImage source={imageSource} shape={imageShape} />
@@ -109,7 +113,7 @@ function Header({
         <Title>{title}</Title>
         {subTitle && <SubTitle>{subTitle}</SubTitle>}
         <Horizontal>
-          <PlayButton disabled={!canPlay} onClick={onTogglePlay}>
+          <PlayButton disabled={!canPlay} onClick={handleTogglePlay}>
             {isPlaying ? "Pause" : "Play"}
           </PlayButton>
           <FavoriteButton isToggled={isFavorite} onClick={onToggleFavorite} />

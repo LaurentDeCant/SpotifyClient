@@ -97,8 +97,8 @@ export function getFullArtist(artistId: string) {
         ...artist,
         isFollowed: await checkFollowedArtist(artist.id)
       })),
-      fetchJson(`${artistUrl}/albums`),
-      fetchJson(`${artistUrl}/related-artists`),
+      fetchJson(`${artistUrl}/albums?country=us`),
+      fetchJson(`${artistUrl}/related-artists?country=us`),
       fetchJson(`${artistUrl}/top-tracks?country=us`)
     ]).then(([artist, albums, relatedArtists, topTracks]) => {
       dispatch({

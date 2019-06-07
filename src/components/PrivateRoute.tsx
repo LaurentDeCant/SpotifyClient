@@ -9,14 +9,18 @@ import {
 import { connect } from "react-redux";
 import { State } from "../reducers";
 import { selectIsLoggedIn } from "../reducers/authorization";
+import { selectUserProfile } from "../reducers/userProfile";
+import { UserProfile } from "../types";
 
 interface Props extends RouteProps {
   isLoggedIn: boolean;
+  userProfile?: UserProfile;
 }
 
 function PrivateRoute({
   component: Component,
   isLoggedIn,
+  userProfile,
   ...rest
 }: Props & RouteComponentProps) {
   return (
@@ -24,7 +28,11 @@ function PrivateRoute({
       {...rest}
       render={props =>
         isLoggedIn ? (
-          Component && <Component {...props} />
+          userProfile ? (
+            Component && <Component {...props} />
+          ) : (
+            <></>
+          )
         ) : (
           <Redirect to={`${process.env.PUBLIC_URL}/login`} />
         )
@@ -34,7 +42,8 @@ function PrivateRoute({
 }
 
 const mapState = (state: State) => ({
-  isLoggedIn: selectIsLoggedIn(state)
+  isLoggedIn: selectIsLoggedIn(state),
+  userProfile: selectUserProfile(state)
 });
 
 export default withRouter(

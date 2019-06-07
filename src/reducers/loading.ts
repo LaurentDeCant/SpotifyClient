@@ -5,7 +5,8 @@ import {
   FollowingActionType,
   LibraryActionType,
   PlaylistActionType,
-  SearchActionType
+  SearchActionType,
+  UserProfileActionType
 } from "../actions";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
@@ -83,7 +84,10 @@ export default createReducer(initialState, {
   [PlaylistActionType.PlaylistFailure]: decrement,
   [SearchActionType.SearchRequest]: increment,
   [SearchActionType.SearchSuccess]: decrement,
-  [SearchActionType.SearchFailure]: decrement
+  [SearchActionType.SearchFailure]: decrement,
+  [UserProfileActionType.UserProfileRequest]: increment,
+  [UserProfileActionType.UserProfileSuccess]: decrement,
+  [UserProfileActionType.UserProfileFailure]: decrement
 });
 
 export function selectIsLoading(state: CombinedState): boolean {

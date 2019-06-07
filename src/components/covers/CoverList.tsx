@@ -8,11 +8,12 @@ const StyledList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: -12.5px;
+  margin: -${props => props.theme.thickness.small}px;
+  width: calc(100% + 2 * ${props => props.theme.thickness.small}px);
 `;
 
 function splitWidth(times: number) {
-  return `calc((100% - ${times * 25}px) / ${times} - 1px)`;
+  return `calc((100% - ${times * 25}px) / ${times} - 4px)`;
 }
 
 const StyledItem = styled.li`

@@ -1,32 +1,32 @@
 import React from "react";
 import SubMenu from "../layout/SubMenu";
 import SubRoutes from "../layout/SubRoutes";
-import Artists from "./Artists";
-import Albums from "./Albums";
-import Playlists from "./Playlists";
-import Tracks from "./Tracks";
+import FollowedArtists from "./FollowedArtists";
+import SavedAlbums from "./SavedAlbums";
+import FollowedPlaylists from "./FollowedPlaylists";
+import SavedTracks from "./SavedTracks";
 
 const items = [
   {
     path: "artists",
     text: "Artists",
     default: true,
-    component: Artists
+    component: FollowedArtists
   },
   {
     path: "albums",
     text: "Albums",
-    component: Albums
+    component: SavedAlbums
   },
   {
     path: "playlists",
     text: "Playlists",
-    component: Playlists
+    component: FollowedPlaylists
   },
   {
     path: "tracks",
     text: "Tracks",
-    component: Tracks
+    component: SavedTracks
   }
 ];
 

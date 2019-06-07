@@ -11,8 +11,7 @@ const StyledButton = styled(ButtonBase)`
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: ${props => props.theme.thickness.extraSmall}px
-    ${props => props.theme.thickness.small}px;
+  padding: ${props => props.theme.thickness.small}px;
   width 100%;
 `;
 

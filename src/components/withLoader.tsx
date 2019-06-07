@@ -6,6 +6,8 @@ import { State } from "../reducers";
 import { selectIsLoading } from "../reducers/loading";
 
 const Fader = styled.div<{ isLoading: boolean }>`
+  display: flex;
+  flex-grow: 1;
   opacity: ${props => (props.isLoading ? "0" : "1")};
   transition: ${props => (props.isLoading ? "all 0" : "all 0.2s")};
 `;

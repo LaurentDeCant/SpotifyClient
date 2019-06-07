@@ -31,6 +31,7 @@ const StyledMenu = styled(Menu)`
 `;
 
 const StyledRoutes = styled(Routes)`
+  flex-grow: 1;
   flex-shrink: 1;
 `;
 

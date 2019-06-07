@@ -1,5 +1,6 @@
 import { UserProfile } from "../types";
-import { ActionType, UserProfileSuccessAction } from "../actions/userProfile";
+import { UserProfileActionType as ActionType } from "../actions";
+import { UserProfileSuccessAction } from "../actions/userProfile";
 import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 

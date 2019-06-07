@@ -56,8 +56,8 @@ function Audio({
     const currentAudio = audio.current;
 
     if (currentAudio) {
+      console.log(command);
       const { currentTime } = times;
-
       switch (command) {
         case Command.Play:
           currentAudio.play();

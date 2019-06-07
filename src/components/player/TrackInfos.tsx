@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Artist, Album, Track } from "../../types";
 import { State } from "../../reducers";
-import { Image, Text } from "../core";
+import { Image, Text, ToggleButton, IconType } from "../core";
 import { getImageSource } from "../../utils";
 import {
   selectLoadedArtists,
@@ -29,11 +29,18 @@ const StyedImage = styled(Image)`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: ${props => props.theme.thickness.small}px;
   overflow: hidden;
 `;
 
 const Title = styled(Text)`
   margin-bottom: ${props => props.theme.thickness.extraSmall}px;
+`;
+
+const FavoriteButton = styled(ToggleButton).attrs(() => ({
+  iconType: IconType.Favorite
+}))`
+  flex-shrink: 0;
 `;
 
 interface Props {
@@ -55,10 +62,17 @@ function TrackInfos({
           <StyedImage source={getImageSource(album)} />
         </Link>
       )}
-      <Container>
-        {track && <Title>{track.name}</Title>}
-        <ArtistList artists={artists} />
-      </Container>
+
+      {track && (
+        <>
+          <Container>
+            <Title>{track.name}</Title>
+            <ArtistList artists={artists} />
+          </Container>
+
+          <FavoriteButton />
+        </>
+      )}
     </Wrapper>
   );
 }

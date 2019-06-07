@@ -45,7 +45,7 @@ const CenterWrapper = styled(ThirdWrapper)`
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
-    margin: 0 ${props => props.theme.thickness.medium}px;
+    margin: 0 ${props => props.theme.thickness.small}px;
     max-width: 50%;
   }
 `;

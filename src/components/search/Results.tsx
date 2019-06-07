@@ -32,6 +32,11 @@ const Section = styled.section`
   }
 `;
 
+const StyledHeading = styled(Heading)`
+  align-self: center;
+  font-size: ${props => props.theme.fontSize.extraExtraLarge};
+`;
+
 interface ArtistsProps {
   artists: Artist[];
   selectArtist: (artistId: string) => void;
@@ -110,7 +115,7 @@ function Results({
       <Playlists playlists={playlists} selectPlaylist={selectPlaylist} />
     </Wrapper>
   ) : (
-    <Heading>No Results found.</Heading>
+    <StyledHeading>No Results found.</StyledHeading>
   );
 }
 

@@ -36,6 +36,10 @@ export default createGlobalStyle`
     &:not(:disabled) {
       cursor: pointer;
     }
+
+    &:disabled {
+      cursor: not-allowed; 
+    }
   }
 
   a, button, input {

@@ -15,6 +15,7 @@ export enum IconType {
   QueueMusic = "queue_music",
   Refresh = "refresh",
   Search = "search",
+  SentimentVeryDissatisfied = "sentiment_very_dissatisfied",
   Shuffle = "shuffle",
   SkipNext = "skip_next",
   SkipPrevious = "skip_previous",
