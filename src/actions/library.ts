@@ -1,5 +1,7 @@
+import { Album, Track } from "../types";
 import { State } from "../reducers";
 import { selectAlbum } from "../reducers/albums";
+import { selectTrack } from "../reducers/tracks";
 import { fetchJson } from "../utils/authorization";
 import { LibraryActionType as ActionType } from ".";
 import {
@@ -27,11 +29,11 @@ export function getSavedAlbums() {
   };
 }
 
-export async function checkSavedAlbum(albumId: string) {
+export async function checkSavedAlbum(album: Album) {
   const array = await fetchJson(
-    `${process.env.REACT_APP_BASE_URL}/me/albums/contains?ids=${albumId}`
+    `${process.env.REACT_APP_BASE_URL}/me/albums/contains?ids=${album.id}`
   );
-  return array[0];
+  return { ...album, isSaved: array[0] };
 }
 
 export interface SaveAlbumSuccessAction
@@ -96,5 +98,66 @@ export function getSavedTracks() {
       path: "me/tracks",
       schema: Schemas.PagedTracks
     });
+  };
+}
+
+export async function checkSavedTracks(tracks: Track[]) {
+  const trackIds = tracks.map(track => track.id);
+  const array = await fetchJson(
+    `${
+      process.env.REACT_APP_BASE_URL
+    }/me/tracks/contains?ids=${encodeURIComponent(trackIds.join(","))}`
+  );
+  return tracks.map((track, index) => ({
+    ...track,
+    isSaved: array[index]
+  }));
+}
+
+export interface SaveTrackSuccessAction
+  extends PayloadAction<ActionType.SaveTrackSuccess, { trackId: string }> {}
+
+function saveTrack(trackId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.SaveTrackRequest,
+        ActionType.SaveTrackSuccess,
+        ActionType.SaveTrackFailure
+      ],
+      path: `me/tracks?ids=${trackId}`,
+      method: FetchMethod.Put,
+      data: { trackId }
+    });
+  };
+}
+
+export interface UnsaveTrackSuccessAction
+  extends PayloadAction<ActionType.UnsaveTrackSuccess, { trackId: string }> {}
+
+function UnsaveTrack(trackId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.UnsaveTrackRequest,
+        ActionType.UnsaveTrackSuccess,
+        ActionType.UnsaveTrackFailure
+      ],
+      path: `me/tracks?ids=${trackId}`,
+      method: FetchMethod.Delete,
+      data: { trackId }
+    });
+  };
+}
+
+export function toggleSavedTrack(trackId: string) {
+  return (dispatch: FetchDispatch, getState: () => State) => {
+    const state = getState();
+    const track = selectTrack(state, trackId);
+    if (track.isSaved) {
+      UnsaveTrack(trackId)(dispatch);
+    } else {
+      saveTrack(trackId)(dispatch);
+    }
   };
 }

@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Artist, Track } from "../../types";
-import { getArtistNames } from "../../utils";
+import { toggleSavedTrack } from "../../actions/library";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
-import { Icon, IconType, RoundButton, Text } from "../core";
 import { selectTrackArtists } from "../../reducers/tracks";
+import { getArtistNames } from "../../utils";
+import { Icon, IconType, RoundButton, Text, ToggleButton } from "../core";
 
 const Wrapper = styled.li<{ isLoaded: boolean }>`
   align-items: center;
@@ -80,7 +81,7 @@ const Duration = styled.span`
   margin-right: ${props => props.theme.thickness.small}px;
 `;
 
-const FavoriteButton = styled(RoundButton).attrs(() => ({
+const FavoriteButton = styled(ToggleButton).attrs(() => ({
   iconType: IconType.Favorite
 }))`
   flex-shrink: 0;
@@ -88,7 +89,7 @@ const FavoriteButton = styled(RoundButton).attrs(() => ({
 
 interface OwnProps {
   track: Track;
-  onToggle: (trackId: string) => void;
+  onTogglePlay: (trackId: string) => void;
 }
 
 interface Props extends OwnProps {
@@ -96,6 +97,7 @@ interface Props extends OwnProps {
   isDisabled: boolean;
   isLoaded: boolean;
   isPlaying: boolean;
+  toggleSavedTrack: (trackId: string) => void;
 }
 
 function TrackItem({
@@ -104,7 +106,8 @@ function TrackItem({
   isDisabled,
   isLoaded,
   isPlaying,
-  onToggle
+  onTogglePlay,
+  toggleSavedTrack
 }: Props) {
   function renderArtist() {
     return <SubTitle>{getArtistNames(artists)}</SubTitle>;
@@ -123,7 +126,11 @@ function TrackItem({
   }
 
   function handleClick() {
-    onToggle(track.id);
+    onTogglePlay(track.id);
+  }
+
+  function handleToggleFavorite() {
+    toggleSavedTrack(track.id);
   }
 
   return (
@@ -145,7 +152,10 @@ function TrackItem({
 
       {renderDuration()}
 
-      <FavoriteButton />
+      <FavoriteButton
+        isToggled={track.isSaved}
+        onClick={handleToggleFavorite}
+      />
     </Wrapper>
   );
 }
@@ -161,7 +171,11 @@ const mapState = (state: State, { track }: OwnProps) => ({
   isPlaying: selectIsPlaying(state, track.id)
 });
 
+const mapDispatch = {
+  toggleSavedTrack
+};
+
 export default connect(
   mapState,
-  null
+  mapDispatch
 )(TrackItem);

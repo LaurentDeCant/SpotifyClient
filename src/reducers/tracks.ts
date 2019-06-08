@@ -1,7 +1,6 @@
 import merge from "lodash/merge";
 import { createSelector } from "reselect";
 import memoize from "lodash/memoize";
-import { EntitiesAction } from "../actions/types";
 import {
   AlbumActionType,
   ArtistActionType,
@@ -9,6 +8,11 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
+import { EntitiesAction } from "../actions/types";
+import {
+  SaveTrackSuccessAction,
+  UnsaveTrackSuccessAction
+} from "../actions/library";
 import { State as CombinedState } from ".";
 import { TrackDictionary } from "./types";
 import createReducer from "./createReducer";
@@ -30,7 +34,27 @@ export default createReducer(initialState, {
   [PlaylistActionType.PlaylistSuccess]: mergeTracks,
   [SearchActionType.SearchSuccess]: mergeTracks,
   [LibraryActionType.SavedAlbumsSuccess]: mergeTracks,
-  [LibraryActionType.SavedTracksSuccess]: mergeTracks
+  [LibraryActionType.SavedTracksSuccess]: mergeTracks,
+  [LibraryActionType.SaveTrackSuccess]: (
+    state: State,
+    { payload }: SaveTrackSuccessAction
+  ) => ({
+    ...state,
+    [payload.trackId]: {
+      ...state[payload.trackId],
+      isSaved: true
+    }
+  }),
+  [LibraryActionType.UnsaveTrackSuccess]: (
+    state: State,
+    { payload }: UnsaveTrackSuccessAction
+  ) => ({
+    ...state,
+    [payload.trackId]: {
+      ...state[payload.trackId],
+      isSaved: false
+    }
+  })
 });
 
 export function selectTrack({ tracks }: CombinedState, trackId: string) {

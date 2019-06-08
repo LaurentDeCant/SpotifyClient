@@ -26,7 +26,7 @@ interface Props {
 }
 
 function Queue({ collection, tracks, loadPlayPause }: Props) {
-  function handleToggle(trackId: string) {
+  function handleTogglePlay(trackId: string) {
     collection && loadPlayPause(collection.id, collection.type, trackId);
   }
 
@@ -35,7 +35,7 @@ function Queue({ collection, tracks, loadPlayPause }: Props) {
       {tracks && tracks.length ? (
         <>
           <Heading>Queue</Heading>
-          <TrackList tracks={tracks} onToggle={handleToggle} />
+          <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
         </>
       ) : (
         <Wrapper>

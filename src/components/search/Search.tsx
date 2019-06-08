@@ -9,11 +9,12 @@ import Recents from "./Recents";
 import Results from "./Results";
 
 const StyledInput = styled.input`
-  background: ${props => props.theme.background.light};
+  background: ${props => props.theme.background.active};
   border: none;
   border-radius: ${props => props.theme.thickness.medium}px;
   caret-color: ${props => props.theme.color.primary};
   color: ${props => props.theme.foreground.default};
+  flex-shrink: 0;
   font-size: ${props => props.theme.fontSize.extraLarge}px;
   font-weight: ${props => props.theme.fontWeight.light};
   height: ${props => props.theme.thickness.large}px;

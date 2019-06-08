@@ -18,10 +18,7 @@ export function getAlbum(albumId: string) {
       type: ActionType.AlbumRequest
     });
     fetchJson(`${process.env.REACT_APP_BASE_URL}/albums/${albumId}`)
-      .then(async album => ({
-        ...album,
-        isSaved: await checkSavedAlbum(album.id)
-      }))
+      .then(checkSavedAlbum)
       .then(album => {
         dispatch({
           type: ActionType.AlbumSuccess,

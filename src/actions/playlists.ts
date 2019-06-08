@@ -24,18 +24,14 @@ export function getPlaylist(playlistId: string) {
     });
     const state = getState();
     const userProfile = selectUserProfile(state);
-    fetchJson(`${process.env.REACT_APP_BASE_URL}/playlists/${playlistId}`)
-      .then(async playlist => ({
-        ...playlist,
-        isFollowed: userProfile
-          ? await checkFollowedPlaylist(playlist.id, userProfile.id)
-          : undefined
-      }))
-      .then(playlist => {
-        dispatch({
-          type: ActionType.PlaylistSuccess,
-          payload: normalize(playlist, Schemas.Playlist).entities
+    userProfile &&
+      fetchJson(`${process.env.REACT_APP_BASE_URL}/playlists/${playlistId}`)
+        .then(playlist => checkFollowedPlaylist(playlist, userProfile.id))
+        .then(playlist => {
+          dispatch({
+            type: ActionType.PlaylistSuccess,
+            payload: normalize(playlist, Schemas.Playlist).entities
+          });
         });
-      });
   };
 }

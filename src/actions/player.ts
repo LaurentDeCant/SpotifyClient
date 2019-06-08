@@ -57,7 +57,6 @@ export function loadCollection(
   collectionType: Type,
   trackId?: string
 ) {
-  console.log(collectionId, collectionType, trackId);
   return (dispatch: Dispatch<LoadCollectionAction>, getState: () => State) => {
     const state = getState();
     const trackIds = getTrackIds(state, collectionId, collectionType);

@@ -21,4 +21,5 @@ export interface Track {
   type: string;
   uri: string;
   is_local: boolean;
+  isSaved: boolean;
 }

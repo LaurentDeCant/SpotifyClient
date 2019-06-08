@@ -1,7 +1,6 @@
 import merge from "lodash/merge";
 import { createSelector } from "reselect";
 import memoize from "lodash/memoize";
-import { EntitiesAction } from "../actions/types";
 import {
   AlbumActionType,
   ArtistActionType,
@@ -10,6 +9,7 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
+import { EntitiesAction } from "../actions/types";
 import {
   SaveAlbumSuccessAction,
   UnsaveAlbumSuccessAction

@@ -1,13 +1,13 @@
 import merge from "lodash/merge";
 import { createSelector } from "reselect";
 import memoize from "lodash/memoize";
-import { EntitiesAction } from "../actions/types";
 import {
   BrowseActionType,
   FollowingActionType,
   PlaylistActionType,
   SearchActionType
 } from "../actions";
+import { EntitiesAction } from "../actions/types";
 import { State as CombinedState } from ".";
 import { PlaylistDictionary } from "./types";
 import createReducer from "./createReducer";

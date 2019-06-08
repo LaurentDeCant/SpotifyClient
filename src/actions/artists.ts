@@ -102,10 +102,7 @@ export function getFullArtist(artistId: string) {
     });
     const artistUrl = `${process.env.REACT_APP_BASE_URL}/artists/${artistId}`;
     Promise.all([
-      fetchJson(artistUrl).then(async artist => ({
-        ...artist,
-        isFollowed: await checkFollowedArtist(artist.id)
-      })),
+      fetchJson(artistUrl).then(checkFollowedArtist),
       fetchJson(`${artistUrl}/albums?country=us`),
       fetchJson(`${artistUrl}/related-artists?country=us`),
       fetchJson(`${artistUrl}/top-tracks?country=us`)

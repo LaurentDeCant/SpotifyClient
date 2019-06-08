@@ -1,3 +1,4 @@
+import { Artist, Playlist } from "../types";
 import { State } from "../reducers";
 import { selectArtist } from "../reducers/artists";
 import { selectPlaylist } from "../reducers/playlists";
@@ -28,13 +29,13 @@ export function getFollowedArtists() {
   };
 }
 
-export async function checkFollowedArtist(artistId: string) {
+export async function checkFollowedArtist(artist: Artist) {
   const array = await fetchJson(
-    `${
-      process.env.REACT_APP_BASE_URL
-    }/me/following/contains?type=artist&ids=${artistId}`
+    `${process.env.REACT_APP_BASE_URL}/me/following/contains?type=artist&ids=${
+      artist.id
+    }`
   );
-  return array[0];
+  return { ...artist, isFollowed: array[0] };
 }
 
 export interface FollowArtistSuccessAction
@@ -106,15 +107,15 @@ export function getFollowedPlaylists() {
 }
 
 export async function checkFollowedPlaylist(
-  playlistId: string,
+  playlist: Playlist,
   userId: string
 ) {
   const array = await fetchJson(
-    `${
-      process.env.REACT_APP_BASE_URL
-    }/playlists/${playlistId}/followers/contains?ids=${userId}`
+    `${process.env.REACT_APP_BASE_URL}/playlists/${
+      playlist.id
+    }/followers/contains?ids=${userId}`
   );
-  return array[0];
+  return { ...playlist, isFollowed: array[0] };
 }
 
 export interface FollowPlaylistSuccessAction

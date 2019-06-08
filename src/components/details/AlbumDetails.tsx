@@ -76,7 +76,7 @@ function AlbumDetails({
         onTogglePlay={handleTogglePlay}
         onToggleFavorite={handleToggleFavorite}
       />
-      <TrackList tracks={tracks} onToggle={handleTogglePlay} />
+      <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
     </Collection>
   ) : (
     <></>

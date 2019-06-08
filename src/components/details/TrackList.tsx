@@ -10,21 +10,21 @@ const StyledList = styled.ul`
 
 interface Props {
   tracks: Track[];
-  onToggle: (trackId: string) => void;
+  onTogglePlay: (trackId: string) => void;
 }
 
-function TrackList({ tracks, onToggle }: Props) {
+function TrackList({ tracks, onTogglePlay }: Props) {
   return (
     <StyledList>
       {tracks.map(track => (
-        <TrackItem key={track.id} track={track} onToggle={onToggle} />
+        <TrackItem key={track.id} track={track} onTogglePlay={onTogglePlay} />
       ))}
     </StyledList>
   );
 }
 
 TrackList.defaultProps = {
-  onToggle: () => {}
+  onTogglePlay: () => {}
 };
 
 export default TrackList;

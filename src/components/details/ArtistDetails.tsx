@@ -30,12 +30,14 @@ const Section = styled.section`
 
 function TopTracks({
   tracks,
-  onToggle
+  onTogglePlay
 }: {
   tracks: Track[];
-  onToggle: (trackId: string) => void;
+  onTogglePlay: (trackId: string) => void;
 }) {
-  return <>{tracks && <TrackList tracks={tracks} onToggle={onToggle} />}</>;
+  return (
+    <>{tracks && <TrackList tracks={tracks} onTogglePlay={onTogglePlay} />}</>
+  );
 }
 
 function Albums({ albums }: { albums: Album[] }) {
@@ -124,7 +126,7 @@ function ArtistDetails({
           onTogglePlay={handleTogglePlay}
           onToggleFavorite={handleToggleFavorite}
         />
-        <TopTracks tracks={topTracks} onToggle={handleTogglePlay} />
+        <TopTracks tracks={topTracks} onTogglePlay={handleTogglePlay} />
       </Wrapper>
       <Albums albums={albums} />
       <RelatedArtists artists={relatedArtists} />
