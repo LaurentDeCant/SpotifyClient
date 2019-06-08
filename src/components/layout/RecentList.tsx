@@ -7,7 +7,7 @@ import { selectRecents } from "../../reducers/player";
 import RecentItem from "./RecentItem";
 
 const Title = styled.h3`
-  font-size: ${props => props.theme.fontSize.medium};
+  font-size: ${props => props.theme.fontSize.medium}px;
   font-weight: ${props => props.theme.fontWeight.normal};
   text-align: center;
   margin-bottom: ${props => props.theme.thickness.small}px;

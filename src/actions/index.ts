@@ -65,9 +65,21 @@ export enum LibraryActionType {
   SavedAlbumsRequest = "SAVED_ALBUMS_REQUEST",
   SavedAlbumsSuccess = "SAVED_ALBUMS_SUCCESS",
   SavedAlbumsFailure = "SAVED_ALBUMS_FAILURE",
+  SaveAlbumRequest = "SAVE_ALBUM_REQUEST",
+  SaveAlbumSuccess = "SAVE_ALBUM_SUCCESS",
+  SaveAlbumFailure = "SAVE_ALBUM_FAILURE",
+  UnsaveAlbumRequest = "UNSAVE_ALBUM_REQUEST",
+  UnsaveAlbumSuccess = "UNSAVE_ALBUM_SUCCESS",
+  UnsaveAlbumFailure = "UNSAVE_ALBUM_FAILURE",
   SavedTracksRequest = "SAVED_TRACKS_REQUEST",
   SavedTracksSuccess = "SAVED_TRACKS_SUCCESS",
-  SavedTracksFailure = "SAVED_TRACKS_FAILURE"
+  SavedTracksFailure = "SAVED_TRACKS_FAILURE",
+  SaveTrackRequest = "SAVE_TRACK_REQUEST",
+  SaveTrackSuccess = "SAVE_TRACK_SUCCESS",
+  SaveTrackFailure = "SAVE_TRACK_FAILURE",
+  UnsaveTrackRequest = "UNSAVE_TRACK_REQUEST",
+  UnsaveTrackSuccess = "UNSAVE_TRACK_SUCCESS",
+  UnsaveTrackFailure = "UNSAVE_TRACK_FAILURE"
 }
 
 export enum PlaylistActionType {

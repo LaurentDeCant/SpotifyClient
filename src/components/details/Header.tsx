@@ -41,11 +41,11 @@ const Vertical = styled.div`
 `;
 
 const Title = styled(Text)`
-  font-size: ${props => props.theme.fontSize.extraLarge};
+  font-size: ${props => props.theme.fontSize.extraLarge}px;
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
-    font-size: ${props => props.theme.fontSize.extraLarge};
+    font-size: ${props => props.theme.fontSize.extraLarge}px;
     width: ${length}px;
   }
 `;
@@ -53,13 +53,13 @@ const Title = styled(Text)`
 const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
   display: inline-block;
-  font-size: ${props => props.theme.fontSize.medium};
+  font-size: ${props => props.theme.fontSize.medium}px;
   font-weight: ${props => props.theme.fontWeight.light};
   margin-top: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
-    font-size: ${props => props.theme.fontSize.large};
+    font-size: ${props => props.theme.fontSize.large}px;
     width: ${length}px;
   }
 `;

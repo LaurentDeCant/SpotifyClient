@@ -24,14 +24,14 @@ const StyledImge = styled(Image)`
 `;
 
 const Title = styled(Text)`
-  font-size: ${props => props.theme.fontSize.medium};
+  font-size: ${props => props.theme.fontSize.medium}px;
   text-align: center;
   width: 100%;
 `;
 
 const SubTitle = styled(Text)`
   color: ${props => props.theme.foreground.dark};
-  font-size: ${props => props.theme.fontSize.medium};
+  font-size: ${props => props.theme.fontSize.medium}px;
   font-weight: ${props => props.theme.fontWeight.light};
   margin-top: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;

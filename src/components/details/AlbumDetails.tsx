@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Album, Artist, Track, Type } from "../../types";
 import { getAlbum } from "../../actions/albums";
 import { loadPlayPause } from "../../actions/player";
+import { toggleSavedAlbum } from "../../actions/library";
 import { State } from "../../reducers";
 import {
   selectAlbum,
@@ -34,6 +35,7 @@ interface Props extends RouteComponentProps<Params> {
     collectionType: Type,
     trackId?: string
   ) => void;
+  toggleSavedAlbum: (albumId: string) => void;
 }
 
 function AlbumDetails({
@@ -44,7 +46,8 @@ function AlbumDetails({
   isPlayable,
   isPlaying,
   getAlbum,
-  loadPlayPause
+  loadPlayPause,
+  toggleSavedAlbum
 }: Props) {
   const { albumId } = match.params;
 
@@ -53,8 +56,12 @@ function AlbumDetails({
   };
   useEffect(effect, []);
 
-  function handleToggle(trackId?: string) {
+  function handleTogglePlay(trackId?: string) {
     loadPlayPause(albumId, Type.Album, trackId);
+  }
+
+  function handleToggleFavorite() {
+    toggleSavedAlbum(albumId);
   }
 
   return album ? (
@@ -65,10 +72,11 @@ function AlbumDetails({
         subTitle={getArtistNames(artists)}
         canPlay={isPlayable}
         isPlaying={isPlaying}
-        isFavorite={false}
-        onTogglePlay={handleToggle}
+        isFavorite={album.isSaved}
+        onTogglePlay={handleTogglePlay}
+        onToggleFavorite={handleToggleFavorite}
       />
-      <TrackList tracks={tracks} onToggle={handleToggle} />
+      <TrackList tracks={tracks} onToggle={handleTogglePlay} />
     </Collection>
   ) : (
     <></>
@@ -89,7 +97,8 @@ const mapState = (state: State, ownProps: Props) => {
 
 const mapDispatch = {
   getAlbum,
-  loadPlayPause
+  loadPlayPause,
+  toggleSavedAlbum
 };
 
 export default withLoader(

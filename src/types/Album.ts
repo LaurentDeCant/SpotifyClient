@@ -27,4 +27,5 @@ export interface Album {
   tracks: string[];
   type: Type;
   uri: string;
+  isSaved: boolean;
 }

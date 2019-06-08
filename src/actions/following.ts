@@ -4,10 +4,10 @@ import { selectPlaylist } from "../reducers/playlists";
 import { fetchJson } from "../utils/authorization";
 import { FollowingActionType as ActionType } from ".";
 import {
+  PayloadAction,
   EntitiesAction,
   FetchDispatch,
-  FetchMethod,
-  PayloadAction
+  FetchMethod
 } from "./types";
 import { Schemas } from "./schemas";
 
@@ -40,38 +40,51 @@ export async function checkFollowedArtist(artistId: string) {
 export interface FollowArtistSuccessAction
   extends PayloadAction<ActionType.FollowArtistSuccess, { artistId: string }> {}
 
+function followArtist(artistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.FollowArtistRequest,
+        ActionType.FollowArtistSuccess,
+        ActionType.FollowArtistFailure
+      ],
+      path: `me/following?type=artist&ids=${artistId}`,
+      method: FetchMethod.Put,
+      data: { artistId }
+    });
+  };
+}
+
 export interface UnfollowArtistSuccessAction
   extends PayloadAction<
     ActionType.UnfollowArtistSuccess,
     { artistId: string }
   > {}
 
+function unfollowArtist(artistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.UnfollowArtistRequest,
+        ActionType.UnfollowArtistSuccess,
+        ActionType.UnfollowArtistFailure
+      ],
+      path: `me/following?type=artist&ids=${artistId}`,
+      method: FetchMethod.Delete,
+      data: { artistId }
+    });
+  };
+}
+
 export function toggleFollowArtist(artistId: string) {
   return (dispatch: FetchDispatch, getState: () => State) => {
     const state = getState();
     const artist = selectArtist(state, artistId);
-    let types, method;
     if (artist.isFollowed) {
-      types = [
-        ActionType.UnfollowArtistRequest,
-        ActionType.UnfollowArtistSuccess,
-        ActionType.UnfollowArtistFailure
-      ];
-      method = FetchMethod.Delete;
+      unfollowArtist(artistId)(dispatch);
     } else {
-      types = [
-        ActionType.FollowArtistRequest,
-        ActionType.FollowArtistSuccess,
-        ActionType.FollowArtistFailure
-      ];
-      method = FetchMethod.Put;
+      followArtist(artistId)(dispatch);
     }
-    dispatch({
-      types,
-      path: `me/following?type=artist&ids=${artistId}`,
-      method,
-      data: { artistId }
-    });
   };
 }
 
@@ -110,37 +123,50 @@ export interface FollowPlaylistSuccessAction
     { playlistId: string }
   > {}
 
+function followPlaylist(playlistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.FollowPlaylistRequest,
+        ActionType.FollowPlaylistSuccess,
+        ActionType.FollowPlaylistFailure
+      ],
+      path: `playlists/${playlistId}/followers`,
+      method: FetchMethod.Put,
+      data: { playlistId }
+    });
+  };
+}
+
 export interface UnfollowPlaylistSuccessAction
   extends PayloadAction<
     ActionType.UnfollowPlaylistSuccess,
     { playlistId: string }
   > {}
 
+function unfollowPlaylist(playlistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.UnfollowPlaylistRequest,
+        ActionType.UnfollowPlaylistSuccess,
+        ActionType.UnfollowPlaylistFailure
+      ],
+      path: `playlists/${playlistId}/followers`,
+      method: FetchMethod.Delete,
+      data: { playlistId }
+    });
+  };
+}
+
 export function toggleFollowPlaylist(playlistId: string) {
   return (dispatch: FetchDispatch, getState: () => State) => {
     const state = getState();
     const playlist = selectPlaylist(state, playlistId);
-    let types, method;
     if (playlist.isFollowed) {
-      types = [
-        ActionType.UnfollowPlaylistRequest,
-        ActionType.UnfollowPlaylistSuccess,
-        ActionType.UnfollowPlaylistFailure
-      ];
-      method = FetchMethod.Delete;
+      unfollowPlaylist(playlistId)(dispatch);
     } else {
-      types = [
-        ActionType.FollowPlaylistRequest,
-        ActionType.FollowPlaylistSuccess,
-        ActionType.FollowPlaylistFailure
-      ];
-      method = FetchMethod.Put;
+      followPlaylist(playlistId)(dispatch);
     }
-    dispatch({
-      types,
-      path: `playlists/${playlistId}/followers`,
-      method,
-      data: { playlistId }
-    });
   };
 }

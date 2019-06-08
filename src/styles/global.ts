@@ -15,7 +15,7 @@ export default createGlobalStyle`
     background: ${theme.background.default}; 
     color: ${theme.foreground.default};
     font-family: "Roboto", sans-serif;
-    font-size: ${theme.fontSize.medium};
+    font-size: ${theme.fontSize.medium}px;
     font-weight: ${theme.fontWeight.normal};
     user-select: none;
   }
@@ -30,7 +30,7 @@ export default createGlobalStyle`
     border: 0;
     color: ${theme.foreground.default};
     font-family: "Roboto", sans-serif;
-    font-size: ${theme.fontSize.medium};
+    font-size: ${theme.fontSize.medium}px;
     font-weight: ${theme.fontWeight.normal};
 
     &:not(:disabled) {

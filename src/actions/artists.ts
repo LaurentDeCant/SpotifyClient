@@ -1,4 +1,5 @@
 import { Dispatch } from "react";
+import { Action } from "redux";
 import { normalize } from "normalizr";
 import { fetchJson } from "../utils/authorization";
 import { ArtistActionType as ActionType } from ".";
@@ -86,8 +87,16 @@ export function getArtistTopTracks(artistId: string) {
   };
 }
 
+interface FullArtistRequestAction
+  extends Action<ActionType.FullArtistRequest> {}
+
+export interface FullArtistSuccessAction
+  extends EntitiesAction<ActionType.FullArtistSuccess> {}
+
 export function getFullArtist(artistId: string) {
-  return (dispatch: Dispatch<any>) => {
+  return (
+    dispatch: Dispatch<FullArtistRequestAction | FullArtistSuccessAction>
+  ) => {
     dispatch({
       type: ActionType.FullArtistRequest
     });

@@ -15,11 +15,11 @@ export interface Theme {
     error: string;
   };
   fontSize: {
-    small: string;
-    medium: string;
-    large: string;
-    extraLarge: string;
-    extraExtraLarge: string;
+    small: number;
+    medium: number;
+    large: number;
+    extraLarge: number;
+    extraExtraLarge: number;
   };
   fontWeight: {
     light: number;
@@ -59,11 +59,11 @@ export const theme: Theme = {
     error: "#e57373"
   },
   fontSize: {
-    small: "12px",
-    medium: "16px",
-    large: "20px",
-    extraLarge: "24px",
-    extraExtraLarge: "32px"
+    small: 12,
+    medium: 16,
+    large: 20,
+    extraLarge: 24,
+    extraExtraLarge: 32
   },
   fontWeight: {
     light: 300,

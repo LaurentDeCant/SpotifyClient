@@ -10,6 +10,10 @@ import {
   PlaylistActionType,
   SearchActionType
 } from "../actions";
+import {
+  SaveAlbumSuccessAction,
+  UnsaveAlbumSuccessAction
+} from "../actions/library";
 import { State as CombinedState } from ".";
 import { AlbumDictionary, ArtistDictionary } from "./types";
 import createReducer from "./createReducer";
@@ -31,7 +35,27 @@ export default createReducer(initialState, {
   [BrowseActionType.NewReleasesSuccess]: mergeAlbums,
   [SearchActionType.SearchSuccess]: mergeAlbums,
   [LibraryActionType.SavedAlbumsSuccess]: mergeAlbums,
-  [LibraryActionType.SavedTracksSuccess]: mergeAlbums
+  [LibraryActionType.SavedTracksSuccess]: mergeAlbums,
+  [LibraryActionType.SaveAlbumSuccess]: (
+    state: State,
+    { payload }: SaveAlbumSuccessAction
+  ) => ({
+    ...state,
+    [payload.albumId]: {
+      ...state[payload.albumId],
+      isSaved: true
+    }
+  }),
+  [LibraryActionType.UnsaveAlbumSuccess]: (
+    state: State,
+    { payload }: UnsaveAlbumSuccessAction
+  ) => ({
+    ...state,
+    [payload.albumId]: {
+      ...state[payload.albumId],
+      isSaved: false
+    }
+  })
 });
 
 export function selectAlbum({ albums }: CombinedState, albumId: string) {

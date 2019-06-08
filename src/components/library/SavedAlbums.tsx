@@ -1,18 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import styled from "../../styles/styled";
 import { Album } from "../../types";
 import { getSavedAlbums } from "../../actions/library";
 import { State } from "../../reducers";
 import { selectSavedAlbums } from "../../reducers/library";
-import { Heading } from "../core";
 import AlbumCovers from "../covers/AlbumCovers";
+import Empty from "../layout/Empty";
 import withLoader from "../withLoader";
-
-const StyledHeading = styled(Heading)`
-  align-self: center;
-  font-size: ${props => props.theme.fontSize.extraExtraLarge};
-`;
 
 interface Props {
   albums: Album[];
@@ -25,7 +19,7 @@ function SavedAlbums({ albums, getSavedAlbums }: Props) {
   return albums.length ? (
     <AlbumCovers albums={albums} />
   ) : (
-    <StyledHeading>No saved albums.</StyledHeading>
+    <Empty>No saved albums</Empty>
   );
 }
 

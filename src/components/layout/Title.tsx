@@ -10,7 +10,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledText = styled(Text)`
-  font-size: ${props => props.theme.fontSize.large};
+  font-size: ${props => props.theme.fontSize.large}px;
   font-weight: ${props => props.theme.fontWeight.bold};
 `;
 

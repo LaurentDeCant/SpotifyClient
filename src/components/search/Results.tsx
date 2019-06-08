@@ -17,6 +17,7 @@ import { Heading } from "../core";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";
 import PlaylistCovers from "../covers/PlaylistCovers";
+import Empty from "../layout/Empty";
 import withLoader from "../withLoader";
 
 const Wrapper = styled.div`
@@ -30,11 +31,6 @@ const Section = styled.section`
   &:last-child {
     margin-bottom: 0;
   }
-`;
-
-const StyledHeading = styled(Heading)`
-  align-self: center;
-  font-size: ${props => props.theme.fontSize.extraExtraLarge};
 `;
 
 interface ArtistsProps {
@@ -115,7 +111,7 @@ function Results({
       <Playlists playlists={playlists} selectPlaylist={selectPlaylist} />
     </Wrapper>
   ) : (
-    <StyledHeading>No Results found.</StyledHeading>
+    <Empty>No Results found</Empty>
   );
 }
 

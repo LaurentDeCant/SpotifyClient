@@ -6,7 +6,7 @@ const List = styled.ul`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  font-size: ${props => props.theme.fontSize.medium};
+  font-size: ${props => props.theme.fontSize.medium}px;
   justify-content: center;
   margin-bottom: 0;
   position: relative;
