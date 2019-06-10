@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
-  flex-shrink: 1;
+  flex-shrink: 0;
   justify-content: center;
   margin: 0 0 ${props => props.theme.thickness.medium}px 0;
 
@@ -18,18 +18,29 @@ const Wrapper = styled.div`
   }
 `;
 
-const length = 300;
 const StyledImage = styled(Image)`
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
-  height: ${length / 2}px;
   margin: 0 ${props => props.theme.thickness.medium}px 0 0;
-  width: ${length / 2}px;
+  max-height: calc(
+    100% -
+      ${props =>
+        props.theme.thickness.extraLarge +
+        props.theme.thickness.large +
+        props.theme.thickness.medium +
+        props.theme.thickness.small}
+  );
+  max-width: calc(100% - 187.5px);
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    max-height: ${props => props.theme.thickness.extraExtraLarge}px;
+    max-width: ${props => props.theme.thickness.extraExtraLarge}px;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
-    height: ${length}px;
-    margin: 0 0 ${props => props.theme.thickness.small}px 0;
-    width: ${length}px;
+    margin: 0 0 ${props => props.theme.thickness.medium}px 0;
+    max-height: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
+    max-width: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
   }
 `;
 
@@ -46,7 +57,7 @@ const Title = styled(Text)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     font-size: ${props => props.theme.fontSize.extraLarge}px;
-    width: ${length}px;
+    max-width: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
   }
 `;
 
@@ -60,7 +71,7 @@ const SubTitle = styled(Text)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     font-size: ${props => props.theme.fontSize.large}px;
-    width: ${length}px;
+    max-width: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
   }
 `;
 

@@ -42,9 +42,13 @@ function Recents({ history, recents, clearRecents }: Props) {
   const covers = getCovers(recents);
   return (
     <Wrapper>
-      {!!recents.length && <Heading>Recent searches</Heading>}
-      <StyledCoverList covers={covers} onClick={handleClick} />
-      {!!recents.length && <ClearButton onClick={clearRecents} />}
+      {!!recents.length && (
+        <>
+          <Heading>Recent searches</Heading>
+          <StyledCoverList covers={covers} onClick={handleClick} />
+          <ClearButton onClick={clearRecents} />
+        </>
+      )}
     </Wrapper>
   );
 }

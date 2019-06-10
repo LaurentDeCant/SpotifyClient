@@ -5,6 +5,7 @@ import styled from "../../styles/styled";
 const List = styled.ul`
   align-items: center;
   display: flex;
+  flex-shrink: 0;
   flex-wrap: wrap;
   font-size: ${props => props.theme.fontSize.medium}px;
   justify-content: center;
