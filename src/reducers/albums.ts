@@ -12,7 +12,8 @@ import {
 import { EntitiesAction } from "../actions/types";
 import {
   SaveAlbumSuccessAction,
-  UnsaveAlbumSuccessAction
+  UnsaveAlbumSuccessAction,
+  CheckSavedAlbumSuccess
 } from "../actions/library";
 import { State as CombinedState } from ".";
 import { AlbumDictionary, ArtistDictionary } from "./types";
@@ -36,6 +37,16 @@ export default createReducer(initialState, {
   [SearchActionType.SearchSuccess]: mergeAlbums,
   [LibraryActionType.SavedAlbumsSuccess]: mergeAlbums,
   [LibraryActionType.SavedTracksSuccess]: mergeAlbums,
+  [LibraryActionType.CheckSavedAlbumSuccess]: (
+    state: State,
+    { payload }: CheckSavedAlbumSuccess
+  ) => ({
+    ...state,
+    [payload.albumId]: {
+      ...state[payload.albumId],
+      isSaved: payload[0]
+    }
+  }),
   [LibraryActionType.SaveAlbumSuccess]: (
     state: State,
     { payload }: SaveAlbumSuccessAction

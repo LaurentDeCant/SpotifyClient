@@ -1,4 +1,4 @@
-import { Artist, Playlist } from "../types";
+import { Artist } from "../types";
 import { State } from "../reducers";
 import { selectArtist } from "../reducers/artists";
 import { selectPlaylist } from "../reducers/playlists";
@@ -106,16 +106,24 @@ export function getFollowedPlaylists() {
   };
 }
 
-export async function checkFollowedPlaylist(
-  playlist: Playlist,
-  userId: string
-) {
-  const array = await fetchJson(
-    `${process.env.REACT_APP_BASE_URL}/playlists/${
-      playlist.id
-    }/followers/contains?ids=${userId}`
-  );
-  return { ...playlist, isFollowed: array[0] };
+export interface CheckFollowedPlaylistSuccessAction
+  extends PayloadAction<
+    ActionType.CheckFollowedPlaylistSuccess,
+    { playlistId: string; [key: number]: boolean }
+  > {}
+
+export function checkFollowedPlaylist(playlistId: string, userId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.CheckFollowedPlaylistRequest,
+        ActionType.CheckFollowedPlaylistSuccess,
+        ActionType.CheckFollowedPlaylistFailure
+      ],
+      path: `playlists/${playlistId}/followers/contains?ids=${userId}`,
+      data: { playlistId }
+    });
+  };
 }
 
 export interface FollowPlaylistSuccessAction

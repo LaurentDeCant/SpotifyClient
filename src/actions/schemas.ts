@@ -20,8 +20,7 @@ const Artists = new schema.Object({
 const Category = new schema.Entity("categories");
 
 const PagedAlbums = new schema.Object({
-  //@ts-ignore
-  items: [{ album: Album }],
+  items: [Album],
   albums: { items: [Album] }
 });
 
@@ -63,6 +62,11 @@ const Results = new schema.Entity(
     })
   }
 );
+
+const SavedAlbums = new schema.Object({
+  //@ts-ignore
+  items: [{ album: Album }]
+});
 
 const Track = new schema.Entity(
   "tracks",
@@ -113,13 +117,14 @@ export const Schemas = {
   Artist,
   Artists,
   Category,
-  Track,
-  Tracks,
   PagedAlbums,
   PagedArtists,
   PagedCategories,
   PagedPlaylists,
   PagedTracks,
   Playlist,
-  Results
+  Results,
+  SavedAlbums,
+  Track,
+  Tracks
 };

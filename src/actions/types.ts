@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { schema } from "normalizr";
-import { Entities } from "../types";
+import { Album, Artist, Category, Playlist, Track } from "../types";
 
 export enum FetchMethod {
   Get = "GET",
@@ -9,12 +9,28 @@ export enum FetchMethod {
   Delete = "DELETE"
 }
 
+export interface Entities {
+  albums: { [id: string]: Album };
+  artists: { [id: string]: Artist };
+  categories: { [id: string]: Category };
+  playlists: { [id: string]: Playlist };
+  tracks: { [id: string]: Track };
+  results: {
+    [id: string]: {
+      albums: Album[];
+      artists: Artist[];
+      playlists: Playlist[];
+    };
+  };
+}
+
 export interface FetchAction<D = {}> {
   types: string[];
   path: string;
   method?: FetchMethod;
   schema?: schema.Entity | schema.Object;
   data?: D;
+  then?: (json: any) => void;
 }
 
 export interface FetchDispatch {

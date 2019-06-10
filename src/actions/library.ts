@@ -1,4 +1,4 @@
-import { Album, Track } from "../types";
+import { Track } from "../types";
 import { State } from "../reducers";
 import { selectAlbum } from "../reducers/albums";
 import { selectTrack } from "../reducers/tracks";
@@ -24,16 +24,29 @@ export function getSavedAlbums() {
         ActionType.SavedAlbumsFailure
       ],
       path: "me/albums",
-      schema: Schemas.PagedAlbums
+      schema: Schemas.SavedAlbums
     });
   };
 }
 
-export async function checkSavedAlbum(album: Album) {
-  const array = await fetchJson(
-    `${process.env.REACT_APP_BASE_URL}/me/albums/contains?ids=${album.id}`
-  );
-  return { ...album, isSaved: array[0] };
+export interface CheckSavedAlbumSuccess
+  extends PayloadAction<
+    ActionType.CheckSavedAlbumSuccess,
+    { albumId: string; [key: number]: boolean }
+  > {}
+
+export function checkSavedAlbum(albumId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.CheckSavedAlbumRequest,
+        ActionType.CheckSavedAlbumSuccess,
+        ActionType.CheckSavedAlbumFailure
+      ],
+      path: `me/albums/contains?ids=${albumId}`,
+      data: { albumId }
+    });
+  };
 }
 
 export interface SaveAlbumSuccessAction

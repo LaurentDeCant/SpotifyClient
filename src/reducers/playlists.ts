@@ -14,7 +14,8 @@ import createReducer from "./createReducer";
 import { selectTracks } from "./tracks";
 import {
   FollowPlaylistSuccessAction,
-  UnfollowPlaylistSuccessAction
+  UnfollowPlaylistSuccessAction,
+  CheckFollowedPlaylistSuccessAction
 } from "../actions/following";
 
 export interface State extends PlaylistDictionary {}
@@ -31,6 +32,16 @@ export default createReducer(initialState, {
   [BrowseActionType.FeaturedPlaylistsSuccess]: mergePlaylists,
   [SearchActionType.SearchSuccess]: mergePlaylists,
   [FollowingActionType.FollowedPlaylistsSuccess]: mergePlaylists,
+  [FollowingActionType.CheckFollowedPlaylistSuccess]: (
+    state: State,
+    { payload }: CheckFollowedPlaylistSuccessAction
+  ) => ({
+    ...state,
+    [payload.playlistId]: {
+      ...state[payload.playlistId],
+      isFollowed: payload[0]
+    }
+  }),
   [FollowingActionType.FollowPlaylistSuccess]: (
     state: State,
     { payload }: FollowPlaylistSuccessAction

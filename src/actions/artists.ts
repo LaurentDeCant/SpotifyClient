@@ -1,11 +1,6 @@
-import { Dispatch } from "react";
-import { Action } from "redux";
-import { normalize } from "normalizr";
-import { fetchJson } from "../utils/authorization";
 import { ArtistActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
-import { checkFollowedArtist } from "./following";
 
 export interface ArtistSuccessAction
   extends EntitiesAction<ActionType.ArtistSuccess> {}
@@ -19,7 +14,8 @@ export function getArtist(artistId: string) {
         ActionType.ArtistFailure
       ],
       path: `artists/${artistId}`,
-      schema: Schemas.Artist
+      schema: Schemas.Artist,
+      then: () => {}
     });
   };
 }
@@ -87,38 +83,11 @@ export function getArtistTopTracks(artistId: string) {
   };
 }
 
-interface FullArtistRequestAction
-  extends Action<ActionType.FullArtistRequest> {}
-
-export interface FullArtistSuccessAction
-  extends EntitiesAction<ActionType.FullArtistSuccess> {}
-
 export function getFullArtist(artistId: string) {
-  return (
-    dispatch: Dispatch<FullArtistRequestAction | FullArtistSuccessAction>
-  ) => {
-    dispatch({
-      type: ActionType.FullArtistRequest
-    });
-    const artistUrl = `${process.env.REACT_APP_BASE_URL}/artists/${artistId}`;
-    Promise.all([
-      fetchJson(artistUrl).then(checkFollowedArtist),
-      fetchJson(`${artistUrl}/albums?country=us`),
-      fetchJson(`${artistUrl}/related-artists?country=us`),
-      fetchJson(`${artistUrl}/top-tracks?country=us`)
-    ]).then(([artist, albums, relatedArtists, topTracks]) => {
-      dispatch({
-        type: ActionType.FullArtistSuccess,
-        payload: normalize(
-          {
-            ...artist,
-            albums: albums.items,
-            relatedArtists: relatedArtists.artists,
-            topTracks: topTracks.tracks
-          },
-          Schemas.Artist
-        ).entities
-      });
-    });
+  return (dispatch: FetchDispatch) => {
+    getArtist(artistId)(dispatch);
+    getArtistAlbums(artistId)(dispatch);
+    getArtistRelatedArtists(artistId)(dispatch);
+    getArtistTopTracks(artistId)(dispatch);
   };
 }

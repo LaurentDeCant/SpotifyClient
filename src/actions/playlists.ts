@@ -1,37 +1,30 @@
-import { Dispatch } from "react";
-import { Action } from "redux";
-import { normalize } from "normalizr";
 import { State } from "../reducers";
 import { selectUserProfile } from "../reducers/userProfile";
-import { fetchJson } from "../utils/authorization";
 import { PlaylistActionType as ActionType } from ".";
-import { EntitiesAction } from "./types";
+import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
 import { checkFollowedPlaylist } from "./following";
-
-interface PlaylistRequestAction extends Action<ActionType.PlaylistRequest> {}
 
 export interface PlaylistSuccessAction
   extends EntitiesAction<ActionType.PlaylistSuccess> {}
 
 export function getPlaylist(playlistId: string) {
-  return (
-    dispatch: Dispatch<PlaylistRequestAction | PlaylistSuccessAction>,
-    getState: () => State
-  ) => {
+  return (dispatch: FetchDispatch, getState: () => State) => {
     dispatch({
-      type: ActionType.PlaylistRequest
+      types: [
+        ActionType.PlaylistRequest,
+        ActionType.PlaylistSuccess,
+        ActionType.PlaylistFailure
+      ],
+      path: `playlists/${playlistId}`,
+      schema: Schemas.Playlist,
+      then: () => {
+        const state = getState();
+        const userProfile = selectUserProfile(state);
+        if (userProfile) {
+          checkFollowedPlaylist(playlistId, userProfile.id)(dispatch);
+        }
+      }
     });
-    const state = getState();
-    const userProfile = selectUserProfile(state);
-    userProfile &&
-      fetchJson(`${process.env.REACT_APP_BASE_URL}/playlists/${playlistId}`)
-        .then(playlist => checkFollowedPlaylist(playlist, userProfile.id))
-        .then(playlist => {
-          dispatch({
-            type: ActionType.PlaylistSuccess,
-            payload: normalize(playlist, Schemas.Playlist).entities
-          });
-        });
   };
 }
