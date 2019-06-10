@@ -44,14 +44,19 @@ const PlayButton = styled(RoundButton).attrs<
   }
 `;
 
-const NoMusicIcon = styled(Icon).attrs(() => ({
-  type: IconType.MusicOff
+const MusicIcon = styled(Icon).attrs(() => ({
+  type: IconType.MusicNote
 }))`
-  color: ${props => props.theme.color.error};
   flex-shrink: 0;
   margin-right: ${props => props.theme.thickness.small}px;
   text-align: center;
   width: ${props => props.theme.thickness.large}px;
+`;
+
+const NoMusicIcon = styled(MusicIcon).attrs(() => ({
+  type: IconType.MusicOff
+}))`
+  color: ${props => props.theme.color.error};
 `;
 
 const Infos = styled.div`
@@ -89,7 +94,7 @@ const FavoriteButton = styled(ToggleButton).attrs(() => ({
 
 interface OwnProps {
   track: Track;
-  onTogglePlay: (trackId: string) => void;
+  onTogglePlay?: (trackId: string) => void;
 }
 
 interface Props extends OwnProps {
@@ -126,7 +131,9 @@ function TrackItem({
   }
 
   function handleClick() {
-    onTogglePlay(track.id);
+    if (onTogglePlay) {
+      onTogglePlay(track.id);
+    }
   }
 
   function handleToggleFavorite() {
@@ -135,14 +142,18 @@ function TrackItem({
 
   return (
     <Wrapper isLoaded={isLoaded}>
-      {isDisabled ? (
-        <NoMusicIcon />
+      {onTogglePlay ? (
+        isDisabled ? (
+          <NoMusicIcon />
+        ) : (
+          <PlayButton
+            isLoaded={isLoaded}
+            isPlaying={isPlaying}
+            onClick={handleClick}
+          />
+        )
       ) : (
-        <PlayButton
-          isLoaded={isLoaded}
-          isPlaying={isPlaying}
-          onClick={handleClick}
-        />
+        <MusicIcon />
       )}
 
       <Infos>

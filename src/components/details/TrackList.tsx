@@ -10,7 +10,7 @@ const StyledList = styled.ul`
 
 interface Props {
   tracks: Track[];
-  onTogglePlay: (trackId: string) => void;
+  onTogglePlay?: (trackId: string) => void;
 }
 
 function TrackList({ tracks, onTogglePlay }: Props) {
@@ -22,9 +22,5 @@ function TrackList({ tracks, onTogglePlay }: Props) {
     </StyledList>
   );
 }
-
-TrackList.defaultProps = {
-  onTogglePlay: () => {}
-};
 
 export default TrackList;

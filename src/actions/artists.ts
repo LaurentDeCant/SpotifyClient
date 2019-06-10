@@ -88,7 +88,9 @@ export function getArtistTopTracks(artistId: string) {
       data: { artistId },
       then: json => {
         const trackIds = json.tracks.map(({ id }: any) => id);
-        checkSavedTracks(trackIds)(dispatch);
+        if (trackIds.length) {
+          checkSavedTracks(trackIds)(dispatch);
+        }
       }
     });
   };

@@ -19,7 +19,9 @@ export function getAlbum(albumId: string) {
       then: json => {
         checkSavedAlbum(albumId)(dispatch);
         const trackIds = json.tracks.items.map(({ id }: any) => id);
-        checkSavedTracks(trackIds)(dispatch);
+        if (trackIds.length) {
+          checkSavedTracks(trackIds)(dispatch);
+        }
       }
     });
   };

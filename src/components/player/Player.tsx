@@ -33,7 +33,7 @@ const LeftWrapper = styled(ThirdWrapper)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     display: block;
-    min-width: 25%;
+    width: 25%;
   }
 `;
 
@@ -45,8 +45,8 @@ const CenterWrapper = styled(ThirdWrapper)`
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
-    margin: 0 ${props => props.theme.thickness.small}px;
-    max-width: 50%;
+    padding: 0 ${props => props.theme.thickness.small}px;
+    width: 50%;
   }
 `;
 
@@ -57,7 +57,7 @@ const RightWrapper = styled(ThirdWrapper)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     display: flex;
-    min-width: 25%;
+    width: 25%;
   }
 `;
 

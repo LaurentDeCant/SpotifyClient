@@ -110,7 +110,9 @@ export function getSavedTracks() {
       schema: Schemas.PagedTracks,
       then: json => {
         const trackIds = json.items.map(({ track }: any) => track.id);
-        checkSavedTracks(trackIds)(dispatch);
+        if (trackIds.length) {
+          checkSavedTracks(trackIds)(dispatch);
+        }
       }
     });
   };

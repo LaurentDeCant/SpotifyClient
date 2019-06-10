@@ -126,23 +126,31 @@ export default createReducer(initialState, {
   [ActionType.Ended]: (state: State): State => {
     const { trackIndex, trackIds } = state;
     return trackIndex === trackIds.length - 1
-      ? { ...state, playerState: PlayerState.Paused }
+      ? state.isLooped
+        ? { ...state, trackIndex: 0, command: Command.Play }
+        : { ...state, playerState: PlayerState.Paused }
       : {
           ...state,
           trackIndex: trackIndex + 1,
           command: Command.Play
         };
   },
-  [ActionType.Next]: (state: State): State => ({
-    ...state,
-    trackIndex: state.trackIndex + 1,
-    command: Command.Play
-  }),
-  [ActionType.Previous]: (state: State): State => ({
-    ...state,
-    trackIndex: state.trackIndex - 1,
-    command: Command.Play
-  }),
+  [ActionType.Next]: (state: State): State => {
+    const { trackIndex, trackIds } = state;
+    return {
+      ...state,
+      trackIndex: trackIndex === trackIds.length - 1 ? 0 : state.trackIndex + 1,
+      command: Command.Play
+    };
+  },
+  [ActionType.Previous]: (state: State): State => {
+    const { trackIndex, trackIds } = state;
+    return {
+      ...state,
+      trackIndex: trackIndex === 0 ? trackIds.length - 1 : state.trackIndex - 1,
+      command: Command.Play
+    };
+  },
   [ActionType.ToggleShuffle]: (state: State): State => ({
     ...state,
     isShuffled: !state.isShuffled
@@ -223,13 +231,13 @@ export function selectCanSeek(state: CombinedState) {
 }
 
 export function selectCanNext(state: CombinedState) {
-  const { trackIds, trackIndex } = state.player;
-  return trackIds.length > 1 && trackIndex < trackIds.length - 1;
+  const { trackIds, trackIndex, isLooped } = state.player;
+  return trackIds.length > 1 && (trackIndex < trackIds.length - 1 || isLooped);
 }
 
 export function selectCanPrevious(state: CombinedState) {
-  const { trackIds, trackIndex } = state.player;
-  return trackIds.length > 1 && trackIndex > 0;
+  const { trackIds, trackIndex, isLooped } = state.player;
+  return trackIds.length > 1 && (trackIndex > 0 || isLooped);
 }
 
 export function selectIsShuffled({ player }: CombinedState) {
