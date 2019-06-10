@@ -1,8 +1,6 @@
-import { Track } from "../types";
 import { State } from "../reducers";
 import { selectAlbum } from "../reducers/albums";
 import { selectTrack } from "../reducers/tracks";
-import { fetchJson } from "../utils/authorization";
 import { LibraryActionType as ActionType } from ".";
 import {
   PayloadAction,
@@ -109,22 +107,33 @@ export function getSavedTracks() {
         ActionType.SavedTracksFailure
       ],
       path: "me/tracks",
-      schema: Schemas.PagedTracks
+      schema: Schemas.PagedTracks,
+      then: json => {
+        const trackIds = json.items.map(({ track }: any) => track.id);
+        checkSavedTracks(trackIds)(dispatch);
+      }
     });
   };
 }
 
-export async function checkSavedTracks(tracks: Track[]) {
-  const trackIds = tracks.map(track => track.id);
-  const array = await fetchJson(
-    `${
-      process.env.REACT_APP_BASE_URL
-    }/me/tracks/contains?ids=${encodeURIComponent(trackIds.join(","))}`
-  );
-  return tracks.map((track, index) => ({
-    ...track,
-    isSaved: array[index]
-  }));
+export interface CheckSavedTrackSuccess
+  extends PayloadAction<
+    ActionType.CheckSavedTracksSuccess,
+    { trackIds: string[]; [key: number]: boolean }
+  > {}
+
+export function checkSavedTracks(trackIds: string[]) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.CheckSavedTracksRequest,
+        ActionType.CheckSavedTracksSuccess,
+        ActionType.CheckSavedTracksFailure
+      ],
+      path: `me/tracks/contains?ids=${encodeURIComponent(trackIds.join(","))}`,
+      data: { trackIds }
+    });
+  };
 }
 
 export interface SaveTrackSuccessAction

@@ -1,7 +1,7 @@
 import { AlbumActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
-import { checkSavedAlbum } from "./library";
+import { checkSavedAlbum, checkSavedTracks } from "./library";
 
 export interface AlbumSuccessAction
   extends EntitiesAction<ActionType.AlbumSuccess> {}
@@ -16,7 +16,11 @@ export function getAlbum(albumId: string) {
       ],
       path: `albums/${albumId}`,
       schema: Schemas.Album,
-      then: () => checkSavedAlbum(albumId)(dispatch)
+      then: json => {
+        checkSavedAlbum(albumId)(dispatch);
+        const trackIds = json.tracks.items.map(({ id }: any) => id);
+        checkSavedTracks(trackIds)(dispatch);
+      }
     });
   };
 }

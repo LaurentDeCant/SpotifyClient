@@ -16,10 +16,7 @@ export enum ArtistActionType {
   ArtistRelatedArtistsFailure = "ARTIST_RELATED_ARTISTS_FAILURE",
   ArtistTopTracksRequest = "ARTIST_TOP_TRACKS_REQUEST",
   ArtistTopTracksSuccess = "ARTIST_TOP_TRACKS_SUCCESS",
-  ArtistTopTracksFailure = "ARTIST_TOP_TRACKS_FAILURE",
-  FullArtistRequest = "FULL_ARTIST_REQUEST",
-  FullArtistSuccess = "FULL_ARTIST_SUCCESS",
-  FullArtistFailure = "FULL_ARTIST_FAILURE"
+  ArtistTopTracksFailure = "ARTIST_TOP_TRACKS_FAILURE"
 }
 
 export enum BrowseActionType {
@@ -44,6 +41,9 @@ export enum FollowingActionType {
   FollowedArtistsRequest = "FOLLOWED_ARTISTS_REQUEST",
   FollowedArtistsSuccess = "FOLLOWED_ARTISTS_SUCCESS",
   FollowedArtistsFailure = "FOLLOWED_ARTISTS_FAILURE",
+  CheckFollowedArtistRequest = "CHECK_FOLLOWED_ARTIST_REQUEST",
+  CheckFollowedArtistSuccess = "CHECK_FOLLOWED_ARTIST_SUCCESS",
+  CheckFollowedArtistFailure = "CHECK_FOLLOWED_ARTIST_FAILURE",
   FollowArtistRequest = "FOLLOW_ARTIST_REQUEST",
   FollowArtistSuccess = "FOLLOW_ARTIST_SUCCESS",
   FollowArtistFailure = "FOLLOW_ARTIST_FAILURE",
@@ -80,6 +80,9 @@ export enum LibraryActionType {
   SavedTracksRequest = "SAVED_TRACKS_REQUEST",
   SavedTracksSuccess = "SAVED_TRACKS_SUCCESS",
   SavedTracksFailure = "SAVED_TRACKS_FAILURE",
+  CheckSavedTracksRequest = "CHECK_SAVED_TRACKS_REQUEST",
+  CheckSavedTracksSuccess = "CHECK_SAVED_TRACKS_SUCCESS",
+  CheckSavedTracksFailure = "CHECK_SAVED_TRACKS_FAILURE",
   SaveTrackRequest = "SAVE_TRACK_REQUEST",
   SaveTrackSuccess = "SAVE_TRACK_SUCCESS",
   SaveTrackFailure = "SAVE_TRACK_FAILURE",

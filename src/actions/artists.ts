@@ -1,6 +1,8 @@
 import { ArtistActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";
+import { checkFollowedArtist } from "./following";
+import { checkSavedTracks } from "./library";
 
 export interface ArtistSuccessAction
   extends EntitiesAction<ActionType.ArtistSuccess> {}
@@ -15,7 +17,12 @@ export function getArtist(artistId: string) {
       ],
       path: `artists/${artistId}`,
       schema: Schemas.Artist,
-      then: () => {}
+      then: () => {
+        getArtistAlbums(artistId)(dispatch);
+        getArtistRelatedArtists(artistId)(dispatch);
+        getArtistTopTracks(artistId)(dispatch);
+        checkFollowedArtist(artistId)(dispatch);
+      }
     });
   };
 }
@@ -78,16 +85,11 @@ export function getArtistTopTracks(artistId: string) {
       ],
       path: `artists/${artistId}/top-tracks?country=us`,
       schema: Schemas.Tracks,
-      data: { artistId }
+      data: { artistId },
+      then: json => {
+        const trackIds = json.tracks.map(({ id }: any) => id);
+        checkSavedTracks(trackIds)(dispatch);
+      }
     });
-  };
-}
-
-export function getFullArtist(artistId: string) {
-  return (dispatch: FetchDispatch) => {
-    getArtist(artistId)(dispatch);
-    getArtistAlbums(artistId)(dispatch);
-    getArtistRelatedArtists(artistId)(dispatch);
-    getArtistTopTracks(artistId)(dispatch);
   };
 }

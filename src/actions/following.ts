@@ -1,8 +1,6 @@
-import { Artist } from "../types";
 import { State } from "../reducers";
 import { selectArtist } from "../reducers/artists";
 import { selectPlaylist } from "../reducers/playlists";
-import { fetchJson } from "../utils/authorization";
 import { FollowingActionType as ActionType } from ".";
 import {
   PayloadAction,
@@ -29,13 +27,24 @@ export function getFollowedArtists() {
   };
 }
 
-export async function checkFollowedArtist(artist: Artist) {
-  const array = await fetchJson(
-    `${process.env.REACT_APP_BASE_URL}/me/following/contains?type=artist&ids=${
-      artist.id
-    }`
-  );
-  return { ...artist, isFollowed: array[0] };
+export interface CheckFollowedArtistSuccessAction
+  extends PayloadAction<
+    ActionType.CheckFollowedArtistSuccess,
+    { artistId: string; [key: number]: boolean }
+  > {}
+
+export function checkFollowedArtist(artistId: string) {
+  return (dispatch: FetchDispatch) => {
+    dispatch({
+      types: [
+        ActionType.CheckFollowedArtistRequest,
+        ActionType.CheckFollowedArtistSuccess,
+        ActionType.CheckFollowedArtistFailure
+      ],
+      path: `me/following/contains?type=artist&ids=${artistId}`,
+      data: { artistId }
+    });
+  };
 }
 
 export interface FollowArtistSuccessAction

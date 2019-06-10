@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
 import { Album, Artist, Track, Type } from "../../types";
 import { getImageSource, getImageShape } from "../../utils";
-import { getFullArtist } from "../../actions/artists";
+import { getArtist } from "../../actions/artists";
 import { loadPlayPause } from "../../actions/player";
 import { toggleFollowArtist } from "../../actions/following";
 import { State } from "../../reducers";
@@ -77,7 +77,7 @@ interface Props extends RouteComponentProps<Params> {
   topTracks: Track[];
   isPlayable: boolean;
   isPlaying: boolean;
-  getFullArtist: (artistId: string) => void;
+  getArtist: (artistId: string) => void;
   loadPlayPause: (
     artistId: string,
     collectionType: Type,
@@ -94,14 +94,14 @@ function ArtistDetails({
   topTracks,
   isPlayable,
   isPlaying,
-  getFullArtist,
+  getArtist,
   loadPlayPause,
   toggleFollowArtist
 }: Props) {
   const { artistId } = match.params;
 
   const effect = () => {
-    getFullArtist(artistId);
+    getArtist(artistId);
   };
   useEffect(effect, [artistId]);
 
@@ -150,7 +150,7 @@ const mapState = (state: State, ownProps: Props) => {
 };
 
 const mapDispatch = {
-  getFullArtist,
+  getArtist,
   loadPlayPause,
   toggleFollowArtist
 };

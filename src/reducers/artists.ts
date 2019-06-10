@@ -24,7 +24,8 @@ import { selectAlbums } from "./albums";
 import { selectTracks } from "./tracks";
 import {
   FollowArtistSuccessAction,
-  UnfollowArtistSuccessAction
+  UnfollowArtistSuccessAction,
+  CheckFollowedArtistSuccessAction
 } from "../actions/following";
 
 export interface State extends ArtistDictionary {}
@@ -33,6 +34,16 @@ const initialState: State = {};
 
 function mergeArtists(state: State, { payload }: EntitiesAction<any>): State {
   return merge({}, state, payload.artists);
+}
+
+function updateArtist(state: State, artistId: string, props: any) {
+  return {
+    ...state,
+    [artistId]: {
+      ...state[artistId],
+      ...props
+    }
+  };
 }
 
 export default createReducer(initialState, {
@@ -79,7 +90,6 @@ export default createReducer(initialState, {
       }
     };
   },
-  [ArtistActionType.FullArtistSuccess]: mergeArtists,
   [AlbumActionType.AlbumSuccess]: mergeArtists,
   [PlaylistActionType.PlaylistSuccess]: mergeArtists,
   [BrowseActionType.NewReleasesSuccess]: mergeArtists,
@@ -87,26 +97,18 @@ export default createReducer(initialState, {
   [LibraryActionType.SavedAlbumsSuccess]: mergeArtists,
   [LibraryActionType.SavedTracksSuccess]: mergeArtists,
   [FollowingActionType.FollowedArtistsSuccess]: mergeArtists,
+  [FollowingActionType.CheckFollowedArtistSuccess]: (
+    state: State,
+    { payload }: CheckFollowedArtistSuccessAction
+  ) => updateArtist(state, payload.artistId, { isFollowed: payload[0] }),
   [FollowingActionType.FollowArtistSuccess]: (
     state: State,
     { payload }: FollowArtistSuccessAction
-  ) => ({
-    ...state,
-    [payload.artistId]: {
-      ...state[payload.artistId],
-      isFollowed: true
-    }
-  }),
+  ) => updateArtist(state, payload.artistId, { isFollowed: true }),
   [FollowingActionType.UnfollowArtistSuccess]: (
     state: State,
     { payload }: UnfollowArtistSuccessAction
-  ) => ({
-    ...state,
-    [payload.artistId]: {
-      ...state[payload.artistId],
-      isFollowed: false
-    }
-  })
+  ) => updateArtist(state, payload.artistId, { isFollowed: false })
 });
 
 export function selectArtist({ artists }: CombinedState, artistId: string) {

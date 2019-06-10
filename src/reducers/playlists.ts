@@ -26,6 +26,16 @@ function mergePlaylists(state: State, { payload }: EntitiesAction<any>): State {
   return merge({}, state, payload.playlists);
 }
 
+function updatePlaylist(state: State, playlistId: string, props: any) {
+  return {
+    ...state,
+    [playlistId]: {
+      ...state[playlistId],
+      ...props
+    }
+  };
+}
+
 export default createReducer(initialState, {
   [PlaylistActionType.PlaylistSuccess]: mergePlaylists,
   [BrowseActionType.CategoryPlaylistsSuccess]: mergePlaylists,
@@ -35,33 +45,15 @@ export default createReducer(initialState, {
   [FollowingActionType.CheckFollowedPlaylistSuccess]: (
     state: State,
     { payload }: CheckFollowedPlaylistSuccessAction
-  ) => ({
-    ...state,
-    [payload.playlistId]: {
-      ...state[payload.playlistId],
-      isFollowed: payload[0]
-    }
-  }),
+  ) => updatePlaylist(state, payload.playlistId, { isFollowed: payload[0] }),
   [FollowingActionType.FollowPlaylistSuccess]: (
     state: State,
     { payload }: FollowPlaylistSuccessAction
-  ) => ({
-    ...state,
-    [payload.playlistId]: {
-      ...state[payload.playlistId],
-      isFollowed: true
-    }
-  }),
+  ) => updatePlaylist(state, payload.playlistId, { isFollowed: true }),
   [FollowingActionType.UnfollowPlaylistSuccess]: (
     state: State,
     { payload }: UnfollowPlaylistSuccessAction
-  ) => ({
-    ...state,
-    [payload.playlistId]: {
-      ...state[payload.playlistId],
-      isFollowed: false
-    }
-  })
+  ) => updatePlaylist(state, payload.playlistId, { isFollowed: false })
 });
 
 export function selectPlaylist(

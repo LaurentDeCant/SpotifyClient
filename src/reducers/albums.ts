@@ -28,9 +28,18 @@ function mergeAlbums(state: State, { payload }: EntitiesAction<any>): State {
   return merge({}, state, payload.albums);
 }
 
+function updateAlbum(state: State, albumId: string, props: any) {
+  return {
+    ...state,
+    [albumId]: {
+      ...state[albumId],
+      ...props
+    }
+  };
+}
+
 export default createReducer(initialState, {
   [AlbumActionType.AlbumSuccess]: mergeAlbums,
-  [ArtistActionType.FullArtistSuccess]: mergeAlbums,
   [PlaylistActionType.PlaylistSuccess]: mergeAlbums,
   [ArtistActionType.ArtistAlbumsSuccess]: mergeAlbums,
   [BrowseActionType.NewReleasesSuccess]: mergeAlbums,
@@ -40,33 +49,15 @@ export default createReducer(initialState, {
   [LibraryActionType.CheckSavedAlbumSuccess]: (
     state: State,
     { payload }: CheckSavedAlbumSuccess
-  ) => ({
-    ...state,
-    [payload.albumId]: {
-      ...state[payload.albumId],
-      isSaved: payload[0]
-    }
-  }),
+  ) => updateAlbum(state, payload.albumId, { isSaved: payload[0] }),
   [LibraryActionType.SaveAlbumSuccess]: (
     state: State,
     { payload }: SaveAlbumSuccessAction
-  ) => ({
-    ...state,
-    [payload.albumId]: {
-      ...state[payload.albumId],
-      isSaved: true
-    }
-  }),
+  ) => updateAlbum(state, payload.albumId, { isSaved: true }),
   [LibraryActionType.UnsaveAlbumSuccess]: (
     state: State,
     { payload }: UnsaveAlbumSuccessAction
-  ) => ({
-    ...state,
-    [payload.albumId]: {
-      ...state[payload.albumId],
-      isSaved: false
-    }
-  })
+  ) => updateAlbum(state, payload.albumId, { isSaved: false })
 });
 
 export function selectAlbum({ albums }: CombinedState, albumId: string) {

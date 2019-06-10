@@ -11,7 +11,8 @@ import {
 import { EntitiesAction } from "../actions/types";
 import {
   SaveTrackSuccessAction,
-  UnsaveTrackSuccessAction
+  UnsaveTrackSuccessAction,
+  CheckSavedTrackSuccess
 } from "../actions/library";
 import { State as CombinedState } from ".";
 import { TrackDictionary } from "./types";
@@ -27,34 +28,40 @@ function mergeTracks(state: State, { payload }: EntitiesAction<any>): State {
   return merge({}, state, payload.tracks);
 }
 
+function updateTrack(state: State, trackId: string, props: any) {
+  return {
+    ...state,
+    [trackId]: {
+      ...state[trackId],
+      ...props
+    }
+  };
+}
+
 export default createReducer(initialState, {
   [AlbumActionType.AlbumSuccess]: mergeTracks,
   [ArtistActionType.ArtistTopTracksSuccess]: mergeTracks,
-  [ArtistActionType.FullArtistSuccess]: mergeTracks,
   [PlaylistActionType.PlaylistSuccess]: mergeTracks,
   [SearchActionType.SearchSuccess]: mergeTracks,
   [LibraryActionType.SavedAlbumsSuccess]: mergeTracks,
   [LibraryActionType.SavedTracksSuccess]: mergeTracks,
+  [LibraryActionType.CheckSavedTracksSuccess]: (
+    state: State,
+    { payload }: CheckSavedTrackSuccess
+  ) =>
+    payload.trackIds.reduce(
+      (previous, current, index) =>
+        updateTrack(previous, current, { isSaved: payload[index] }),
+      state
+    ),
   [LibraryActionType.SaveTrackSuccess]: (
     state: State,
     { payload }: SaveTrackSuccessAction
-  ) => ({
-    ...state,
-    [payload.trackId]: {
-      ...state[payload.trackId],
-      isSaved: true
-    }
-  }),
+  ) => updateTrack(state, payload.trackId, { isSaved: true }),
   [LibraryActionType.UnsaveTrackSuccess]: (
     state: State,
     { payload }: UnsaveTrackSuccessAction
-  ) => ({
-    ...state,
-    [payload.trackId]: {
-      ...state[payload.trackId],
-      isSaved: false
-    }
-  })
+  ) => updateTrack(state, payload.trackId, { isSaved: false })
 });
 
 export function selectTrack({ tracks }: CombinedState, trackId: string) {
