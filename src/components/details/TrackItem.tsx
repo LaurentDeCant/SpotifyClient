@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
-import { Artist, Track } from "../../types";
+import { Album, Artist, Track } from "../../types";
 import { toggleSavedTrack } from "../../actions/library";
 import { State } from "../../reducers";
 import { selectIsLoaded, selectIsPlaying } from "../../reducers/player";
-import { selectTrackArtists } from "../../reducers/tracks";
-import { getArtistNames } from "../../utils";
+import { selectTrackArtists, selectTrackAlbum } from "../../reducers/tracks";
 import { Icon, IconType, RoundButton, Text, ToggleButton } from "../core";
+import ArtistNames from "./ArtistNames";
+import AlbumName from "./AlbumName";
 
 const Wrapper = styled.li<{ isLoaded: boolean }>`
   align-items: center;
@@ -15,8 +16,7 @@ const Wrapper = styled.li<{ isLoaded: boolean }>`
   box-sizing: border-box;
   ${props => props.isLoaded && "color: " + props.theme.color.primary};
   display: flex;
-  margin-bottom: ${props => props.theme.thickness.extraSmall}px;
-  padding: ${props => props.theme.thickness.small}px 0;
+  margin-bottom: ${props => props.theme.thickness.medium}px;
   width: 100%;
 
   &:last-child {
@@ -59,7 +59,7 @@ const NoMusicIcon = styled(MusicIcon).attrs(() => ({
   color: ${props => props.theme.color.error};
 `;
 
-const Infos = styled.div`
+const Names = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -69,15 +69,22 @@ const Infos = styled.div`
   overflow: hidden;
 `;
 
-const Title = styled(Text)`
+const Name = styled(Text)`
   font-weight: ${props => props.theme.fontWeight.normal};
   margin-bottom: ${props => props.theme.thickness.extraSmall}px;
   text-align: left;
 `;
 
-const SubTitle = styled(Text)`
+const Others = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Separator = styled.span.attrs(() => ({
+  children: "-"
+}))`
   color: ${props => props.theme.foreground.dark};
-  text-align: left;
+  margin: 0 ${props => props.theme.thickness.extraSmall}px;
 `;
 
 const Duration = styled.span`
@@ -98,6 +105,7 @@ interface OwnProps {
 }
 
 interface Props extends OwnProps {
+  album?: Album;
   artists: Artist[];
   isDisabled: boolean;
   isLoaded: boolean;
@@ -106,6 +114,7 @@ interface Props extends OwnProps {
 }
 
 function TrackItem({
+  album,
   track,
   artists,
   isDisabled,
@@ -114,10 +123,6 @@ function TrackItem({
   onTogglePlay,
   toggleSavedTrack
 }: Props) {
-  function renderArtist() {
-    return <SubTitle>{getArtistNames(artists)}</SubTitle>;
-  }
-
   function renderDuration() {
     let seconds = track.duration_ms / 1000;
     const minutes = Math.floor(seconds / 60);
@@ -156,10 +161,14 @@ function TrackItem({
         <MusicIcon />
       )}
 
-      <Infos>
-        <Title>{track.name}</Title>
-        {renderArtist()}
-      </Infos>
+      <Names>
+        <Name>{track.name}</Name>
+        <Others>
+          <ArtistNames artists={artists} />
+          <Separator />
+          {album && <AlbumName album={album} />}
+        </Others>
+      </Names>
 
       {renderDuration()}
 
@@ -176,6 +185,7 @@ function isDisabled(track: Track) {
 }
 
 const mapState = (state: State, { track }: OwnProps) => ({
+  album: selectTrackAlbum(state, track.id),
   artists: selectTrackArtists(state, track.id),
   isDisabled: isDisabled(track),
   isLoaded: selectIsLoaded(state)(track.id),

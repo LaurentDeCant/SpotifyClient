@@ -28,9 +28,16 @@ const StyledImage = styled(Image)`
         props.theme.thickness.extraLarge +
         props.theme.thickness.large +
         props.theme.thickness.medium +
-        props.theme.thickness.small}
+        props.theme.thickness.small}px
   );
-  max-width: calc(100% - 187.5px);
+  max-width: calc(
+    100% -
+      ${props =>
+        props.theme.thickness.extraLarge +
+        props.theme.thickness.large +
+        props.theme.thickness.medium +
+        props.theme.thickness.small}px
+  );
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     max-height: ${props => props.theme.thickness.extraExtraLarge}px;
@@ -39,8 +46,8 @@ const StyledImage = styled(Image)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     margin: 0 0 ${props => props.theme.thickness.medium}px 0;
-    max-height: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
-    max-width: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
+    max-height: ${props => props.theme.thickness.extraExtraExtraLarge}px;
+    max-width: ${props => props.theme.thickness.extraExtraExtraLarge}px;
   }
 `;
 
@@ -57,7 +64,7 @@ const Title = styled(Text)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     font-size: ${props => props.theme.fontSize.extraLarge}px;
-    max-width: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
+    max-width: ${props => props.theme.thickness.extraExtraExtraLarge}px;
   }
 `;
 
@@ -71,14 +78,19 @@ const SubTitle = styled(Text)`
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     font-size: ${props => props.theme.fontSize.large}px;
-    max-width: ${props => 2 * props.theme.thickness.extraExtraLarge}px;
+    margin-top: ${props => props.theme.thickness.small}px;
+    max-width: ${props => props.theme.thickness.extraExtraExtraLarge}px;
   }
 `;
 
 const Horizontal = styled.div`
   display: flex;
   flex-orientation: row;
-  margin-top: ${props => props.theme.thickness.medium}px;
+  margin-top: ${props => props.theme.thickness.small}px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
+    margin-top: ${props => props.theme.thickness.medium}px;
+  }
 `;
 
 const FavoriteButton = styled(ToggleButton).attrs(() => ({

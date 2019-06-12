@@ -1,5 +1,5 @@
-import merge from "lodash/merge";
 import { createSelector } from "reselect";
+import merge from "lodash/merge";
 import memoize from "lodash/memoize";
 import {
   AlbumActionType,
@@ -70,12 +70,14 @@ export function selectTrack({ tracks }: CombinedState, trackId: string) {
 
 export function selectTrackAlbum(state: CombinedState, trackId: string) {
   const track = selectTrack(state, trackId);
-  return selectAlbum(state, track.album);
+  if (track) {
+    return selectAlbum(state, track.album);
+  }
 }
 
 export function selectTrackArtists(state: CombinedState, trackId: string) {
   const track = selectTrack(state, trackId);
-  return selectArtists(state)(track.artists);
+  return track ? selectArtists(state)(track.artists) : [];
 }
 
 export const selectTracks = createSelector(

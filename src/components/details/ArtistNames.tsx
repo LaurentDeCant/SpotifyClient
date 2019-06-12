@@ -13,10 +13,10 @@ const List = styled.ul`
 const Item = styled.span`
   color: ${props => props.theme.foreground.dark};
   font-weight: ${props => props.theme.fontWeight.light};
-  margin-right: ${props => props.theme.thickness.extraSmall}px;
 
   :not(:last-child)::after {
     content: ",";
+    margin-right: ${props => props.theme.thickness.extraSmall}px;
   }
 `;
 
@@ -28,7 +28,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-function ArtistList({ artists }: { artists: Artist[] }) {
+function ArtistNames({ artists }: { artists: Artist[] }) {
   return (
     <List>
       {artists.map(artist => (
@@ -42,4 +42,4 @@ function ArtistList({ artists }: { artists: Artist[] }) {
   );
 }
 
-export default ArtistList;
+export default ArtistNames;

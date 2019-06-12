@@ -1,5 +1,6 @@
 import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "../../styles/styled";
 import { Artist, Album, Track } from "../../types";
 import { State } from "../../reducers";
@@ -10,8 +11,7 @@ import {
   selectLoadedAlbum,
   selectLoadedTrack
 } from "../../reducers/player";
-import ArtistList from "./ArtistList";
-import { Link } from "react-router-dom";
+import ArtistNames from "../details/ArtistNames";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -67,7 +67,7 @@ function TrackInfos({
         <>
           <Container>
             <Title>{track.name}</Title>
-            <ArtistList artists={artists} />
+            <ArtistNames artists={artists} />
           </Container>
 
           <FavoriteButton />

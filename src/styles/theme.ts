@@ -39,6 +39,7 @@ export interface Theme {
     large: number;
     extraLarge: number;
     extraExtraLarge: number;
+    extraExtraExtraLarge: number;
   };
 }
 
@@ -82,6 +83,7 @@ export const theme: Theme = {
     medium: 25,
     large: 50,
     extraLarge: 100,
-    extraExtraLarge: 200
+    extraExtraLarge: 200,
+    extraExtraExtraLarge: 400
   }
 };
