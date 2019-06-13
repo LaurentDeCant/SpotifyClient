@@ -111,7 +111,7 @@ function Results({
       <Playlists playlists={playlists} selectPlaylist={selectPlaylist} />
     </Wrapper>
   ) : (
-    <Empty>No Results found</Empty>
+    <Empty>No Results</Empty>
   );
 }
 

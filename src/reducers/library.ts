@@ -36,3 +36,8 @@ export function selectSavedAlbums(state: CombinedState) {
 export function selectSavedTracks(state: CombinedState) {
   return selectTracks(state)(state.library.userTrackIds);
 }
+
+export function selectPlayableTracks(state: CombinedState) {
+  const tracks = selectSavedTracks(state);
+  return tracks ? tracks.filter(track => track.preview_url) : [];
+}

@@ -174,9 +174,9 @@ export default createReducer(initialState, {
 });
 
 export function selectCollection({ player }: CombinedState) {
-  const { collections: recents } = player;
-  if (recents.length) {
-    return recents[0];
+  const { collections } = player;
+  if (collections.length) {
+    return collections[0];
   }
 }
 
@@ -285,15 +285,17 @@ export const selectRecents = createSelector(
     artists: ArtistDictionary,
     playlists: PlaylistDictionary
   ) => {
-    return player.collections.map(collection => {
-      switch (collection.type) {
-        case Type.Album:
-          return albums[collection.id];
-        case Type.Artist:
-          return artists[collection.id];
-        default:
-          return playlists[collection.id];
-      }
-    });
+    return player.collections
+      .filter(collection => collection.id)
+      .map(collection => {
+        switch (collection.type) {
+          case Type.Album:
+            return albums[collection.id];
+          case Type.Artist:
+            return artists[collection.id];
+          default:
+            return playlists[collection.id];
+        }
+      });
   }
 );

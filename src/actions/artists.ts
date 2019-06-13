@@ -41,7 +41,7 @@ export function getArtistAlbums(artistId: string) {
         ActionType.ArtistAlbumsSuccess,
         ActionType.ArtistAlbumsFailure
       ],
-      path: `artists/${artistId}/albums`,
+      path: `artists/${artistId}/albums?country=us`,
       schema: Schemas.PagedAlbums,
       data: { artistId }
     });
@@ -62,7 +62,7 @@ export function getArtistRelatedArtists(artistId: string) {
         ActionType.ArtistRelatedArtistsSuccess,
         ActionType.ArtistRelatedArtistsFailure
       ],
-      path: `artists/${artistId}/related-artists`,
+      path: `artists/${artistId}/related-artists?country=us`,
       schema: Schemas.Artists,
       data: { artistId }
     });

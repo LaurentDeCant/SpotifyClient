@@ -8,12 +8,9 @@ import { Collection } from "../../reducers/types";
 import { selectCollection, selectLoadedTracks } from "../../reducers/player";
 import { Heading } from "../core";
 import TrackList from "../details/TrackList";
+import Empty from "../layout/Empty";
 
-const Wrapper = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100%;
-`;
+const Wrapper = styled.div``;
 
 interface Props {
   collection?: Collection;
@@ -31,18 +28,16 @@ function Queue({ collection, tracks, loadPlayPause }: Props) {
   }
 
   return (
-    <>
+    <Wrapper>
       {tracks && tracks.length ? (
         <>
           <Heading>Queue</Heading>
           <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
         </>
       ) : (
-        <Wrapper>
-          <Heading>No tracks in the queue.</Heading>
-        </Wrapper>
+        <Empty>No tracks</Empty>
       )}
-    </>
+    </Wrapper>
   );
 }
 

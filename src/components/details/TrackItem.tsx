@@ -12,15 +12,18 @@ import AlbumName from "./AlbumName";
 
 const Wrapper = styled.li<{ isLoaded: boolean }>`
   align-items: center;
-  border-radius: 40px;
   box-sizing: border-box;
   ${props => props.isLoaded && "color: " + props.theme.color.primary};
   display: flex;
-  margin-bottom: ${props => props.theme.thickness.medium}px;
+  padding: ${props => props.theme.thickness.small}px;
   width: 100%;
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:hover {
+    background: ${props => props.theme.background.hover};
   }
 `;
 

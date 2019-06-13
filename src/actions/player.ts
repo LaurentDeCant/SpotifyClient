@@ -6,6 +6,7 @@ import { selectIsPlaying, selectIsLoaded } from "../reducers/player";
 import { selectPlayableTracks as selectAlbumTracks } from "../reducers/albums";
 import { selectPlayableTracks as selectArtistTracks } from "../reducers/artists";
 import { selectPlayableTracks as selectPlaylistTracks } from "../reducers/playlists";
+import { selectPlayableTracks as selectLibraryTracks } from "../reducers/library";
 
 export enum ActionType {
   LoadCollection = "LOAD_COLLECTION",
@@ -41,7 +42,8 @@ export interface LoadCollectionAction
 const providers = {
   [Type.Album]: selectAlbumTracks,
   [Type.Artist]: selectArtistTracks,
-  [Type.Playlist]: selectPlaylistTracks
+  [Type.Playlist]: selectPlaylistTracks,
+  [Type.Library]: selectLibraryTracks
 };
 
 function getTrackIds(
