@@ -1,11 +1,9 @@
-import { Album, Artist, Playlist, Track, Type } from "../types";
-
-interface Dictionary<T> {
-  [key: string]: T;
-}
+import { Dictionary } from "lodash";
+import { Album, Artist, Category, Playlist, Track, Type } from "../types";
 
 export interface AlbumDictionary extends Dictionary<Album> {}
 export interface ArtistDictionary extends Dictionary<Artist> {}
+export interface CategoryDictionary extends Dictionary<Category> {}
 export interface PlaylistDictionary extends Dictionary<Playlist> {}
 export interface TrackDictionary extends Dictionary<Track> {}
 

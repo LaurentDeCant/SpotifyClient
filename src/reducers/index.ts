@@ -6,6 +6,7 @@ import browse, { State as BrowseState } from "./browse";
 import following, { State as FollowingState } from "./following";
 import library, { State as LibraryState } from "./library";
 import loading, { State as LoadingState } from "./loading";
+import notifications, { State as NotificationsState } from "./notifications";
 import player, { State as PlayerState } from "./player";
 import playlists, { State as PlaylistsState } from "./playlists";
 import search, { State as SearchState } from "./search";
@@ -20,6 +21,7 @@ export interface State {
   following: FollowingState;
   library: LibraryState;
   loading: LoadingState;
+  notifications: NotificationsState;
   player: PlayerState;
   playlists: PlaylistsState;
   search: SearchState;
@@ -35,6 +37,7 @@ export default combineReducers<State>({
   following,
   library,
   loading,
+  notifications,
   player,
   playlists,
   search,

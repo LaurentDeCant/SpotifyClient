@@ -24,7 +24,7 @@ export interface State extends AlbumDictionary {}
 
 const initialState: State = {};
 
-function mergeAlbums(state: State, { payload }: EntitiesAction<any>): State {
+function mergeAlbums(state: State, { payload }: EntitiesAction) {
   return merge({}, state, payload.albums);
 }
 

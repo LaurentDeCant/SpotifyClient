@@ -67,7 +67,7 @@ export default createReducer(initialState, {
   [ActionType.LoadCollection]: (
     state: State,
     { payload }: LoadCollectionAction
-  ): State => {
+  ) => {
     const { collectionId, collectionType, trackIds, trackId } = payload;
     return {
       ...state,
@@ -85,45 +85,42 @@ export default createReducer(initialState, {
     trackIndex: state.trackIds.indexOf(payload.trackId),
     command: Command.Play
   }),
-  [ActionType.TrackLoaded]: (
-    state: State,
-    { payload }: TrackLoadedAction
-  ): State => ({
+  [ActionType.TrackLoaded]: (state: State, { payload }: TrackLoadedAction) => ({
     ...state,
     duration: payload
   }),
-  [ActionType.Playing]: (state: State): State => ({
+  [ActionType.Playing]: (state: State) => ({
     ...state,
     playerState: PlayerState.Playing,
     command: Command.None
   }),
-  [ActionType.Update]: (state: State, { payload }: UpdateAction): State => ({
+  [ActionType.Update]: (state: State, { payload }: UpdateAction) => ({
     ...state,
     currentTime: payload,
     command: Command.None
   }),
-  [ActionType.Play]: (state: State): State => ({
+  [ActionType.Play]: (state: State) => ({
     ...state,
     command: Command.Play
   }),
-  [ActionType.Pause]: (state: State): State => ({
+  [ActionType.Pause]: (state: State) => ({
     ...state,
     command: Command.Pause
   }),
-  [ActionType.Paused]: (state: State): State => ({
+  [ActionType.Paused]: (state: State) => ({
     ...state,
     playerState: PlayerState.Paused,
     command: Command.None
   }),
-  [ActionType.Seek]: (state: State, { payload }: SeekAction): State => ({
+  [ActionType.Seek]: (state: State, { payload }: SeekAction) => ({
     ...state,
     currentTime: payload,
     command: Command.Seek
   }),
-  [ActionType.Seeked]: (state: State): State => ({
+  [ActionType.Seeked]: (state: State) => ({
     ...state
   }),
-  [ActionType.Ended]: (state: State): State => {
+  [ActionType.Ended]: (state: State) => {
     const { trackIndex, trackIds } = state;
     return trackIndex === trackIds.length - 1
       ? state.isLooped
@@ -135,7 +132,7 @@ export default createReducer(initialState, {
           command: Command.Play
         };
   },
-  [ActionType.Next]: (state: State): State => {
+  [ActionType.Next]: (state: State) => {
     const { trackIndex, trackIds } = state;
     return {
       ...state,
@@ -143,7 +140,7 @@ export default createReducer(initialState, {
       command: Command.Play
     };
   },
-  [ActionType.Previous]: (state: State): State => {
+  [ActionType.Previous]: (state: State) => {
     const { trackIndex, trackIds } = state;
     return {
       ...state,
@@ -151,23 +148,23 @@ export default createReducer(initialState, {
       command: Command.Play
     };
   },
-  [ActionType.ToggleShuffle]: (state: State): State => ({
+  [ActionType.ToggleShuffle]: (state: State) => ({
     ...state,
     isShuffled: !state.isShuffled
   }),
-  [ActionType.ToggleLoop]: (state: State): State => ({
+  [ActionType.ToggleLoop]: (state: State) => ({
     ...state,
     isLooped: !state.isLooped
   }),
   [ActionType.ChangeVolume]: (
     state: State,
     { payload }: ChangeVolumeAction
-  ): State => ({
+  ) => ({
     ...state,
     ...payload,
     command: Command.ChangeVolume
   }),
-  [ActionType.VolumeChanged]: (state: State): State => ({
+  [ActionType.VolumeChanged]: (state: State) => ({
     ...state,
     command: Command.None
   })

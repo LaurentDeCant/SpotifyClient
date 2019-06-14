@@ -22,7 +22,7 @@ export interface State extends PlaylistDictionary {}
 
 const initialState: State = {};
 
-function mergePlaylists(state: State, { payload }: EntitiesAction<any>): State {
+function mergePlaylists(state: State, { payload }: EntitiesAction) {
   return merge({}, state, payload.playlists);
 }
 

@@ -32,7 +32,7 @@ export interface State extends ArtistDictionary {}
 
 const initialState: State = {};
 
-function mergeArtists(state: State, { payload }: EntitiesAction<any>): State {
+function mergeArtists(state: State, { payload }: EntitiesAction) {
   return merge({}, state, payload.artists);
 }
 

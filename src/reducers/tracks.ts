@@ -24,7 +24,7 @@ export interface State extends TrackDictionary {}
 
 const initialState: State = {};
 
-function mergeTracks(state: State, { payload }: EntitiesAction<any>): State {
+function mergeTracks(state: State, { payload }: EntitiesAction) {
   return merge({}, state, payload.tracks);
 }
 

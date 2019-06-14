@@ -16,7 +16,7 @@ export function getAlbum(albumId: string) {
       ],
       path: `albums/${albumId}`,
       schema: Schemas.Album,
-      then: json => {
+      success: json => {
         checkSavedAlbum(albumId)(dispatch);
         const trackIds = json.tracks.items.map(({ id }: any) => id);
         if (trackIds.length) {

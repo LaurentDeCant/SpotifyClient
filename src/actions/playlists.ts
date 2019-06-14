@@ -19,7 +19,7 @@ export function getPlaylist(playlistId: string) {
       ],
       path: `playlists/${playlistId}`,
       schema: Schemas.Playlist,
-      then: json => {
+      success: json => {
         const state = getState();
         const userProfile = selectUserProfile(state);
         if (userProfile) {

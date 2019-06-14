@@ -19,14 +19,14 @@ const initialState: State = {
   count: 0
 };
 
-function increment(state: State): State {
+function increment(state: State) {
   return {
     ...state,
     count: state.count + 1
   };
 }
 
-function decrement(state: State): State {
+function decrement(state: State) {
   return {
     ...state,
     count: state.count - 1

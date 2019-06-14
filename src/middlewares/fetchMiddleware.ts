@@ -3,7 +3,7 @@ import { normalize } from "normalizr";
 import { authorizedFetch } from "../utils/authorization";
 
 export default () => (next: Dispatch) => (action: any) => {
-  const { types, path, method, schema, data, then } = action;
+  const { types, path, method, schema, data, success } = action;
 
   if (types) {
     const [requestType, successType, failureType] = types;
@@ -28,8 +28,8 @@ export default () => (next: Dispatch) => (action: any) => {
       } else {
         next({ type: failureType, payload: json.error });
       }
-      if (then) {
-        then(json);
+      if (success) {
+        success(json);
       }
     });
   } else {

@@ -1,6 +1,12 @@
 import { Action } from "redux";
 import { schema } from "normalizr";
-import { Album, Artist, Category, Playlist, Track } from "../types";
+import {
+  AlbumDictionary,
+  ArtistDictionary,
+  CategoryDictionary,
+  PlaylistDictionary,
+  TrackDictionary
+} from "../reducers/types";
 
 export enum FetchMethod {
   Get = "GET",
@@ -10,36 +16,36 @@ export enum FetchMethod {
 }
 
 export interface Entities {
-  albums: { [id: string]: Album };
-  artists: { [id: string]: Artist };
-  categories: { [id: string]: Category };
-  playlists: { [id: string]: Playlist };
-  tracks: { [id: string]: Track };
+  albums: AlbumDictionary;
+  artists: ArtistDictionary;
+  categories: CategoryDictionary;
+  playlists: PlaylistDictionary;
+  tracks: TrackDictionary;
   results: {
-    [id: string]: {
-      albums: Album[];
-      artists: Artist[];
-      playlists: Playlist[];
+    [key: string]: {
+      albums: string[];
+      artists: string[];
+      playlists: string[];
     };
   };
 }
 
-export interface FetchAction<D = {}> {
+export interface FetchAction<D = any> {
   types: string[];
   path: string;
   method?: FetchMethod;
   schema?: schema.Entity | schema.Object;
   data?: D;
-  then?: (json: any) => void;
+  success?: (json: any) => void;
 }
 
 export interface FetchDispatch {
   (action: FetchAction): void;
 }
 
-export interface PayloadAction<T, P> extends Action<T> {
+export interface PayloadAction<T = any, P = any> extends Action<T> {
   payload: P;
 }
 
-export interface EntitiesAction<T, D = {}>
+export interface EntitiesAction<T = any, D = any>
   extends PayloadAction<T, Entities & D> {}
