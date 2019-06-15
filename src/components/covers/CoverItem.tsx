@@ -8,7 +8,7 @@ import { Cover } from "./types";
 const StyledButton = styled(ButtonBase)<{ shape: ImageShape }>`
   background: ${props => props.theme.background.light};
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
-  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.theme.shadow.middle};
   display: flex;
   margin-bottom: ${props => props.theme.thickness.small}px;
   padding-top: 100%;

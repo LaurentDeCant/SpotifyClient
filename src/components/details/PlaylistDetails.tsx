@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Playlist, Track, Type } from "../../types";
@@ -48,18 +48,18 @@ function PlaylistDetails({
 }: Props) {
   const { playlistId } = match.params;
 
-  const effect = () => {
-    getPlaylist(playlistId);
-  };
-  useEffect(effect, []);
+  useEffect(() => getPlaylist(playlistId), [getPlaylist, playlistId]);
 
-  function handleTogglePlay(trackId?: string) {
-    loadPlayPause(playlistId, Type.Playlist, trackId);
-  }
+  const handleTogglePlay = useCallback(
+    (trackId?: string) => {
+      loadPlayPause(playlistId, Type.Playlist, trackId);
+    },
+    [loadPlayPause, playlistId]
+  );
 
-  function handleToggleFavorite() {
+  const handleToggleFavorite = useCallback(() => {
     toggleFollowPlaylist(playlistId);
-  }
+  }, [toggleFollowPlaylist, playlistId]);
 
   return playlist ? (
     <Wrapper>

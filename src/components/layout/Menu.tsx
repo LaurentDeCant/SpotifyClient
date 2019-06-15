@@ -7,7 +7,7 @@ import RecentList from "./RecentList";
 
 const Wrapper = styled.div`
   background: ${props => props.theme.background.dark};
-  box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.theme.shadow.middle};
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,6 @@ const Wrapper = styled.div`
   z-index: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
-    box-shadow: 2px 0 4px 2px rgba(0, 0, 0, 0.2);
     padding: ${props => props.theme.thickness.medium}px 0;
     width: ${props => props.theme.thickness.extraExtraLarge}px;
   }

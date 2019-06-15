@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 `;
 
 const StyedImage = styled(Image)`
-  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.theme.shadow.middle};
   height: 75px;
   margin-right: ${props => props.theme.thickness.small}px;
   width: 75px;

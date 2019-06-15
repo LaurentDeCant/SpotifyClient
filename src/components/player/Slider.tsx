@@ -41,7 +41,7 @@ const Thumb = styled.div.attrs<{ position: number }>(({ position }) => ({
   &::before {
     background: ${props => props.theme.foreground.default};
     border-radius: 50%;
-    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: ${props => props.theme.shadow.middle};
     content: "";
     height: 50%;
     left: 25%;

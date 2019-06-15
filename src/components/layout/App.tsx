@@ -3,8 +3,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import styled from "../../styles/styled";
 import Header from "./Header";
 import Menu from "./Menu";
-import Player from "../player/Player";
 import Routes from "./Routes";
+import NotificationList from "./NotificationList";
+import Player from "../player/Player";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,7 +20,11 @@ const StyledHeader = styled(Header)`
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100% - 150px);
+  height: calc(
+    100% -
+      ${props =>
+        props.theme.thickness.extraLarge + props.theme.thickness.large}px
+  );
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     flex-direction: row;
@@ -35,6 +40,12 @@ const StyledRoutes = styled(Routes)`
   flex-shrink: 1;
 `;
 
+const StyledNotificationList = styled(NotificationList)`
+  height: 100%;
+  position: fixed;
+  right: 0;
+`;
+
 function App() {
   return (
     <Router>
@@ -44,6 +55,7 @@ function App() {
         <Body>
           <StyledMenu />
           <StyledRoutes />
+          <StyledNotificationList />
         </Body>
 
         <Player />

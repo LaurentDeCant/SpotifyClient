@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Album, Artist, Track, Type } from "../../types";
@@ -51,18 +51,20 @@ function AlbumDetails({
 }: Props) {
   const { albumId } = match.params;
 
-  const effect = () => {
+  useEffect(() => {
     getAlbum(albumId);
-  };
-  useEffect(effect, []);
+  }, [getAlbum, albumId]);
 
-  function handleTogglePlay(trackId?: string) {
-    loadPlayPause(albumId, Type.Album, trackId);
-  }
+  const handleTogglePlay = useCallback(
+    (trackId?: string) => {
+      loadPlayPause(albumId, Type.Album, trackId);
+    },
+    [loadPlayPause, albumId]
+  );
 
-  function handleToggleFavorite() {
+  const handleToggleFavorite = useCallback(() => {
     toggleSavedAlbum(albumId);
-  }
+  }, [toggleSavedAlbum, albumId]);
 
   return album ? (
     <Collection>

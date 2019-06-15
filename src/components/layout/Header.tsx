@@ -13,7 +13,7 @@ const Wrapper = styled.header`
   align-items: center;
   display: flex;
   background: ${props => props.theme.color.primary};
-  box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.theme.shadow.middle};
   flex-shrink: 0;
   height: ${props => props.theme.thickness.large}px;
   justify-content: space-between;

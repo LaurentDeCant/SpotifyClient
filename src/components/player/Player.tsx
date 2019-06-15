@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   align-items: center;
   background: ${props => props.theme.background.light};
   box-sizing: border-box;
-  box-shadow: 0 -2px 4px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.theme.shadow.middle};
   display: flex;
   height: ${props => props.theme.thickness.extraLarge}px;
   padding: ${props => props.theme.thickness.small}px;

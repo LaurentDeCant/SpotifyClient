@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
@@ -100,18 +100,18 @@ function ArtistDetails({
 }: Props) {
   const { artistId } = match.params;
 
-  const effect = () => {
-    getArtist(artistId);
-  };
-  useEffect(effect, [artistId]);
+  useEffect(() => getArtist(artistId), [getArtist, artistId]);
 
-  function handleTogglePlay(trackId?: string) {
-    loadPlayPause(artistId, Type.Artist, trackId);
-  }
+  const handleTogglePlay = useCallback(
+    (trackId?: string) => {
+      loadPlayPause(artistId, Type.Artist, trackId);
+    },
+    [loadPlayPause, artistId]
+  );
 
-  function handleToggleFavorite() {
+  const handleToggleFavorite = useCallback(() => {
     toggleFollowArtist(artistId);
-  }
+  }, [toggleFollowArtist, artistId]);
 
   return artist ? (
     <>

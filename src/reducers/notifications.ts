@@ -1,5 +1,10 @@
 import { v4 } from "uuid";
 import { FollowingActionType, LibraryActionType } from "../actions";
+import {
+  ActionType as NotificationActionType,
+  DeleteNotificationAction
+} from "../actions/notifications";
+import { State as CombinedState } from "../reducers";
 import createReducer from "./createReducer";
 
 export interface Notification {
@@ -12,7 +17,7 @@ export interface State extends Array<Notification> {}
 const initialState: State = [];
 
 function addNotification(state: State, message: string) {
-  return [...state, { id: v4(), message }];
+  return [{ id: v4(), message }, ...state];
 }
 
 export default createReducer(initialState, {
@@ -31,5 +36,15 @@ export default createReducer(initialState, {
   [LibraryActionType.SaveTrackSuccess]: (state: State) =>
     addNotification(state, "Track saved"),
   [LibraryActionType.UnsaveTrackSuccess]: (state: State) =>
-    addNotification(state, "Track unsaved")
+    addNotification(state, "Track unsaved"),
+  [NotificationActionType.DeleteNotification]: (
+    state: State,
+    { payload }: DeleteNotificationAction
+  ) => [
+    ...state.filter(notification => notification.id !== payload.notificationId)
+  ]
 });
+
+export function selectNotifications({ notifications }: CombinedState) {
+  return notifications;
+}

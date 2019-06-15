@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledImage = styled(Image)`
-  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.theme.shadow.middle};
   flex-shrink: 0;
   margin: 0 ${props => props.theme.thickness.medium}px 0 0;
   max-height: calc(
@@ -86,11 +86,7 @@ const SubTitle = styled(Text)`
 const Horizontal = styled.div`
   display: flex;
   flex-orientation: row;
-  margin-top: ${props => props.theme.thickness.small}px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
-    margin-top: ${props => props.theme.thickness.medium}px;
-  }
+  margin-top: ${props => props.theme.thickness.medium}px;
 `;
 
 const FavoriteButton = styled(ToggleButton).attrs(() => ({

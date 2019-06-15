@@ -31,6 +31,11 @@ export interface Theme {
     dark: string;
     darker: string;
   };
+  shadow: {
+    low: string;
+    middle: string;
+    high: string;
+  };
   thickness: {
     extraExtraSmall: number;
     extraSmall: number;
@@ -75,6 +80,11 @@ export const theme: Theme = {
     default: "#ffffff",
     dark: "rgba(255, 255, 255, 0.6)",
     darker: "rgba(255, 255, 255, 0.3)"
+  },
+  shadow: {
+    low: "0 0 2px 1px rgba(0, 0, 0, 0.1)",
+    middle: "0 0 4px 2px rgba(0, 0, 0, 0.2)",
+    high: "0 0 8px 4px rgba(0, 0, 0, 0.4)"
   },
   thickness: {
     extraExtraSmall: 3.125,
