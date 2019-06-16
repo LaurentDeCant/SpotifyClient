@@ -23,7 +23,7 @@ const Wrapper = styled.li<{ isLoaded: boolean }>`
   }
 
   &:hover {
-    background: ${props => props.theme.background.hover};
+    background: ${props => props.theme.onBackground.hover};
   }
 `;
 
@@ -86,12 +86,12 @@ const Others = styled.div`
 const Separator = styled.span.attrs(() => ({
   children: "-"
 }))`
-  color: ${props => props.theme.foreground.secondary};
+  color: ${props => props.theme.onBackground.secondary};
   margin: 0 ${props => props.theme.thickness.extraSmall}px;
 `;
 
 const Duration = styled.span`
-  color: ${props => props.theme.foreground.secondary};
+  color: ${props => props.theme.onBackground.secondary};
   flex-shrink: 0;
   margin-right: ${props => props.theme.thickness.small}px;
 `;

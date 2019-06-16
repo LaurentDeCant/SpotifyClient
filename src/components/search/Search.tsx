@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
@@ -9,11 +9,11 @@ import Recents from "./Recents";
 import Results from "./Results";
 
 const StyledInput = styled.input`
-  background: ${props => props.theme.background.active};
+  background: ${props => props.theme.onBackground.active};
   border: none;
   border-radius: ${props => props.theme.thickness.medium}px;
   caret-color: ${props => props.theme.color.primary};
-  color: ${props => props.theme.foreground.primary};
+  color: ${props => props.theme.onBackground.primary};
   flex-shrink: 0;
   font-size: ${props => props.theme.fontSize.extraLarge}px;
   font-weight: ${props => props.theme.fontWeight.light};
@@ -35,22 +35,24 @@ interface Props extends RouteComponentProps<Params> {
   search: (query: string) => void;
 }
 
-let debounced: (query: string) => void;
-
 function Search({ history, match, search }: Props) {
   const { query } = match.params;
   const [value, setValue] = useState(query || "");
 
   const effect = () => {
-    debounced = _.debounce((query: string) => {
-      history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
-      search(query);
-    }, 500);
     if (value) {
       search(value);
     }
   };
   useEffect(effect, []);
+
+  const debounced = useCallback(
+    _.debounce((query: string) => {
+      history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
+      search(query);
+    }, 500),
+    []
+  );
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;

@@ -30,7 +30,21 @@ const ThemeButton = styled(RoundButton).attrs<
 >(({ mode }) => ({
   iconType:
     mode === ThemeMode.Dark ? IconType.Brightness4 : IconType.Brightness5
-}))<ThemeButtonProps>``;
+}))<ThemeButtonProps>`
+  color: ${props => props.theme.onPrimary.primary};
+
+  &:not(:disabled):hover {
+    color: ${props => props.theme.onPrimary.primary};
+  }
+
+  &::before {
+    background: ${props => props.theme.onPrimary.hover};
+  }
+
+  &::after {
+    background: ${props => props.theme.onPrimary.active};
+  }
+`;
 
 function Root() {
   const [themeMode, setThemeMode] = useState(ThemeMode.Dark);

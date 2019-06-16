@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const ProgressTime = styled.div`
-  color: ${props => props.theme.foreground.secondary};
+  color: ${props => props.theme.onBackground.secondary};
   font-size: ${props => props.theme.fontSize.small}px;
   font-weight: ${props => props.theme.fontWeight.light};
 `;

@@ -36,19 +36,19 @@ const List = styled.ul`
 const StyledNavLink = styled(NavLink)`
   ${click}
   align-items: center;
-  color: ${props => props.theme.foreground.secondary};
+  color: ${props => props.theme.onBackground.secondary};
   display: flex;
   height: ${props => props.theme.thickness.large}px;
   padding: 0 ${props => props.theme.thickness.medium}px;
 
   &:hover {
-    color: ${props => props.theme.foreground.primary};
+    color: ${props => props.theme.onBackground.primary};
   }
 
   &.active {
     border-bottom: ${props => props.theme.thickness.extraExtraSmall}px solid
       ${props => props.theme.color.primary};
-    color: ${props => props.theme.foreground.primary};
+    color: ${props => props.theme.onBackground.primary};
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {

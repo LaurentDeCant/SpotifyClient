@@ -27,8 +27,9 @@ function CategoryPlaylists({
   getCategory,
   getPlaylists
 }: Props) {
+  const { categoryId } = match.params;
+
   const effect = () => {
-    const { categoryId } = match.params;
     if (!category) {
       getCategory(categoryId);
     }

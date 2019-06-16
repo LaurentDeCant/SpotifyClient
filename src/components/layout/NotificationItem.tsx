@@ -71,16 +71,19 @@ const Wrapper = styled.li<{ isExiting: boolean }>`
 const DoneIcon = styled(Icon).attrs(() => ({
   type: IconType.Done
 }))`
+  color: ${props => props.theme.onPrimary.primary};
   margin-right: ${props => props.theme.thickness.small}px;
 `;
 
 const Text = styled.span`
+  color: ${props => props.theme.onPrimary.primary};
   flex-grow: 1;
 `;
 
 const ClearButton = styled(RoundButton).attrs(() => ({
   iconType: IconType.Clear
 }))`
+  color: ${props => props.theme.onPrimary.primary};
   justify-self: flex-end;
 `;
 
@@ -94,14 +97,11 @@ function NotificationItem({ notification, deleteNotification }: Props) {
 
   useEffect(() => {
     setTimeout(() => {
-      setIsExiting(true);
-      setTimeout(() => {
-        deleteNotification(notification.id);
-      }, 400);
+      exit();
     }, 4000);
   });
 
-  function handleClick() {
+  function exit() {
     setIsExiting(true);
     setTimeout(() => {
       deleteNotification(notification.id);
@@ -112,7 +112,7 @@ function NotificationItem({ notification, deleteNotification }: Props) {
     <Wrapper isExiting={isExiting}>
       <DoneIcon />
       <Text>{notification.message}</Text>
-      <ClearButton onClick={handleClick} />
+      <ClearButton onClick={exit} />
     </Wrapper>
   );
 }

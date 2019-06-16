@@ -39,7 +39,7 @@ const Thumb = styled.div.attrs<{ position: number }>(({ position }) => ({
   transition: left 0.2s;
 
   &::before {
-    background: ${props => props.theme.foreground.primary};
+    background: ${props => props.theme.onBackground.primary};
     border-radius: 50%;
     box-shadow: ${props => props.theme.shadow.middle};
     content: "";
@@ -58,7 +58,7 @@ const Thumb = styled.div.attrs<{ position: number }>(({ position }) => ({
 const Right = styled.div.attrs<{ width: number }>(props => ({
   style: { width: `${100 - props.width * 100}%` }
 }))<{ width: number }>`
-  background: ${props => props.theme.foreground.secondary};
+  background: ${props => props.theme.onBackground.secondary};
   border-radius: 0 ${props => props.theme.thickness.extraExtraSmall}px
     ${props => props.theme.thickness.extraExtraSmall}px 0;
   height: ${props => props.theme.thickness.extraExtraSmall}px;

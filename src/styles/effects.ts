@@ -1,9 +1,12 @@
-const click = (props: any) => `
+import { Theme } from "./theme";
+
+const click = ({ theme }: { theme: Theme }) => `
+  color: ${theme.onBackground.secondary};
   overflow: hidden;
   position relative;
   
   &:not(:disabled):hover {
-    color: ${props.theme.foreground.primary};
+    color: ${theme.onBackground.primary};
   }
 
   &::before, &::after {
@@ -19,11 +22,11 @@ const click = (props: any) => `
   }
 
   &::before {
-    background: ${props.theme.background.hover};
+    background: ${theme.onBackground.hover};
   }
 
   &::after {
-    background: ${props.theme.background.active};
+    background: ${theme.onBackground.active};
   }
 
   &:not(:disabled):hover::before,

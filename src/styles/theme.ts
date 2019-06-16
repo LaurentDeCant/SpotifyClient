@@ -8,8 +8,6 @@ export interface Theme {
     primary: string;
     secondary: string;
     tertiary: string;
-    hover: string;
-    active: string;
   };
   breakpoint: {
     extraSmall: number;
@@ -31,10 +29,19 @@ export interface Theme {
     normal: number;
     bold: number;
   };
-  foreground: {
+  onBackground: {
     primary: string;
     secondary: string;
     tertiary: string;
+    hover: string;
+    active: string;
+  };
+  onPrimary: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+    hover: string;
+    active: string;
   };
   shadow: {
     low: string;
@@ -73,6 +80,13 @@ const theme = {
     normal: 400,
     bold: 500
   },
+  onPrimary: {
+    primary: "rgba(255, 255, 255, 1)",
+    secondary: "rgba(255, 255, 255, 0.70)",
+    tertiary: "rgba(255, 255, 255, 0.50)",
+    hover: "rgba(255, 255, 255, 0.08)",
+    active: "rgba(255, 255, 255, 0.16)"
+  },
   shadow: {
     low: "0 1px 2px rgba(0, 0, 0, .5)",
     middle: "0 2px 4px rgba(0, 0, 0, .5)",
@@ -95,18 +109,18 @@ export const darkTheme: Theme = {
   background: {
     primary: "#000000",
     secondary: "#212121",
-    tertiary: "#303030",
-    hover: "rgba(255, 255, 255, 0.08)",
-    active: "rgba(255, 255, 255, 0.16)"
+    tertiary: "#303030"
   },
   color: {
     ...theme.color,
     error: "#e57373"
   },
-  foreground: {
+  onBackground: {
     primary: "rgba(255, 255, 255, 1)",
     secondary: "rgba(255, 255, 255, 0.70)",
-    tertiary: "rgba(255, 255, 255, 0.50)"
+    tertiary: "rgba(255, 255, 255, 0.50)",
+    hover: "rgba(255, 255, 255, 0.08)",
+    active: "rgba(255, 255, 255, 0.16)"
   }
 };
 
@@ -115,17 +129,17 @@ export const lightTheme: Theme = {
   background: {
     primary: "#fafafa",
     secondary: "#f5f5f5",
-    tertiary: "#e0e0e0",
-    hover: "rgba(0, 0, 0, 0.04)",
-    active: "rgba(0, 0, 0, 0.08)"
+    tertiary: "#e0e0e0"
   },
   color: {
     ...theme.color,
     error: "#d32f2f"
   },
-  foreground: {
+  onBackground: {
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.54)",
-    tertiary: "rgba(0, 0, 0, 0.38)"
+    tertiary: "rgba(0, 0, 0, 0.38)",
+    hover: "rgba(0, 0, 0, 0.04)",
+    active: "rgba(0, 0, 0, 0.08)"
   }
 };

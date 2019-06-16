@@ -9,13 +9,15 @@ const StyledLink = styled(Link)`
   height: 100%;
 `;
 
-const StyledText = styled(Text)`
-  font-size: ${props => props.theme.fontSize.large}px;
-  font-weight: ${props => props.theme.fontWeight.bold};
+const StyledIcon = styled(Icon)`
+  color: ${props => props.theme.onPrimary.primary};
+  margin-right: ${props => props.theme.thickness.small}px;
 `;
 
-const StyledIcon = styled(Icon)`
-  margin-right: ${props => props.theme.thickness.small}px;
+const StyledText = styled(Text)`
+  color: ${props => props.theme.onPrimary.primary};
+  font-size: ${props => props.theme.fontSize.large}px;
+  font-weight: ${props => props.theme.fontWeight.bold};
 `;
 
 const Brand = () => {

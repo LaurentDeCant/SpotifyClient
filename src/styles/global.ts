@@ -13,7 +13,7 @@ export default createGlobalStyle<{ theme: Theme }>`
 
   body {
     background: ${props => props.theme.background.secondary};
-    color: ${props => props.theme.foreground.primary};
+    color: ${props => props.theme.onBackground.primary};
     font-family: "Roboto", sans-serif;
     font-size: ${props => props.theme.fontSize.medium}px;
     font-weight: ${props => props.theme.fontWeight.normal};
@@ -21,14 +21,13 @@ export default createGlobalStyle<{ theme: Theme }>`
   }
 
   a {
-    color: ${props => props.theme.foreground.primary};
+    color: ${props => props.theme.onBackground.primary};
     text-decoration: none;
   }
 
   button {
     background: transparent;
     border: 0;
-    color: ${props => props.theme.foreground.primary};
     font-family: "Roboto", sans-serif;
     font-size: ${props => props.theme.fontSize.medium}px;
     font-weight: ${props => props.theme.fontWeight.normal};

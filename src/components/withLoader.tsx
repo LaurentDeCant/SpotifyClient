@@ -24,7 +24,7 @@ const Loader = styled.div<{ isLoading: boolean }>`
   z-index: 2;
 
   &::before {
-    background: ${props => props.theme.foreground.secondary};
+    background: ${props => props.theme.onPrimary.secondary};
     content: "";
     height: 100%;
     position: absolute;
@@ -33,7 +33,7 @@ const Loader = styled.div<{ isLoading: boolean }>`
 
   &::after {
     animation: transform 2s linear infinite;
-    background: ${props => props.theme.foreground.primary};
+    background: ${props => props.theme.onPrimary.primary};
     content: "";
     height: 100%;
     position: absolute;
