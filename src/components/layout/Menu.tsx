@@ -36,7 +36,7 @@ const List = styled.ul`
 const StyledNavLink = styled(NavLink)`
   ${click}
   align-items: center;
-  color: ${props => props.theme.foreground.dark};
+  color: ${props => props.theme.foreground.lightFade};
   display: flex;
   height: ${props => props.theme.thickness.large}px;
   padding: 0 ${props => props.theme.thickness.medium}px;

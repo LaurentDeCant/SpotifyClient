@@ -86,12 +86,12 @@ const Others = styled.div`
 const Separator = styled.span.attrs(() => ({
   children: "-"
 }))`
-  color: ${props => props.theme.foreground.dark};
+  color: ${props => props.theme.foreground.lightFade};
   margin: 0 ${props => props.theme.thickness.extraSmall}px;
 `;
 
 const Duration = styled.span`
-  color: ${props => props.theme.foreground.dark};
+  color: ${props => props.theme.foreground.lightFade};
   flex-shrink: 0;
   margin-right: ${props => props.theme.thickness.small}px;
 `;

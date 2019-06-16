@@ -69,7 +69,7 @@ const Title = styled(Text)`
 `;
 
 const SubTitle = styled(Text)`
-  color: ${props => props.theme.foreground.dark};
+  color: ${props => props.theme.foreground.lightFade};
   display: inline-block;
   font-size: ${props => props.theme.fontSize.medium}px;
   font-weight: ${props => props.theme.fontWeight.light};

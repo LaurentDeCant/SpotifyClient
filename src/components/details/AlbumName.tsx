@@ -4,7 +4,7 @@ import styled from "../../styles/styled";
 import { Album } from "../../types";
 
 const StyledLink = styled(Link)`
-  color: ${props => props.theme.foreground.dark};
+  color: ${props => props.theme.foreground.lightFade};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

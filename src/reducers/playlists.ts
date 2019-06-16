@@ -68,7 +68,7 @@ export function selectPlaylistTracks(state: CombinedState, albumId: string) {
   if (playlist) {
     const tracks = selectTracks(state)(playlist.tracks);
     if (tracks) {
-      return tracks;
+      return tracks.filter(track => !!track);
     }
   }
 

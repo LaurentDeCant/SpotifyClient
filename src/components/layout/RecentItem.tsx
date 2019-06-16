@@ -33,7 +33,7 @@ const Name = styled(Text)`
 `;
 
 const Type = styled(Text)`
-  color: ${props => props.theme.foreground.dark};
+  color: ${props => props.theme.foreground.lightFade};
   text-align: left;
 `;
 

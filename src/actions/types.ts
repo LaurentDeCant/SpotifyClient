@@ -30,7 +30,7 @@ export interface Entities {
   };
 }
 
-export interface FetchAction<D = any> {
+export interface FetchAction<D = {}> {
   types: string[];
   path: string;
   method?: FetchMethod;
@@ -47,5 +47,5 @@ export interface PayloadAction<T = any, P = any> extends Action<T> {
   payload: P;
 }
 
-export interface EntitiesAction<T = any, D = any>
+export interface EntitiesAction<T = any, D = {}>
   extends PayloadAction<T, Entities & D> {}

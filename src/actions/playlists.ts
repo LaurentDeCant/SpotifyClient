@@ -25,7 +25,9 @@ export function getPlaylist(playlistId: string) {
         if (userProfile) {
           checkFollowedPlaylist(playlistId, userProfile.id)(dispatch);
         }
-        const trackIds = json.tracks.items.map(({ track }: any) => track.id);
+        const trackIds = json.tracks.items.map(
+          ({ track }: any) => track && track.id
+        );
         if (trackIds.length) {
           checkSavedTracks(trackIds)(dispatch);
         }

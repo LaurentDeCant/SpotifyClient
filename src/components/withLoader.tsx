@@ -24,7 +24,7 @@ const Loader = styled.div<{ isLoading: boolean }>`
   z-index: 2;
 
   &::before {
-    background: ${props => props.theme.foreground.dark};
+    background: ${props => props.theme.foreground.lightFade};
     content: "";
     height: 100%;
     position: absolute;

@@ -28,8 +28,8 @@ export interface Theme {
   };
   foreground: {
     default: string;
-    dark: string;
-    darker: string;
+    lightFade: string;
+    darkFade: string;
   };
   shadow: {
     low: string;
@@ -50,9 +50,9 @@ export interface Theme {
 
 export const theme: Theme = {
   background: {
-    light: "#303030",
-    default: "#202020",
-    dark: "#101010",
+    light: "#303030", // #ffffff
+    default: "#212121", // #fafafa
+    dark: "#000000", // f5f5f5
     hover: "rgba(255, 255, 255, 0.1)",
     active: "rgba(255, 255, 255, 0.1)"
   },
@@ -78,13 +78,13 @@ export const theme: Theme = {
   },
   foreground: {
     default: "#ffffff",
-    dark: "rgba(255, 255, 255, 0.6)",
-    darker: "rgba(255, 255, 255, 0.3)"
+    lightFade: "rgba(255, 255, 255, 0.66)",
+    darkFade: "rgba(255, 255, 255, 0.33)"
   },
   shadow: {
-    low: "0 0 2px 1px rgba(0, 0, 0, 0.1)",
-    middle: "0 0 4px 2px rgba(0, 0, 0, 0.2)",
-    high: "0 0 8px 4px rgba(0, 0, 0, 0.4)"
+    low: "0 1px 2px rgba(0, 0, 0, .5)",
+    middle: "0 2px 4px rgba(0, 0, 0, .5)",
+    high: "0 4px 8px rgba(0, 0, 0, .5)"
   },
   thickness: {
     extraExtraSmall: 3.125,

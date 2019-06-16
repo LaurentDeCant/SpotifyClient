@@ -5,13 +5,13 @@ import Icon, { IconType } from "./Icon";
 
 const StyedButton = styled(ButtonBase)`
   border-radius: 50%;
-  color: ${props => props.theme.foreground.dark};
+  color: ${props => props.theme.foreground.lightFade};
   height: ${props => props.theme.thickness.large}px;
   padding: ${props => props.theme.thickness.small}px;
   width: ${props => props.theme.thickness.large}px;
 
   &:disabled {
-    color: ${props => props.theme.foreground.darker};
+    color: ${props => props.theme.foreground.darkFade};
   }
 `;
 

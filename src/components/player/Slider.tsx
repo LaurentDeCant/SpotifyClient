@@ -58,7 +58,7 @@ const Thumb = styled.div.attrs<{ position: number }>(({ position }) => ({
 const Right = styled.div.attrs<{ width: number }>(props => ({
   style: { width: `${100 - props.width * 100}%` }
 }))<{ width: number }>`
-  background: ${props => props.theme.foreground.dark};
+  background: ${props => props.theme.foreground.lightFade};
   border-radius: 0 ${props => props.theme.thickness.extraExtraSmall}px
     ${props => props.theme.thickness.extraExtraSmall}px 0;
   height: ${props => props.theme.thickness.extraExtraSmall}px;

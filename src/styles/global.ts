@@ -12,9 +12,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.5)), ${
-      theme.background.default
-    };
+    background: ${theme.background.default};
     color: ${theme.foreground.default};
     font-family: "Roboto", sans-serif;
     font-size: ${theme.fontSize.medium}px;

@@ -29,11 +29,9 @@ function Queue({ collection, tracks, loadPlayPause }: Props) {
 
   return (
     <Wrapper>
+      <Heading>Queue</Heading>
       {tracks && tracks.length ? (
-        <>
-          <Heading>Queue</Heading>
-          <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
-        </>
+        <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
       ) : (
         <Empty>No tracks</Empty>
       )}

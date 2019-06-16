@@ -83,7 +83,7 @@ export function selectAlbumTracks(state: CombinedState, albumId: string) {
   if (album) {
     const tracks = selectTracks(state)(album.tracks);
     if (tracks) {
-      return tracks;
+      return tracks.filter(track => !!track);
     }
   }
 
@@ -100,7 +100,7 @@ export const selectAlbums = createSelector(
 
 export function selectPlayableTracks(state: CombinedState, albumId: string) {
   const tracks = selectAlbumTracks(state, albumId);
-  return tracks ? tracks.filter(track => track.preview_url) : [];
+  return tracks ? tracks.filter(track => track && track.preview_url) : [];
 }
 
 export function selectIsPlayable(state: CombinedState, albumId: string) {
