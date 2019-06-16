@@ -5,7 +5,7 @@ const ButtonBase = styled.button`
   ${click}
 
   &:disabled {
-    color: ${props => props.theme.foreground.lightFade};
+    color: ${props => props.theme.foreground.secondary};
   }
 `;
 

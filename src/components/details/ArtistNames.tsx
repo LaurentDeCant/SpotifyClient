@@ -4,14 +4,14 @@ import styled from "../../styles/styled";
 import { Artist } from "../../types";
 
 const List = styled.ul`
-  color: ${props => props.theme.foreground.lightFade};
+  color: ${props => props.theme.foreground.secondary};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
 const Item = styled.span`
-  color: ${props => props.theme.foreground.lightFade};
+  color: ${props => props.theme.foreground.secondary};
   font-weight: ${props => props.theme.fontWeight.light};
 
   :not(:last-child)::after {
@@ -21,7 +21,7 @@ const Item = styled.span`
 `;
 
 const StyledLink = styled(Link)`
-  color: ${props => props.theme.foreground.lightFade};
+  color: ${props => props.theme.foreground.secondary};
 
   :hover {
     text-decoration: underline;

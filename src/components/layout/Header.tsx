@@ -1,4 +1,4 @@
-import React, { useEffect, HTMLAttributes } from "react";
+import React, { useEffect, HTMLAttributes, ReactNode } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
@@ -6,7 +6,7 @@ import { getUserProfile } from "../../actions/userProfile";
 import { State } from "../../reducers";
 import { selectIsLoggedIn } from "../../reducers/authorization";
 import { selectUserProfile } from "../../reducers/userProfile";
-import Title from "./Title";
+import Brand from "./Brand";
 import User from "./User";
 
 const Wrapper = styled.header`
@@ -25,29 +25,47 @@ const Wrapper = styled.header`
   }
 `;
 
+const Left = styled.div`
+  height: 100%;
+`;
+
+const Right = styled.div`
+  display: flex;
+  height: 100%;
+`;
+
 interface Props {
+  children: ReactNode;
   isLoggedIn: boolean;
   userProfile?: UserProfile;
   getUserProfile: () => void;
 }
 
 function Header({
+  children,
   className,
   isLoggedIn,
   userProfile,
   getUserProfile
 }: Props & HTMLAttributes<HTMLElement>) {
-  const effect = () => {
+  useEffect(() => {
     if (isLoggedIn) {
       getUserProfile();
     }
-  };
-  useEffect(effect, []);
+  }, [isLoggedIn, getUserProfile]);
 
   return (
     <Wrapper className={className}>
-      <Title />
-      {userProfile && <User {...userProfile} />}
+      <Left>
+        <Brand />
+      </Left>
+
+      {userProfile && (
+        <Right>
+          {children}
+          <User {...userProfile} />
+        </Right>
+      )}
     </Wrapper>
   );
 }

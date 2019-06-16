@@ -3,7 +3,7 @@ const click = (props: any) => `
   position relative;
   
   &:not(:disabled):hover {
-    color: ${props.theme.foreground.default};
+    color: ${props.theme.foreground.primary};
   }
 
   &::before, &::after {

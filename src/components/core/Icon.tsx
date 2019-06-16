@@ -1,6 +1,8 @@
 import React, { HTMLAttributes } from "react";
 
 export enum IconType {
+  Brightness4 = "brightness_4",
+  Brightness5 = "brightness_5",
   Clear = "clear",
   Done = "done",
   Favorite = "favorite",

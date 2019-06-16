@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const StyledIcon = styled(Icon).attrs(() => ({
   type: IconType.SentimentVeryDissatisfied
 }))`
-  color: ${props => props.theme.foreground.lightFade};
+  color: ${props => props.theme.foreground.secondary};
   font-size: ${props => 4 * props.theme.fontSize.extraExtraLarge}px;
   margin-bottom: ${props => props.theme.thickness.medium}px;
 `;

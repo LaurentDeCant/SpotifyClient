@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
-import { theme } from "./theme";
+import { Theme } from "./theme";
 
-export default createGlobalStyle`
+export default createGlobalStyle<{ theme: Theme }>`
   html, body, #root {
     height: 100%;
   }
@@ -12,26 +12,26 @@ export default createGlobalStyle`
   }
 
   body {
-    background: ${theme.background.default};
-    color: ${theme.foreground.default};
+    background: ${props => props.theme.background.secondary};
+    color: ${props => props.theme.foreground.primary};
     font-family: "Roboto", sans-serif;
-    font-size: ${theme.fontSize.medium}px;
-    font-weight: ${theme.fontWeight.normal};
+    font-size: ${props => props.theme.fontSize.medium}px;
+    font-weight: ${props => props.theme.fontWeight.normal};
     user-select: none;
   }
 
   a {
-    color: ${theme.foreground.default};
+    color: ${props => props.theme.foreground.primary};
     text-decoration: none;
   }
 
   button {
     background: transparent;
     border: 0;
-    color: ${theme.foreground.default};
+    color: ${props => props.theme.foreground.primary};
     font-family: "Roboto", sans-serif;
-    font-size: ${theme.fontSize.medium}px;
-    font-weight: ${theme.fontWeight.normal};
+    font-size: ${props => props.theme.fontSize.medium}px;
+    font-weight: ${props => props.theme.fontWeight.normal};
 
     &:not(:disabled) {
       cursor: pointer;

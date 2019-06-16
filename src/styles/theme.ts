@@ -1,8 +1,13 @@
+export enum ThemeMode {
+  Dark = "DARK",
+  Light = "LIGHT"
+}
+
 export interface Theme {
   background: {
-    light: string;
-    default: string;
-    dark: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
     hover: string;
     active: string;
   };
@@ -27,9 +32,9 @@ export interface Theme {
     bold: number;
   };
   foreground: {
-    default: string;
-    lightFade: string;
-    darkFade: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
   };
   shadow: {
     low: string;
@@ -48,21 +53,13 @@ export interface Theme {
   };
 }
 
-export const theme: Theme = {
-  background: {
-    light: "#303030", // #ffffff
-    default: "#212121", // #fafafa
-    dark: "#000000", // f5f5f5
-    hover: "rgba(255, 255, 255, 0.1)",
-    active: "rgba(255, 255, 255, 0.1)"
-  },
+const theme = {
   breakpoint: {
     extraSmall: 480,
     small: 960
   },
   color: {
-    primary: "#1db954",
-    error: "#e57373"
+    primary: "#1db954"
   },
   fontSize: {
     small: 12,
@@ -75,11 +72,6 @@ export const theme: Theme = {
     light: 300,
     normal: 400,
     bold: 500
-  },
-  foreground: {
-    default: "#ffffff",
-    lightFade: "rgba(255, 255, 255, 0.66)",
-    darkFade: "rgba(255, 255, 255, 0.33)"
   },
   shadow: {
     low: "0 1px 2px rgba(0, 0, 0, .5)",
@@ -95,5 +87,45 @@ export const theme: Theme = {
     extraLarge: 100,
     extraExtraLarge: 200,
     extraExtraExtraLarge: 400
+  }
+};
+
+export const darkTheme: Theme = {
+  ...theme,
+  background: {
+    primary: "#000000",
+    secondary: "#212121",
+    tertiary: "#303030",
+    hover: "rgba(255, 255, 255, 0.08)",
+    active: "rgba(255, 255, 255, 0.16)"
+  },
+  color: {
+    ...theme.color,
+    error: "#e57373"
+  },
+  foreground: {
+    primary: "rgba(255, 255, 255, 1)",
+    secondary: "rgba(255, 255, 255, 0.70)",
+    tertiary: "rgba(255, 255, 255, 0.50)"
+  }
+};
+
+export const lightTheme: Theme = {
+  ...theme,
+  background: {
+    primary: "#fafafa",
+    secondary: "#f5f5f5",
+    tertiary: "#e0e0e0",
+    hover: "rgba(0, 0, 0, 0.04)",
+    active: "rgba(0, 0, 0, 0.08)"
+  },
+  color: {
+    ...theme.color,
+    error: "#d32f2f"
+  },
+  foreground: {
+    primary: "rgba(0, 0, 0, 0.87)",
+    secondary: "rgba(0, 0, 0, 0.54)",
+    tertiary: "rgba(0, 0, 0, 0.38)"
   }
 };

@@ -18,7 +18,7 @@ const StyledIcon = styled(Icon)`
   margin-right: ${props => props.theme.thickness.small}px;
 `;
 
-const Title = () => {
+const Brand = () => {
   return (
     <StyledLink to={`${process.env.PUBLIC_URL}/browse`}>
       <StyledIcon type={IconType.Wifi} />
@@ -27,4 +27,4 @@ const Title = () => {
   );
 };
 
-export default Title;
+export default Brand;

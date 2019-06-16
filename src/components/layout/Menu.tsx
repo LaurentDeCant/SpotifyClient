@@ -6,7 +6,7 @@ import { Icon, IconType } from "../core";
 import RecentList from "./RecentList";
 
 const Wrapper = styled.div`
-  background: ${props => props.theme.background.dark};
+  background: ${props => props.theme.background.primary};
   box-shadow: ${props => props.theme.shadow.middle};
   box-sizing: border-box;
   display: flex;
@@ -36,19 +36,19 @@ const List = styled.ul`
 const StyledNavLink = styled(NavLink)`
   ${click}
   align-items: center;
-  color: ${props => props.theme.foreground.lightFade};
+  color: ${props => props.theme.foreground.secondary};
   display: flex;
   height: ${props => props.theme.thickness.large}px;
   padding: 0 ${props => props.theme.thickness.medium}px;
 
   &:hover {
-    color: ${props => props.theme.foreground.default};
+    color: ${props => props.theme.foreground.primary};
   }
 
   &.active {
     border-bottom: ${props => props.theme.thickness.extraExtraSmall}px solid
       ${props => props.theme.color.primary};
-    color: ${props => props.theme.foreground.default};
+    color: ${props => props.theme.foreground.primary};
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {

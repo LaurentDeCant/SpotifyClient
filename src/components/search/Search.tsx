@@ -13,7 +13,7 @@ const StyledInput = styled.input`
   border: none;
   border-radius: ${props => props.theme.thickness.medium}px;
   caret-color: ${props => props.theme.color.primary};
-  color: ${props => props.theme.foreground.default};
+  color: ${props => props.theme.foreground.primary};
   flex-shrink: 0;
   font-size: ${props => props.theme.fontSize.extraLarge}px;
   font-weight: ${props => props.theme.fontWeight.light};

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import styled from "../../styles/styled";
 import Header from "./Header";
@@ -43,14 +43,23 @@ const StyledRoutes = styled(Routes)`
 const StyledNotificationList = styled(NotificationList)`
   height: 100%;
   position: fixed;
+  top: ${props => 2 * props.theme.thickness.large}px;
   right: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    top: ${props => props.theme.thickness.large}px;
+  }
 `;
 
-function App() {
+interface Props {
+  children: ReactNode;
+}
+
+function App({ children }: Props) {
   return (
     <Router>
       <Wrapper>
-        <StyledHeader />
+        <StyledHeader>{children}</StyledHeader>
 
         <Body>
           <StyledMenu />

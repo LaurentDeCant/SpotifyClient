@@ -6,7 +6,7 @@ import { ImageShape } from "../core/Image";
 import { Cover } from "./types";
 
 const StyledButton = styled(ButtonBase)<{ shape: ImageShape }>`
-  background: ${props => props.theme.background.light};
+  background: ${props => props.theme.background.tertiary};
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
   box-shadow: ${props => props.theme.shadow.middle};
   display: flex;
@@ -30,7 +30,7 @@ const Title = styled(Text)`
 `;
 
 const SubTitle = styled(Text)`
-  color: ${props => props.theme.foreground.lightFade};
+  color: ${props => props.theme.foreground.secondary};
   font-size: ${props => props.theme.fontSize.medium}px;
   font-weight: ${props => props.theme.fontWeight.light};
   margin-top: ${props => props.theme.thickness.extraSmall}px;

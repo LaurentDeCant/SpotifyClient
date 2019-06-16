@@ -16,7 +16,7 @@ const StyledImg = styled.img<{ shape: ImageShape; isLoaded: boolean }>`
 `;
 
 const Container = styled.div<{ shape: ImageShape }>`
-  background: ${props => props.theme.background.light};
+  background: ${props => props.theme.background.tertiary};
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
   height: 100%;
   position: relative;

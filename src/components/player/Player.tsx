@@ -14,7 +14,7 @@ import Volume from "./Volume";
 
 const Wrapper = styled.div`
   align-items: center;
-  background: ${props => props.theme.background.light};
+  background: ${props => props.theme.background.tertiary};
   box-sizing: border-box;
   box-shadow: ${props => props.theme.shadow.middle};
   display: flex;

@@ -21,7 +21,7 @@ const List = styled.ul`
 
 const StyledNavLink = styled(NavLink)`
   align-items: center;
-  color: ${props => props.theme.foreground.lightFade};
+  color: ${props => props.theme.foreground.secondary};
   display: flex;
   height: ${props => props.theme.thickness.large}px;
   justify-content: center;
@@ -29,11 +29,11 @@ const StyledNavLink = styled(NavLink)`
   position: relative;
 
   &:hover {
-    color: ${props => props.theme.foreground.default};
+    color: ${props => props.theme.foreground.primary};
   }
 
   &.active {
-    color: ${props => props.theme.foreground.default};
+    color: ${props => props.theme.foreground.primary};
   }
 
   &.active::after {
