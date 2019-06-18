@@ -9,7 +9,7 @@ import Recents from "./Recents";
 import Results from "./Results";
 
 const StyledInput = styled.input`
-  background: ${props => props.theme.onBackground.active};
+  background: ${props => props.theme.background.tertiary};
   border: none;
   border-radius: ${props => props.theme.thickness.medium}px;
   caret-color: ${props => props.theme.color.primary};

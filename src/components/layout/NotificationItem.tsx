@@ -81,9 +81,9 @@ const Text = styled.span`
 `;
 
 const ClearButton = styled(RoundButton).attrs(() => ({
+  onPrimary: true,
   iconType: IconType.Clear
 }))`
-  color: ${props => props.theme.onPrimary.primary};
   justify-self: flex-end;
 `;
 

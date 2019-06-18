@@ -8,7 +8,7 @@ import { clearRecents } from "../../actions/search";
 import { State } from "../../reducers";
 import { selectRecents } from "../../reducers/search";
 import { getImageSource, getImageShape } from "../../utils";
-import { Button, Heading } from "../core";
+import { Heading, PrimaryButton } from "../core";
 import CoverList from "../covers/CoverList";
 
 const Wrapper = styled.div`
@@ -20,7 +20,7 @@ const StyledCoverList = styled(CoverList)`
   margin-bottom: ${props => props.theme.thickness.medium}px;
 `;
 
-const ClearButton = styled(Button).attrs(() => ({
+const ClearButton = styled(PrimaryButton).attrs(() => ({
   children: "Clear"
 }))`
   align-self: center;

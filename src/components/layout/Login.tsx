@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Button, Heading } from "../core";
+import { Heading, PrimaryButton } from "../core";
 import { logInRedirect } from "../../utils/authorization";
 
 const Wrapper = styled.div`
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(PrimaryButton)`
   width: ${props => props.theme.thickness.extraLarge}px;
 `;
 

@@ -1,12 +1,18 @@
 import { Theme } from "./theme";
 
-const click = ({ theme }: { theme: Theme }) => `
-  color: ${theme.onBackground.secondary};
+const clickable = (onPrimary?: boolean) => ({ theme }: { theme: Theme }) => `
+  color: ${onPrimary ? theme.onPrimary.primary : theme.onBackground.secondary};
   overflow: hidden;
   position relative;
   
+  &:disabled {
+    color: ${
+      onPrimary ? theme.onPrimary.tertiary : theme.onBackground.tertiary
+    };
+  }
+
   &:not(:disabled):hover {
-    color: ${theme.onBackground.primary};
+    color: ${onPrimary ? theme.onPrimary.primary : theme.onBackground.primary};
   }
 
   &::before, &::after {
@@ -22,11 +28,13 @@ const click = ({ theme }: { theme: Theme }) => `
   }
 
   &::before {
-    background: ${theme.onBackground.hover};
+    background: ${onPrimary ? theme.onPrimary.hover : theme.onBackground.hover};
   }
 
   &::after {
-    background: ${theme.onBackground.active};
+    background: ${
+      onPrimary ? theme.onPrimary.active : theme.onBackground.active
+    };
   }
 
   &:not(:disabled):hover::before,
@@ -35,4 +43,4 @@ const click = ({ theme }: { theme: Theme }) => `
   }
 `;
 
-export { click };
+export { clickable };

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Button, IconType, Image, Text, ToggleButton } from "../core";
+import { IconType, Image, PrimaryButton, Text, ToggleButton } from "../core";
 import { ImageShape } from "../core/Image";
 
 const Wrapper = styled.div`
@@ -93,7 +93,7 @@ const FavoriteButton = styled(ToggleButton).attrs(() => ({
   iconType: IconType.Favorite
 }))``;
 
-const PlayButton = styled(Button)`
+const PlayButton = styled(PrimaryButton)`
   margin-right: ${props => props.theme.thickness.small}px;
   width: ${props => props.theme.thickness.extraLarge}px;
 `;

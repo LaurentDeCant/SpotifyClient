@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "../../styles/styled";
-import { Image, Text } from "../core";
-import ButtonBase from "../core/ButtonBase";
+import { Button, Image, Text } from "../core";
 import { ImageShape } from "../core/Image";
 import { Cover } from "./types";
 
-const StyledButton = styled(ButtonBase)<{ shape: ImageShape }>`
-  background: ${props => props.theme.background.tertiary};
+const StyledButton = styled(Button)<{ shape: ImageShape }>`
+    background: ${props => props.theme.background.tertiary};
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
   box-shadow: ${props => props.theme.shadow.middle};
   display: flex;

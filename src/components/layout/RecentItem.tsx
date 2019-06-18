@@ -4,10 +4,9 @@ import { capitalize } from "lodash";
 import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
 import { getImageSource, getImageShape } from "../../utils";
-import { Text, Image } from "../core";
-import ButtonBase from "../core/ButtonBase";
+import { Button, Text, Image } from "../core";
 
-const StyledButton = styled(ButtonBase)`
+const StyledButton = styled(Button)`
   align-items: center;
   display: flex;
   flex-direction: row;

@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "../../styles/styled";
-import { click } from "../../styles/effects";
+import { clickable } from "../../styles/effects";
 import { Icon, IconType } from "../core";
 import RecentList from "./RecentList";
 
@@ -34,16 +34,13 @@ const List = styled.ul`
 `;
 
 const StyledNavLink = styled(NavLink)`
-  ${click}
+  ${clickable(false)}
+
   align-items: center;
   color: ${props => props.theme.onBackground.secondary};
   display: flex;
   height: ${props => props.theme.thickness.large}px;
   padding: 0 ${props => props.theme.thickness.medium}px;
-
-  &:hover {
-    color: ${props => props.theme.onBackground.primary};
-  }
 
   &.active {
     border-bottom: ${props => props.theme.thickness.extraExtraSmall}px solid

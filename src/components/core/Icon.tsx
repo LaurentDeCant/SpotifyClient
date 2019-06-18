@@ -1,8 +1,7 @@
 import React, { HTMLAttributes } from "react";
 
 export enum IconType {
-  Brightness4 = "brightness_4",
-  Brightness5 = "brightness_5",
+  Brightness3 = "brightness_3",
   Clear = "clear",
   Done = "done",
   Favorite = "favorite",
@@ -22,7 +21,8 @@ export enum IconType {
   SkipPrevious = "skip_previous",
   VolumeOff = "volume_off",
   VolumeUp = "volume_up",
-  Wifi = "wifi"
+  Wifi = "wifi",
+  WbSunny = "wb_sunny"
 }
 
 interface Props {
