@@ -28,8 +28,8 @@ function NotificationList({
   notifications
 }: Props & HTMLAttributes<HTMLElement>) {
   return (
-    <Wrapper>
-      <List className={className}>
+    <Wrapper className={className}>
+      <List>
         {notifications.map(notification => (
           <NotificationItem key={notification.id} notification={notification} />
         ))}

@@ -18,7 +18,6 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   box-shadow: ${props => props.theme.shadow.middle};
   display: flex;
-  height: ${props => props.theme.thickness.extraLarge}px;
   padding: ${props => props.theme.thickness.small}px;
   z-index: 2;
 `;

@@ -29,8 +29,16 @@ interface Props {
   type: IconType;
 }
 
-function Icon({ className, type }: Props & HTMLAttributes<HTMLElement>) {
-  return <i className={`material-icons ${className}`}>{type}</i>;
+function Icon({
+  className,
+  type,
+  ...rest
+}: Props & HTMLAttributes<HTMLElement>) {
+  return (
+    <i {...rest} className={`material-icons ${className}`}>
+      {type}
+    </i>
+  );
 }
 
 export default Icon;

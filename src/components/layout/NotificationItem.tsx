@@ -9,6 +9,7 @@ const Wrapper = styled.li<{ isExiting: boolean }>`
   align-items: center;
   background: ${props => props.theme.color.primary};
   box-shadow: ${props => props.theme.shadow.high};
+  box-sizing: border-box;
   display: flex;
   overflow: hidden;
   padding-left: ${props => props.theme.thickness.medium}px;
@@ -36,7 +37,7 @@ const Wrapper = styled.li<{ isExiting: boolean }>`
     }
     100% {
       height: ${props => props.theme.thickness.large}px;
-      left: -${props => props.theme.thickness.extraExtraLarge + props.theme.thickness.extraLarge + props.theme.thickness.large}px;
+      left: -${props => props.theme.thickness.extraExtraLarge + props.theme.thickness.extraLarge + props.theme.thickness.medium}px;
       margin-bottom: ${props => props.theme.thickness.small}px;
       padding-bottom: ${props => props.theme.thickness.small}px;
       padding-top: ${props => props.theme.thickness.small}px;
@@ -46,7 +47,7 @@ const Wrapper = styled.li<{ isExiting: boolean }>`
   @keyframes exit {
     0% {
       height: ${props => props.theme.thickness.large}px;
-      left: -${props => props.theme.thickness.extraExtraLarge + props.theme.thickness.extraLarge + props.theme.thickness.large}px;
+      left: -${props => props.theme.thickness.extraExtraLarge + props.theme.thickness.extraLarge + props.theme.thickness.medium}px;
       margin-bottom: ${props => props.theme.thickness.small}px;
       padding-bottom: ${props => props.theme.thickness.small}px;
       padding-top: ${props => props.theme.thickness.small}px;

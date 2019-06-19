@@ -15,16 +15,18 @@ const Wrapper = styled.div`
 
 const StyledHeader = styled(Header)`
   flex-shrink: 0;
+  height: ${props => props.theme.thickness.large}px;
+  padding: 0 ${props => props.theme.thickness.medium}px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    padding: 0 ${props => props.theme.thickness.large}px;
+  }
 `;
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(
-    100% -
-      ${props =>
-        props.theme.thickness.extraLarge + props.theme.thickness.large}px
-  );
+  flex-grow: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     flex-direction: row;
@@ -37,7 +39,6 @@ const StyledMenu = styled(Menu)`
 
 const StyledRoutes = styled(Routes)`
   flex-grow: 1;
-  flex-shrink: 1;
 `;
 
 const StyledNotificationList = styled(NotificationList)`
@@ -49,6 +50,11 @@ const StyledNotificationList = styled(NotificationList)`
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     top: ${props => props.theme.thickness.large}px;
   }
+`;
+
+const StyledPlayer = styled(Player)`
+  flex-shrink: 0;
+  height: ${props => props.theme.thickness.extraLarge}px;
 `;
 
 interface Props {
@@ -67,7 +73,7 @@ function App({ children }: Props) {
           <StyledNotificationList />
         </Body>
 
-        <Player />
+        <StyledPlayer />
       </Wrapper>
     </Router>
   );

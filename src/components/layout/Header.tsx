@@ -15,14 +15,8 @@ const Wrapper = styled.header`
   background: ${props => props.theme.color.primary};
   box-shadow: ${props => props.theme.shadow.middle};
   flex-shrink: 0;
-  height: ${props => props.theme.thickness.large}px;
   justify-content: space-between;
-  padding: 0 ${props => props.theme.thickness.medium}px;
   z-index: 2;
-
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
-    padding: 0 ${props => props.theme.thickness.large}px;
-  }
 `;
 
 const Left = styled.div`

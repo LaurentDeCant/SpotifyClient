@@ -3,13 +3,11 @@ import styled from "styled-components";
 import Button from "./Button";
 import Icon, { IconType } from "./Icon";
 
-const StyedButton = styled(Button).attrs<{
+const StyledButton = styled(Button).attrs<{
   onPrimary: boolean;
-  iconType: IconType;
-}>(({ onPrimary, iconType }) => ({
-  children: <StyledIcon type={iconType} />,
+}>(({ onPrimary }) => ({
   onPrimary
-}))<{ onPrimary: boolean }>`
+}))`
   border-radius: 50%;
   height: ${props => props.theme.thickness.large}px;
   padding: ${props => props.theme.thickness.small}px;
@@ -31,9 +29,9 @@ function RoundButton({
   ...rest
 }: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <StyedButton {...rest} onPrimary={!!onPrimary}>
+    <StyledButton {...rest} onPrimary={!!onPrimary}>
       <StyledIcon type={iconType} />
-    </StyedButton>
+    </StyledButton>
   );
 }
 
