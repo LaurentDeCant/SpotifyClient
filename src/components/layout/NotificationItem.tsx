@@ -29,35 +29,39 @@ const Wrapper = styled.li<{ isExiting: boolean }>`
       padding-top: 0;
     }
     50% {
-      height: ${props => props.theme.thickness.large}px;
+      height: ${props =>
+        props.theme.thickness.large + 2 * props.theme.thickness.extraSmall}px;
       left: ${props => props.theme.thickness.small}px;
       margin-bottom: ${props => props.theme.thickness.small}px;
-      padding-bottom: ${props => props.theme.thickness.small}px;
-      padding-top: ${props => props.theme.thickness.small}px;
+      padding-bottom: ${props => props.theme.thickness.extraSmall}px;
+      padding-top: ${props => props.theme.thickness.extraSmall}px;
     }
     100% {
-      height: ${props => props.theme.thickness.large}px;
+      height: ${props =>
+        props.theme.thickness.large + 2 * props.theme.thickness.extraSmall}px;
       left: -${props => props.theme.thickness.extraExtraLarge + props.theme.thickness.extraLarge + props.theme.thickness.medium}px;
       margin-bottom: ${props => props.theme.thickness.small}px;
-      padding-bottom: ${props => props.theme.thickness.small}px;
-      padding-top: ${props => props.theme.thickness.small}px;
+      padding-bottom: ${props => props.theme.thickness.extraSmall}px;
+      padding-top: ${props => props.theme.thickness.extraSmall}px;
     }
   }
 
   @keyframes exit {
     0% {
-      height: ${props => props.theme.thickness.large}px;
+      height: ${props =>
+        props.theme.thickness.large + 2 * props.theme.thickness.extraSmall}px;
       left: -${props => props.theme.thickness.extraExtraLarge + props.theme.thickness.extraLarge + props.theme.thickness.medium}px;
       margin-bottom: ${props => props.theme.thickness.small}px;
-      padding-bottom: ${props => props.theme.thickness.small}px;
-      padding-top: ${props => props.theme.thickness.small}px;
+      padding-bottom: ${props => props.theme.thickness.extraSmall}px;
+      padding-top: ${props => props.theme.thickness.extraSmall}px;
     }
     50% {
-      height: ${props => props.theme.thickness.large}px;
+      height: ${props =>
+        props.theme.thickness.large + 2 * props.theme.thickness.extraSmall}px;
       left: ${props => props.theme.thickness.small}px;
       margin-bottom: ${props => props.theme.thickness.small}px;
-      padding-bottom: ${props => props.theme.thickness.small}px;
-      padding-top: ${props => props.theme.thickness.small}px;
+      padding-bottom: ${props => props.theme.thickness.extraSmall}px;
+      padding-top: ${props => props.theme.thickness.extraSmall}px;
     }
     100% {
       height: 0;

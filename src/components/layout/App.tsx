@@ -16,10 +16,12 @@ const Wrapper = styled.div`
 const StyledHeader = styled(Header)`
   flex-shrink: 0;
   height: ${props => props.theme.thickness.large}px;
-  padding: 0 ${props => props.theme.thickness.medium}px;
+  padding: ${props => props.theme.thickness.extraSmall}px
+    ${props => props.theme.thickness.medium}px;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
-    padding: 0 ${props => props.theme.thickness.large}px;
+    padding: ${props => props.theme.thickness.extraSmall}px
+      ${props => props.theme.thickness.large}px;
   }
 `;
 
@@ -48,7 +50,8 @@ const StyledNotificationList = styled(NotificationList)`
   right: 0;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
-    top: ${props => props.theme.thickness.large}px;
+    top: ${props =>
+      props.theme.thickness.large + 2 * props.theme.thickness.extraSmall}px;
   }
 `;
 

@@ -30,7 +30,9 @@ const ThemeButton = styled(RoundButton).attrs<
 >(({ mode }) => ({
   onPrimary: true,
   iconType: mode === ThemeMode.Dark ? IconType.Brightness3 : IconType.WbSunny
-}))<ThemeButtonProps>``;
+}))<ThemeButtonProps>`
+  margin-right: ${props => props.theme.thickness.extraSmall}px;
+`;
 
 function Root() {
   const [themeMode, setThemeMode] = useState(ThemeMode.Dark);
