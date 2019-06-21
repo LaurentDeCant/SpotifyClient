@@ -14,7 +14,7 @@ import {
 } from "../../reducers/albums";
 import { selectIsPlaying } from "../../reducers/player";
 import { getArtistNames, getImageSource } from "../../utils";
-import Collection from "./Wrapper";
+import Wrapper from "./Wrapper";
 import Header from "./Header";
 import TrackList from "./TrackList";
 import withLoader from "../withLoader";
@@ -67,7 +67,7 @@ function AlbumDetails({
   }, [toggleSavedAlbum, albumId]);
 
   return album ? (
-    <Collection>
+    <Wrapper>
       <Header
         imageSource={getImageSource(album)}
         title={album.name}
@@ -79,7 +79,7 @@ function AlbumDetails({
         onToggleFavorite={handleToggleFavorite}
       />
       <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
-    </Collection>
+    </Wrapper>
   ) : (
     <></>
   );

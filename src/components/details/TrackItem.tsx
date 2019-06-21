@@ -15,7 +15,7 @@ const Wrapper = styled.li<{ isLoaded: boolean }>`
   box-sizing: border-box;
   ${props => props.isLoaded && "color: " + props.theme.color.primary};
   display: flex;
-  padding: ${props => props.theme.thickness.small}px;
+  padding: ${props => props.theme.thickness.extraSmall}px;
   width: 100%;
 
   &:last-child {

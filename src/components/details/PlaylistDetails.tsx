@@ -13,10 +13,10 @@ import {
   selectIsPlayable
 } from "../../reducers/playlists";
 import { selectIsPlaying } from "../../reducers/player";
+import Wrapper from "./Wrapper";
 import Header from "./Header";
 import TrackList from "./TrackList";
 import withLoader from "../withLoader";
-import Wrapper from "./Wrapper";
 
 interface Params {
   playlistId: string;

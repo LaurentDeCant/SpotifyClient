@@ -17,9 +17,14 @@ const StyledHeader = styled(Header)`
   flex-shrink: 0;
   height: ${props => props.theme.thickness.large}px;
   padding: ${props => props.theme.thickness.extraSmall}px
-    ${props => props.theme.thickness.medium}px;
+    ${props => props.theme.thickness.small}px;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    padding: ${props => props.theme.thickness.extraSmall}px
+      ${props => props.theme.thickness.medium}px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     padding: ${props => props.theme.thickness.extraSmall}px
       ${props => props.theme.thickness.large}px;
   }

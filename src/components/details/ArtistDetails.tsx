@@ -20,8 +20,8 @@ import TrackList from "./TrackList";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";
 import { Heading } from "../core";
-import Header from "./Header";
 import Wrapper from "./Wrapper";
+import Header from "./Header";
 import withLoader from "../withLoader";
 
 const Section = styled.section`

@@ -19,7 +19,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
-  padding: ${props => props.theme.thickness.medium}px;
+  padding: ${props => props.theme.thickness.small}px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    padding: ${props => props.theme.thickness.medium}px;
+  }
 `;
 
 const publicUrl = process.env.PUBLIC_URL;
