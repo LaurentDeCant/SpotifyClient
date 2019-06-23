@@ -8,7 +8,7 @@ export interface State {
   userProfile?: UserProfile;
 }
 
-const initialState: State = {};
+export const initialState: State = {};
 
 export default createReducer(initialState, {
   [ActionType.UserProfileSuccess]: (

@@ -7,12 +7,12 @@ export interface Track {
   disc_number: number;
   duration_ms: number;
   explicit: boolean;
-  external_ids: ExternalId;
-  external_urls: ExternalUrl;
+  external_ids?: ExternalId;
+  external_urls?: ExternalUrl;
   href: string;
   id: string;
   is_playable: boolean;
-  linked_from: TrackLink;
+  linked_from?: TrackLink;
   restrictions: Restriction[];
   name: string;
   popularity: number;

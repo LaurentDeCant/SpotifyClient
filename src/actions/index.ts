@@ -91,6 +91,26 @@ export enum LibraryActionType {
   UnsaveTrackFailure = "UNSAVE_TRACK_FAILURE"
 }
 
+export enum PlayerActionType {
+  LoadCollection = "LOAD_COLLECTION",
+  LoadTrack = "LOAD_TRACK",
+  TrackLoaded = "TRACK_LOADED",
+  Play = "PLAY",
+  Playing = "PLAYING",
+  Update = "UPDATE",
+  Pause = "PAUSE",
+  Paused = "PAUSED",
+  Seek = "SEEK",
+  Seeked = "SEEKED",
+  ChangeVolume = "CHANGE_VOLUME",
+  VolumeChanged = "VOLUME_CHANGED",
+  Ended = "ENDED",
+  Next = "NEXT",
+  Previous = "PREVIOUS",
+  ToggleShuffle = "TOGGLE_SHUFFLE",
+  ToggleLoop = "TOGGLE_LOOP"
+}
+
 export enum PlaylistActionType {
   PlaylistRequest = "PLAYLIST_REQUEST",
   PlaylistSuccess = "PLAYLIST_SUCCESS",

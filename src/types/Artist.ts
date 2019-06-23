@@ -1,8 +1,8 @@
 import { ExternalUrl, Followers, Image, Type } from ".";
 
 export interface Artist {
-  external_url: ExternalUrl;
-  followers: Followers;
+  external_url?: ExternalUrl;
+  followers?: Followers;
   genres: string[];
   href: string;
   id: string;

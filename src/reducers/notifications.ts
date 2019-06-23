@@ -14,7 +14,7 @@ export interface Notification {
 
 export interface State extends Array<Notification> {}
 
-const initialState: State = [];
+export const initialState: State = [];
 
 function addNotification(state: State, message: string) {
   return [{ id: v4(), message }, ...state];

@@ -15,7 +15,7 @@ export interface State {
   count: number;
 }
 
-const initialState: State = {
+export const initialState: State = {
   count: 0
 };
 

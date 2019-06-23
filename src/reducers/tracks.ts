@@ -22,7 +22,7 @@ import { selectArtists } from "./artists";
 
 export interface State extends TrackDictionary {}
 
-const initialState: State = {};
+export const initialState: State = {};
 
 function mergeTracks(state: State, { payload }: EntitiesAction) {
   return merge({}, state, payload.tracks);

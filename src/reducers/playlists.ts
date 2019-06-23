@@ -20,7 +20,7 @@ import {
 
 export interface State extends PlaylistDictionary {}
 
-const initialState: State = {};
+export const initialState: State = {};
 
 function mergePlaylists(state: State, { payload }: EntitiesAction) {
   return merge({}, state, payload.playlists);

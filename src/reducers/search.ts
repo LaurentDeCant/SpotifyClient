@@ -27,7 +27,7 @@ export interface State {
   recents: Collection[];
 }
 
-const initialState: State = {
+export const initialState: State = {
   albumIds: [],
   artistIds: [],
   playlistIds: [],

@@ -1,32 +1,13 @@
 import { Dispatch } from "redux";
 import { Type } from "../types";
-import { PayloadAction } from "./types";
 import { State } from "../reducers";
 import { selectIsPlaying, selectIsLoaded } from "../reducers/player";
 import { selectPlayableTracks as selectAlbumTracks } from "../reducers/albums";
 import { selectPlayableTracks as selectArtistTracks } from "../reducers/artists";
 import { selectPlayableTracks as selectPlaylistTracks } from "../reducers/playlists";
 import { selectPlayableTracks as selectLibraryTracks } from "../reducers/library";
-
-export enum ActionType {
-  LoadCollection = "LOAD_COLLECTION",
-  LoadTrack = "LOAD_TRACK",
-  TrackLoaded = "TRACK_LOADED",
-  Play = "PLAY",
-  Playing = "PLAYING",
-  Update = "UPDATE",
-  Pause = "PAUSE",
-  Paused = "PAUSED",
-  Seek = "SEEK",
-  Seeked = "SEEKED",
-  ChangeVolume = "CHANGE_VOLUME",
-  VolumeChanged = "VOLUME_CHANGED",
-  Ended = "ENDED",
-  Next = "NEXT",
-  Previous = "PREVIOUS",
-  ToggleShuffle = "TOGGLE_SHUFFLE",
-  ToggleLoop = "TOGGLE_LOOP"
-}
+import { PlayerActionType as ActionType } from ".";
+import { PayloadAction } from "./types";
 
 export interface LoadCollectionAction
   extends PayloadAction<

@@ -30,7 +30,7 @@ import {
 
 export interface State extends ArtistDictionary {}
 
-const initialState: State = {};
+export const initialState: State = {};
 
 function mergeArtists(state: State, { payload }: EntitiesAction) {
   return merge({}, state, payload.artists);

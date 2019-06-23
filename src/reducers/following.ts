@@ -13,7 +13,7 @@ export interface State {
   userPlaylistIds: string[];
 }
 
-const initialState: State = {
+export const initialState: State = {
   userArtistIds: [],
   userPlaylistIds: []
 };

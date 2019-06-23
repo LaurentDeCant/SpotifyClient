@@ -20,7 +20,7 @@ export interface State {
   newReleaseIds: string[];
 }
 
-const initialState: State = {
+export const initialState: State = {
   categories: {},
   categoryPlaylistIds: [],
   featuredPlaylistIds: [],

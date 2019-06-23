@@ -13,7 +13,7 @@ export interface State {
   userTrackIds: string[];
 }
 
-const initialState: State = {
+export const initialState: State = {
   userAlbumIds: [],
   userTrackIds: []
 };

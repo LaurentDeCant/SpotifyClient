@@ -14,7 +14,7 @@ export interface Album {
   coyrights: Copyright[];
   external_ids: ExternalId[];
   external_urls: ExternalUrl[];
-  genre: string[];
+  genres: string[];
   href: string;
   id: string;
   images: Image[];

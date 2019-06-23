@@ -6,7 +6,7 @@ export interface State {
   isLoggedIn: boolean;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isLoggedIn: false
 };
 

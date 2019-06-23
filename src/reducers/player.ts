@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { Type } from "../types";
+import { PlayerActionType as ActionType } from "../actions";
 import {
-  ActionType,
   LoadCollectionAction,
   LoadTrackAction,
   TrackLoadedAction,
@@ -49,7 +49,7 @@ export interface State {
   command: Command;
 }
 
-const initialState: State = {
+export const initialState: State = {
   collections: [],
   trackIds: [],
   trackIndex: 0,
@@ -202,9 +202,9 @@ export function selectLoadedArtists(state: CombinedState) {
 }
 
 export function selectIsLoaded(state: CombinedState) {
-  const { collections: recents, trackIds, trackIndex } = state.player;
+  const { collections, trackIds, trackIndex } = state.player;
   return (id: string) =>
-    (recents.length && recents[0].id === id) ||
+    (collections.length && collections[0].id === id) ||
     (!!trackIds.length && trackIds[trackIndex] === id);
 }
 
