@@ -101,9 +101,13 @@ function NotificationItem({ notification, deleteNotification }: Props) {
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const handle = setTimeout(() => {
       exit();
     }, 4000);
+
+    return () => {
+      clearTimeout(handle);
+    };
   });
 
   function exit() {

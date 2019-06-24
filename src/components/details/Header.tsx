@@ -9,7 +9,11 @@ const Wrapper = styled.div`
   flex-direction: row;
   flex-shrink: 0;
   justify-content: center;
-  margin: 0 0 ${props => props.theme.thickness.medium}px 0;
+  margin: 0 0 ${props => props.theme.thickness.small}px 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    margin: 0 0 ${props => props.theme.thickness.medium}px 0;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
     flex-direction: column;
@@ -21,7 +25,7 @@ const Wrapper = styled.div`
 const StyledImage = styled(Image)`
   box-shadow: ${props => props.theme.shadow.middle};
   flex-shrink: 0;
-  margin: 0 ${props => props.theme.thickness.medium}px 0 0;
+  margin: 0 ${props => props.theme.thickness.small}px 0 0;
   max-height: calc(
     100% -
       ${props =>
@@ -40,6 +44,7 @@ const StyledImage = styled(Image)`
   );
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    margin: 0 ${props => props.theme.thickness.medium}px 0 0;
     max-height: ${props => props.theme.thickness.extraExtraLarge}px;
     max-width: ${props => props.theme.thickness.extraExtraLarge}px;
   }

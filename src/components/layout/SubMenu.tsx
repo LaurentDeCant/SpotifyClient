@@ -6,17 +6,9 @@ const List = styled.ul`
   align-items: center;
   display: flex;
   flex-shrink: 0;
-  flex-wrap: wrap;
   font-size: ${props => props.theme.fontSize.medium}px;
   justify-content: center;
-  margin-bottom: 0;
-  position: relative;
-  top: -25px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
-    margin-bottom: ${props => props.theme.thickness.medium}px;
-    top: 0;
-  }
+  margin-bottom: ${props => props.theme.thickness.medium}px;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -25,8 +17,11 @@ const StyledNavLink = styled(NavLink)`
   display: flex;
   height: ${props => props.theme.thickness.large}px;
   justify-content: center;
-  padding: 0 ${props => props.theme.thickness.medium}px;
+  overflow: hidden;
+  padding: 0 ${props => props.theme.thickness.small}px;
   position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &:hover {
     color: ${props => props.theme.onBackground.primary};
@@ -45,6 +40,10 @@ const StyledNavLink = styled(NavLink)`
     position: absolute;
     transform: translate(-50%, 0);
     width: ${props => props.theme.thickness.large}px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+    padding: 0 ${props => props.theme.thickness.medium}px;
   }
 `;
 

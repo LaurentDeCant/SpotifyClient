@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Category, Playlist } from "../../types";
-import { getCategory, getCategoryPlaylists } from "../../actions/browse";
+import { getCategory } from "../../actions/browse";
 import { State } from "../../reducers";
 import { selectCategory, selectCategoryPlaylists } from "../../reducers/browse";
 import { Heading } from "../core";
@@ -17,25 +17,14 @@ interface Props extends RouteComponentProps<Params> {
   category?: Category;
   playlists: Playlist[];
   getCategory: (categoryId: string) => void;
-  getPlaylists: (categoryId: string) => void;
 }
 
-function CategoryPlaylists({
-  match,
-  category,
-  playlists,
-  getCategory,
-  getPlaylists
-}: Props) {
+function CategoryPlaylists({ match, category, playlists, getCategory }: Props) {
   const { categoryId } = match.params;
 
-  const effect = () => {
-    if (!category) {
-      getCategory(categoryId);
-    }
-    getPlaylists(categoryId);
-  };
-  useEffect(effect, []);
+  useEffect(() => {
+    getCategory(categoryId);
+  }, [getCategory, categoryId]);
 
   return (
     <div>
@@ -55,8 +44,7 @@ const mapState = (state: State, { match }: Props) => {
 };
 
 const mapDispatch = {
-  getCategory: (categoryId: string) => getCategory(categoryId),
-  getPlaylists: (categoryId: string) => getCategoryPlaylists(categoryId)
+  getCategory: (categoryId: string) => getCategory(categoryId)
 };
 
 export default withLoader(

@@ -37,27 +37,23 @@ interface Props extends RouteComponentProps<Params> {
 
 function Search({ history, match, search }: Props) {
   const { query } = match.params;
-  const [value, setValue] = useState(query || "");
+  const [value, setValue] = useState(query);
 
-  const effect = () => {
-    if (value) {
-      search(value);
-    }
-  };
-  useEffect(effect, []);
-
-  const debounced = useCallback(
+  const navigate = useCallback(
     _.debounce((query: string) => {
       history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
-      search(query);
     }, 500),
     []
   );
 
+  useEffect(() => {
+    search(query);
+  }, [search, query]);
+
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
     setValue(value);
-    debounced(value);
+    navigate(value);
   }
 
   return (

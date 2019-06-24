@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 0 ${props => props.theme.thickness.medium}px;
+  padding: 0 ${props => props.theme.thickness.small}px;
   z-index: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
@@ -40,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
   color: ${props => props.theme.onBackground.secondary};
   display: flex;
   height: ${props => props.theme.thickness.large}px;
-  padding: 0 ${props => props.theme.thickness.medium}px;
+  padding: 0 ${props => props.theme.thickness.small}px;
 
   &.active {
     border-bottom: ${props => props.theme.thickness.extraExtraSmall}px solid

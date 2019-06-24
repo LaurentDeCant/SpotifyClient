@@ -14,18 +14,13 @@ import {
   AlbumDictionary,
   ArtistDictionary,
   PlaylistDictionary,
-  Collection
+  Collection,
+  PlayState
 } from "./types";
 import createReducer from "./createReducer";
 import { selectTrack, selectTracks } from "./tracks";
 import { selectAlbum } from "./albums";
 import { selectArtists } from "./artists";
-
-enum PlayerState {
-  None = "NONE",
-  Playing = "IS_PLAYING",
-  Paused = "IS_PAUSED"
-}
 
 export enum Command {
   None = "NONE",
@@ -38,8 +33,8 @@ export enum Command {
 export interface State {
   collections: Collection[];
   trackIds: string[];
-  trackIndex: number;
-  playerState: PlayerState;
+  currentIndex: number;
+  playState: PlayState;
   duration: number;
   currentTime: number;
   isShuffled: boolean;
@@ -52,8 +47,8 @@ export interface State {
 export const initialState: State = {
   collections: [],
   trackIds: [],
-  trackIndex: 0,
-  playerState: PlayerState.None,
+  currentIndex: 0,
+  playState: PlayState.None,
   duration: 0,
   currentTime: 0,
   isShuffled: false,
@@ -76,13 +71,13 @@ export default createReducer(initialState, {
         ...state.collections.filter(recent => recent.id !== collectionId)
       ],
       trackIds: trackIds,
-      trackIndex: trackId ? trackIds.indexOf(trackId) : 0,
+      currentIndex: trackId ? trackIds.indexOf(trackId) : 0,
       command: Command.Play
     };
   },
   [ActionType.LoadTrack]: (state: State, { payload }: LoadTrackAction) => ({
     ...state,
-    trackIndex: state.trackIds.indexOf(payload.trackId),
+    currentIndex: state.trackIds.indexOf(payload.trackId),
     command: Command.Play
   }),
   [ActionType.TrackLoaded]: (state: State, { payload }: TrackLoadedAction) => ({
@@ -91,7 +86,7 @@ export default createReducer(initialState, {
   }),
   [ActionType.Playing]: (state: State) => ({
     ...state,
-    playerState: PlayerState.Playing,
+    playState: PlayState.Playing,
     command: Command.None
   }),
   [ActionType.Update]: (state: State, { payload }: UpdateAction) => ({
@@ -109,7 +104,7 @@ export default createReducer(initialState, {
   }),
   [ActionType.Paused]: (state: State) => ({
     ...state,
-    playerState: PlayerState.Paused,
+    playState: PlayState.Paused,
     command: Command.None
   }),
   [ActionType.Seek]: (state: State, { payload }: SeekAction) => ({
@@ -121,30 +116,32 @@ export default createReducer(initialState, {
     ...state
   }),
   [ActionType.Ended]: (state: State) => {
-    const { trackIndex, trackIds } = state;
-    return trackIndex === trackIds.length - 1
+    const { currentIndex, trackIds } = state;
+    return currentIndex === trackIds.length - 1
       ? state.isLooped
-        ? { ...state, trackIndex: 0, command: Command.Play }
-        : { ...state, playerState: PlayerState.Paused }
+        ? { ...state, currentIndex: 0, command: Command.Play }
+        : { ...state, playState: PlayState.Paused }
       : {
           ...state,
-          trackIndex: trackIndex + 1,
+          currentIndex: currentIndex + 1,
           command: Command.Play
         };
   },
   [ActionType.Next]: (state: State) => {
-    const { trackIndex, trackIds } = state;
+    const { currentIndex, trackIds } = state;
     return {
       ...state,
-      trackIndex: trackIndex === trackIds.length - 1 ? 0 : state.trackIndex + 1,
+      currentIndex:
+        currentIndex === trackIds.length - 1 ? 0 : state.currentIndex + 1,
       command: Command.Play
     };
   },
   [ActionType.Previous]: (state: State) => {
-    const { trackIndex, trackIds } = state;
+    const { currentIndex, trackIds } = state;
     return {
       ...state,
-      trackIndex: trackIndex === 0 ? trackIds.length - 1 : state.trackIndex - 1,
+      currentIndex:
+        currentIndex === 0 ? trackIds.length - 1 : state.currentIndex - 1,
       command: Command.Play
     };
   },
@@ -178,9 +175,9 @@ export function selectCollection({ player }: CombinedState) {
 }
 
 export function selectLoadedTrack(state: CombinedState) {
-  const { trackIds, trackIndex } = state.player;
+  const { trackIds, currentIndex } = state.player;
   if (trackIds) {
-    return selectTrack(state, trackIds[trackIndex]);
+    return selectTrack(state, trackIds[currentIndex]);
   }
 }
 
@@ -202,39 +199,39 @@ export function selectLoadedArtists(state: CombinedState) {
 }
 
 export function selectIsLoaded(state: CombinedState) {
-  const { collections, trackIds, trackIndex } = state.player;
+  const { collections, trackIds, currentIndex } = state.player;
   return (id: string) =>
     (collections.length && collections[0].id === id) ||
-    (!!trackIds.length && trackIds[trackIndex] === id);
+    (!!trackIds.length && trackIds[currentIndex] === id);
 }
 
 export function selectIsPlaying(state: CombinedState, id?: string) {
-  const { playerState } = state.player;
-  return (
-    (!id || selectIsLoaded(state)(id)) && playerState === PlayerState.Playing
-  );
+  const { playState } = state.player;
+  return (!id || selectIsLoaded(state)(id)) && playState === PlayState.Playing;
 }
 
 export function selectCanPlayPause(state: CombinedState) {
   const { player } = state;
   return (
-    player.playerState !== PlayerState.None &&
+    player.playState !== PlayState.None &&
     player.currentTime !== player.duration
   );
 }
 
 export function selectCanSeek(state: CombinedState) {
-  return state.player.playerState !== PlayerState.None;
+  return state.player.playState !== PlayState.None;
 }
 
 export function selectCanNext(state: CombinedState) {
-  const { trackIds, trackIndex, isLooped } = state.player;
-  return trackIds.length > 1 && (trackIndex < trackIds.length - 1 || isLooped);
+  const { trackIds, currentIndex, isLooped } = state.player;
+  return (
+    trackIds.length > 1 && (currentIndex < trackIds.length - 1 || isLooped)
+  );
 }
 
 export function selectCanPrevious(state: CombinedState) {
-  const { trackIds, trackIndex, isLooped } = state.player;
-  return trackIds.length > 1 && (trackIndex > 0 || isLooped);
+  const { trackIds, currentIndex, isLooped } = state.player;
+  return trackIds.length > 1 && (currentIndex > 0 || isLooped);
 }
 
 export function selectIsShuffled({ player }: CombinedState) {

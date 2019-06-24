@@ -4,7 +4,6 @@ import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
 import { getUserProfile } from "../../actions/userProfile";
 import { State } from "../../reducers";
-import { selectIsLoggedIn } from "../../reducers/authorization";
 import { selectUserProfile } from "../../reducers/userProfile";
 import Brand from "./Brand";
 import User from "./User";
@@ -30,7 +29,6 @@ const Right = styled.div`
 
 interface Props {
   children: ReactNode;
-  isLoggedIn: boolean;
   userProfile?: UserProfile;
   getUserProfile: () => void;
 }
@@ -38,15 +36,12 @@ interface Props {
 function Header({
   children,
   className,
-  isLoggedIn,
   userProfile,
   getUserProfile
 }: Props & HTMLAttributes<HTMLElement>) {
   useEffect(() => {
-    if (isLoggedIn) {
-      getUserProfile();
-    }
-  }, [isLoggedIn, getUserProfile]);
+    getUserProfile();
+  }, [getUserProfile]);
 
   return (
     <Wrapper className={className}>
@@ -65,7 +60,6 @@ function Header({
 }
 
 const mapState = (state: State) => ({
-  isLoggedIn: selectIsLoggedIn(state),
   userProfile: selectUserProfile(state)
 });
 

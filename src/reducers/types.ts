@@ -11,3 +11,9 @@ export interface Collection {
   id: string;
   type: Type;
 }
+
+export enum PlayState {
+  None = "NONE",
+  Playing = "IS_PLAYING",
+  Paused = "IS_PAUSED"
+}
