@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/spotify-client/static/js/main.d2455b09.chunk.js",
-    "main.js.map": "/spotify-client/static/js/main.d2455b09.chunk.js.map",
+    "main.js": "/spotify-client/static/js/main.32947c51.chunk.js",
+    "main.js.map": "/spotify-client/static/js/main.32947c51.chunk.js.map",
     "runtime~main.js": "/spotify-client/static/js/runtime~main.9f025a71.js",
     "runtime~main.js.map": "/spotify-client/static/js/runtime~main.9f025a71.js.map",
     "static/js/2.b796bfcc.chunk.js": "/spotify-client/static/js/2.b796bfcc.chunk.js",
     "static/js/2.b796bfcc.chunk.js.map": "/spotify-client/static/js/2.b796bfcc.chunk.js.map",
     "index.html": "/spotify-client/index.html",
-    "precache-manifest.db07c8eff5c8dd6108769129a412d5ca.js": "/spotify-client/precache-manifest.db07c8eff5c8dd6108769129a412d5ca.js",
+    "precache-manifest.f89e48af0a496c4ac384ed77192fbb7e.js": "/spotify-client/precache-manifest.f89e48af0a496c4ac384ed77192fbb7e.js",
     "service-worker.js": "/spotify-client/service-worker.js"
   }
 }
