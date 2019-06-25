@@ -34,6 +34,7 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  min-height: 0;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     flex-direction: row;

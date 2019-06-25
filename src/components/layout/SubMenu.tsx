@@ -6,6 +6,7 @@ const List = styled.ul`
   align-items: center;
   display: flex;
   flex-shrink: 0;
+  flex-wrap: wrap;
   font-size: ${props => props.theme.fontSize.medium}px;
   justify-content: center;
   margin-bottom: ${props => props.theme.thickness.medium}px;
@@ -17,11 +18,8 @@ const StyledNavLink = styled(NavLink)`
   display: flex;
   height: ${props => props.theme.thickness.large}px;
   justify-content: center;
-  overflow: hidden;
   padding: 0 ${props => props.theme.thickness.small}px;
   position: relative;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 
   &:hover {
     color: ${props => props.theme.onBackground.primary};

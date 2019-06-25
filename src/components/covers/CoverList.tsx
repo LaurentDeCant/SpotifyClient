@@ -3,7 +3,7 @@ import styled from "../../styles/styled";
 import { Cover } from "./types";
 import CoverItem from "./CoverItem";
 
-const StyledList = styled.ul`
+const List = styled.ul`
   align-content: flex-start;
   display: flex;
   flex-wrap: wrap;
@@ -16,11 +16,7 @@ function splitWidth(times: number) {
   return `calc((100% - ${times * 25}px) / ${times} - 4px)`;
 }
 
-const StyledItem = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const StyledCoverItem = styled(CoverItem)`
   margin: ${props => props.theme.thickness.small}px;
   width: ${splitWidth(2)};
 
@@ -41,13 +37,11 @@ interface Props {
 
 function CoverList({ className, covers, onClick }: Props) {
   return (
-    <StyledList className={className}>
+    <List className={className}>
       {covers.map(cover => (
-        <StyledItem key={cover.id}>
-          <CoverItem cover={cover} onClick={onClick} />
-        </StyledItem>
+        <StyledCoverItem key={cover.id} cover={cover} onClick={onClick} />
       ))}
-    </StyledList>
+    </List>
   );
 }
 

@@ -4,22 +4,20 @@ import { Button, Image, Text } from "../core";
 import { ImageShape } from "../core/Image";
 import { Cover } from "./types";
 
-const StyledButton = styled(Button)<{ shape: ImageShape }>`
-    background: ${props => props.theme.background.tertiary};
-  ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
-  box-shadow: ${props => props.theme.shadow.middle};
+const Item = styled.li`
   display: flex;
-  margin-bottom: ${props => props.theme.thickness.small}px;
-  padding-top: 100%;
-  position: relative;
-  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-const StyledImge = styled(Image)`
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
+const StyledButton = styled(Button)<{ shape: ImageShape }>`
+  background: ${props => props.theme.background.tertiary};
+  ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
+  flex-shrink: 0;
+  box-shadow: ${props => props.theme.shadow.middle};
+  margin-bottom: ${props => props.theme.thickness.small}px;
+  width: 100%;
 `;
 
 const Title = styled(Text)`
@@ -38,26 +36,27 @@ const SubTitle = styled(Text)`
 `;
 
 interface Props {
+  className?: string;
   cover: Cover;
   onClick: (coverId: string) => void;
 }
 
-function CoverItem({ cover, onClick }: Props) {
+function CoverItem({ className, cover, onClick }: Props) {
   function handleClick() {
     onClick(cover.id);
   }
 
   return (
-    <>
+    <Item className={className}>
       <StyledButton
         onClick={handleClick}
         shape={cover.imageShape || ImageShape.Square}
       >
-        <StyledImge source={cover.imageSource} />
+        <Image source={cover.imageSource} />
       </StyledButton>
       <Title>{cover.title}</Title>
       {cover.subTitle && <SubTitle>{cover.subTitle}</SubTitle>}
-    </>
+    </Item>
   );
 }
 

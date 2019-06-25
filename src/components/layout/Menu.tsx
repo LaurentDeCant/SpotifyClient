@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 const List = styled.ul`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
 
   @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
     flex-direction: column;

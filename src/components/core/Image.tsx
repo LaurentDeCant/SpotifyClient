@@ -6,31 +6,27 @@ export enum ImageShape {
   Round = "ROUND"
 }
 
-const StyledImg = styled.img<{ shape: ImageShape; isLoaded: boolean }>`
-  ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
-  height: auto;
-  object-fit: cover;
-  opacity: ${props => (props.isLoaded ? "1" : "0")}
-  width: 100%;
-  transition: opacity .2s;
-`;
-
-const Container = styled.div<{ shape: ImageShape }>`
+const Wrapper = styled.div<{ shape: ImageShape }>`
   background: ${props => props.theme.background.tertiary};
   ${props => props.shape === ImageShape.Round && "border-radius: 50%;"}
-  height: 100%;
-  position: relative;
+  overflow: hidden;
   width: 100%;
 `;
 
-const StyledText = styled.span`
-  font-size: ${props => props.theme.thickness.extraLarge}px;
-  font-weight: ${props => props.theme.fontWeight.light}
-  left: 50%;
+const ReWrapper = styled.div`
+  padding-top: 100%;
+  position: relative;
+`;
+
+const Img = styled.img<{ isLoaded: boolean }>`
+  height: 100%;
+  left: 0;
   position: absolute;
-  text-align: center;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  object-fit: cover;
+  opacity: ${props => (props.isLoaded ? "1" : "0")}
+  top: 0;
+  width: 100%;
+  transition: opacity .2s;
 `;
 
 interface Props {
@@ -49,18 +45,12 @@ function Image({
     setIsLoaded(true);
   }
 
-  return source ? (
-    <StyledImg
-      className={className}
-      src={source}
-      shape={shape}
-      onLoad={handleLoad}
-      isLoaded={isLoaded}
-    />
-  ) : (
-    <Container className={className} shape={shape}>
-      <StyledText>?</StyledText>
-    </Container>
+  return (
+    <Wrapper className={className} shape={shape}>
+      <ReWrapper>
+        {source && <Img src={source} onLoad={handleLoad} isLoaded={isLoaded} />}
+      </ReWrapper>
+    </Wrapper>
   );
 }
 

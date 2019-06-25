@@ -14,6 +14,8 @@ import CoverList from "../covers/CoverList";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 0;
 `;
 
 const StyledCoverList = styled(CoverList)`
