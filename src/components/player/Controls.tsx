@@ -79,17 +79,30 @@ function Controls({
 }: Props) {
   return (
     <Wrapper>
-      <ShuffleButton onClick={toggleShuffle} isToggled={isShuffled} />
-      <PreviousButton disabled={!canPrevious} onClick={previous} />
+      <ShuffleButton
+        data-testid="shuffleButton"
+        onClick={toggleShuffle}
+        isToggled={isShuffled}
+      />
+      <PreviousButton
+        data-testid="previousButton"
+        disabled={!canPrevious}
+        onClick={previous}
+      />
 
       <PlayButton
+        data-testid="playButton"
         disabled={!canPlayPause}
         onClick={playPause}
         iconType={isPlaying ? IconType.Pause : IconType.PlayArrow}
       />
 
-      <NextButton disabled={!canNext} onClick={next} />
-      <LoopButton onClick={toggleLoop} isToggled={isLooped} />
+      <NextButton data-testid="nextButton" disabled={!canNext} onClick={next} />
+      <LoopButton
+        data-testid="loopButton"
+        onClick={toggleLoop}
+        isToggled={isLooped}
+      />
     </Wrapper>
   );
 }

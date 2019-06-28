@@ -2,7 +2,7 @@ import styled from "../../styles/styled";
 import Button from "./Button";
 
 const PrimaryButton = styled(Button).attrs(() => ({
-  onPrimary: true
+  isOnPrimary: true
 }))`
   background: ${props => props.theme.color.primary};
   border-radius: ${props => props.theme.thickness.medium}px;

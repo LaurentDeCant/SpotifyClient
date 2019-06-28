@@ -1,5 +1,13 @@
 import { PlayerActionType } from "../actions";
-import reducer, { initialState, Command } from "./player";
+import { initialState as initialCombinedState } from ".";
+import reducer, {
+  initialState,
+  Command,
+  selectIsLoaded,
+  selectIsPlaying,
+  selectCanPrevious,
+  selectCanNext
+} from "./player";
 import { PlayState } from "./types";
 
 describe("player reducer", () => {
@@ -99,4 +107,24 @@ describe("player reducer", () => {
   });
 });
 
-describe("player selectors", () => {});
+describe("player selectors", () => {
+  test("selectIsLaded", () => {
+    const state = initialCombinedState;
+    const isLoaded = selectIsLoaded(state)("");
+  });
+
+  test("selectIsPlaying", () => {
+    const state = initialCombinedState;
+    const isPlaying = selectIsPlaying(state);
+  });
+
+  test("selectCanPrevious", () => {
+    const state = initialCombinedState;
+    const canPrevious = selectCanPrevious(state);
+  });
+
+  test("selectCanNext", () => {
+    const state = initialCombinedState;
+    const canNext = selectCanNext(state);
+  });
+});

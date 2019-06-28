@@ -4,9 +4,9 @@ import Button from "./Button";
 import Icon, { IconType } from "./Icon";
 
 const StyledButton = styled(Button).attrs<{
-  onPrimary: boolean;
-}>(({ onPrimary }) => ({
-  onPrimary
+  isOnPrimary: boolean;
+}>(({ isOnPrimary }) => ({
+  isOnPrimary
 }))`
   border-radius: 50%;
   height: ${props => props.theme.thickness.large}px;
@@ -19,17 +19,17 @@ const StyledIcon = styled(Icon)`
 `;
 
 export interface Props {
-  onPrimary?: boolean;
+  isOnPrimary?: boolean;
   iconType: IconType;
 }
 
 function RoundButton({
-  onPrimary,
+  isOnPrimary,
   iconType,
   ...rest
 }: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <StyledButton {...rest} onPrimary={!!onPrimary}>
+    <StyledButton {...rest} isOnPrimary={!!isOnPrimary}>
       <StyledIcon type={iconType} />
     </StyledButton>
   );

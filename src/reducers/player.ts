@@ -127,21 +127,21 @@ export default createReducer(initialState, {
           command: Command.Play
         };
   },
-  [ActionType.Next]: (state: State) => {
-    const { currentIndex, trackIds } = state;
-    return {
-      ...state,
-      currentIndex:
-        currentIndex === trackIds.length - 1 ? 0 : state.currentIndex + 1,
-      command: Command.Play
-    };
-  },
   [ActionType.Previous]: (state: State) => {
     const { currentIndex, trackIds } = state;
     return {
       ...state,
       currentIndex:
         currentIndex === 0 ? trackIds.length - 1 : state.currentIndex - 1,
+      command: Command.Play
+    };
+  },
+  [ActionType.Next]: (state: State) => {
+    const { currentIndex, trackIds } = state;
+    return {
+      ...state,
+      currentIndex:
+        currentIndex === trackIds.length - 1 ? 0 : state.currentIndex + 1,
       command: Command.Play
     };
   },
@@ -222,16 +222,16 @@ export function selectCanSeek(state: CombinedState) {
   return state.player.playState !== PlayState.None;
 }
 
+export function selectCanPrevious(state: CombinedState) {
+  const { trackIds, currentIndex, isLooped } = state.player;
+  return trackIds.length > 1 && (currentIndex > 0 || isLooped);
+}
+
 export function selectCanNext(state: CombinedState) {
   const { trackIds, currentIndex, isLooped } = state.player;
   return (
     trackIds.length > 1 && (currentIndex < trackIds.length - 1 || isLooped)
   );
-}
-
-export function selectCanPrevious(state: CombinedState) {
-  const { trackIds, currentIndex, isLooped } = state.player;
-  return trackIds.length > 1 && (currentIndex > 0 || isLooped);
 }
 
 export function selectIsShuffled({ player }: CombinedState) {
