@@ -4,7 +4,6 @@ import {
   ActionType as NotificationActionType,
   DeleteNotificationAction
 } from "../actions/notifications";
-import { State as CombinedState } from "../reducers";
 import createReducer from "./createReducer";
 
 export interface Notification {
@@ -44,7 +43,3 @@ export default createReducer(initialState, {
     ...state.filter(notification => notification.id !== payload.notificationId)
   ]
 });
-
-export function selectNotifications({ notifications }: CombinedState) {
-  return notifications;
-}

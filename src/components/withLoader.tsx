@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import styled from "../styles/styled";
 import { State } from "../reducers";
-import { selectIsLoading } from "../reducers/loading";
+import { selectIsLoading } from "../selectors/loading";
 
 const Fader = styled.div<{ isLoading: boolean }>`
   display: flex;

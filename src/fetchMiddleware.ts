@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { normalize } from "normalizr";
-import { authorizedFetch } from "../utils/authorization";
+import { authorizedFetch } from "./utils/authorization";
 
 export default () => (next: Dispatch) => (action: any) => {
   const { types, path, method, schema, data, success } = action;

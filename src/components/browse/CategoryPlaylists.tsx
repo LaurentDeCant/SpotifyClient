@@ -4,7 +4,10 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { Category, Playlist } from "../../types";
 import { getCategory } from "../../actions/browse";
 import { State } from "../../reducers";
-import { selectCategory, selectCategoryPlaylists } from "../../reducers/browse";
+import {
+  selectCategory,
+  selectCategoryPlaylists
+} from "../../selectors/browse";
 import { Heading } from "../core";
 import PlaylistCovers from "../covers/PlaylistCovers";
 import withLoader from "../withLoader";

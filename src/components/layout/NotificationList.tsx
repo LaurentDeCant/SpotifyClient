@@ -2,10 +2,8 @@ import React, { HTMLAttributes } from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { State } from "../../reducers";
-import {
-  Notification,
-  selectNotifications
-} from "../../reducers/notifications";
+import { Notification } from "../../reducers/notifications";
+import { selectNotifications } from "../../selectors/notifications";
 import NotificationItem from "./NotificationItem";
 
 const Wrapper = styled.div`

@@ -1,6 +1,4 @@
 import merge from "lodash/merge";
-import { createSelector } from "reselect";
-import memoize from "lodash/memoize";
 import {
   BrowseActionType,
   FollowingActionType,
@@ -8,15 +6,13 @@ import {
   SearchActionType
 } from "../actions";
 import { EntitiesAction } from "../actions/types";
-import { State as CombinedState } from ".";
-import { PlaylistDictionary } from "./types";
-import createReducer from "./createReducer";
-import { selectTracks } from "./tracks";
 import {
   FollowPlaylistSuccessAction,
   UnfollowPlaylistSuccessAction,
   CheckFollowedPlaylistSuccessAction
 } from "../actions/following";
+import { PlaylistDictionary } from "./types";
+import createReducer from "./createReducer";
 
 export interface State extends PlaylistDictionary {}
 
@@ -55,39 +51,3 @@ export default createReducer(initialState, {
     { payload }: UnfollowPlaylistSuccessAction
   ) => updatePlaylist(state, payload.playlistId, { isFollowed: false })
 });
-
-export function selectPlaylist(
-  { playlists }: CombinedState,
-  playlistId: string
-) {
-  return playlists[playlistId];
-}
-
-export function selectPlaylistTracks(state: CombinedState, albumId: string) {
-  const playlist = selectPlaylist(state, albumId);
-  if (playlist) {
-    const tracks = selectTracks(state)(playlist.tracks);
-    if (tracks) {
-      return tracks.filter(track => !!track);
-    }
-  }
-
-  return [];
-}
-
-export const selectPlaylists = createSelector(
-  ({ playlists }: CombinedState) => playlists,
-  (playlists: PlaylistDictionary) =>
-    memoize((playlistIds: string[]) =>
-      playlistIds ? playlistIds.map(playlistId => playlists[playlistId]) : []
-    )
-);
-
-export function selectPlayableTracks(state: CombinedState, playlistId: string) {
-  const tracks = selectPlaylistTracks(state, playlistId);
-  return tracks ? tracks.filter(track => track.preview_url) : [];
-}
-
-export function selectIsPlayable(state: CombinedState, playlistId: string) {
-  return !!selectPlayableTracks(state, playlistId).length;
-}

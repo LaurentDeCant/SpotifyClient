@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Playlist } from "../../types";
 import { getFeaturedPlaylists } from "../../actions/browse";
 import { State } from "../../reducers";
-import { selectFeaturedPlaylists } from "../../reducers/browse";
+import { selectFeaturedPlaylists } from "../../selectors/browse";
 import PlaylistCovers from "../covers/PlaylistCovers";
 import withLoader from "../withLoader";
 

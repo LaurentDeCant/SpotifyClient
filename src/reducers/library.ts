@@ -3,10 +3,7 @@ import {
   SavedAlbumsSuccessAction,
   SavedTracksSuccessAction
 } from "../actions/library";
-import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
-import { selectAlbums } from "./albums";
-import { selectTracks } from "./tracks";
 
 export interface State {
   userAlbumIds: string[];
@@ -28,21 +25,3 @@ export default createReducer(initialState, {
     { payload }: SavedTracksSuccessAction
   ) => ({ ...state, userTrackIds: Object.keys(payload.tracks || {}) })
 });
-
-export function selectSavedAlbums(state: CombinedState) {
-  return selectAlbums(state)(state.library.userAlbumIds);
-}
-
-export function selectSavedTracks(state: CombinedState) {
-  const tracks = selectTracks(state)(state.library.userTrackIds);
-  if (tracks) {
-    return tracks.filter(track => !!track);
-  }
-
-  return [];
-}
-
-export function selectPlayableTracks(state: CombinedState) {
-  const tracks = selectSavedTracks(state);
-  return tracks ? tracks.filter(track => track.preview_url) : [];
-}

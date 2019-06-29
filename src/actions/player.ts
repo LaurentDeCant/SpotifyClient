@@ -1,11 +1,11 @@
 import { Dispatch } from "redux";
 import { Type } from "../types";
 import { State } from "../reducers";
-import { selectIsPlaying, selectIsLoaded } from "../reducers/player";
-import { selectPlayableTracks as selectAlbumTracks } from "../reducers/albums";
-import { selectPlayableTracks as selectArtistTracks } from "../reducers/artists";
-import { selectPlayableTracks as selectPlaylistTracks } from "../reducers/playlists";
-import { selectPlayableTracks as selectLibraryTracks } from "../reducers/library";
+import { selectIsPlaying, selectIsLoaded } from "../selectors/player";
+import { selectPlayableTracks as selectAlbumTracks } from "../selectors/albums";
+import { selectPlayableTracks as selectArtistTracks } from "../selectors/artists";
+import { selectPlayableTracks as selectPlaylistTracks } from "../selectors/playlists";
+import { selectPlayableTracks as selectLibraryTracks } from "../selectors/library";
 import { PlayerActionType as ActionType } from ".";
 import { PayloadAction } from "./types";
 

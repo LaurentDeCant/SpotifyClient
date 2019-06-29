@@ -8,7 +8,6 @@ import {
   SearchActionType,
   UserProfileActionType
 } from "../actions";
-import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 
 export interface State {
@@ -86,7 +85,3 @@ export default createReducer(initialState, {
   [UserProfileActionType.UserProfileSuccess]: decrement,
   [UserProfileActionType.UserProfileFailure]: decrement
 });
-
-export function selectIsLoading(state: CombinedState): boolean {
-  return !!state.loading.count;
-}

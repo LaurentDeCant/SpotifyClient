@@ -3,10 +3,7 @@ import {
   FollowedArtistsSuccessAction,
   FollowedPlaylistsSuccessAction
 } from "../actions/following";
-import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
-import { selectArtists } from "./artists";
-import { selectPlaylists } from "./playlists";
 
 export interface State {
   userArtistIds: string[];
@@ -31,11 +28,3 @@ export default createReducer(initialState, {
     { payload }: FollowedPlaylistsSuccessAction
   ) => ({ ...state, userPlaylistIds: Object.keys(payload.playlists || []) })
 });
-
-export function selectFollowedArtists(state: CombinedState) {
-  return selectArtists(state)(state.following.userArtistIds);
-}
-
-export function selectFollowedPlaylists(state: CombinedState) {
-  return selectPlaylists(state)(state.following.userPlaylistIds);
-}

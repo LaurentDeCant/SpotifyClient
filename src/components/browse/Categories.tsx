@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Category } from "../../types";
 import { getCategories } from "../../actions/browse";
 import { State } from "../../reducers";
-import { selectCategories } from "../../reducers/browse";
+import { selectCategories } from "../../selectors/browse";
 import CategoryCovers from "../covers/CategoryCovers";
 import withLoader from "../withLoader";
 

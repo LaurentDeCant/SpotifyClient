@@ -11,8 +11,8 @@ import {
   selectPlaylist,
   selectPlaylistTracks,
   selectIsPlayable
-} from "../../reducers/playlists";
-import { selectIsPlaying } from "../../reducers/player";
+} from "../../selectors/playlists";
+import { selectIsPlaying } from "../../selectors/player";
 import Wrapper from "./Wrapper";
 import Header from "./Header";
 import TrackList from "./TrackList";

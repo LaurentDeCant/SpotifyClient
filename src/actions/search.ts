@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { Album, Artist, Playlist } from "../types";
 import { State } from "../reducers";
-import { selectAlbum as selectAlbumById } from "../reducers/albums";
-import { selectArtist as selectArtistById } from "../reducers/artists";
-import { selectPlaylist as selectPlaylistById } from "../reducers/playlists";
+import { selectAlbum as selectAlbumById } from "../selectors/albums";
+import { selectArtist as selectArtistById } from "../selectors/artists";
+import { selectPlaylist as selectPlaylistById } from "../selectors/playlists";
 import { SearchActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch, PayloadAction } from "./types";
 import { Schemas } from "./schemas";

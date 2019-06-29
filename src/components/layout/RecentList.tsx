@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
 import { State } from "../../reducers";
-import { selectRecents } from "../../reducers/player";
+import { selectRecents } from "../../selectors/player";
 import RecentItem from "./RecentItem";
 
 const Title = styled.h3`

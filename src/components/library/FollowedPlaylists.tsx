@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Playlist } from "../../types";
 import { getFollowedPlaylists } from "../../actions/following";
 import { State } from "../../reducers";
-import { selectFollowedPlaylists } from "../../reducers/following";
+import { selectFollowedPlaylists } from "../../selectors/following";
 import PlaylistCovers from "../covers/PlaylistCovers";
 import Empty from "../layout/Empty";
 import withLoader from "../withLoader";

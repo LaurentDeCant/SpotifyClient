@@ -4,7 +4,7 @@ import styled from "../../styles/styled";
 import { UserProfile } from "../../types";
 import { getUserProfile } from "../../actions/userProfile";
 import { State } from "../../reducers";
-import { selectUserProfile } from "../../reducers/userProfile";
+import { selectUserProfile } from "../../selectors/userProfile";
 import Brand from "./Brand";
 import User from "./User";
 

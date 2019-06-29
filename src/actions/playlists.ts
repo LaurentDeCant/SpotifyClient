@@ -1,5 +1,5 @@
 import { State } from "../reducers";
-import { selectUserProfile } from "../reducers/userProfile";
+import { selectUserProfile } from "../selectors/userProfile";
 import { PlaylistActionType as ActionType } from ".";
 import { EntitiesAction, FetchDispatch } from "./types";
 import { Schemas } from "./schemas";

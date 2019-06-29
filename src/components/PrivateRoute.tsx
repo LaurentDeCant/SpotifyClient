@@ -8,8 +8,8 @@ import {
 } from "react-router";
 import { connect } from "react-redux";
 import { State } from "../reducers";
-import { selectIsLoggedIn } from "../reducers/authorization";
-import { selectUserProfile } from "../reducers/userProfile";
+import { selectIsLoggedIn } from "../selectors/authorization";
+import { selectUserProfile } from "../selectors/userProfile";
 import { UserProfile } from "../types";
 
 interface Props extends RouteProps {

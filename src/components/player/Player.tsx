@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
 import styled from "../../styles/styled";
 import { State } from "../../reducers";
-import { Times, selectTimes, selectCanSeek } from "../../reducers/player";
+import { Times, selectTimes, selectCanSeek } from "../../selectors/player";
 import { seek } from "../../actions/player";
 import { IconType, RoundButton } from "../core";
 import TrackInfos from "./TrackInfos";

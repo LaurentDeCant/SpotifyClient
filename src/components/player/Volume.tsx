@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "../../styles/styled";
 import { changeVolume } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectVolume, selectIsMuted } from "../../reducers/player";
+import { selectVolume, selectIsMuted } from "../../selectors/player";
 import { IconType, RoundButton } from "../core";
 import Slider from "./Slider";
 

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getSavedTracks } from "../../actions/library";
 import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
-import { selectSavedTracks } from "../../reducers/library";
+import { selectSavedTracks } from "../../selectors/library";
 import { Track, Type } from "../../types";
 import TrackList from "../details/TrackList";
 import Empty from "../layout/Empty";

@@ -11,8 +11,8 @@ import {
   selectAlbumArtists,
   selectAlbumTracks,
   selectIsPlayable
-} from "../../reducers/albums";
-import { selectIsPlaying } from "../../reducers/player";
+} from "../../selectors/albums";
+import { selectIsPlaying } from "../../selectors/player";
 import { getArtistNames, getImageSource } from "../../utils";
 import Wrapper from "./Wrapper";
 import Header from "./Header";

@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
 import GlobalStyle from "./styles/global";
 import styled, { ThemeProvider } from "./styles/styled";
 import { ThemeMode, darkTheme, lightTheme } from "./styles/theme";
-import rootReducer from "./reducers";
 import { checkRedirection, initAuthorization } from "./utils/authorization";
-import fetchMiddleware from "./middlewares/fetchMiddleware";
 import { RoundButton, IconType } from "./components/core";
 import App from "./components/layout/App";
+import { createStore } from "./store";
 
 checkRedirection();
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunkMiddleware, fetchMiddleware))
-);
+const store = createStore();
 initAuthorization(store.dispatch);
 
 interface ThemeButtonProps {

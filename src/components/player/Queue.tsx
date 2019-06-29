@@ -5,7 +5,7 @@ import { Track, Type } from "../../types";
 import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
 import { Collection } from "../../reducers/types";
-import { selectCollection, selectLoadedTracks } from "../../reducers/player";
+import { selectCollection, selectLoadedTracks } from "../../selectors/player";
 import { Heading } from "../core";
 import TrackList from "../details/TrackList";
 import Empty from "../layout/Empty";

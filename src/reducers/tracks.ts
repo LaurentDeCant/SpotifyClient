@@ -1,6 +1,4 @@
-import { createSelector } from "reselect";
 import merge from "lodash/merge";
-import memoize from "lodash/memoize";
 import {
   AlbumActionType,
   ArtistActionType,
@@ -14,11 +12,8 @@ import {
   UnsaveTrackSuccessAction,
   CheckSavedTrackSuccess
 } from "../actions/library";
-import { State as CombinedState } from ".";
 import { TrackDictionary } from "./types";
 import createReducer from "./createReducer";
-import { selectAlbum } from "./albums";
-import { selectArtists } from "./artists";
 
 export interface State extends TrackDictionary {}
 
@@ -63,27 +58,3 @@ export default createReducer(initialState, {
     { payload }: UnsaveTrackSuccessAction
   ) => updateTrack(state, payload.trackId, { isSaved: false })
 });
-
-export function selectTrack({ tracks }: CombinedState, trackId: string) {
-  return tracks[trackId];
-}
-
-export function selectTrackAlbum(state: CombinedState, trackId: string) {
-  const track = selectTrack(state, trackId);
-  if (track) {
-    return selectAlbum(state, track.album);
-  }
-}
-
-export function selectTrackArtists(state: CombinedState, trackId: string) {
-  const track = selectTrack(state, trackId);
-  return track ? selectArtists(state)(track.artists) : [];
-}
-
-export const selectTracks = createSelector(
-  (state: CombinedState) => state.tracks,
-  (tracks: TrackDictionary) =>
-    memoize((trackIds: string[]) =>
-      trackIds ? trackIds.map(trackId => tracks[trackId]) : []
-    )
-);

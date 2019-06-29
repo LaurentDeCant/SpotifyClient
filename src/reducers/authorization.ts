@@ -1,5 +1,4 @@
 import { ActionType } from "../actions/authorization";
-import { State as CombinedState } from ".";
 import createReducer from "./createReducer";
 
 export interface State {
@@ -16,7 +15,3 @@ export default createReducer(initialState, {
     isLoggedIn: true
   })
 });
-
-export function selectIsLoggedIn(state: CombinedState): boolean {
-  return !!state.authorization.isLoggedIn;
-}

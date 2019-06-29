@@ -6,7 +6,7 @@ import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
 import { clearRecents } from "../../actions/search";
 import { State } from "../../reducers";
-import { selectRecents } from "../../reducers/search";
+import { selectRecents } from "../../selectors/search";
 import { getImageSource, getImageShape } from "../../utils";
 import { Heading, PrimaryButton } from "../core";
 import CoverList from "../covers/CoverList";

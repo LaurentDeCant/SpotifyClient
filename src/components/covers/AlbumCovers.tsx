@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Album, Artist } from "../../types";
 import { State } from "../../reducers";
-import { selectAlbumArtists } from "../../reducers/albums";
+import { selectAlbumArtists } from "../../selectors/albums";
 import { getArtistNames, getImageSource } from "../../utils";
 import { Cover } from "./types";
 import CoverList from "./CoverList";

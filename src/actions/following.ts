@@ -1,6 +1,6 @@
 import { State } from "../reducers";
-import { selectArtist } from "../reducers/artists";
-import { selectPlaylist } from "../reducers/playlists";
+import { selectArtist } from "../selectors/artists";
+import { selectPlaylist } from "../selectors/playlists";
 import { FollowingActionType as ActionType } from ".";
 import {
   PayloadAction,

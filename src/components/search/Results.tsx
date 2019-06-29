@@ -12,7 +12,7 @@ import {
   selectAlbums,
   selectArtists,
   selectPlaylists
-} from "../../reducers/search";
+} from "../../selectors/search";
 import { Heading } from "../core";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";

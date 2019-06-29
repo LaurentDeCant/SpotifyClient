@@ -1,6 +1,6 @@
 import { State } from "../reducers";
-import { selectAlbum } from "../reducers/albums";
-import { selectTrack } from "../reducers/tracks";
+import { selectAlbum } from "../selectors/albums";
+import { selectTrack } from "../selectors/tracks";
 import { LibraryActionType as ActionType } from ".";
 import {
   PayloadAction,

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Artist } from "../../types";
 import { getFollowedArtists } from "../../actions/following";
 import { State } from "../../reducers";
-import { selectFollowedArtists } from "../../reducers/following";
+import { selectFollowedArtists } from "../../selectors/following";
 import ArtistCovers from "../covers/ArtistCovers";
 import Empty from "../layout/Empty";
 import withLoader from "../withLoader";

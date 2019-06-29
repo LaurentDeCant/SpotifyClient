@@ -1,5 +1,3 @@
-import { createSelector } from "reselect";
-import { Album, Category, Playlist } from "../types";
 import { BrowseActionType as ActionType } from "../actions";
 import {
   CategorySuccessAction,
@@ -8,13 +6,11 @@ import {
   CategoryPlaylistsSuccessAction,
   FeaturedPlaylistsSuccessAction
 } from "../actions/browse";
-import { State as CombinedState } from ".";
+import { CategoryDictionary } from "./types";
 import createReducer from "./createReducer";
-import { selectPlaylists } from "./playlists";
-import { selectAlbums } from "./albums";
 
 export interface State {
-  categories: { [id: string]: Category };
+  categories: CategoryDictionary;
   categoryPlaylistIds: string[];
   featuredPlaylistIds: string[];
   newReleaseIds: string[];
@@ -64,27 +60,3 @@ export default createReducer(initialState, {
     newReleaseIds: Object.keys(action.payload.albums)
   })
 });
-
-export const selectCategories = createSelector(
-  ({ browse }: CombinedState) => browse.categories,
-  (categories: { [categoryId: string]: Category }) => Object.values(categories)
-);
-
-export function selectCategory(
-  state: CombinedState,
-  categoryId: string
-): Category | undefined {
-  return state.browse.categories[categoryId];
-}
-
-export function selectCategoryPlaylists(state: CombinedState): Playlist[] {
-  return selectPlaylists(state)(state.browse.categoryPlaylistIds);
-}
-
-export function selectFeaturedPlaylists(state: CombinedState): Playlist[] {
-  return selectPlaylists(state)(state.browse.featuredPlaylistIds);
-}
-
-export function selectNewReleases(state: CombinedState): Album[] {
-  return selectAlbums(state)(state.browse.newReleaseIds);
-}

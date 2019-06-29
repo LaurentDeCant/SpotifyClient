@@ -1,5 +1,4 @@
-import { createSelector } from "reselect";
-import { Album, Artist, Playlist, Image, Type } from "../types";
+import { Image, Type } from "../types";
 import { SearchActionType as ActionType } from "../actions";
 import {
   SearchSuccessAction,
@@ -8,17 +7,8 @@ import {
   SelectPlaylistAction
 } from "../actions/search";
 import { getImageSource } from "../utils";
-import { State as CombinedState } from ".";
-import {
-  Collection,
-  AlbumDictionary,
-  ArtistDictionary,
-  PlaylistDictionary
-} from "./types";
+import { Collection } from "./types";
 import createReducer from "./createReducer";
-import { selectAlbums as selectAlbumsById } from "./albums";
-import { selectArtists as selectArtistsById } from "./artists";
-import { selectPlaylists as selectPlaylistsById } from "./playlists";
 
 export interface State {
   albumIds: string[];
@@ -78,41 +68,3 @@ export default createReducer(initialState, {
     recents: []
   })
 });
-
-export function selectAlbums(state: CombinedState): Album[] {
-  return selectAlbumsById(state)(state.search.albumIds);
-}
-
-export function selectArtists(state: CombinedState): Artist[] {
-  return selectArtistsById(state)(state.search.artistIds).sort(
-    (x, y) => y.popularity - x.popularity
-  );
-}
-
-export function selectPlaylists(state: CombinedState): Playlist[] {
-  return selectPlaylistsById(state)(state.search.playlistIds);
-}
-
-export const selectRecents = createSelector(
-  ({ search }: CombinedState) => search,
-  ({ albums }: CombinedState) => albums,
-  ({ artists }: CombinedState) => artists,
-  ({ playlists }: CombinedState) => playlists,
-  (
-    search: State,
-    albums: AlbumDictionary,
-    artists: ArtistDictionary,
-    playlists: PlaylistDictionary
-  ) => {
-    return search.recents.map(recent => {
-      switch (recent.type) {
-        case Type.Album:
-          return albums[recent.id];
-        case Type.Artist:
-          return artists[recent.id];
-        default:
-          return playlists[recent.id];
-      }
-    });
-  }
-);

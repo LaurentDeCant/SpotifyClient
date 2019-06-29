@@ -1,16 +1,6 @@
 import React, { useEffect, useRef, SyntheticEvent } from "react";
 import { connect } from "react-redux";
 import { Track } from "../../types";
-import { State } from "../../reducers";
-import {
-  selectLoadedTrack,
-  Times,
-  selectTimes,
-  selectVolume,
-  selectIsMuted,
-  Command,
-  selectCommand
-} from "../../reducers/player";
 import {
   trackLoaded,
   playing,
@@ -20,6 +10,16 @@ import {
   volumeChanged,
   ended
 } from "../../actions/player";
+import { State } from "../../reducers";
+import { Command } from "../../reducers/player";
+import {
+  selectLoadedTrack,
+  Times,
+  selectTimes,
+  selectVolume,
+  selectIsMuted,
+  selectCommand
+} from "../../selectors/player";
 
 interface Props {
   loadedTrack?: Track;

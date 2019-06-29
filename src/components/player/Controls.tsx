@@ -1,8 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "../../styles/styled";
+import {
+  toggleShuffle,
+  previous,
+  playPause,
+  next,
+  toggleLoop
+} from "../../actions/player";
 import { State } from "../../reducers";
-import { IconType, RoundButton, ToggleButton } from "../core";
 import {
   selectCanNext,
   selectCanPrevious,
@@ -10,14 +16,8 @@ import {
   selectIsLooped,
   selectIsPlaying,
   selectIsShuffled
-} from "../../reducers/player";
-import {
-  next,
-  previous,
-  toggleLoop,
-  playPause,
-  toggleShuffle
-} from "../../actions/player";
+} from "../../selectors/player";
+import { IconType, RoundButton, ToggleButton } from "../core";
 
 const Wrapper = styled.div`
   align-items: center;

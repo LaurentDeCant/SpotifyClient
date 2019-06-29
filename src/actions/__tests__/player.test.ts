@@ -1,15 +1,15 @@
 import configureStore from "redux-mock-store";
-import { Type } from "../types";
-import { State, initialState } from "../reducers";
-import { PlayState } from "../reducers/types";
-import { PlayerActionType } from ".";
-import { loadPlayPause } from "./player";
+import { Type } from "../../types";
+import { State, initialState } from "../../reducers";
+import { PlayState } from "../../reducers/types";
+import { PlayerActionType } from "..";
+import { loadPlayPause } from "../player";
 import {
   createAlbum,
   createArtist,
   createPlaylist,
   createTrack
-} from "./utils";
+} from "../utils";
 
 const mockStore = configureStore<State>();
 

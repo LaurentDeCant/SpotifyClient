@@ -1,14 +1,6 @@
-import { PlayerActionType } from "../actions";
-import { initialState as initialCombinedState } from ".";
-import reducer, {
-  initialState,
-  Command,
-  selectIsLoaded,
-  selectIsPlaying,
-  selectCanPrevious,
-  selectCanNext
-} from "./player";
-import { PlayState } from "./types";
+import { PlayerActionType } from "../../actions";
+import reducer, { initialState, Command } from "../../reducers/player";
+import { PlayState } from "../types";
 
 describe("player reducer", () => {
   test("load collection", () => {
@@ -104,27 +96,5 @@ describe("player reducer", () => {
 
     expect(state.currentIndex).toBe(1);
     expect(state.command).toBe(Command.Play);
-  });
-});
-
-describe("player selectors", () => {
-  test("selectIsLaded", () => {
-    const state = initialCombinedState;
-    const isLoaded = selectIsLoaded(state)("");
-  });
-
-  test("selectIsPlaying", () => {
-    const state = initialCombinedState;
-    const isPlaying = selectIsPlaying(state);
-  });
-
-  test("selectCanPrevious", () => {
-    const state = initialCombinedState;
-    const canPrevious = selectCanPrevious(state);
-  });
-
-  test("selectCanNext", () => {
-    const state = initialCombinedState;
-    const canNext = selectCanNext(state);
   });
 });

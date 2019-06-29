@@ -14,8 +14,8 @@ import {
   selectArtistAlbums,
   selectArtistTopTracks,
   selectArtistRelatedArtists
-} from "../../reducers/artists";
-import { selectIsPlaying } from "../../reducers/player";
+} from "../../selectors/artists";
+import { selectIsPlaying } from "../../selectors/player";
 import TrackList from "./TrackList";
 import AlbumCovers from "../covers/AlbumCovers";
 import ArtistCovers from "../covers/ArtistCovers";

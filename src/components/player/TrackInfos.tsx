@@ -10,7 +10,7 @@ import {
   selectLoadedArtists,
   selectLoadedAlbum,
   selectLoadedTrack
-} from "../../reducers/player";
+} from "../../selectors/player";
 import ArtistNames from "../details/ArtistNames";
 
 const Wrapper = styled.div`

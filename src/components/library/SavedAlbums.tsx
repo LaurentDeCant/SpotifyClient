@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Album } from "../../types";
 import { getSavedAlbums } from "../../actions/library";
 import { State } from "../../reducers";
-import { selectSavedAlbums } from "../../reducers/library";
+import { selectSavedAlbums } from "../../selectors/library";
 import AlbumCovers from "../covers/AlbumCovers";
 import Empty from "../layout/Empty";
 import withLoader from "../withLoader";
