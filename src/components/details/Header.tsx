@@ -11,11 +11,11 @@ const Wrapper = styled.div`
   justify-content: center;
   margin: 0 0 ${props => props.theme.thickness.small}px 0;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     margin: 0 0 ${props => props.theme.thickness.medium}px 0;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.small}px) {
     flex-direction: column;
     justify-content: flex-start;
     margin: 0 ${props => props.theme.thickness.medium}px 0 0;
@@ -35,12 +35,12 @@ const StyledImage = styled(Image)`
         props.theme.thickness.small}px
   );
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     margin: 0 ${props => props.theme.thickness.medium}px 0 0;
     width: ${props => props.theme.thickness.extraExtraLarge}px;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.small}px) {
     margin: 0 0 ${props => props.theme.thickness.medium}px 0;
     width: ${props => props.theme.thickness.extraExtraExtraLarge}px;
   }
@@ -57,7 +57,7 @@ const Title = styled(Text)`
   font-size: ${props => props.theme.fontSize.extraLarge}px;
   text-align: center;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.small}px) {
     font-size: ${props => props.theme.fontSize.extraLarge}px;
     max-width: ${props => props.theme.thickness.extraExtraExtraLarge}px;
   }
@@ -71,7 +71,7 @@ const SubTitle = styled(Text)`
   margin-top: ${props => props.theme.thickness.extraSmall}px;
   text-align: center;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.small}px) {
     font-size: ${props => props.theme.fontSize.large}px;
     margin-top: ${props => props.theme.thickness.small}px;
     max-width: ${props => props.theme.thickness.extraExtraExtraLarge}px;

@@ -21,7 +21,7 @@ const ThemeButton = styled(RoundButton).attrs<
   ThemeButtonProps,
   { iconType: IconType }
 >(({ mode }) => ({
-  onPrimary: true,
+  isOnPrimary: true,
   iconType: mode === ThemeMode.Dark ? IconType.Brightness3 : IconType.WbSunny
 }))<ThemeButtonProps>`
   margin-right: ${props => props.theme.thickness.extraSmall}px;

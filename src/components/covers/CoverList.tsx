@@ -20,11 +20,11 @@ const StyledCoverItem = styled(CoverItem)`
   margin: ${props => props.theme.thickness.small}px;
   width: ${splitWidth(2)};
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     width: ${splitWidth(3)};
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.small}px) {
     width: ${splitWidth(6)};
   }
 `;

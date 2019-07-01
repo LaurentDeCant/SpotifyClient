@@ -86,7 +86,7 @@ const Text = styled.span`
 `;
 
 const ClearButton = styled(RoundButton).attrs(() => ({
-  onPrimary: true,
+  isOnPrimary: true,
   iconType: IconType.Clear
 }))`
   justify-self: flex-end;

@@ -40,7 +40,7 @@ const StyledNavLink = styled(NavLink)`
     width: ${props => props.theme.thickness.large}px;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.medium}px;
   }
 `;

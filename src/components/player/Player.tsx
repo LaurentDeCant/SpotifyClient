@@ -30,7 +30,7 @@ const ThirdWrapper = styled.div`
 const LeftWrapper = styled(ThirdWrapper)`
   display: none;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     display: block;
     width: 25%;
   }
@@ -43,7 +43,7 @@ const CenterWrapper = styled(ThirdWrapper)`
   justify-content: space-evenly;
   width: 100%;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.small}px;
     width: 50%;
   }
@@ -54,7 +54,7 @@ const RightWrapper = styled(ThirdWrapper)`
   display: none;
   justify-content: flex-end;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     display: flex;
     width: 25%;
   }

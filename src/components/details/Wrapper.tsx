@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     margin-bottom: ${props => props.theme.thickness.medium}px;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.small}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.small}px) {
     flex-direction: row;
   }
 `;

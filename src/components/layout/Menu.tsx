@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   padding: 0 ${props => props.theme.thickness.small}px;
   z-index: 1;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     padding: ${props => props.theme.thickness.medium}px 0;
     width: ${props => props.theme.thickness.extraExtraLarge}px;
   }
@@ -26,7 +26,7 @@ const List = styled.ul`
   flex-direction: row;
   justify-content: space-between;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     flex-direction: column;
     justify-content: flex-start;
     margin-bottom: ${props => props.theme.thickness.medium}px;
@@ -48,7 +48,7 @@ const StyledNavLink = styled(NavLink)`
     color: ${props => props.theme.onBackground.primary};
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     padding: 0 ${props => props.theme.thickness.large}px;
 
     &.active {
@@ -67,7 +67,7 @@ const StyledRecents = styled(RecentList)`
   overflow: hidden;
   display: none;
 
-  @media (min-width: ${({ theme }) => theme.breakpoint.extraSmall}px) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.width.extraSmall}px) {
     display: block;
   }
 `;

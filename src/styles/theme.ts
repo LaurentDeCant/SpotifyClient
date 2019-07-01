@@ -10,8 +10,13 @@ export interface Theme {
     tertiary: string;
   };
   breakpoint: {
-    extraSmall: number;
-    small: number;
+    height: {
+      small: number;
+    };
+    width: {
+      extraSmall: number;
+      small: number;
+    };
   };
   color: {
     primary: string;
@@ -62,8 +67,13 @@ export interface Theme {
 
 const theme = {
   breakpoint: {
-    extraSmall: 480,
-    small: 960
+    height: {
+      small: 540
+    },
+    width: {
+      extraSmall: 480,
+      small: 960
+    }
   },
   color: {
     primary: "#1db954"

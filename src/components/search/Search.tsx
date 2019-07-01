@@ -1,5 +1,11 @@
 import _ from "lodash";
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEvent,
+  FormEvent
+} from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import styled from "../../styles/styled";
@@ -50,6 +56,10 @@ function Search({ history, match, search }: Props) {
     search(query);
   }, [search, query]);
 
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+  }
+
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
     setValue(value);
@@ -57,15 +67,16 @@ function Search({ history, match, search }: Props) {
   }
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <StyledInput
+        type="text"
         value={value}
         onChange={handleChange}
         placeholder="Search..."
         autoFocus
       />
       {query ? <Results /> : <Recents />}
-    </>
+    </form>
   );
 }
 
