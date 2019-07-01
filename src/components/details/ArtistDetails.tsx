@@ -25,7 +25,7 @@ import Header from "./Header";
 import withLoader from "../withLoader";
 
 const Section = styled.section`
-  margin-bottom: 40px;
+  margin-bottom: ${props => props.theme.thickness.medium}px;
 `;
 
 function TopTracks({

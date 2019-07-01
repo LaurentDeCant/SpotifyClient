@@ -46,7 +46,7 @@ export function selectLoadedArtists(state: State) {
 export function selectIsLoaded(state: State) {
   const { collections, trackIds, currentIndex } = state.player;
   return (id: string) =>
-    (collections.length && collections[0].id === id) ||
+    (!!collections.length && collections[0].id === id) ||
     (!!trackIds.length && trackIds[currentIndex] === id);
 }
 

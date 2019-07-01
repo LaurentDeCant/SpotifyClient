@@ -16,13 +16,12 @@ export function getArtist(artistId: string) {
         ActionType.ArtistFailure
       ],
       path: `artists/${artistId}`,
-      schema: Schemas.Artist,
-      success: () => {
-        getArtistAlbums(artistId)(dispatch);
-        getArtistRelatedArtists(artistId)(dispatch);
-        getArtistTopTracks(artistId)(dispatch);
-        checkFollowedArtist(artistId)(dispatch);
-      }
+      schema: Schemas.Artist
+    }).then(() => {
+      getArtistAlbums(artistId)(dispatch);
+      getArtistRelatedArtists(artistId)(dispatch);
+      getArtistTopTracks(artistId)(dispatch);
+      checkFollowedArtist(artistId)(dispatch);
     });
   };
 }
@@ -85,12 +84,11 @@ export function getArtistTopTracks(artistId: string) {
       ],
       path: `artists/${artistId}/top-tracks?country=us`,
       schema: Schemas.Tracks,
-      data: { artistId },
-      success: json => {
-        const trackIds = json.tracks.map(({ id }: any) => id);
-        if (trackIds.length) {
-          checkSavedTracks(trackIds)(dispatch);
-        }
+      data: { artistId }
+    }).then(json => {
+      const trackIds = json.tracks.map(({ id }: any) => id);
+      if (trackIds.length) {
+        checkSavedTracks(trackIds)(dispatch);
       }
     });
   };

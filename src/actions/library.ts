@@ -107,12 +107,11 @@ export function getSavedTracks() {
         ActionType.SavedTracksFailure
       ],
       path: "me/tracks",
-      schema: Schemas.PagedTracks,
-      success: json => {
-        const trackIds = json.items.map(({ track }: any) => track && track.id);
-        if (trackIds.length) {
-          checkSavedTracks(trackIds)(dispatch);
-        }
+      schema: Schemas.PagedTracks
+    }).then(json => {
+      const trackIds = json.items.map(({ track }: any) => track && track.id);
+      if (trackIds.length) {
+        checkSavedTracks(trackIds)(dispatch);
       }
     });
   };

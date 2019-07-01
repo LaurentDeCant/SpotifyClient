@@ -18,19 +18,18 @@ export function getPlaylist(playlistId: string) {
         ActionType.PlaylistFailure
       ],
       path: `playlists/${playlistId}`,
-      schema: Schemas.Playlist,
-      success: json => {
-        const state = getState();
-        const userProfile = selectUserProfile(state);
-        if (userProfile) {
-          checkFollowedPlaylist(playlistId, userProfile.id)(dispatch);
-        }
-        const trackIds = json.tracks.items.map(
-          ({ track }: any) => track && track.id
-        );
-        if (trackIds.length) {
-          checkSavedTracks(trackIds)(dispatch);
-        }
+      schema: Schemas.Playlist
+    }).then(json => {
+      const state = getState();
+      const userProfile = selectUserProfile(state);
+      if (userProfile) {
+        checkFollowedPlaylist(playlistId, userProfile.id)(dispatch);
+      }
+      const trackIds = json.tracks.items.map(
+        ({ track }: any) => track && track.id
+      );
+      if (trackIds.length) {
+        checkSavedTracks(trackIds)(dispatch);
       }
     });
   };

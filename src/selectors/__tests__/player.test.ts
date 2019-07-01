@@ -5,21 +5,215 @@ import {
   selectCanPrevious,
   selectCanNext
 } from "../../selectors/player";
+import { Type } from "../../types";
+import { PlayState } from "../../reducers/types";
 
 describe("player selectors", () => {
-  test("selectIsLaded", () => {
-    const isLoaded = selectIsLoaded(initialState)("");
+  describe("selectIsLoaded", () => {
+    test("returns false when collections and tracks are empty", () => {
+      const isLoaded = selectIsLoaded({
+        ...initialState
+      })("a");
+
+      expect(isLoaded).toBeFalsy();
+    });
+
+    test("returns false when id is not found", () => {
+      const isLoaded = selectIsLoaded({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          collections: [{ id: "a", type: Type.Album }],
+          trackIds: ["b"]
+        }
+      })("c");
+
+      expect(isLoaded).toBeFalsy();
+    });
+
+    test("returns true when collectionId is found", () => {
+      const isLoaded = selectIsLoaded({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          collections: [{ id: "a", type: Type.Album }],
+          trackIds: ["b"]
+        }
+      })("a");
+
+      expect(isLoaded).toBeTruthy();
+    });
+
+    test("returns true when trackId is found", () => {
+      const isLoaded = selectIsLoaded({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          collections: [{ id: "a", type: Type.Album }],
+          trackIds: ["b"]
+        }
+      })("b");
+
+      expect(isLoaded).toBeTruthy();
+    });
   });
 
-  test("selectIsPlaying", () => {
-    const isPlaying = selectIsPlaying(initialState);
+  describe("selectIsPlaying", () => {
+    test("returns false player is not playing", () => {
+      const isPlaying = selectIsPlaying(initialState);
+
+      expect(isPlaying).toBeFalsy();
+    });
+
+    test("returns false when item is not loaded", () => {
+      const isPlaying = selectIsPlaying(initialState, "a");
+
+      expect(isPlaying).toBeFalsy();
+    });
+
+    test("returns false when item is loaded and player is not playing", () => {
+      const isPlaying = selectIsPlaying(
+        {
+          ...initialState,
+          player: { ...initialState.player, trackIds: ["a"] }
+        },
+        "a"
+      );
+
+      expect(isPlaying).toBeFalsy();
+    });
+
+    test("returns true when player is playing", () => {
+      const isPlaying = selectIsPlaying({
+        ...initialState,
+        player: { ...initialState.player, playState: PlayState.Playing }
+      });
+
+      expect(isPlaying).toBeTruthy();
+    });
+
+    test("returns true when item is loaded and player is playing", () => {
+      const isPlaying = selectIsPlaying(
+        {
+          ...initialState,
+          player: {
+            ...initialState.player,
+            trackIds: ["a"],
+            playState: PlayState.Playing
+          }
+        },
+        "a"
+      );
+
+      expect(isPlaying).toBeTruthy();
+    });
   });
 
-  test("selectCanPrevious", () => {
-    const canPrevious = selectCanPrevious(initialState);
+  describe("selectCanPrevious", () => {
+    test("returns false when there is one track ", () => {
+      const canPrevious = selectCanPrevious({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a"]
+        }
+      });
+
+      expect(canPrevious).toBeFalsy();
+    });
+
+    test("returns false when there are many tracks and current is first", () => {
+      const canPrevious = selectCanPrevious({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a", "b"],
+          currentIndex: 0
+        }
+      });
+
+      expect(canPrevious).toBeFalsy();
+    });
+
+    test("returns true when there are many tracks and current is not first", () => {
+      const canPrevious = selectCanPrevious({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a", "b"],
+          currentIndex: 1
+        }
+      });
+
+      expect(canPrevious).toBeTruthy();
+    });
+
+    test("returns true when there are many tracks and player is looped", () => {
+      const canPrevious = selectCanPrevious({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a", "b"],
+          currentIndex: 0,
+          isLooped: true
+        }
+      });
+
+      expect(canPrevious).toBeTruthy();
+    });
   });
 
-  test("selectCanNext", () => {
-    const canNext = selectCanNext(initialState);
+  describe("selectCanNext", () => {
+    test("returns false when there is one track ", () => {
+      const canNext = selectCanNext({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a"]
+        }
+      });
+
+      expect(canNext).toBeFalsy();
+    });
+
+    test("returns false when there are many tracks and current is first", () => {
+      const canNext = selectCanNext({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a", "b"],
+          currentIndex: 1
+        }
+      });
+
+      expect(canNext).toBeFalsy();
+    });
+
+    test("returns true when there are many tracks and current is not first", () => {
+      const canNext = selectCanNext({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a", "b"],
+          currentIndex: 0
+        }
+      });
+
+      expect(canNext).toBeTruthy();
+    });
+
+    test("returns true when there are many tracks and player is looped", () => {
+      const canNext = selectCanNext({
+        ...initialState,
+        player: {
+          ...initialState.player,
+          trackIds: ["a", "b"],
+          currentIndex: 1,
+          isLooped: true
+        }
+      });
+
+      expect(canNext).toBeTruthy();
+    });
   });
 });

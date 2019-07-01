@@ -31,10 +31,9 @@ export function getCategory(categoryId: string) {
         ActionType.CategoryFailure
       ],
       path: `browse/categories/${categoryId}`,
-      schema: Schemas.Category,
-      success: () => {
-        getCategoryPlaylists(categoryId)(dispatch);
-      }
+      schema: Schemas.Category
+    }).then(() => {
+      getCategoryPlaylists(categoryId)(dispatch);
     });
   };
 }

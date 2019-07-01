@@ -15,13 +15,12 @@ export function getAlbum(albumId: string) {
         ActionType.AlbumFailure
       ],
       path: `albums/${albumId}`,
-      schema: Schemas.Album,
-      success: json => {
-        checkSavedAlbum(albumId)(dispatch);
-        const trackIds = json.tracks.items.map(({ id }: any) => id);
-        if (trackIds.length) {
-          checkSavedTracks(trackIds)(dispatch);
-        }
+      schema: Schemas.Album
+    }).then(json => {
+      checkSavedAlbum(albumId)(dispatch);
+      const trackIds = json.tracks.items.map(({ id }: any) => id);
+      if (trackIds.length) {
+        checkSavedTracks(trackIds)(dispatch);
       }
     });
   };

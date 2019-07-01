@@ -36,11 +36,10 @@ export interface FetchAction<D = {}> {
   method?: FetchMethod;
   schema?: schema.Entity | schema.Object;
   data?: D;
-  success?: (json: any) => void;
 }
 
 export interface FetchDispatch {
-  (action: FetchAction): void;
+  (action: FetchAction): Promise<any>;
 }
 
 export interface PayloadAction<T = any, P = any> extends Action<T> {
