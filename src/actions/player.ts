@@ -6,6 +6,7 @@ import { selectPlayableTracks as selectAlbumTracks } from "../selectors/albums";
 import { selectPlayableTracks as selectArtistTracks } from "../selectors/artists";
 import { selectPlayableTracks as selectPlaylistTracks } from "../selectors/playlists";
 import { selectPlayableTracks as selectLibraryTracks } from "../selectors/library";
+import { selectPlayableTracks as selectSearchTracks } from "../selectors/search";
 import { PlayerActionType as ActionType } from ".";
 import { PayloadAction } from "./types";
 
@@ -24,7 +25,8 @@ const providers = {
   [Type.Album]: selectAlbumTracks,
   [Type.Artist]: selectArtistTracks,
   [Type.Playlist]: selectPlaylistTracks,
-  [Type.Library]: selectLibraryTracks
+  [Type.Library]: selectLibraryTracks,
+  [Type.Search]: selectSearchTracks
 };
 
 function getTrackIds(

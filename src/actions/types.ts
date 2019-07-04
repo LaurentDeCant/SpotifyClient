@@ -26,6 +26,7 @@ export interface Entities {
       albums: string[];
       artists: string[];
       playlists: string[];
+      tracks: string[];
     };
   };
 }

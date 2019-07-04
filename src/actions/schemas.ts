@@ -55,10 +55,11 @@ const Results = new schema.Entity(
     playlists: [Playlist]
   },
   {
-    processStrategy: ({ albums, artists, playlists }) => ({
+    processStrategy: ({ albums, artists, playlists, tracks }) => ({
       albums: albums.items,
       artists: artists.items,
-      playlists: playlists.items
+      playlists: playlists.items,
+      tracks: tracks.items
     })
   }
 );
@@ -109,6 +110,10 @@ PagedTracks.define({
 });
 
 Playlist.define({
+  tracks: [Track]
+});
+
+Results.define({
   tracks: [Track]
 });
 

@@ -9,6 +9,8 @@ import TrackList from "../details/TrackList";
 import Empty from "../layout/Empty";
 import withLoader from "../withLoader";
 
+const CollectionId = "";
+
 interface Props {
   tracks: Track[];
   getSavedTracks: () => void;
@@ -18,8 +20,6 @@ interface Props {
     trackId: string
   ) => void;
 }
-
-const CollectionId = "";
 
 function SavedTracks({ tracks, getSavedTracks, loadPlayPause }: Props) {
   useEffect(getSavedTracks, []);

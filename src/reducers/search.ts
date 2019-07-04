@@ -14,6 +14,7 @@ export interface State {
   albumIds: string[];
   artistIds: string[];
   playlistIds: string[];
+  trackIds: string[];
   recents: Collection[];
 }
 
@@ -21,6 +22,7 @@ export const initialState: State = {
   albumIds: [],
   artistIds: [],
   playlistIds: [],
+  trackIds: [],
   recents: []
 };
 
@@ -39,14 +41,20 @@ function addRecent(
 }
 
 export default createReducer(initialState, {
-  [ActionType.SearchSuccess]: (state: State, action: SearchSuccessAction) => {
-    const { results } = action.payload;
-    const { albums, artists, playlists } = results[Object.keys(results)[0]];
+  [ActionType.SearchSuccess]: (
+    state: State,
+    { payload }: SearchSuccessAction
+  ) => {
+    const { results } = payload;
+    const { albums, artists, playlists, tracks } = results[
+      Object.keys(results)[0]
+    ];
     return {
       ...state,
       albumIds: albums,
       artistIds: artists,
-      playlistIds: playlists
+      playlistIds: playlists,
+      trackIds: tracks
     };
   },
   [ActionType.ClearResults]: (state: State) => ({

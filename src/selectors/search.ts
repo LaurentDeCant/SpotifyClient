@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { Album, Artist, Playlist, Type } from "../types";
+import { Type } from "../types";
 import { State } from "../reducers";
 import {
   AlbumDictionary,
@@ -10,19 +10,38 @@ import { State as SearchState } from "../reducers/search";
 import { selectAlbums as selectAlbumsById } from "./albums";
 import { selectArtists as selectArtistsById } from "./artists";
 import { selectPlaylists as selectPlaylistsById } from "./playlists";
+import { selectTracks as selectTracksById } from "./tracks";
 
-export function selectAlbums(state: State): Album[] {
+export function selectAlbums(state: State) {
   return selectAlbumsById(state)(state.search.albumIds);
 }
 
-export function selectArtists(state: State): Artist[] {
+export function selectArtists(state: State) {
   return selectArtistsById(state)(state.search.artistIds).sort(
     (x, y) => y.popularity - x.popularity
   );
 }
 
-export function selectPlaylists(state: State): Playlist[] {
+export function selectPlaylists(state: State) {
   return selectPlaylistsById(state)(state.search.playlistIds);
+}
+
+export function selectTracks(state: State) {
+  return selectTracksById(state)(state.search.trackIds);
+}
+
+export function selectPlayableTracks(state: State) {
+  const tracks = selectTracks(state);
+  return tracks ? tracks.filter(track => track.preview_url) : [];
+}
+
+export function selectHasResults({ search }: State) {
+  return (
+    !!search.albumIds.length &&
+    !!search.artistIds.length &&
+    !!search.playlistIds.length &&
+    !!search.trackIds.length
+  );
 }
 
 export const selectRecents = createSelector(
