@@ -4,7 +4,6 @@ import { Playlist } from "../../types";
 import { selectPlaylist } from "../../actions/search";
 import { State } from "../../reducers";
 import { selectPlaylists } from "../../selectors/search";
-import { Heading } from "../core";
 import PlaylistCovers from "../covers/PlaylistCovers";
 import Wrapper from "./Wrapper";
 
@@ -15,14 +14,11 @@ interface PlaylistsProps {
 
 function Playlists({ playlists, selectPlaylist }: PlaylistsProps) {
   return (
-    <>
+    <Wrapper>
       {playlists.length > 0 && (
-        <Wrapper>
-          <Heading>Playlists</Heading>
-          <PlaylistCovers playlists={playlists} onSelect={selectPlaylist} />
-        </Wrapper>
+        <PlaylistCovers playlists={playlists} onSelect={selectPlaylist} />
       )}
-    </>
+    </Wrapper>
   );
 }
 

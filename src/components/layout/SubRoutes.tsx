@@ -14,7 +14,7 @@ function SubRoutes({ match, items }: Props) {
       {!!defaultItem && (
         <DefaultRoute
           from={`${match.path}`}
-          to={`${match.path}/${defaultItem.path}`}
+          to={`${match.url}/${defaultItem.path}`}
         />
       )}
 

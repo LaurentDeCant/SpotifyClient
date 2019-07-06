@@ -4,6 +4,8 @@ import styled from "../../styles/styled";
 import { State } from "../../reducers";
 import { selectHasResults } from "../../selectors/search";
 import Empty from "../layout/Empty";
+import SubMenu from "../layout/SubMenu";
+import SubRoutes from "../layout/SubRoutes";
 import withLoader from "../withLoader";
 import Artists from "./Artists";
 import Albums from "./Albums";
@@ -19,13 +21,35 @@ interface Props {
   hasResults: boolean;
 }
 
+const items = [
+  {
+    path: "artists",
+    text: "Artists",
+    default: true,
+    component: Artists
+  },
+  {
+    path: "albums",
+    text: "Albums",
+    component: Albums
+  },
+  {
+    path: "playlists",
+    text: "Playlists",
+    component: Playlists
+  },
+  {
+    path: "tracks",
+    text: "Tracks",
+    component: Tracks
+  }
+];
+
 function Results({ hasResults }: Props) {
   return hasResults ? (
     <Wrapper>
-      <Artists />
-      <Albums />
-      <Playlists />
-      <Tracks />
+      <SubMenu items={items} />
+      <SubRoutes items={items} />
     </Wrapper>
   ) : (
     <Empty>No Results</Empty>

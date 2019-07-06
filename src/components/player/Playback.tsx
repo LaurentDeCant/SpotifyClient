@@ -1,5 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "../../styles/styled";
+import { seek } from "../../actions/player";
+import { State } from "../../reducers";
+import { Times, selectTimes, selectCanSeek } from "../../selectors/player";
 import Slider from "./Slider";
 
 const Wrapper = styled.div`
@@ -17,13 +21,13 @@ const ProgressTime = styled.div`
 `;
 
 interface Props {
-  duration: number;
-  currentTime: number;
+  times: Times;
   canSeek: boolean;
-  onSeek: (time: number) => void;
+  seek: (time: number) => void;
 }
 
-function Playback({ duration, currentTime, canSeek, onSeek }: Props) {
+function Playback({ times, canSeek, seek }: Props) {
+  const { duration, currentTime } = times;
   function renderTime(seconds: number) {
     const minutes = Math.floor(seconds / 60);
     seconds = Math.round(seconds);
@@ -36,7 +40,7 @@ function Playback({ duration, currentTime, canSeek, onSeek }: Props) {
   }
 
   function handleChange(value: number) {
-    onSeek(duration * value);
+    seek(duration * value);
   }
 
   const progress = duration ? currentTime / duration : 0;
@@ -50,4 +54,16 @@ function Playback({ duration, currentTime, canSeek, onSeek }: Props) {
   );
 }
 
-export default Playback;
+const mapState = (state: State) => ({
+  times: selectTimes(state),
+  canSeek: selectCanSeek(state)
+});
+
+const mapDispatch = {
+  seek
+};
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Playback);

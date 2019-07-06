@@ -5,9 +5,10 @@ import {
   AlbumDictionary,
   ArtistDictionary,
   PlaylistDictionary,
-  PlayState
+  PlayState,
+  Collection
 } from "../reducers/types";
-import { Command, State as PlayerState } from "../reducers/player";
+import { Command } from "../reducers/player";
 import { selectTrack, selectTracks } from "./tracks";
 import { selectAlbum } from "./albums";
 import { selectArtists } from "./artists";
@@ -114,17 +115,17 @@ export function selectCommand(state: State): Command {
 }
 
 export const selectRecents = createSelector(
-  ({ player }: State) => player,
+  ({ player }: State) => player.collections,
   ({ albums }: State) => albums,
   ({ artists }: State) => artists,
   ({ playlists }: State) => playlists,
   (
-    player: PlayerState,
+    collections: Collection[],
     albums: AlbumDictionary,
     artists: ArtistDictionary,
     playlists: PlaylistDictionary
   ) => {
-    return player.collections
+    return collections
       .filter(collection => collection.id)
       .map(collection => {
         switch (collection.type) {

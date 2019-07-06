@@ -4,7 +4,6 @@ import { Artist } from "../../types";
 import { selectArtist } from "../../actions/search";
 import { State } from "../../reducers";
 import { selectArtists } from "../../selectors/search";
-import { Heading } from "../core";
 import ArtistCovers from "../covers/ArtistCovers";
 import Wrapper from "./Wrapper";
 
@@ -15,14 +14,11 @@ interface ArtistsProps {
 
 function Artists({ artists, selectArtist }: ArtistsProps) {
   return (
-    <>
+    <Wrapper>
       {artists.length > 0 && (
-        <Wrapper>
-          <Heading>Artists</Heading>
-          <ArtistCovers artists={artists} onSelect={selectArtist} />
-        </Wrapper>
+        <ArtistCovers artists={artists} onSelect={selectArtist} />
       )}
-    </>
+    </Wrapper>
   );
 }
 

@@ -1,10 +1,6 @@
 import React, { HTMLAttributes } from "react";
-import { connect } from "react-redux";
 import { withRouter, RouteComponentProps } from "react-router";
 import styled from "../../styles/styled";
-import { seek } from "../../actions/player";
-import { State } from "../../reducers";
-import { Times, selectTimes, selectCanSeek } from "../../selectors/player";
 import { IconType, RoundButton } from "../core";
 import TrackInfos from "./TrackInfos";
 import Audio from "./Audio";
@@ -68,19 +64,10 @@ const QueueButton = styled(RoundButton).attrs(() => ({
   iconType: IconType.QueueMusic
 }))``;
 
-interface Props extends RouteComponentProps {
-  times: Times;
-  canSeek: boolean;
-  seek: (time: number) => void;
-}
-
 function Player({
   className,
-  history,
-  times,
-  canSeek,
-  seek
-}: Props & HTMLAttributes<HTMLElement>) {
+  history
+}: RouteComponentProps & HTMLAttributes<HTMLElement>) {
   function handleQueueClick() {
     history.push(`${process.env.PUBLIC_URL}/queue`);
   }
@@ -93,13 +80,7 @@ function Player({
 
       <CenterWrapper>
         <Controls />
-
-        <Playback
-          duration={times.duration}
-          currentTime={times.currentTime}
-          canSeek={canSeek}
-          onSeek={seek}
-        />
+        <Playback />
       </CenterWrapper>
 
       <RightWrapper>
@@ -112,18 +93,4 @@ function Player({
   );
 }
 
-const mapState = (state: State) => ({
-  times: selectTimes(state),
-  canSeek: selectCanSeek(state)
-});
-
-const mapDispatch = {
-  seek
-};
-
-export default withRouter(
-  connect(
-    mapState,
-    mapDispatch
-  )(Player)
-);
+export default withRouter(Player);

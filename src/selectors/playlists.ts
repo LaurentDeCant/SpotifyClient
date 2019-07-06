@@ -13,7 +13,7 @@ export function selectPlaylistTracks(state: State, albumId: string) {
   if (playlist) {
     const tracks = selectTracks(state)(playlist.tracks);
     if (tracks) {
-      return tracks.filter(track => !!track);
+      return tracks;
     }
   }
 

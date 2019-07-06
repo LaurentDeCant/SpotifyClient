@@ -41,15 +41,22 @@ interface Props extends RouteComponentProps<Params> {
   search: (query: string) => void;
 }
 
-function Search({ history, match, search }: Props) {
+function Search({ history, match, location, search }: Props) {
   const { query } = match.params;
   const [value, setValue] = useState(query);
 
   const navigate = useCallback(
     _.debounce((query: string) => {
-      history.push(`${process.env.PUBLIC_URL}/search${query && "/"}${query}`);
+      const path =
+        match.url !== location.pathname
+          ? _.last(location.pathname.split("/"))
+          : "";
+      history.push(
+        `${process.env.PUBLIC_URL}/search${query && `/${query}`}${path &&
+          `/${path}`}`
+      );
     }, 500),
-    []
+    [match, location]
   );
 
   useEffect(() => {

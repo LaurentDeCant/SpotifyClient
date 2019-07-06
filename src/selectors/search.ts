@@ -4,9 +4,9 @@ import { State } from "../reducers";
 import {
   AlbumDictionary,
   ArtistDictionary,
-  PlaylistDictionary
+  PlaylistDictionary,
+  Collection
 } from "../reducers/types";
-import { State as SearchState } from "../reducers/search";
 import { selectAlbums as selectAlbumsById } from "./albums";
 import { selectArtists as selectArtistsById } from "./artists";
 import { selectPlaylists as selectPlaylistsById } from "./playlists";
@@ -45,17 +45,17 @@ export function selectHasResults({ search }: State) {
 }
 
 export const selectRecents = createSelector(
-  ({ search }: State) => search,
+  ({ search }: State) => search.recents,
   ({ albums }: State) => albums,
   ({ artists }: State) => artists,
   ({ playlists }: State) => playlists,
   (
-    search: SearchState,
+    recents: Collection[],
     albums: AlbumDictionary,
     artists: ArtistDictionary,
     playlists: PlaylistDictionary
   ) => {
-    return search.recents.map(recent => {
+    return recents.map(recent => {
       switch (recent.type) {
         case Type.Album:
           return albums[recent.id];

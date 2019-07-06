@@ -25,6 +25,8 @@ export const selectTracks = createSelector(
   (state: State) => state.tracks,
   (tracks: TrackDictionary) =>
     memoize((trackIds: string[]) =>
-      trackIds ? trackIds.map(trackId => tracks[trackId]) : []
+      trackIds
+        ? trackIds.map(trackId => tracks[trackId]).filter(track => !!track)
+        : []
     )
 );

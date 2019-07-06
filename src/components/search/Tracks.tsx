@@ -4,7 +4,6 @@ import { Track, Type } from "../../types";
 import { loadPlayPause } from "../../actions/player";
 import { State } from "../../reducers";
 import { selectTracks } from "../../selectors/search";
-import { Heading } from "../core";
 import TrackList from "../details/TrackList";
 import Wrapper from "./Wrapper";
 
@@ -25,14 +24,11 @@ function Tracks({ tracks, loadPlayPause }: TracksProps) {
   }
 
   return (
-    <>
+    <Wrapper>
       {!!tracks.length && (
-        <Wrapper>
-          <Heading>Tracks</Heading>
-          <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
-        </Wrapper>
+        <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
       )}
-    </>
+    </Wrapper>
   );
 }
 

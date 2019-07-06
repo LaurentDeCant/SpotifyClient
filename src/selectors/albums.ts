@@ -27,7 +27,7 @@ export function selectAlbumTracks(state: State, albumId: string) {
   if (album) {
     const tracks = selectTracks(state)(album.tracks);
     if (tracks) {
-      return tracks.filter(track => !!track);
+      return tracks;
     }
   }
 

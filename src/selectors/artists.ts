@@ -39,7 +39,7 @@ export function selectArtistTopTracks(state: State, artistId: string) {
   if (artist) {
     const tracks = selectTracks(state)(artist.topTracks);
     if (tracks) {
-      return tracks.filter(track => !!track);
+      return tracks;
     }
   }
 
