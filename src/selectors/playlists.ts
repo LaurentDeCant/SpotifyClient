@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import memoize from "lodash/memoize";
+import { memoize } from "lodash";
 import { State } from "../reducers";
 import { PlaylistDictionary } from "../reducers/types";
 import { selectTracks } from "./tracks";

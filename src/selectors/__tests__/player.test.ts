@@ -24,7 +24,7 @@ describe("player selectors", () => {
         player: {
           ...initialState.player,
           collections: [{ id: "a", type: Type.Album }],
-          trackIds: ["b"]
+          playQueue: ["b"]
         }
       })("c");
 
@@ -37,7 +37,7 @@ describe("player selectors", () => {
         player: {
           ...initialState.player,
           collections: [{ id: "a", type: Type.Album }],
-          trackIds: ["b"]
+          playQueue: ["b"]
         }
       })("a");
 
@@ -50,7 +50,7 @@ describe("player selectors", () => {
         player: {
           ...initialState.player,
           collections: [{ id: "a", type: Type.Album }],
-          trackIds: ["b"]
+          playQueue: ["b"]
         }
       })("b");
 
@@ -75,7 +75,7 @@ describe("player selectors", () => {
       const isPlaying = selectIsPlaying(
         {
           ...initialState,
-          player: { ...initialState.player, trackIds: ["a"] }
+          player: { ...initialState.player, playQueue: ["a"] }
         },
         "a"
       );
@@ -98,7 +98,7 @@ describe("player selectors", () => {
           ...initialState,
           player: {
             ...initialState.player,
-            trackIds: ["a"],
+            playQueue: ["a"],
             playState: PlayState.Playing
           }
         },
@@ -115,7 +115,7 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a"]
+          playQueue: ["a"]
         }
       });
 
@@ -127,8 +127,8 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a", "b"],
-          currentIndex: 0
+          playQueue: ["a", "b"],
+          currentTrack: 0
         }
       });
 
@@ -140,8 +140,8 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a", "b"],
-          currentIndex: 1
+          playQueue: ["a", "b"],
+          currentTrack: 1
         }
       });
 
@@ -153,8 +153,8 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a", "b"],
-          currentIndex: 0,
+          playQueue: ["a", "b"],
+          currentTrack: 0,
           isLooped: true
         }
       });
@@ -169,7 +169,7 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a"]
+          playQueue: ["a"]
         }
       });
 
@@ -181,8 +181,8 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a", "b"],
-          currentIndex: 1
+          playQueue: ["a", "b"],
+          currentTrack: 1
         }
       });
 
@@ -194,8 +194,8 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a", "b"],
-          currentIndex: 0
+          playQueue: ["a", "b"],
+          currentTrack: 0
         }
       });
 
@@ -207,8 +207,8 @@ describe("player selectors", () => {
         ...initialState,
         player: {
           ...initialState.player,
-          trackIds: ["a", "b"],
-          currentIndex: 1,
+          playQueue: ["a", "b"],
+          currentTrack: 1,
           isLooped: true
         }
       });

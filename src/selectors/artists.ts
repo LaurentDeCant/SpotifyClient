@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import memoize from "lodash/memoize";
+import { memoize } from "lodash";
 import { Artist } from "../types";
 import { State } from "../reducers";
 import { ArtistDictionary } from "../reducers/types";

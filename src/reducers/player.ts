@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { PlayerActionType as ActionType } from "../actions";
 import {
   LoadCollectionAction,
@@ -21,7 +22,8 @@ export enum Command {
 export interface State {
   collections: Collection[];
   trackIds: string[];
-  currentIndex: number;
+  playQueue: string[];
+  currentTrack: number;
   playState: PlayState;
   duration: number;
   currentTime: number;
@@ -35,7 +37,8 @@ export interface State {
 export const initialState: State = {
   collections: [],
   trackIds: [],
-  currentIndex: 0,
+  playQueue: [],
+  currentTrack: 0,
   playState: PlayState.None,
   duration: 0,
   currentTime: 0,
@@ -58,14 +61,15 @@ export default createReducer(initialState, {
         { id: collectionId, type: collectionType },
         ...state.collections.filter(recent => recent.id !== collectionId)
       ],
-      trackIds: trackIds,
-      currentIndex: trackId ? trackIds.indexOf(trackId) : 0,
+      trackIds,
+      playQueue: state.isShuffled ? _.shuffle(trackIds) : trackIds,
+      currentTrack: trackId ? state.playQueue.indexOf(trackId) : 0,
       command: Command.Play
     };
   },
   [ActionType.LoadTrack]: (state: State, { payload }: LoadTrackAction) => ({
     ...state,
-    currentIndex: state.trackIds.indexOf(payload.trackId),
+    currentTrack: state.trackIds.indexOf(payload.trackId),
     command: Command.Play
   }),
   [ActionType.TrackLoaded]: (state: State, { payload }: TrackLoadedAction) => ({
@@ -104,39 +108,47 @@ export default createReducer(initialState, {
     ...state
   }),
   [ActionType.Ended]: (state: State) => {
-    const { currentIndex, trackIds } = state;
-    return currentIndex === trackIds.length - 1
+    const { currentTrack, playQueue } = state;
+    return currentTrack === playQueue.length - 1
       ? state.isLooped
-        ? { ...state, currentIndex: 0, command: Command.Play }
+        ? { ...state, currentTrack: 0, command: Command.Play }
         : { ...state, playState: PlayState.Paused }
       : {
           ...state,
-          currentIndex: currentIndex + 1,
+          currentTrack: currentTrack + 1,
           command: Command.Play
         };
   },
   [ActionType.Previous]: (state: State) => {
-    const { currentIndex, trackIds } = state;
+    const { currentTrack, playQueue } = state;
     return {
       ...state,
-      currentIndex:
-        currentIndex === 0 ? trackIds.length - 1 : state.currentIndex - 1,
+      currentTrack:
+        currentTrack === 0 ? playQueue.length - 1 : state.currentTrack - 1,
       command: Command.Play
     };
   },
   [ActionType.Next]: (state: State) => {
-    const { currentIndex, trackIds } = state;
+    const { currentTrack, playQueue } = state;
     return {
       ...state,
-      currentIndex:
-        currentIndex === trackIds.length - 1 ? 0 : state.currentIndex + 1,
+      currentTrack:
+        currentTrack === playQueue.length - 1 ? 0 : state.currentTrack + 1,
       command: Command.Play
     };
   },
-  [ActionType.ToggleShuffle]: (state: State) => ({
-    ...state,
-    isShuffled: !state.isShuffled
-  }),
+  [ActionType.ToggleShuffle]: (state: State) => {
+    const playQueue = state.isShuffled
+      ? state.trackIds
+      : _.shuffle(state.trackIds);
+    const currentTrack = playQueue.indexOf(state.playQueue[state.currentTrack]);
+    return {
+      ...state,
+      playQueue,
+      currentTrack,
+      isShuffled: !state.isShuffled
+    };
+  },
   [ActionType.ToggleLoop]: (state: State) => ({
     ...state,
     isLooped: !state.isLooped

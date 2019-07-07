@@ -11,7 +11,7 @@ import Library from "../library/Library";
 import PlaylistDetails from "../details/PlaylistDetails";
 import AlbumDetails from "../details/AlbumDetails";
 import ArtistDetails from "../details/ArtistDetails";
-import Queue from "../player/Queue";
+import PlayQueue from "../player/PlayQueue";
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -51,7 +51,7 @@ const Routes = ({ className }: HTMLAttributes<HTMLElement>) => {
         path={`${publicUrl}/artist/:artistId`}
         component={ArtistDetails}
       />
-      <PrivateRoute path={`${publicUrl}/queue`} component={Queue} />
+      <PrivateRoute path={`${publicUrl}/queue`} component={PlayQueue} />
     </Wrapper>
   );
 };

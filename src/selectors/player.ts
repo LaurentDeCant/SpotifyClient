@@ -21,15 +21,15 @@ export function selectCollection({ player }: State) {
 }
 
 export function selectLoadedTrack(state: State) {
-  const { trackIds, currentIndex } = state.player;
-  if (trackIds) {
-    return selectTrack(state, trackIds[currentIndex]);
+  const { playQueue, currentTrack } = state.player;
+  if (playQueue) {
+    return selectTrack(state, playQueue[currentTrack]);
   }
 }
 
 export function selectLoadedTracks(state: State) {
-  const { trackIds } = state.player;
-  return trackIds ? selectTracks(state)(trackIds) : [];
+  const { playQueue } = state.player;
+  return playQueue ? selectTracks(state)(playQueue) : [];
 }
 
 export function selectLoadedAlbum(state: State) {
@@ -45,10 +45,10 @@ export function selectLoadedArtists(state: State) {
 }
 
 export function selectIsLoaded(state: State) {
-  const { collections, trackIds, currentIndex } = state.player;
+  const { collections, playQueue, currentTrack } = state.player;
   return (id: string) =>
     (!!collections.length && collections[0].id === id) ||
-    (!!trackIds.length && trackIds[currentIndex] === id);
+    (!!playQueue.length && playQueue[currentTrack] === id);
 }
 
 export function selectIsPlaying(state: State, id?: string) {
@@ -69,14 +69,14 @@ export function selectCanSeek(state: State) {
 }
 
 export function selectCanPrevious(state: State) {
-  const { trackIds, currentIndex, isLooped } = state.player;
-  return trackIds.length > 1 && (currentIndex > 0 || isLooped);
+  const { playQueue, currentTrack, isLooped } = state.player;
+  return playQueue.length > 1 && (currentTrack > 0 || isLooped);
 }
 
 export function selectCanNext(state: State) {
-  const { trackIds, currentIndex, isLooped } = state.player;
+  const { playQueue, currentTrack, isLooped } = state.player;
   return (
-    trackIds.length > 1 && (currentIndex < trackIds.length - 1 || isLooped)
+    playQueue.length > 1 && (currentTrack < playQueue.length - 1 || isLooped)
   );
 }
 

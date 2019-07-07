@@ -12,6 +12,7 @@ import {
   selectLoadedTrack
 } from "../../selectors/player";
 import ArtistNames from "../details/ArtistNames";
+import { toggleSavedTrack } from "../../actions/library";
 
 const Wrapper = styled.div`
   align-items: center;
@@ -47,14 +48,22 @@ interface Props {
   track?: Track;
   album?: Album;
   artists: Artist[];
+  toggleFavorite: (trackId: string) => void;
 }
 
 function TrackInfos({
   className,
   track,
   album,
-  artists
+  artists,
+  toggleFavorite
 }: Props & HTMLAttributes<HTMLElement>) {
+  function handleFavoriteClick() {
+    if (track) {
+      toggleFavorite(track.id);
+    }
+  }
+
   return (
     <Wrapper className={className}>
       {album && (
@@ -70,7 +79,10 @@ function TrackInfos({
             <ArtistNames artists={artists} />
           </Container>
 
-          <FavoriteButton />
+          <FavoriteButton
+            isToggled={track.isSaved}
+            onClick={handleFavoriteClick}
+          />
         </>
       )}
     </Wrapper>
@@ -83,7 +95,11 @@ const mapState = (state: State) => ({
   artists: selectLoadedArtists(state)
 });
 
+const mapDispatch = {
+  toggleFavorite: toggleSavedTrack
+};
+
 export default connect(
   mapState,
-  null
+  mapDispatch
 )(TrackInfos);

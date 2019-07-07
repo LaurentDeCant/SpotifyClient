@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, {
   useState,
   useEffect,
@@ -8,6 +7,7 @@ import React, {
 } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
+import _ from "lodash";
 import styled from "../../styles/styled";
 import { Album, Artist, Playlist } from "../../types";
 import { search } from "../../actions/search";
@@ -52,7 +52,8 @@ function Search({ history, match, location, search }: Props) {
           ? _.last(location.pathname.split("/"))
           : "";
       history.push(
-        `${process.env.PUBLIC_URL}/search${query && `/${query}`}${path &&
+        `${process.env.PUBLIC_URL}/search${query && `/${query}`}${query &&
+          path &&
           `/${path}`}`
       );
     }, 500),

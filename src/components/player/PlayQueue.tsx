@@ -22,14 +22,14 @@ interface Props {
   ) => void;
 }
 
-function Queue({ collection, tracks, loadPlayPause }: Props) {
+function PlayQueue({ collection, tracks, loadPlayPause }: Props) {
   function handleTogglePlay(trackId: string) {
     collection && loadPlayPause(collection.id, collection.type, trackId);
   }
 
   return (
     <Wrapper>
-      <Heading>Queue</Heading>
+      <Heading>Play Queue</Heading>
       {tracks && tracks.length ? (
         <TrackList tracks={tracks} onTogglePlay={handleTogglePlay} />
       ) : (
@@ -51,4 +51,4 @@ const mapDispatch = {
 export default connect(
   mapState,
   mapDispatch
-)(Queue);
+)(PlayQueue);
