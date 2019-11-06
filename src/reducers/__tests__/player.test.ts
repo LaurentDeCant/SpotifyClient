@@ -36,6 +36,41 @@ describe("player reducer", () => {
     expect(state.command).toBe(Command.Play);
   });
 
+  test("load track unshuffled", () => {
+    const state = reducer(initialState, {
+      type: PlayerActionType.LoadCollection,
+      payload: {
+        collectionId: "1",
+        trackIds: ["1", "2", "3"],
+        trackId: "3"
+      }
+    });
+
+    expect(state.collections).toEqual([{ id: "1" }]);
+    expect(state.playQueue).toEqual(["1", "2", "3"]);
+    expect(state.currentTrack).toBe(2);
+    expect(state.command).toBe(Command.Play);
+  });
+
+  test("load track shuffled", () => {
+    const state = reducer(
+      { ...initialState, isShuffled: true },
+      {
+        type: PlayerActionType.LoadCollection,
+        payload: {
+          collectionId: "1",
+          trackIds: ["1", "2", "3"],
+          trackId: "3"
+        }
+      }
+    );
+
+    expect(state.collections).toEqual([{ id: "1" }]);
+    expect(state.playQueue).not.toEqual(["1", "2", "3"]);
+    expect(state.currentTrack).not.toBe(-1);
+    expect(state.command).toBe(Command.Play);
+  });
+
   test("ended first", () => {
     const state = reducer(
       {

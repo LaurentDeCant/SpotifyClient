@@ -16,7 +16,7 @@ const StyledIcon = styled(Icon)`
 
 const StyledText = styled(Text)`
   color: ${props => props.theme.onPrimary.primary};
-  font-size: ${props => props.theme.fontSize.large}px;
+  font-size: ${props => props.theme.fontSize.extraLarge}px;
   font-weight: ${props => props.theme.fontWeight.bold};
 `;
 

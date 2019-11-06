@@ -55,6 +55,7 @@ export default createReducer(initialState, {
     { payload }: LoadCollectionAction
   ) => {
     const { collectionId, collectionType, trackIds, trackId } = payload;
+    const playQueue = state.isShuffled ? _.shuffle(trackIds) : trackIds;
     return {
       ...state,
       collections: [
@@ -62,8 +63,8 @@ export default createReducer(initialState, {
         ...state.collections.filter(recent => recent.id !== collectionId)
       ],
       trackIds,
-      playQueue: state.isShuffled ? _.shuffle(trackIds) : trackIds,
-      currentTrack: trackId ? state.playQueue.indexOf(trackId) : 0,
+      playQueue: playQueue,
+      currentTrack: trackId ? playQueue.indexOf(trackId) : 0,
       command: Command.Play
     };
   },
